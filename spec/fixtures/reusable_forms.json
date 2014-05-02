@@ -1,0 +1,11 @@
+{
+  "list_info": {
+    "page": 1,
+    "num_pages": 1,
+    "num_results": 1,
+    "page_size": 20
+  },
+  "reusable_forms":[
+    {"reusable_form_id":"a364138e0d8ae6393aa425a8ec64715580f3748b","title":"bitcoin","message":"Hello, bitcoin pdf here","is_creator":true,"can_edit":true,"signer_roles":[{"name":"Client","order":null}],"cc_roles":[],"documents":[{"index":"0","name":"bitcoin.pdf","custom_fields":[],"form_fields":[{"name":"","type":"signature","signer":"1","x":501,"y":7498,"width":120,"height":30,"required":true,"api_id":"a1ca72_9"}]}],"custom_fields":[],"named_form_fields":[{"name":"","type":"signature","signer":"1","x":501,"y":7498,"width":120,"height":30,"required":true,"api_id":"a1ca72_9"}],"accounts":[{"account_id":"a82bbf8a2fb928f239e2bd59df50e23b82b3eedd","email_address":"testuser@example.com","is_paid_hs":false,"is_paid_hf":false,"quotas":{"templates_left":0,"documents_left":3,"api_signature_requests_left":0}}]}
+  ]
+}
