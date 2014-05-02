@@ -244,6 +244,8 @@ module HelloSign
       # @option opts [String] subject The subject in the email that will be sent to the signers.
       # @option opts [String] message The custom message in the email that will be sent to the signers.
       # @option opts [String] signing_redirect_url The URL you want the signer redirected to after they successfully sign.
+      # @option opts [Integer] hide_text_tags Whether or not your text tags hidden after parsing
+      # @option opts [Integer] use_text_tags Whether or not your document contains parseable text-tags
       # @option opts [Array<Hash>] signers List of signers, each item is a Hash with these keys:
       #   * :name (String) Sender' name
       #   * :email_address (String) Sender's email address

@@ -52,7 +52,7 @@ module HelloSign
       # @example
       #   team = @client.destroy_team
       def destroy_team
-        HelloSign::Resource::Team.new post("/team/destroy")
+        post("/team/destroy")
       end
 
       #
