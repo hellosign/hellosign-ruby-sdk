@@ -148,7 +148,7 @@ module HelloSign
     def parse(response)
       if response["content-type"] == "application/pdf"
         response.body
-      elsif response.body.empty?
+      elsif response.body.strip.empty?
         {}
       else
         MultiJson.load response.body
@@ -197,7 +197,12 @@ module HelloSign
         if value.is_a? String
           opts[:"#{key}[#{index}]"] = value
         else
-          opts[:"#{key}[#{value.delete(:role)}]"] = value
+          if value[:role]
+            opts[:"#{key}[#{value[:role]}]"] = value
+            value.delete(:role)
+          else
+            opts[:"#{key}[#{index}]"] = value
+          end
         end
       end
       opts.delete(key)
