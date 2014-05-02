@@ -32,7 +32,7 @@ module HelloSign
       # @example
       #   reusable_forms = @client.get_reusable_forms :page => 1
       #
-      def get_reusable_forms opts
+      def get_reusable_forms opts={}
         HelloSign::Resource::ResourceArray.new get('/reusable_form/list', opts), "reusable_forms", HelloSign::Resource::ReusableForm
       end
 
@@ -49,8 +49,9 @@ module HelloSign
       #   reusable_forms = @client.add_user_to_reusable_form :reusable_form_id => 'f57db65d3f933b5316d398057a36176831451a35', :email_address => 'george@hellosign.com'
       #
       def add_user_to_reusable_form opts
-        HelloSign::Resource::ReusableForm.new post("/reusable_form/add_user/#{opts[:reusable_form_id]}", opts)
-      end
+        path = "/reusable_form/add_user/#{opts[:reusable_form_id]}"
+        opts.delete(:reusable_form_id)
+        HelloSign::Resource::ReusableForm.new post(path, :body => opts)      end
 
       #
       # Removes the specified Account's access to the specified ReusableForm.
@@ -64,7 +65,9 @@ module HelloSign
       #   reusable_forms = @client.remove_user_from_reusable_form :reusable_form_id => 'f57db65d3f933b5316d398057a36176831451a35', :email_address => 'george@hellosign.com'
       #
       def remove_user_from_reusable_form opts
-        HelloSign::Resource::ReusableForm.new post("/reusable_form/remove_user/#{opts[:reusable_form_id]}", opts)
+        path = "/reusable_form/remove_user/#{opts[:reusable_form_id]}"
+        opts.delete(:reusable_form_id)
+        HelloSign::Resource::ReusableForm.new post(path, :body => opts)
       end
     end
   end
