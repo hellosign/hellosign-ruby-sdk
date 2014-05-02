@@ -51,7 +51,8 @@ module HelloSign
       def add_user_to_reusable_form opts
         path = "/reusable_form/add_user/#{opts[:reusable_form_id]}"
         opts.delete(:reusable_form_id)
-        HelloSign::Resource::ReusableForm.new post(path, :body => opts)      end
+        HelloSign::Resource::ReusableForm.new post(path, :body => opts)
+      end
 
       #
       # Removes the specified Account's access to the specified ReusableForm.

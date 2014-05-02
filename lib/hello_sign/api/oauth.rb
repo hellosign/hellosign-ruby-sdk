@@ -40,8 +40,8 @@ module HelloSign
       #
       # refresh user oauth token.
       #
-      # @return [Hash] refresh oauth info
-      def refresh_oauth_token oauth_token
+      # @return [Hash] refreshed oauth info
+      def refresh_oauth_token refresh_token
         post('/oauth/token', {:body => {:grant_type => 'refresh_token', :refresh_token => refresh_token}, :oauth_request => true})
       end
 
