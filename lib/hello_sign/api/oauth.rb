@@ -33,17 +33,7 @@ module HelloSign
         opts[:client_secret] = self.client_secret
         opts[:grant_type] = 'authorization_code'
         post('/oauth/token', {:body => opts, :oauth_request => true})
-        # connection = Faraday.new({url: "https://www.hellosign.com/oauth/token", headers: {user_agent: self.user_agent}}) do |faraday|
-        #   faraday.request  :url_encoded
-        #   faraday.response :logger
-        #   faraday.adapter  :net_http
-        # end
-        # response = connection.post do |request|
-        #   request.url '/oauth/token'
-        #   request.body = opts
-        # end
 
-        # MultiJson.load response.body
       end
 
 
@@ -52,7 +42,7 @@ module HelloSign
       #
       # @return [Hash] refresh oauth info
       def refresh_oauth_token oauth_token
-        post('/oauth/token', {:body => {:grant_type => 'refresh_token', :refresh_token => oauth_token}, :oauth_request => true})
+        post('/oauth/token', {:body => {:grant_type => 'refresh_token', :refresh_token => refresh_token}, :oauth_request => true})
       end
 
 
@@ -66,7 +56,7 @@ module HelloSign
         opts[:client_id] = self.client_id
         opts[:client_secret] = self.client_secret
 
-        post('/account/create', {:body => opts})
+        HelloSign::Resource::Account.new post('/account/create', {:body => opts})
       end
     end
   end
