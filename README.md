@@ -4,7 +4,7 @@
 
 Add this line to your application's Gemfile:
 
-    gem 'hellosign-ruby'
+    gem 'hellosign-ruby-sdk'
 
 And then execute:
 
