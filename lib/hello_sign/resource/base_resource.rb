@@ -34,7 +34,7 @@ module HelloSign
       #
       # Magic method, help class have dynamic methods based on hash keys.
       #
-      # If initialize hash have a key match the method name, return value of that key.
+      # If initialized hash has a key which matches the method name, return value of that key.
       #
       # Otherwise, return nil
       #
