@@ -33,7 +33,9 @@ module HelloSign
       #   signature_requests = @client.get_signature_requests :page => 1
       #
       def get_signature_requests opts={}
-        HelloSign::Resource::ResourceArray.new get('/signature_request/list', opts), 'signature_requests',  HelloSign::Resource::SignatureRequest
+        path = '/signature_request/list'
+        path += opts[:page] ? "?page=#{opts[:page]}" : ""
+        HelloSign::Resource::ResourceArray.new get(path, opts), 'signature_requests',  HelloSign::Resource::SignatureRequest
       end
 
       #

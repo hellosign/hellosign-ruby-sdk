@@ -33,7 +33,9 @@ module HelloSign
       #   reusable_forms = @client.get_reusable_forms :page => 1
       #
       def get_reusable_forms opts={}
-        HelloSign::Resource::ResourceArray.new get('/reusable_form/list', opts), "reusable_forms", HelloSign::Resource::ReusableForm
+        path = '/reusable_form/list'
+        path += opts[:page] ? "?page=#{opts[:page]}" : ""
+        HelloSign::Resource::ResourceArray.new get(path, opts), "reusable_forms", HelloSign::Resource::ReusableForm
       end
 
 
