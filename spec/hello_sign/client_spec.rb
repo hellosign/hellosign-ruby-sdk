@@ -102,7 +102,7 @@ describe HelloSign::Client do
         end
 
         it "work correctly" do
-          expect(lambda{HelloSign.send_signature_request_with_reusable_form(
+          expect(lambda{HelloSign.send_signature_request_with_template(
             :ccs => ["sss"]
           )}).not_to raise_error
         end
@@ -114,7 +114,7 @@ describe HelloSign::Client do
         end
 
         it "work correctly" do
-          expect(lambda{HelloSign.send_signature_request_with_reusable_form(
+          expect(lambda{HelloSign.send_signature_request_with_template(
             :ccs => [{
               :email_address => 'jack@example.com',
               :name => 'Jack',

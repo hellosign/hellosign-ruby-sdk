@@ -101,10 +101,10 @@ describe HelloSign::Api::SignatureRequest do
     end
   end
 
-  describe "#send_signature_request_with_reusable_form" do
+  describe "#send_signature_request_with_template" do
     before do
       stub_post("/signature_request/send_with_reusable_form", 'signature_request')
-      @signature_request = HelloSign.send_signature_request_with_reusable_form({})
+      @signature_request = HelloSign.send_signature_request_with_template({})
     end
 
     it "should get the correct resource" do
@@ -123,10 +123,10 @@ describe HelloSign::Api::SignatureRequest do
     end
   end
 
-  describe "#create_embedded_signature_request_with_reusable_form" do
+  describe "#create_embedded_signature_request_with_template" do
     before do
       stub_post("/signature_request/create_embedded_with_reusable_form", 'signature_request')
-      @signature_request = HelloSign.create_embedded_signature_request_with_reusable_form({})
+      @signature_request = HelloSign.create_embedded_signature_request_with_template({})
     end
 
     it "should get the correct resource" do

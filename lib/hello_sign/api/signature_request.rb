@@ -25,7 +25,7 @@ module HelloSign
 
       #
       # Returns a list of SignatureRequests that you can access. This includes SignatureRequests you have sent as well as received, but not ones that you have been CCed on.
-      # @option opts [Integer] page (1) Which page number of the ReusableForm List to return.
+      # @option opts [Integer] page (1) Which page number of the Template List to return.
       #
       # @return [HelloSign::Resource::ResourceArray]
       #
@@ -88,9 +88,9 @@ module HelloSign
       end
 
       #
-      # Creates and sends a new SignatureRequest based off of the ReusableForm specified with the reusable_form_id parameter.
+      # Creates and sends a new SignatureRequest based off of the Template specified with the template_id parameter.
       # @option opts [Integer] test_mode (0) Whether this is a test, the signature request will not be legally binding if set to 1.
-      # @option opts [String] reusable_form_id The id of the ReusableForm to use when creating the SignatureRequest.
+      # @option opts [String] template_id The id of the Template to use when creating the SignatureRequest.
       # @option opts [String] title The title you want to assign to the SignatureRequest.
       # @option opts [String] subject The subject in the email that will be sent to the signers.
       # @option opts [String] message The custom message in the email that will be sent to the signers.
@@ -100,14 +100,14 @@ module HelloSign
       #   * :email_address (String) Sender's email address
       #   * :order (Integer) The order the signer is required to sign in
       #   * :pin (Integer) The 4- to 12-character access code that will secure this signer's signature page. You must have a business plan to use this feature.
-      # @option opts [Array<Hash>] ccs The email addresses CC destinations. Required when a CC role exists for the ReusableForm.
-      # @option opts [Array<Hash>] custom_fields The value to fill in for the custom field with the name of CustomFieldName. Required when a CustomField exists in the ReusableForm.
+      # @option opts [Array<Hash>] ccs The email addresses CC destinations. Required when a CC role exists for the Template.
+      # @option opts [Array<Hash>] custom_fields The value to fill in for the custom field with the name of CustomFieldName. Required when a CustomField exists in the Template.
       #
       # @return [HelloSign::Resource::SignatureRequest] a SignatureRequest
       # @example
-      #  signature_request = @client.send_signature_request_with_reusable_form(
+      #  signature_request = @client.send_signature_request_with_template(
       #    :test_mode => 1,
-      #    :reusable_form_id => 'c26b8a16784a872da37ea946b9ddec7c1e11dff6',
+      #    :template_id => 'c26b8a16784a872da37ea946b9ddec7c1e11dff6',
       #    :title => 'Purchase Order',
       #    :subject => 'Purchase Order',
       #    :message => 'Glad we could come to an agreement.',
@@ -131,7 +131,7 @@ module HelloSign
       #    ]
       #  )
       #
-      def send_signature_request_with_reusable_form opts
+      def send_signature_request_with_template opts
         prepare_signers opts
         prepare_ccs opts
         HelloSign::Resource::SignatureRequest.new post('/signature_request/send_with_reusable_form', :body => opts)
@@ -225,11 +225,11 @@ module HelloSign
       end
 
       #
-      # Creates a new SignatureRequest based on the given ReusableForm to be signed in an embedded iFrame.
+      # Creates a new SignatureRequest based on the given Template to be signed in an embedded iFrame.
       # Note that embedded signature requests can only be signed in embedded iFrames whereas normal signature requests can only be signed on HelloSign.
       # @option opts [Integer] test_mode (0) Whether this is a test, the signature request will not be legally binding if set to 1.
       # @option opts [String] client_id Client id of the app you're using to create this embedded signature request. Visit our  {https://www.hellosign.com/api/reference#Embedded embedded page} page to learn more about this parameter.
-      # @option opts [String] reusable_form_id The id of the ReusableForm to use when creating the SignatureRequest.
+      # @option opts [String] template_id The id of the Template to use when creating the SignatureRequest.
       # @option opts [String] title The title you want to assign to the SignatureRequest.
       # @option opts [String] subject The subject in the email that will be sent to the signers.
       # @option opts [String] message The custom message in the email that will be sent to the signers.
@@ -241,14 +241,14 @@ module HelloSign
       #   * :email_address (String) Sender's email address
       #   * :order (Integer) The order the signer is required to sign in
       #   * :pin (Integer) The 4- to 12-character access code that will secure this signer's signature page. You must have a business plan to use this feature.
-      # @option opts [Hash] ccs The email address of the CC filling the role of RoleName. Required when a CC role exists for the ReusableForm.
-      # @option opts [Hash] custom_fields The value to fill in for custom field with the name of CustomFieldName. Required when a CustomField exists in the ReusableForm.
+      # @option opts [Hash] ccs The email address of the CC filling the role of RoleName. Required when a CC role exists for the Template.
+      # @option opts [Hash] custom_fields The value to fill in for custom field with the name of CustomFieldName. Required when a CustomField exists in the Template.
       # @return [HelloSign::Resource::SignatureRequest] a SignatureRequest
       # @example
-      #   request = @client.create_embedded_signature_request_with_reusable_form(
+      #   request = @client.create_embedded_signature_request_with_template(
       #     :test_mode => 1,
       #     :client_id => 'b6b8e7deaf8f0b95c029dca049356d4a2cf9710a',
-      #     :reusable_form_id => 'c26b8a16784a872da37ea946b9ddec7c1e11dff6',
+      #     :template_id => 'c26b8a16784a872da37ea946b9ddec7c1e11dff6',
       #     :title => 'Purchase Order',
       #     :subject => 'Purchase Order',
       #     :message => 'Glad we could come to an agreement.',
@@ -270,7 +270,7 @@ module HelloSign
       #     }
       #   )
       #
-      def create_embedded_signature_request_with_reusable_form opts
+      def create_embedded_signature_request_with_template opts
         opts[:client_id] ||= self.client_id
         prepare_signers opts
         prepare_ccs opts

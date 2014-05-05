@@ -19,7 +19,7 @@ module HelloSign
   class Client
     include Api::Account
     include Api::SignatureRequest
-    include Api::ReusableForm
+    include Api::Template
     include Api::Team
     include Api::UnclaimedDraft
     include Api::Embedded
