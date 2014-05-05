@@ -11,7 +11,7 @@ module HelloSign
     class Account < BaseResource
 
       #
-      # create a new Account from a hash. if key define then account data with be the value of hash[key], otherwise a hash ifself
+      # Create a new Account from a hash. If key defined then account data with be the value of hash[key], otherwise the hash itself
       # @param  hash [Hash] account's data
       # @param  key [String] (account) key of the hash, point to where account data is. If nil then the hash itself
       #

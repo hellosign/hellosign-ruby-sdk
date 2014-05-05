@@ -2,7 +2,7 @@ module HelloSign
   module Api
 
     #
-    # HelloSign allows you to embed the signing page on your site in an iFrame,
+    # HelloSign allows you to embed the signing page on your site in an iFrame
     # without the need for the end-user to create a HelloSign account.
     # Take a look at our {https://www.hellosign.com/api/embeddedSigningWalkthrough embedded signing walkthrough}
     # for more information about this.
@@ -12,7 +12,7 @@ module HelloSign
     module Embedded
 
       #
-      # Retrieves the necessary information to build an embedded signature request.
+      # Retrieves the embedded signature request url.
       # @option opts [String] signature_id The id of the signature to get a signature url for
       #
       # @return [HelloSign::Resource::Embedded] Returns an Embedded object

@@ -12,7 +12,7 @@ module HelloSign
     class ReusableForm < BaseResource
 
       #
-      # create a new ReusableForm from a hash. if key define then reuable form data with be the value of hash[key], otherwise a hash ifself
+      # create a new ReusableForm from a hash. If a key is defined then reusable form data with be the value of hash[key], otherwise the hash itself
       # @param  hash [Hash] reusable form's data
       # @param  key [String] (reusable_form) key of the hash, point to where reusable form data is. If nil then the hash itself
       #

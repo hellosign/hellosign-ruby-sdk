@@ -40,20 +40,20 @@ module HelloSign
 
       #
       # Creates and sends a new SignatureRequest with the submitted documents.
-      # If form_fields_per_document is not specified, a signature page will be affixed
-      # where all signers will be required to add their signature, signifying their agreement to all contained documents.
+      # If form_fields_per_document is not specified, a signature page will be affixed at the end
+      # and all signers will be required to add their signature there.
       # @option opts [Integer] test_mode (0) Whether this is a test, the signature request will not be legally binding if set to 1.
       # @option opts [Array<String>] files Use files to indicate the uploaded file(s) to send for signature. Currently we only support use of either the files parameter or file_urls parameter, not both.
       # @option opts [Array<String>] file_urls Use file_urls to have HelloSign download the file(s) to send for signature. Currently we only support use of either the files parameter or file_urls parameter, not both.
       # @option opts [String] title The title you want to assign to the SignatureRequest.
       # @option opts [String] subject The subject in the email that will be sent to the signers.
       # @option opts [String] message The custom message in the email that will be sent to the signers.
-      # @option opts [String] signing_redirect_url The URL you want the signer redirected to after they successfully sign.
+      # @option opts [String] signing_redirect_url The URL you want the signer redirected to after they successfully sign. (optional)
       # @option opts [Array<Hash>] signers List of signers, each item is a Hash with these keys:
       #   * :name (String) Sender' name
       #   * :email_address (String) Sender's email address
       #   * :order (Integer) The order the signer is required to sign in
-      #   * :pin (Integer) The 4-digit code that will secure this signer's signature page. You must have a business plan to use this feature.
+      #   * :pin (Integer) The 4- to 12-character access code that will secure this signer's signature page. You must have a business plan to use this feature.
       # @option opts [Array<String>] cc_email_addresses The email addresses that should be CCed.
       # @option opts [String] form_fields_per_document
       #
@@ -94,14 +94,14 @@ module HelloSign
       # @option opts [String] title The title you want to assign to the SignatureRequest.
       # @option opts [String] subject The subject in the email that will be sent to the signers.
       # @option opts [String] message The custom message in the email that will be sent to the signers.
-      # @option opts [String] signing_redirect_url The URL you want the signer redirected to after they successfully sign.
-      # @option opts [Hash] signers List signers
+      # @option opts [String] signing_redirect_url The URL you want the signer redirected to after they successfully sign. (optional)
+      # @option opts [Array<Hash>] signers List of signers
       #   * :name (String) Sender' name
       #   * :email_address (String) Sender's email address
       #   * :order (Integer) The order the signer is required to sign in
-      #   * :pin (Integer) The 4-digit code that will secure this signer's signature page. You must have a business plan to use this feature.
-      # @option opts [Hash] ccs The email address of the CC filling the role of RoleName. Required when a CC role exists for the ReusableForm.
-      # @option opts [Hash] custom_fields The value to fill in for custom field with the name of CustomFieldName. Required when a CustomField exists in the ReusableForm.
+      #   * :pin (Integer) The 4- to 12-character access code that will secure this signer's signature page. You must have a business plan to use this feature.
+      # @option opts [Array<Hash>] ccs The email addresses CC destinations. Required when a CC role exists for the ReusableForm.
+      # @option opts [Array<Hash>] custom_fields The value to fill in for the custom field with the name of CustomFieldName. Required when a CustomField exists in the ReusableForm.
       #
       # @return [HelloSign::Resource::SignatureRequest] a SignatureRequest
       # @example
@@ -124,9 +124,11 @@ module HelloSign
       #        :role => "Accounting"
       #      }
       #    ],
-      #    :custom_fields => {
-      #      :Cost => '$20,000'
+      #    :custom_fields => [
+      #    {
+      #      :CustomFieldName => '$20,000'
       #    }
+      #    ]
       #  )
       #
       def send_signature_request_with_reusable_form opts
@@ -160,6 +162,7 @@ module HelloSign
 
       #
       # Download the PDF copy of the current documents specified by the signature_request_id parameter.
+      # @option opts [String] file_type Either 'pdf' or 'zip' depending on the file type desired. Defaults to pdf.
       # @option opts [String] signature_request_id The id of the SignatureRequest to retrieve.
       #
       # @return a PDF
@@ -171,23 +174,8 @@ module HelloSign
         get("/signature_request/files/#{opts[:signature_request_id]}")
       end
 
-
       #
-      # Download the PDF copy of the finalized documents specified by the signature_request_id parameter
-      # @deprecated Use {#signature_request_files} instead.
-      #
-      # @option opts [String] signature_request_id The id of the SignatureRequest to retrieve.
-      #
-      # @return a PDF
-      # @example
-      #   pdf = @client.signature_request_final_copy :signature_request_id => '75cdf7dc8b323d43b347e4a3614d1f822bd09491'
-      #
-      def signature_request_final_copy opts
-        get("/signature_request/final_copy/#{opts[:signature_request_id]}")
-      end
-
-      #
-      # Creates a new SignatureRequest with the submitted documents to be signed in an embedded iFrame .
+      # Creates a new SignatureRequest with the submitted documents to be signed in an embedded iFrame.
       # If form_fields_per_document is not specified, a signature page will be affixed where all signers will be required to add their signature, signifying their agreement to all contained documents.
       # Note that embedded signature requests can only be signed in embedded iFrames whereas normal signature requests can only be signed on HelloSign.
       # @option opts [Integer] test_mode (0) Whether this is a test, the signature request will not be legally binding if set to 1.
@@ -197,12 +185,12 @@ module HelloSign
       # @option opts [String] title The title you want to assign to the SignatureRequest.
       # @option opts [String] subject The subject in the email that will be sent to the signers.
       # @option opts [String] message The custom message in the email that will be sent to the signers.
-      # @option opts [String] signing_redirect_url The URL you want the signer redirected to after they successfully sign.
+      # @option opts [String] signing_redirect_url The URL you want the signer redirected to after they successfully sign. (optional)
       # @option opts [Array<Hash>] signers List of signers, each item is a Hash with these keys:
       #   * :name (String) Sender' name
       #   * :email_address (String) Sender's email address
       #   * :order (Integer) The order the signer is required to sign in
-      #   * :pin (Integer) The 4-digit code that will secure this signer's signature page. You must have a business plan to use this feature.
+      #   * :pin (Integer) The 4- to 12-character access code that will secure this signer's signature page. You must have a business plan to use this feature.
       # @option opts [Array<String>] cc_email_addresses The email addresses that should be CCed.
       # @option opts [String] form_fields_per_document
       #
@@ -245,14 +233,14 @@ module HelloSign
       # @option opts [String] title The title you want to assign to the SignatureRequest.
       # @option opts [String] subject The subject in the email that will be sent to the signers.
       # @option opts [String] message The custom message in the email that will be sent to the signers.
-      # @option opts [String] signing_redirect_url The URL you want the signer redirected to after they successfully sign.
+      # @option opts [String] signing_redirect_url The URL you want the signer redirected to after they successfully sign. (optional)
       # @option opts [Integer] hide_text_tags Whether or not your text tags hidden after parsing
       # @option opts [Integer] use_text_tags Whether or not your document contains parseable text-tags
       # @option opts [Array<Hash>] signers List of signers, each item is a Hash with these keys:
       #   * :name (String) Sender' name
       #   * :email_address (String) Sender's email address
       #   * :order (Integer) The order the signer is required to sign in
-      #   * :pin (Integer) The 4-digit code that will secure this signer's signature page. You must have a business plan to use this feature.
+      #   * :pin (Integer) The 4- to 12-character access code that will secure this signer's signature page. You must have a business plan to use this feature.
       # @option opts [Hash] ccs The email address of the CC filling the role of RoleName. Required when a CC role exists for the ReusableForm.
       # @option opts [Hash] custom_fields The value to fill in for custom field with the name of CustomFieldName. Required when a CustomField exists in the ReusableForm.
       # @return [HelloSign::Resource::SignatureRequest] a SignatureRequest

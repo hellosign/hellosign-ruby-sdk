@@ -25,7 +25,7 @@ HelloSign.configure do |config|
 end
 ```
 ##Usage and Documentation
-When you have configured HelloSign like above, you can start using it:
+When you have configured your app like above, you can start using it:
 
 ```ruby
 # get your account
@@ -38,17 +38,16 @@ my_signature_requests = HelloSign.get_signature_requests
 signature_request = HelloSign.get_signature_requests :signature_request_id => 'id'
 ```
 
-If you have multi user and want to a separated client for them, you can
+If you need to authenticate for multiple users and you want a separated client for them, you can run:
 ```ruby
-client = HelloSign::Client.new :api_key => 'your_user_api_key'
-user_account = client.get_account
+client2 = HelloSign::Client.new :api_key => 'your_user_api_key'
+user_account = client2.get_account
 ```
 
 ##OAuth
-First, you must set client_id and client_secret. Then for each user, generate an link for they to give your app permission to
-perform actions on behalf.
+First, you must ensure the client_id and client_secret are defined and match the information from when you created your 'app' on HelloSign. Also - be aware that until your app is approved you will only be able to authorize your own account. Next, generate a link for your users to grant authorization to perform actions on their behalf.
 ```ruby
-# The state param is use for security, recommended to use random and unique for each user
+# The state param is use for security, it is recommended to use a random and unique string for each user
 state = 'random-string'
 url = HelloSign.oauth_url state
 ```

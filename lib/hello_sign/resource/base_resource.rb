@@ -32,7 +32,7 @@ module HelloSign
 
 
       #
-      # Magic method, help class have dynamic methods based on hash keys.
+      # Magic method, give class dynamic methods based on hash keys.
       #
       # If initialized hash has a key which matches the method name, return value of that key.
       #

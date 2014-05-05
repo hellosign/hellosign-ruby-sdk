@@ -2,7 +2,7 @@ module HelloSign
   module Api
 
     #
-    # Contains all the api about the Team resource.
+    # Contains all the api calls for the Team resource.
     # Take a look at our {https://www.hellosign.com/api/reference#Team team api document}
     # for more information about this.
     #

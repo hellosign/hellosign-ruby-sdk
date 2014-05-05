@@ -2,7 +2,7 @@ module HelloSign
   module Api
 
     #
-    # Contains all the api about the ReusableForm resource.
+    # Contains all the api calls for the ReusableForm resource.
     # Take a look at our {https://www.hellosign.com/api/reference#ReusableForm reusable form api document}
     # for more information about this.
     #
@@ -40,10 +40,10 @@ module HelloSign
 
 
       #
-      # Gives the specified Account access to the specified ReusableForm
+      # Gives the specified Account on your team access to a ReusableForm
       #
-      # @option opts [String] reusable_form_id The id of the ReusableForm to give the Account access to.
-      # @option opts [String] account_id The id of the Account to give access to the ReusableForm. The account_id prevails if account_id and email_address are both provided.
+      # @option opts [String] reusable_form_id The id of the ReusableForm to give access to.
+      # @option opts [String] account_id The id of the Account to get access. The account_id prevails if account_id and email_address are both provided.
       # @option opts [String] email_address The email address of the Account to give access to the ReusableForm. The account_id prevails if account_id and email_address are both provided.
       #
       # @return [ReusableForm] a ReusableForm object

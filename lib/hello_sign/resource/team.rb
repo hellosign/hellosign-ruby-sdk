@@ -11,7 +11,7 @@ module HelloSign
     class Team < BaseResource
 
       #
-      # create a new Team from a hash. if key define then team data with be the value of hash[key], otherwise a hash ifself
+      # create a new Team from a hash. If a key is defined then team data with be the value of hash[key], otherwise the hash itself
       # @param  hash [Hash] team's data
       # @param  key [String] (team) key of the hash, point to where team data is. If nil then the hash itself
       #

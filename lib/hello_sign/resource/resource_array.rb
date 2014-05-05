@@ -16,7 +16,7 @@ module HelloSign
       #
       # @param  hash [Hash] data of the array
       # @param  key [String] key of the hash, point to where resource array data is
-      # @param  resource_class [Class] a Resource Class object inherited from BaseResource. Use the create array item form hash[key] item
+      # @param  resource_class [Class] a Resource Class object inherited from BaseResource. Use the created array item from hash[key]
       #
       # @return [type] [description]
       def initialize(hash, key, resource_class)

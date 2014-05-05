@@ -11,7 +11,7 @@ module HelloSign
     class SignatureRequest < BaseResource
 
       #
-      # create a new SignatureRequest from a hash. if key define then account data with be the value of hash[key], otherwise a hash ifself
+      # create a new SignatureRequest from a hash. If a key is defined then account data with be the value of hash[key], otherwise the hash itself
       # @param  hash [Hash] signature request's data
       # @param  key [String] (signature_request) key of the hash, point to where signature request data is. If nil then the hash itself
       #

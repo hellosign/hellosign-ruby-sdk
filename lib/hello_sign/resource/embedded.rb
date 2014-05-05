@@ -11,7 +11,7 @@ module HelloSign
     class Embedded < BaseResource
 
       #
-      # create a new Embedded from a hash. if key define then embedded data with be the value of hash[key], otherwise a hash ifself
+      # create a new Embedded resource from a hash. If a key is defined then embedded data with be the value of hash[key], otherwise the hash itself
       # @param  hash [Hash] embedded's data
       # @param  key [String] (embedded) key of the hash, point to where embedded data is. If nil then the hash itself
       #

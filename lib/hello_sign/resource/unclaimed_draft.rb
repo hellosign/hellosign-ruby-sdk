@@ -11,7 +11,7 @@ module HelloSign
     class UnclaimedDraft < BaseResource
 
       #
-      # create a new UnclaimedDraft from a hash. if key define then unclaimed draft data with be the value of hash[key], otherwise a hash ifself
+      # create a new UnclaimedDraft from a hash. If a key is defined then unclaimed draft data with be the value of hash[key], otherwise the hash itself
       # @param  hash [Hash] unclaimed draft's data
       # @param  key [String] (unclaimed_draft) key of the hash, point to where unclaimed draft data is. If nil then the hash itself
       #

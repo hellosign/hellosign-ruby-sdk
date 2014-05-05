@@ -3,7 +3,7 @@ module HelloSign
 
 
     #
-    # Contains all the api about the Account resource.
+    # Contains all the api calls for the Account resource.
     # Take a look at our {https://www.hellosign.com/api/reference#Account account api document}
     # for more information about this.
     #
@@ -27,7 +27,7 @@ module HelloSign
       # Creates a new HelloSign account. The user will still need to validate their email address
       # to complete the creation process.
       #
-      # Note: This request does not require authentication, so just performs the basic POST.
+      # Note: This request does not require authentication.
       #
       # @option opts [String] email_address New user's email address
       # @option opts [String] password New user's password
@@ -35,7 +35,7 @@ module HelloSign
       # @return [HelloSign::Resource::Account] New user's account information
       #
       # @example
-      #   account = @client.create_account :email_addres => 'newuser@hellosign.com', :password => 'securePW'
+      #   account = @client.create_account :email_address => 'newuser@hellosign.com', :password => 'securePW'
       #
       def create_account opts
         HelloSign::Resource::Account.new post("/account/create", :body => opts)
@@ -57,10 +57,10 @@ module HelloSign
 
 
       #
-      # Check whether an account exist
+      # Check whether an account exists
       # @option opts [String] email_address user email
       #
-      # @return [Bool] true if exist, else false
+      # @return [Bool] true if exists, else false
       def verify opts
         post("/account/verify", :body => opts).empty? ? false : true
       end
