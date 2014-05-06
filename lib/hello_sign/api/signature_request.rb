@@ -171,7 +171,11 @@ module HelloSign
       #   pdf = @client.signature_request_files :signature_request_id => '75cdf7dc8b323d43b347e4a3614d1f822bd09491'
       #
       def signature_request_files opts
-        get("/signature_request/files/#{opts[:signature_request_id]}")
+        path = "/signature_request/files/#{opts[:signature_request_id]}"
+        if opts[:file_type]
+          path = path + "?file_type=#{opts[:file_type]}"
+        end
+        get(path)
       end
 
       #
