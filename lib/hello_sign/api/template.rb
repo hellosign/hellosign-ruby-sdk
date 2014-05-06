@@ -48,7 +48,7 @@ module HelloSign
       #
       # @return [Template] a Template object
       # @example
-      #   templates = @client.add_user_to_template :template_id => 'f57db65d3f933b5316d398057a36176831451a35', :email_address => 'george@hellosign.com'
+      #   templates = @client.add_user_to_template :template_id => 'f57db65d3f933b5316d398057a36176831451a35', :email_address => 'george@example.com'
       #
       def add_user_to_template opts
         path = "/reusable_form/add_user/#{opts[:template_id]}"
@@ -65,7 +65,7 @@ module HelloSign
       #
       # @return [Template] a Template object
       # @example
-      #   templates = @client.remove_user_from_template :template_id => 'f57db65d3f933b5316d398057a36176831451a35', :email_address => 'george@hellosign.com'
+      #   templates = @client.remove_user_from_template :template_id => 'f57db65d3f933b5316d398057a36176831451a35', :email_address => 'george@example.com'
       #
       def remove_user_from_template opts
         path = "/reusable_form/remove_user/#{opts[:template_id]}"

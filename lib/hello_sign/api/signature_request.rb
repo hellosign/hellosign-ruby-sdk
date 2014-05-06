@@ -75,7 +75,7 @@ module HelloSign
       #         :order => 1,
       #       }
       #     ],
-      #     :cc_email_addresses => ['lawyer@hellosign.com', 'lawyer@example.com'],
+      #     :cc_email_addresses => ['lawyer@example.com', 'lawyer@example2.com'],
       #     :files => ['NDA.pdf', 'AppendixA.pdf']
       #   )
       #
@@ -120,7 +120,7 @@ module HelloSign
       #    ],
       #    :ccs => [
       #      {
-      #        :email_address =>'accounting@hellosign.com',
+      #        :email_address =>'accounting@example.com',
       #        :role => "Accounting"
       #      }
       #    ],
@@ -212,7 +212,7 @@ module HelloSign
       #         :order => 1,
       #       }
       #     ],
-      #     :cc_email_addresses => ['lawyer@hellosign.com', 'lawyer@example.com'],
+      #     :cc_email_addresses => ['lawyer@example.com', 'lawyer@example2.com'],
       #     :files => ['NDA.pdf', 'AppendixA.pdf']
       #   )
       #
@@ -261,7 +261,7 @@ module HelloSign
       #     ],
       #     :ccs => [
       #       {
-      #         :email_address =>'accounting@hellosign.com',
+      #         :email_address =>'accounting@example.com',
       #         :role => "Accounting"
       #       }
       #     ],

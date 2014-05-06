@@ -20,5 +20,6 @@ module HelloSign
         super
       end
     end
+
   end
 end

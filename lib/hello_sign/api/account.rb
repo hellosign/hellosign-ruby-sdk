@@ -35,7 +35,7 @@ module HelloSign
       # @return [HelloSign::Resource::Account] New user's account information
       #
       # @example
-      #   account = @client.create_account :email_address => 'newuser@hellosign.com', :password => 'securePW'
+      #   account = @client.create_account :email_address => 'newuser@example.com', :password => 'securePW'
       #
       def create_account opts
         HelloSign::Resource::Account.new post("/account/create", :body => opts)

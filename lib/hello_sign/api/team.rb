@@ -66,7 +66,7 @@ module HelloSign
       # @return [HelloSign::Resource::Team] updated Team object
       #
       # @example
-      #   team = @client.add_member_to_team :email_address => 'george@hellosign.com'
+      #   team = @client.add_member_to_team :email_address => 'george@example.com'
       def add_member_to_team opts
         HelloSign::Resource::Team.new post("/team/add_member", :body => opts)
       end
@@ -79,7 +79,7 @@ module HelloSign
       #
       # @return [HelloSign::Resource::Team] updated Team object
       # @example
-      #   team = @client.remove_member_from_team :email_address => 'george@hellosign.com'
+      #   team = @client.remove_member_from_team :email_address => 'george@example.com'
       def remove_member_from_team opts
         HelloSign::Resource::Team.new post("/team/remove_member", :body => opts)
       end

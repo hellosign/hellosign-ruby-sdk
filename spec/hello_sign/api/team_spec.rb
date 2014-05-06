@@ -73,7 +73,7 @@ describe HelloSign::Api::Team do
   describe "#add_member_to_team" do
     before do
       stub_post("/team/add_member", "team")
-      @team = HelloSign.add_member_to_team :email_address => "george@hellosign.com"
+      @team = HelloSign.add_member_to_team :email_address => "george@example.com"
     end
 
     it "should get the correct resource" do
@@ -84,7 +84,7 @@ describe HelloSign::Api::Team do
   describe "#remove_member_from_team" do
     before do
       stub_post("/team/remove_member", "team")
-      @team = HelloSign.remove_member_from_team :email_address => "george@hellosign.com"
+      @team = HelloSign.remove_member_from_team :email_address => "george@example.com"
     end
 
     it "should get the correct resource" do

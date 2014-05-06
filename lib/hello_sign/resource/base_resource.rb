@@ -41,8 +41,8 @@ module HelloSign
       # @param method [Symbol] Method's name
       #
       # @example
-      #   resource  = BaseResource.new :email_address => "me@hellosign.com"
-      #   resource.email_address # =>  "me@hellosign.com"
+      #   resource  = BaseResource.new :email_address => "me@example.com"
+      #   resource.email_address # =>  "me@example.com"
       #   resource.not_in_hash_keys # => nil
       def method_missing(method)
         @data.key?(method.to_s) ? @data[method.to_s] : nil
