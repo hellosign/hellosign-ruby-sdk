@@ -134,7 +134,7 @@ module HelloSign
       def send_signature_request_with_template opts
         prepare_signers opts
         prepare_ccs opts
-        HelloSign::Resource::SignatureRequest.new post('/signature_request/send_with_reusable_form', :body => opts)
+        HelloSign::Resource::SignatureRequest.new post('/signature_request/send_with_template', :body => opts)
       end
 
       #
@@ -275,7 +275,7 @@ module HelloSign
         prepare_signers opts
         prepare_ccs opts
 
-        HelloSign::Resource::SignatureRequest.new post('/signature_request/create_embedded_with_reusable_form', :body => opts)
+        HelloSign::Resource::SignatureRequest.new post('/signature_request/create_embedded_with_template', :body => opts)
       end
     end
   end

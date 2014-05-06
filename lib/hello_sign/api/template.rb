@@ -20,7 +20,7 @@ module HelloSign
       #   template = @client.get_template :template_id => 'f57db65d3f933b5316d398057a36176831451a35'
       #
       def get_template opts
-        HelloSign::Resource::Template.new get("/reusable_form/#{opts[:template_id]}")
+        HelloSign::Resource::Template.new get("/template/#{opts[:template_id]}")
       end
 
       #
@@ -33,9 +33,9 @@ module HelloSign
       #   templates = @client.get_templates :page => 1
       #
       def get_templates opts={}
-        path = '/reusable_form/list'
+        path = '/template/list'
         path += opts[:page] ? "?page=#{opts[:page]}" : ""
-        HelloSign::Resource::ResourceArray.new get(path, opts), "reusable_forms", HelloSign::Resource::Template
+        HelloSign::Resource::ResourceArray.new get(path, opts), "templates", HelloSign::Resource::Template
       end
 
 
@@ -51,7 +51,7 @@ module HelloSign
       #   templates = @client.add_user_to_template :template_id => 'f57db65d3f933b5316d398057a36176831451a35', :email_address => 'george@example.com'
       #
       def add_user_to_template opts
-        path = "/reusable_form/add_user/#{opts[:template_id]}"
+        path = "/template/add_user/#{opts[:template_id]}"
         opts.delete(:template_id)
         HelloSign::Resource::Template.new post(path, :body => opts)
       end
@@ -68,7 +68,7 @@ module HelloSign
       #   templates = @client.remove_user_from_template :template_id => 'f57db65d3f933b5316d398057a36176831451a35', :email_address => 'george@example.com'
       #
       def remove_user_from_template opts
-        path = "/reusable_form/remove_user/#{opts[:template_id]}"
+        path = "/template/remove_user/#{opts[:template_id]}"
         opts.delete(:template_id)
         HelloSign::Resource::Template.new post(path, :body => opts)
       end

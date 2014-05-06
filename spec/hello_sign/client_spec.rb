@@ -98,7 +98,7 @@ describe HelloSign::Client do
     context "ccs" do
       describe "is an array" do
         before do
-          stub_post("/signature_request/send_with_reusable_form", 'signature_request')
+          stub_post("/signature_request/send_with_template", 'signature_request')
         end
 
         it "work correctly" do
@@ -110,7 +110,7 @@ describe HelloSign::Client do
 
       describe "is an Hash" do
         before do
-          stub_post("/signature_request/send_with_reusable_form", 'signature_request')
+          stub_post("/signature_request/send_with_template", 'signature_request')
         end
 
         it "work correctly" do
