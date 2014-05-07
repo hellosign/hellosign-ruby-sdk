@@ -24,7 +24,7 @@ require 'hello_sign'
 HelloSign.configure do |config|
   config.api_key = 'api_key'
   # You can use email_address and password instead of api_key. But api_key is recommended
-  # If api_key, email_address and password all present, api_key will be used
+  # If api_key, email_address and password are all present, api_key will be used
   # config.email_address = 'email_address'
   # config.password = 'password'
   config.client_id = 'your_cliend_id' #required only when you want to use embedded or OAuth
@@ -55,4 +55,4 @@ user_account = client2.get_account
 ##Testing
 
 Testing relies on built in hard-coded fixtures. You can run the tests without affecting your actual account data. To do so
-simple run rake test.
+ run <code>rake test</code>.
