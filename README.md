@@ -55,4 +55,4 @@ user_account = client2.get_account
 ##Testing
 
 Testing relies on built in hard-coded fixtures. You can run the tests without affecting your actual account data. To do so
- run <code>rake test</code>.
+from the root of your project run <code>rake spec</code>.
