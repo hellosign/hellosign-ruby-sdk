@@ -121,6 +121,7 @@ module HelloSign
 
         HelloSign::Resource::UnclaimedDraft.new post('/unclaimed_draft/create_embedded', :body => opts)
       end
+
     end
   end
 end

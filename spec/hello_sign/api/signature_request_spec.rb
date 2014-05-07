@@ -90,16 +90,6 @@ describe HelloSign::Api::SignatureRequest do
     end
   end
 
-  describe "#signature_request_final_copy" do
-    before do
-      stub_get("/signature_request/final_copy/1", 'file')
-      @files = HelloSign.signature_request_final_copy(:signature_request_id => 1)
-    end
-
-    it "should get the correct resource" do
-      expect(a_get("/signature_request/final_copy/1")).to have_been_made
-    end
-  end
 
   describe "#send_signature_request_with_template" do
     before do
