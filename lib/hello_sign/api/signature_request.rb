@@ -17,7 +17,7 @@ module HelloSign
       # @return [HelloSign::Resource::SignatureRequest] a SignatureRequest object
       #
       # @example
-      #   signature_request = @client.get_signature_request :signature_request_id => '75cdf7dc8b323d43b347e4a3614d1f822bd09491'
+      #   signature_request = @client.get_signature_request :signature_request_id => 'fa5c8a0b0f492d768749333ad6fcc214c111e967'
       #
       def get_signature_request opts
         HelloSign::Resource::SignatureRequest.new get("/signature_request/#{opts[:signature_request_id]}")

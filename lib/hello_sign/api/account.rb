@@ -61,6 +61,9 @@ module HelloSign
       # @option opts [String] email_address user email
       #
       # @return [Bool] true if exists, else false
+      # @example
+      #   account = @client.verify :email_address => 'newuser@example.com'
+      #
       def verify opts
         post("/account/verify", :body => opts).empty? ? false : true
       end

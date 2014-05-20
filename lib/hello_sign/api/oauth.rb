@@ -28,6 +28,10 @@ module HelloSign
       # @option opts [String] code The authorization code passed to your callback when the user granted access
       #
       # @return [Hash] oauth data of the user
+      #
+      # @example
+      #   client = HelloSign::Client.new :api_key => '%apikey%', :client_id => 'cc91c61d00f8bb2ece1428035716b', :client_secret => '1d14434088507ffa390e6f5528465'
+      #   client.get_oauth_token :state => '900e06e2', :code =>'1b0d28d90c86c141'
       def get_oauth_token opts
         opts[:client_id] = self.client_id
         opts[:client_secret] = self.client_secret
@@ -41,6 +45,11 @@ module HelloSign
       # refresh user oauth token.
       #
       # @return [Hash] refreshed oauth info
+      # @example
+      #   client = HelloSign::Client.new :api_key => '%apikey%', :client_id => 'cc91c61d00f8bb2ece1428035716b', :client_secret => '1d14434088507ffa390e6f5528465'
+      #
+      # @example
+      #   client.refresh_oauth_token :refresh_token => 'hNTI2MTFmM2VmZDQxZTZjOWRmZmFjZmVmMGMyNGFjMzI2MGI5YzgzNmE3'
       def refresh_oauth_token refresh_token
         post('/oauth/token', {:body => {:grant_type => 'refresh_token', :refresh_token => refresh_token}, :oauth_request => true})
       end
