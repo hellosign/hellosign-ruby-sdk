@@ -124,11 +124,10 @@ module HelloSign
       #        :role => "Accounting"
       #      }
       #    ],
-      #    :custom_fields => [
+      #    :custom_fields =>
       #    {
       #      :CustomFieldName => '$20,000'
       #    }
-      #    ]
       #  )
       #
       def send_signature_request_with_template opts
