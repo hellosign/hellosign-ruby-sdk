@@ -103,6 +103,7 @@ module HelloSign
     private
 
     def request(path, method, options={})
+      strip_options_whitespace(options)
       make_connection(options).send method do |request|
         if options[:oauth_request]
           request.url "#{path}", options[:params]
@@ -189,6 +190,19 @@ module HelloSign
 
     def prepare_ccs opts
       prepare opts, :ccs
+    end
+
+    def strip_options_whitespace(hash)
+      hash.each do |k, v|
+        case v
+          when String
+            v.strip!
+          when Array
+            v.each {|av| av.strip!}
+          when Hash
+            strip_options_whitespace(v)
+        end
+      end
     end
 
     def prepare opts, key
