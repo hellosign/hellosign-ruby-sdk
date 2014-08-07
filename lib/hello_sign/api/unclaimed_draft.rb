@@ -69,7 +69,6 @@ module HelloSign
         HelloSign::Resource::UnclaimedDraft.new post('/unclaimed_draft/create', :body => opts)
       end
 
-
       #
       # Creates a new embedded unclaimed draft object that can be launched in an iframe using the claim URL.
       # @option opts [Integer] test_mode (0) Whether this is a test, the signature request will not be legally binding if set to 1.
@@ -90,7 +89,7 @@ module HelloSign
       # @option opts [Array<String>] cc_email_addresses The email addresses that should be CCed.
       #
       # @return [HelloSign::Resource::UnclaimedDraft] a UnclaimedDraft object
-
+      #
       # @example request_signature
       #   unclaimed_draft = @client.create_embedded_unclaimed_draft(
       #     :test_mode => 1,
@@ -112,7 +111,7 @@ module HelloSign
       #     :files => ['NDA.pdf', 'AppendixA.pdf']
       #   )
       #
-      def create_embedded_unclaimed_draft opts
+      def create_embedded_unclaimed_draft(opts)
         opts[:client_id] ||= self.client_id
         prepare_files opts
         if opts[:type] == 'request_signature'
@@ -121,7 +120,6 @@ module HelloSign
 
         HelloSign::Resource::UnclaimedDraft.new post('/unclaimed_draft/create_embedded', :body => opts)
       end
-
     end
   end
 end

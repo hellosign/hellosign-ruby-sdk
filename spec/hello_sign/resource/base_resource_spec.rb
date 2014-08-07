@@ -1,16 +1,18 @@
 require 'spec_helper'
 
 describe HelloSign::Resource::BaseResource do
-  let(:data){{
-        :a => :a1,
-        :b => :b1,
-        :c => { :c1 => :c2},
-        :d => [ :d1, :d2, :d3],
-        :e => [ {:e1 => :e11}, {:e2 => :e21}, {:e3 => :e31}]
-      }}
+  let(:data){
+    {
+      :a => :a1,
+      :b => :b1,
+      :c => { :c1 => :c2},
+      :d => [ :d1, :d2, :d3],
+      :e => [ {:e1 => :e11}, {:e2 => :e21}, {:e3 => :e31}]
+    }
+  }
 
-  describe "methods" do
-    subject(:resource) {HelloSign::Resource::BaseResource.new data }
+  describe 'methods' do
+    subject(:resource) { HelloSign::Resource::BaseResource.new data }
 
     it 'can access attributes by calling method with the same name' do
       data.keys.each do |key|
@@ -32,17 +34,17 @@ describe HelloSign::Resource::BaseResource do
     end
   end
 
-  describe "#initialize" do
+  describe '#initialize' do
     context 'without key params' do
-      subject(:resource) {HelloSign::Resource::BaseResource.new data }
-      it "have correct data" do
+      subject(:resource) { HelloSign::Resource::BaseResource.new data }
+      it 'have correct data' do
         expect(resource.data).to eql(data)
       end
     end
 
     context 'without key params' do
-      subject(:resource) {HelloSign::Resource::BaseResource.new data, :e }
-      it "have correct data" do
+      subject(:resource) { HelloSign::Resource::BaseResource.new data, :e }
+      it 'have correct data' do
         expect(resource.data).to eql(data[:e])
       end
     end

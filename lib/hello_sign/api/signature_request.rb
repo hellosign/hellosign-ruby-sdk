@@ -19,7 +19,7 @@ module HelloSign
       # @example
       #   signature_request = @client.get_signature_request :signature_request_id => 'fa5c8a0b0f492d768749333ad6fcc214c111e967'
       #
-      def get_signature_request opts
+      def get_signature_request(opts)
         HelloSign::Resource::SignatureRequest.new get("/signature_request/#{opts[:signature_request_id]}")
       end
 
@@ -32,9 +32,9 @@ module HelloSign
       # @example
       #   signature_requests = @client.get_signature_requests :page => 1
       #
-      def get_signature_requests opts={}
+      def get_signature_requests(opts={})
         path = '/signature_request/list'
-        path += opts[:page] ? "?page=#{opts[:page]}" : ""
+        path += opts[:page] ? "?page=#{opts[:page]}" : ''
         HelloSign::Resource::ResourceArray.new get(path, opts), 'signature_requests',  HelloSign::Resource::SignatureRequest
       end
 
@@ -80,7 +80,7 @@ module HelloSign
       #   )
       #
 
-      def send_signature_request opts
+      def send_signature_request(opts)
         prepare_files opts
         prepare_signers opts
 
@@ -130,7 +130,7 @@ module HelloSign
       #    }
       #  )
       #
-      def send_signature_request_with_template opts
+      def send_signature_request_with_template(opts)
         prepare_signers opts
         prepare_ccs opts
         HelloSign::Resource::SignatureRequest.new post('/signature_request/send_with_template', :body => opts)
@@ -145,7 +145,7 @@ module HelloSign
       # @example
       #   signature_request = @client.remind_signature_request :signature_request_id => '75cdf7dc8b323d43b347e4a3614d1f822bd09491', :email_address => 'john@example.com'
       #
-      def remind_signature_request opts
+      def remind_signature_request(opts)
         HelloSign::Resource::SignatureRequest.new post("/signature_request/remind/#{opts[:signature_request_id]}", :body => opts)
       end
 
@@ -155,7 +155,7 @@ module HelloSign
       #
       # @example
       #   @client.cancel_signature_request :signature_request_id => '75cdf7dc8b323d43b347e4a3614d1f822bd09491'
-      def cancel_signature_request opts
+      def cancel_signature_request(opts)
         post("/signature_request/cancel/#{opts[:signature_request_id]}", :body => opts)
       end
 
@@ -169,7 +169,7 @@ module HelloSign
       # @example
       #   pdf = @client.signature_request_files :signature_request_id => '75cdf7dc8b323d43b347e4a3614d1f822bd09491'
       #
-      def signature_request_files opts
+      def signature_request_files(opts)
         path = "/signature_request/files/#{opts[:signature_request_id]}"
         if opts[:file_type]
           path = path + "?file_type=#{opts[:file_type]}"
@@ -219,7 +219,7 @@ module HelloSign
       #     :files => ['NDA.pdf', 'AppendixA.pdf']
       #   )
       #
-      def create_embedded_signature_request opts
+      def create_embedded_signature_request(opts)
         opts[:client_id] ||= self.client_id
         prepare_files opts
         prepare_signers opts
@@ -273,7 +273,7 @@ module HelloSign
       #     }
       #   )
       #
-      def create_embedded_signature_request_with_template opts
+      def create_embedded_signature_request_with_template(opts)
         opts[:client_id] ||= self.client_id
         prepare_signers opts
         prepare_ccs opts

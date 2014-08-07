@@ -17,7 +17,7 @@ module HelloSign
       # @param  state [String] used for security and must match throughout the flow for a given user.
       # It can be set to the value of your choice (preferably something random). You should verify it matches the expected value when validating the OAuth callback.
       # @return [type] [description]
-      def oauth_url state
+      def oauth_url(state)
         "#{self.oauth_end_point}/oauth/authorize?response_type=code&client_id=#{self.client_id}&state=#{state}"
       end
 
@@ -32,14 +32,12 @@ module HelloSign
       # @example
       #   client = HelloSign::Client.new :api_key => '%apikey%', :client_id => 'cc91c61d00f8bb2ece1428035716b', :client_secret => '1d14434088507ffa390e6f5528465'
       #   client.get_oauth_token :state => '900e06e2', :code =>'1b0d28d90c86c141'
-      def get_oauth_token opts
+      def get_oauth_token(opts)
         opts[:client_id] = self.client_id
         opts[:client_secret] = self.client_secret
         opts[:grant_type] = 'authorization_code'
         post('/oauth/token', {:body => opts, :oauth_request => true})
-
       end
-
 
       #
       # refresh user oauth token.
@@ -50,7 +48,7 @@ module HelloSign
       #
       # @example
       #   client.refresh_oauth_token :refresh_token => 'hNTI2MTFmM2VmZDQxZTZjOWRmZmFjZmVmMGMyNGFjMzI2MGI5YzgzNmE3'
-      def refresh_oauth_token refresh_token
+      def refresh_oauth_token(refresh_token)
         post('/oauth/token', {:body => {:grant_type => 'refresh_token', :refresh_token => refresh_token}, :oauth_request => true})
       end
 
@@ -61,7 +59,7 @@ module HelloSign
       # @option opts [String] password new user password
       #
       # @return [Hash] details about new user, including oath data
-      def oauth_create_account opts
+      def oauth_create_account(opts)
         opts[:client_id] = self.client_id
         opts[:client_secret] = self.client_secret
 

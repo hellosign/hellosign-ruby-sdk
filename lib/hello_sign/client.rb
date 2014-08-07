@@ -106,7 +106,7 @@ module HelloSign
       strip_options_whitespace(options)
       make_connection(options).send method do |request|
         if options[:oauth_request]
-          request.url "#{path}", options[:params]
+          request.url path, options[:params]
         else
           request.url "#{api_version}#{path}", options[:params]
         end
@@ -147,7 +147,7 @@ module HelloSign
     end
 
     def parse(response)
-      if response["content-type"] == "application/pdf"
+      if response['content-type'] == 'application/pdf'
         response.body
       elsif response.body.strip.empty?
         {}
@@ -162,7 +162,7 @@ module HelloSign
       "Message: #{response.body}"
     end
 
-    def prepare_files opts
+    def prepare_files(opts)
       if opts[:files]
         opts[:files].each_with_index do |file, index|
           if file.is_a? String
@@ -184,11 +184,11 @@ module HelloSign
       end
     end
 
-    def prepare_signers opts
+    def prepare_signers(opts)
       prepare opts, :signers
     end
 
-    def prepare_ccs opts
+    def prepare_ccs(opts)
       prepare opts, :ccs
     end
 
@@ -205,7 +205,7 @@ module HelloSign
       end
     end
 
-    def prepare opts, key
+    def prepare(opts, key)
       return unless opts[key]
       opts[key].each_with_index do |value, index|
         if value.is_a? String

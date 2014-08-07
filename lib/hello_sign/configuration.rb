@@ -1,6 +1,5 @@
 module HelloSign
 
-
   #
   # Define config attributes and default values for HelloSign module
   #
@@ -9,7 +8,7 @@ module HelloSign
   module Configuration
     DEFAULT_ENDPOINT = 'https://api.hellosign.com'
     DEFAULT_API_VERSION = '/v3'
-    DEFAULT_OAUTH_ENDPOINT = "https://www.hellosign.com"
+    DEFAULT_OAUTH_ENDPOINT = 'https://www.hellosign.com'
     VALID_OPTIONS_KEYS = [:end_point, :oauth_end_point, :api_version, :user_agent, :client_id, :client_secret, :email_address, :password, :api_key, :auth_token, :log_level, :logging]
 
 

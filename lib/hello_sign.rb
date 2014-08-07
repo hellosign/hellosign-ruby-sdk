@@ -16,7 +16,6 @@ module HelloSign
     client.send(method, *args, &block)
   end
 
-
   #
   # If HelloSign module don't respond_to? method, ask HelloSign::Client whether it respond or not
   # @param  method [Symbol] method name

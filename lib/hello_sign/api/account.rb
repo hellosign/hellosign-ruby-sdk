@@ -1,7 +1,6 @@
 module HelloSign
   module Api
 
-
     #
     # Contains all the api calls for the Account resource.
     # Take a look at our {https://www.hellosign.com/api/reference#Account account api document}
@@ -20,7 +19,7 @@ module HelloSign
       #   account = @client.get_account
       #
       def get_account
-        HelloSign::Resource::Account.new get("/account")
+        HelloSign::Resource::Account.new get('/account')
       end
 
       #
@@ -37,10 +36,9 @@ module HelloSign
       # @example
       #   account = @client.create_account :email_address => 'newuser@example.com', :password => 'securePW'
       #
-      def create_account opts
-        HelloSign::Resource::Account.new post("/account/create", :body => opts)
+      def create_account(opts)
+        HelloSign::Resource::Account.new post('/account/create', :body => opts)
       end
-
 
       #
       # Updates the current user's callback URL
@@ -51,10 +49,9 @@ module HelloSign
       # @example
       #   account = @client.update_account :callback_url => 'https://www.example.com/callback'
       #
-      def update_account opts
-        HelloSign::Resource::Account.new post("/account", :body => opts)
+      def update_account(opts)
+        HelloSign::Resource::Account.new post('/account', :body => opts)
       end
-
 
       #
       # Check whether an account exists
@@ -64,8 +61,8 @@ module HelloSign
       # @example
       #   account = @client.verify :email_address => 'newuser@example.com'
       #
-      def verify opts
-        post("/account/verify", :body => opts).empty? ? false : true
+      def verify(opts)
+        post('/account/verify', :body => opts).empty? ? false : true
       end
     end
   end

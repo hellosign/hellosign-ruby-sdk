@@ -19,7 +19,7 @@ module HelloSign
       # @example
       #   embedded = @client.get_embedded_sign_url :signature_id => '50e3542f738adfa7ddd4cbd4c00d2a8ab6e4194b'
       #
-      def get_embedded_sign_url opts
+      def get_embedded_sign_url(opts)
         HelloSign::Resource::Embedded.new get("/embedded/sign_url/#{opts[:signature_id]}")
       end
     end

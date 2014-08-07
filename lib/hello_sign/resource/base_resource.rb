@@ -8,7 +8,6 @@ module HelloSign
     #
     class BaseResource
 
-
       #
       # recursively convert hash data into BaseResource.
       #
@@ -18,7 +17,7 @@ module HelloSign
       # @return [HelloSign::Resource::BaseResource] a new BaseResource
       def initialize(hash, key=nil)
         @raw_data = key ? hash[key] : hash
-        @data = @raw_data.inject({}) do |data, (key,value)|
+        @data = @raw_data.inject({}) do |data, (key, value)|
           data[key.to_s] = if value.is_a? Hash
             value = BaseResource.new(value)
           elsif ((value.is_a? Array) && (value[0].is_a? Hash))

@@ -19,7 +19,7 @@ module HelloSign
       # @example
       #   template = @client.get_template :template_id => 'f57db65d3f933b5316d398057a36176831451a35'
       #
-      def get_template opts
+      def get_template(opts)
         HelloSign::Resource::Template.new get("/template/#{opts[:template_id]}")
       end
 
@@ -32,12 +32,11 @@ module HelloSign
       # @example
       #   templates = @client.get_templates :page => 1
       #
-      def get_templates opts={}
+      def get_templates(opts={})
         path = '/template/list'
         path += opts[:page] ? "?page=#{opts[:page]}" : ""
         HelloSign::Resource::ResourceArray.new get(path, opts), "templates", HelloSign::Resource::Template
       end
-
 
       #
       # Gives the specified Account on your team access to a Template
@@ -50,7 +49,7 @@ module HelloSign
       # @example
       #   templates = @client.add_user_to_template :template_id => 'f57db65d3f933b5316d398057a36176831451a35', :email_address => 'george@example.com'
       #
-      def add_user_to_template opts
+      def add_user_to_template(opts)
         path = "/template/add_user/#{opts[:template_id]}"
         opts.delete(:template_id)
         HelloSign::Resource::Template.new post(path, :body => opts)
@@ -67,7 +66,7 @@ module HelloSign
       # @example
       #   templates = @client.remove_user_from_template :template_id => 'f57db65d3f933b5316d398057a36176831451a35', :email_address => 'george@example.com'
       #
-      def remove_user_from_template opts
+      def remove_user_from_template(opts)
         path = "/template/remove_user/#{opts[:template_id]}"
         opts.delete(:template_id)
         HelloSign::Resource::Template.new post(path, :body => opts)
