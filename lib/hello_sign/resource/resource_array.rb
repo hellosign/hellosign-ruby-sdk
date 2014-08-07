@@ -23,8 +23,8 @@ module HelloSign
         @num_results = hash['list_info']['num_results']
         @page_size = hash['list_info']['page_size']
         hash[key] && hash[key].each do |resouce|
-            self << resource_class.new(resouce, nil)
-          end
+          self << resource_class.new(resouce, nil)
+        end
       end
     end
   end

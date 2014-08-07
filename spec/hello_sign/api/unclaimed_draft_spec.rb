@@ -5,7 +5,7 @@ describe HelloSign::Api::UnclaimedDraft do
     context 'send_document' do
       before do
         stub_post('/unclaimed_draft/create', 'unclaimed_draft')
-        @unclaimed_draft = HelloSign.create_unclaimed_draft({:type => 'send_document'})
+        @unclaimed_draft = HelloSign.create_unclaimed_draft({ :type => 'send_document' })
       end
 
       it 'should get the correct resource' do
@@ -20,7 +20,7 @@ describe HelloSign::Api::UnclaimedDraft do
     context 'request_signature' do
       before do
         stub_post('/unclaimed_draft/create', 'unclaimed_draft')
-        @unclaimed_draft = HelloSign.create_unclaimed_draft({:type => 'request_signature'})
+        @unclaimed_draft = HelloSign.create_unclaimed_draft({ :type => 'request_signature' })
       end
 
       it 'should get the correct resource' do

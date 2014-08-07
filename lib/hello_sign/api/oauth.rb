@@ -36,7 +36,7 @@ module HelloSign
         opts[:client_id] = self.client_id
         opts[:client_secret] = self.client_secret
         opts[:grant_type] = 'authorization_code'
-        post('/oauth/token', {:body => opts, :oauth_request => true})
+        post('/oauth/token', { :body => opts, :oauth_request => true })
       end
 
       #
@@ -49,7 +49,7 @@ module HelloSign
       # @example
       #   client.refresh_oauth_token :refresh_token => 'hNTI2MTFmM2VmZDQxZTZjOWRmZmFjZmVmMGMyNGFjMzI2MGI5YzgzNmE3'
       def refresh_oauth_token(refresh_token)
-        post('/oauth/token', {:body => {:grant_type => 'refresh_token', :refresh_token => refresh_token}, :oauth_request => true})
+        post('/oauth/token', { :body => { :grant_type => 'refresh_token', :refresh_token => refresh_token }, :oauth_request => true })
       end
 
 
@@ -63,7 +63,7 @@ module HelloSign
         opts[:client_id] = self.client_id
         opts[:client_secret] = self.client_secret
 
-        HelloSign::Resource::Account.new post('/account/create', {:body => opts})
+        HelloSign::Resource::Account.new post('/account/create', { :body => opts })
       end
     end
   end

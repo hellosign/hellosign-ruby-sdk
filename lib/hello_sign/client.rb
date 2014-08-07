@@ -122,11 +122,11 @@ module HelloSign
         logger.level = @log_level
       end
 
-      connection = Faraday.new(:url => url, :headers => {user_agent: user_agent}) do |faraday|
-        faraday.request  :multipart
-        faraday.request  :url_encoded
+      connection = Faraday.new(:url => url, :headers => { user_agent: user_agent }) do |faraday|
+        faraday.request :multipart
+        faraday.request :url_encoded
         faraday.response :logger, logger if @logging
-        faraday.adapter  :net_http
+        faraday.adapter :net_http
       end
       if options[:no_auth]
       elsif auth_token
@@ -193,7 +193,7 @@ module HelloSign
     end
 
     def strip_options_whitespace(hash)
-      hash.each do |k, v|
+      hash.each do |_, v|
         case v
           when String
             v.strip!

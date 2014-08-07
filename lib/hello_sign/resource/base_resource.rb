@@ -29,7 +29,6 @@ module HelloSign
         end
       end
 
-
       #
       # Magic method, give class dynamic methods based on hash keys.
       #

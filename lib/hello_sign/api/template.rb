@@ -34,8 +34,8 @@ module HelloSign
       #
       def get_templates(opts={})
         path = '/template/list'
-        path += opts[:page] ? "?page=#{opts[:page]}" : ""
-        HelloSign::Resource::ResourceArray.new get(path, opts), "templates", HelloSign::Resource::Template
+        path += opts[:page] ? "?page=#{opts[:page]}" : ''
+        HelloSign::Resource::ResourceArray.new get(path, opts), 'templates', HelloSign::Resource::Template
       end
 
       #

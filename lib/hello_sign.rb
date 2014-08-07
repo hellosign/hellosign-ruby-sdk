@@ -25,6 +25,7 @@ module HelloSign
   end
 
   private
+
   def self.client
     HelloSign::Client.new
   end

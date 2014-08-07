@@ -5,9 +5,9 @@ describe HelloSign::Resource::BaseResource do
     {
       :a => :a1,
       :b => :b1,
-      :c => { :c1 => :c2},
-      :d => [ :d1, :d2, :d3],
-      :e => [ { :e1 => :e11 }, { :e2 => :e21 }, { :e3 => :e31 }]
+      :c => { :c1 => :c2 },
+      :d => [:d1, :d2, :d3],
+      :e => [{ :e1 => :e11 }, { :e2 => :e21 }, { :e3 => :e31 }]
     }
   }
 

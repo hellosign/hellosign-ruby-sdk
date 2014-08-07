@@ -19,7 +19,7 @@ describe HelloSign::Api::Account do
   describe '#create_account' do
     before do
       stub_post('/account/create', 'account')
-      @body = {:email_address => 'test@example.com', :password => 'secret'}
+      @body = { :email_address => 'test@example.com', :password => 'secret' }
       @account = HelloSign.create_account @body
     end
 
