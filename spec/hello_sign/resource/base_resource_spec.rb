@@ -7,7 +7,7 @@ describe HelloSign::Resource::BaseResource do
       :b => :b1,
       :c => { :c1 => :c2},
       :d => [ :d1, :d2, :d3],
-      :e => [ {:e1 => :e11}, {:e2 => :e21}, {:e3 => :e31}]
+      :e => [ { :e1 => :e11 }, { :e2 => :e21 }, { :e3 => :e31 }]
     }
   }
 
@@ -16,7 +16,7 @@ describe HelloSign::Resource::BaseResource do
 
     it 'can access attributes by calling method with the same name' do
       data.keys.each do |key|
-        expect(resource.send key).not_to be_empty
+        expect(resource.send key).not_to be_nil
       end
     end
 
