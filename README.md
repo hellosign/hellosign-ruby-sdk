@@ -13,11 +13,10 @@ And then execute:
 
     $ bundle
 
-
 ## Configuration
 
 Create a config block. At a minimum you'll want to set your [API Key](https://www.hellosign.com/home/myAccount/current_tab/integrations#api) but depending on your usage you'll possibly
-want to set your app's [Client ID](https://www.hellosign.com/oauth/createAppForm) and [Client Secret](https://www.hellosign.com/oauth/createAppForma). In Rails you can place it in `config/initializers/hello_sign.rb`
+want to set your app's [Client ID](https://www.hellosign.com/oauth/createAppForm) and [Client Secret](https://www.hellosign.com/oauth/createAppForm). In Rails you can place it in `config/initializers/hello_sign.rb`
 
 ```ruby
 require 'hello_sign'

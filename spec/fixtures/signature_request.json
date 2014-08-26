@@ -1,2 +1,38 @@
-{"signature_request":{"signature_request_id":"1", "title":"title", "original_title":"original_title", "subject":"subject", "message":"message", "test_mode":false, "is_complete":true, "has_error":false, "custom_fields":[],
-  "response_data":[{"name":"name", "value":"value", "type":"signature", "api_id":"api_id", "signature_id":"signature_id"}], "signing_url":"https://example.com/signing_url", "signing_redirect_url":"https://example.com/signing_redirect_url", "final_copy_uri":"/v3/final_copy_url", "files_url":"https://example.com/file_url", "details_url":"https://example.com/details_url", "requester_email_address":"requester_email_address@example.com", "signatures":[{"signature_id":"signature_id", "has_pin":false, "signer_email_address":"signer_email_address@example.com", "signer_name":"signer_name", "order":1, "status_code":"signed", "signed_at":1393389891, "last_viewed_at":1393389853, "last_reminded_at":1393389852}], "cc_email_addresses":[]}}
+{
+    "signature_request": {
+        "signature_request_id": "1",
+        "title": "title",
+        "original_title": "original_title",
+        "subject": "subject",
+        "message": "message",
+        "test_mode": false,
+        "is_complete": true,
+        "has_error": false,
+        "custom_fields": [],
+        "response_data": [{
+            "name": "name",
+            "value": "value",
+            "type": "signature",
+            "api_id": "api_id",
+            "signature_id": "signature_id"
+        }],
+        "signing_url": "https://example.com/signing_url",
+        "signing_redirect_url": "https://example.com/signing_redirect_url",
+        "final_copy_uri": "/v3/final_copy_url",
+        "files_url": "https://example.com/file_url",
+        "details_url": "https://example.com/details_url",
+        "requester_email_address": "requester_email_address@example.com",
+        "signatures": [{
+            "signature_id": "signature_id",
+            "has_pin": false,
+            "signer_email_address": "signer_email_address@example.com",
+            "signer_name": "signer_name",
+            "order": 1,
+            "status_code": "signed",
+            "signed_at": 1393389891,
+            "last_viewed_at": 1393389853,
+            "last_reminded_at": 1393389852
+        }],
+        "cc_email_addresses": []
+    }
+}

@@ -3,7 +3,6 @@ module HelloSign
 
     #
     # Contains information about the templates you and your team have created
-    #
     # Take a look at our {https://www.hellosign.com/api/reference#Template Template resource document}
     # for more information about this.
     #

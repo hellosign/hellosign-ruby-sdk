@@ -19,7 +19,7 @@ module HelloSign
       # @example
       #   team = @client.get_team
       def get_team
-        HelloSign::Resource::Team.new get("/team")
+        HelloSign::Resource::Team.new get('/team')
       end
 
       #
@@ -30,8 +30,8 @@ module HelloSign
       #
       # @example
       #   team = @client.create_team :name => 'Team America World Police'
-      def create_team opts
-        HelloSign::Resource::Team.new post("/team/create", :body => opts)
+      def create_team(opts)
+        HelloSign::Resource::Team.new post('/team/create', :body => opts)
       end
 
       #
@@ -42,8 +42,8 @@ module HelloSign
       #
       # @example
       #   team = @client.update_team :name => 'New Team Name'
-      def update_team opts
-        HelloSign::Resource::Team.new post("/team", :body => opts)
+      def update_team(opts)
+        HelloSign::Resource::Team.new post('/team', :body => opts)
       end
 
       #
@@ -52,7 +52,7 @@ module HelloSign
       # @example
       #   team = @client.destroy_team
       def destroy_team
-        post("/team/destroy")
+        post('/team/destroy')
       end
 
       #
@@ -67,8 +67,8 @@ module HelloSign
       #
       # @example
       #   team = @client.add_member_to_team :email_address => 'george@example.com'
-      def add_member_to_team opts
-        HelloSign::Resource::Team.new post("/team/add_member", :body => opts)
+      def add_member_to_team(opts)
+        HelloSign::Resource::Team.new post('/team/add_member', :body => opts)
       end
 
 
@@ -80,8 +80,8 @@ module HelloSign
       # @return [HelloSign::Resource::Team] updated Team object
       # @example
       #   team = @client.remove_member_from_team :email_address => 'george@example.com'
-      def remove_member_from_team opts
-        HelloSign::Resource::Team.new post("/team/remove_member", :body => opts)
+      def remove_member_from_team(opts)
+        HelloSign::Resource::Team.new post('/team/remove_member', :body => opts)
       end
     end
   end
