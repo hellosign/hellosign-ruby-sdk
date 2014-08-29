@@ -107,6 +107,29 @@ module HelloSign
       # @example
       #  signature_request = @client.send_signature_request_with_template(
       #    :test_mode => 1,
+      #    :template_ids => [
+      #               'c26b8a16784a872da37ea946b9ddec7c1e11dff6',
+      #               'c7ab48e9a9ee7102dd6229dbbc719abc7d90ff9f'
+      #    ],
+      #    :title => 'Purchase Order',
+      #    :subject => 'Purchase Order',
+      #    :message => 'Glad we could come to an agreement.',
+      #    :signers => [
+      #      {
+      #        :email_address => 'george@example.com',
+      #        :name => 'George',
+      #        :role => 'Client'
+      #      },
+      #      {
+      #        :email_address => 'mary@example.com',
+      #        :name => 'Mary',
+      #        :role => 'Manager'
+      #      }
+      #    ]
+      #  )
+      # @example
+      #  signature_request = @client.send_signature_request_with_template(
+      #    :test_mode => 1,
       #    :template_id => 'c26b8a16784a872da37ea946b9ddec7c1e11dff6',
       #    :title => 'Purchase Order',
       #    :subject => 'Purchase Order',
@@ -133,6 +156,8 @@ module HelloSign
       def send_signature_request_with_template(opts)
         prepare_signers opts
         prepare_ccs opts
+        prepare_templates opts
+
         HelloSign::Resource::SignatureRequest.new post('/signature_request/send_with_template', :body => opts)
       end
 
@@ -277,6 +302,7 @@ module HelloSign
         opts[:client_id] ||= self.client_id
         prepare_signers opts
         prepare_ccs opts
+        prepare_templates opts
 
         HelloSign::Resource::SignatureRequest.new post('/signature_request/create_embedded_with_template', :body => opts)
       end

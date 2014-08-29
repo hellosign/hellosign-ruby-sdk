@@ -192,6 +192,10 @@ module HelloSign
       prepare opts, :ccs
     end
 
+    def prepare_templates(opts)
+      prepare opts, :template_ids
+    end
+
     def strip_options_whitespace(hash)
       hash.each do |_, v|
         case v
