@@ -26,8 +26,8 @@ HelloSign.configure do |config|
   # If api_key, email_address and password are all present, api_key will be used
   # config.email_address = 'email_address'
   # config.password = 'password'
-  config.client_id = 'your_cliend_id' #required only when you want to use embedded or OAuth
-  config.client_secret = 'your_cliend_secret' #required only when you want to use OAuth
+  config.client_id = 'your_client_id' #required only when you want to use embedded or OAuth
+  config.client_secret = 'your_client_secret' #required only when you want to use OAuth
 end
 ```
 
