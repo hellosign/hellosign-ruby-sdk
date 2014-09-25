@@ -18,6 +18,9 @@ module HelloSign
     # Raised when API endpoint returns the HTTP status code 401.
     class Unauthorized < Error; end
 
+    # Raised when API endpoint returns the HTTP status code 402.
+    class PaidApiPlanRequired < Error; end
+
     # Raised when API endpoint returns the HTTP status code 403.
     class Forbidden < Error; end
 

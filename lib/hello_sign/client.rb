@@ -30,6 +30,7 @@ module HelloSign
     ERRORS = {
       400 => Error::BadRequest,
       401 => Error::Unauthorized,
+      402 => Error::PaidApiPlanRequired,
       403 => Error::Forbidden,
       404 => Error::NotFound,
       405 => Error::MethodNotAllowed,
