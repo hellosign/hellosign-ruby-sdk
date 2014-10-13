@@ -55,3 +55,8 @@ user_account = client2.get_account
 
 Testing relies on built in hard-coded fixtures. You can run the tests without affecting your actual account data. To do so
 from the root of your project run <code>rake spec</code>.
+
+## Additional notes
+
+### Local callbacks
+We do not allow app callbacks (event or OAuth) to be set to localhost. However it is still possible to test callbacks against a local server. Tunneling services such as ngrok (http://ngrok.com) can help you set this up.
