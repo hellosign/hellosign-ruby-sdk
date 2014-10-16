@@ -65,6 +65,10 @@ module HelloSign
       #     :title => 'NDA with Acme Co.',
       #     :subject => 'The NDA we talked about',
       #     :message => 'Please sign this NDA and then we can discuss more. Let me know if you have any questions.',
+      #     :metadata => {
+      #      :client_id => '1234',
+      #      :custom_text => 'NDA #9'
+      #     },
       #     :signers => [{
       #         :email_address => 'jack@example.com',
       #         :name => 'Jack',
@@ -114,6 +118,10 @@ module HelloSign
       #    :title => 'Purchase Order',
       #    :subject => 'Purchase Order',
       #    :message => 'Glad we could come to an agreement.',
+      #    :metadata => {
+      #      :client_id => '1234',
+      #      :custom_text => 'NDA #9'
+      #     },
       #    :signers => [
       #      {
       #        :email_address => 'george@example.com',
@@ -134,6 +142,10 @@ module HelloSign
       #    :title => 'Purchase Order',
       #    :subject => 'Purchase Order',
       #    :message => 'Glad we could come to an agreement.',
+      #    :metadata => {
+      #      :client_id => '1234',
+      #      :custom_text => 'NDA #9'
+      #     },
       #    :signers => [
       #      {
       #        :email_address => 'george@example.com',
@@ -230,6 +242,10 @@ module HelloSign
       #     :title => 'NDA with Acme Co.',
       #     :subject => 'The NDA we talked about',
       #     :message => 'Please sign this NDA and then we can discuss more. Let me know if you have any questions.',
+      #     :metadata => {
+      #      :client_id => '1234',
+      #      :custom_text => 'NDA #9'
+      #     },
       #     :signers => [{
       #         :email_address => 'jack@example.com',
       #         :name => 'Jack',
@@ -280,6 +296,10 @@ module HelloSign
       #     :title => 'Purchase Order',
       #     :subject => 'Purchase Order',
       #     :message => 'Glad we could come to an agreement.',
+      #     :metadata => {
+      #      :client_id => '1234',
+      #      :custom_text => 'NDA #9'
+      #     },
       #     :signers => [
       #       {
       #         :email_address => 'george@example.com',

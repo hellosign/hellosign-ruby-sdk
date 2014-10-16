@@ -46,6 +46,10 @@ module HelloSign
       #     :type => 'request_signature',
       #     :subject => 'The NDA we talked about',
       #     :message => 'Please sign this NDA and then we can discuss more. Let me know if you have any questions.',
+      #     :metadata => {
+      #      :client_id => '1234',
+      #      :custom_text => 'NDA #9'
+      #     },
       #     :signers => [{
       #         :email_address => 'jack@example.com',
       #         :name => 'Jack',
@@ -97,6 +101,10 @@ module HelloSign
       #     :subject => 'The NDA we talked about',
       #     :requester_email_address => requester@example.com",
       #     :message => 'Please sign this NDA and then we can discuss more. Let me know if you have any questions.',
+      #     :metadata => {
+      #      :client_id => '1234',
+      #      :custom_text => 'NDA #9'
+      #     },
       #     :signers => [{
       #         :email_address => 'jack@example.com',
       #         :name => 'Jack',
