@@ -20,7 +20,7 @@ module HelloSign
   # If HelloSign module don't respond_to? method, ask HelloSign::Client whether it respond or not
   # @param  method [Symbol] method name
   #
-  def self.respond_to?(method)
+  def self.respond_to?(method, include_all=false)
     return super || client.respond_to?(method)
   end
 
