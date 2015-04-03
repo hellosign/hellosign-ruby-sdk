@@ -38,21 +38,35 @@ describe HelloSign::Client do
   end
 
   describe '#request' do
-    context 'when response status >= 400' do
-      HelloSign::Client::ERRORS.keys.each do |key|
-        it "raise #{HelloSign::Client::ERRORS[key].to_s} when response status #{key}" do
-          # raise when post
-          stub_post('/account/create', 'error', key)
-          expect {
-            HelloSign.create_account :email_address => 'test@example.com', :password => 'password'
-          }.to raise_error(HelloSign::Client::ERRORS[key])
+    def post_request(key)
+      stub_post('/account/create', 'error', key)
+      HelloSign.create_account :email_address => 'test@example.com', :password => 'password'
+    end
 
-          # raise when get
-          stub_get('/account', 'error', key)
-          expect {
-            HelloSign.get_account
-          }.to raise_error(HelloSign::Client::ERRORS[key])
+    def get_request(key)
+      stub_get('/account', 'error', key)
+      HelloSign.get_account
+    end
+
+    HelloSign::Client::ERRORS.keys.each do |key|
+      context "when response status #{key}" do
+        it "raise #{HelloSign::Client::ERRORS[key].to_s} on post" do
+          expect { post_request(key) }.to raise_error(HelloSign::Client::ERRORS[key])
         end
+
+        it "raise #{HelloSign::Client::ERRORS[key].to_s} on get" do
+          expect { get_request(key) }.to raise_error(HelloSign::Client::ERRORS[key])
+        end
+      end
+    end
+
+    context 'when response status not listed' do
+      it 'raise UnknownError for post' do
+        expect { post_request(504) }.to raise_error(HelloSign::Error::UnknownError)
+      end
+
+      it 'raise UnknownError for get' do
+        expect { get_request(504) }.to raise_error(HelloSign::Error::UnknownError)
       end
     end
   end

@@ -142,7 +142,8 @@ module HelloSign
 
     def validate(response)
       if response.status >= 400
-        raise ERRORS[response.status].new error_message(response)
+        error_class = ERRORS[response.status] || HelloSign::Error::UnknownError
+        raise error_class.new error_message(response)
       end
     end
 
