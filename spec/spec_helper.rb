@@ -31,6 +31,10 @@ def load_fixture(name)
   File.new(File.dirname(__FILE__) + "/fixtures/#{name}.json")
 end
 
+def load_file(name)
+  File.read(File.new(File.dirname(__FILE__) + "/fixtures/#{name}"))
+end
+
 def stub_get(path, fixture, status_code=200)
   stub_request(:get, "#{HelloSign.end_point}#{HelloSign.api_version}#{path}").
     to_return(:body => load_fixture(fixture), :status => status_code)

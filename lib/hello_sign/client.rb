@@ -166,7 +166,7 @@ module HelloSign
       if opts[:files]
         opts[:files].each_with_index do |file, index|
           if file.is_a? String
-            opts[:"file[#{index}]"] = Faraday::UploadIO.new(file, 'application/pdf')
+            opts[:"file[#{index}]"] = Faraday::UploadIO.new(StringIO.new(file), 'application/pdf')
           elsif defined? ActionDispatch::Http::UploadedFile
             if file.is_a? ActionDispatch::Http::UploadedFile
               opts[:"file[#{index}]"] = UploadIO.new(file.tempfile, 'application/pdf')
