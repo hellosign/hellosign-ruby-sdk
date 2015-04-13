@@ -128,6 +128,61 @@ module HelloSign
 
         HelloSign::Resource::UnclaimedDraft.new post('/unclaimed_draft/create_embedded', :body => opts)
       end
+
+
+      #
+      # Creates a new embedded unclaimed draft object from a template that can be launched in an iframe using the claim URL.
+      # @option opts [Integer] test_mode (0) Whether this is a test, the signature request will not be legally binding if set to 1.
+      # @option opts [String] subject The subject in the email that will be sent to the signers.
+      # @option opts [String] requester_email_address The email address of the requester.
+      # @option opts [String] message The custom message in the email that will be sent to the signers.
+      # @option opts [String] signing_redirect_url The URL you want the signer redirected to after they successfully sign. (optional)
+      #
+      # @option opts [Array<Hash>] signers List of signers, each item is a Hash with these keys:
+      #   * :name (String) Sender' name
+      #   * :email_address (String) Sender's email address
+      #   * :order (Integer) The order the signer is required to sign in (optional)
+      #   * :pin (Integer) The 4-digit code that will secure this signer's signature page. You must have a business plan to use this feature. (optional)
+      # @option opts [Array<String>] cc_email_addresses The email addresses that should be CCed.
+      #
+      # @return [HelloSign::Resource::UnclaimedDraft] a UnclaimedDraft object
+      #
+      # @example request_signature
+      #   unclaimed_draft = @client.create_embedded_unclaimed_draft_with_template(
+      #     :test_mode => 1,
+      #     :subject => 'The NDA we talked about',
+      #     :template_id => 'c26b8a16784a872da37ea946b9ddec7c1e11dff6',
+      #     :requester_email_address => requester@example.com",
+      #     :message => 'Please sign this NDA and then we can discuss more. Let me know if you have any questions.',
+      #     :metadata => {
+      #      :client_id => '1234',
+      #      :custom_text => 'NDA #9'
+      #     },
+      #      :signers => [
+      #       {
+      #         :email_address => 'george@example.com',
+      #         :name => 'George',
+      #         :role => 'Client'
+      #       }
+      #     ],
+      #     :ccs => [
+      #       {
+      #         :email_address =>'accounting@example.com',
+      #         :role => "Accounting"
+      #       }
+      #     ],
+      #     :custom_fields => {
+      #       :Cost => '$20,000'
+      #     }
+      #   )
+      #
+      def create_embedded_unclaimed_draft_with_template(opts)
+        opts[:client_id] ||= self.client_id
+        prepare_signers opts
+        prepare_ccs opts
+        prepare_templates opts
+        HelloSign::Resource::UnclaimedDraft.new post('/unclaimed_draft/create_embedded_with_template', :body => opts)
+      end
     end
   end
 end

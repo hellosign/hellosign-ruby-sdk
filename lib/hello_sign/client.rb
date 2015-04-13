@@ -152,7 +152,7 @@ module HelloSign
       elsif response.body.strip.empty?
         {}
       else
-        MultiJson.load response.body
+        MultiJson.load response.body.strip
       end
     end
 
@@ -194,6 +194,14 @@ module HelloSign
 
     def prepare_templates(opts)
       prepare opts, :template_ids
+    end
+
+    def prepare_cc_roles(opts)
+      prepare opts, :merge_fields
+    end
+
+    def prepare_signer_roles(opts)
+      prepare opts, :signer_roles
     end
 
     def prepare(opts, key)
