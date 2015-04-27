@@ -44,7 +44,7 @@ describe HelloSign::Client do
           # raise when post
           stub_post('/account/create', 'error', key)
           expect {
-            HelloSign.create_account :email_address => 'test@example.com', :password => 'password'
+            HelloSign.create_account :email_address => 'test@example.com'
           }.to raise_error(HelloSign::Client::ERRORS[key])
 
           # raise when get
