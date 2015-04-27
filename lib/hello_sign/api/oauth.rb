@@ -1,8 +1,8 @@
 #
 # The MIT License (MIT)
-# 
+#
 # Copyright (C) 2014 hellosign.com
-# 
+#
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
@@ -80,7 +80,6 @@ module HelloSign
       #
       # Create new user and get their OAuth token. The user will receive an email asking them to confirm the access being granted. Your app will not be able to perform actions on behalf of this user until they confirm.
       # @option opts [String] email_address new user email address
-      # @option opts [String] password new user password
       #
       # @return [Hash] details about new user, including oath data
       def oauth_create_account(opts)

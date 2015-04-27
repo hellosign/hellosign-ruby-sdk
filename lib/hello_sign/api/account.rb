@@ -1,8 +1,8 @@
 #
 # The MIT License (MIT)
-# 
+#
 # Copyright (C) 2014 hellosign.com
-# 
+#
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
@@ -47,18 +47,17 @@ module HelloSign
       end
 
       #
-      # Creates a new HelloSign account. The user will still need to validate their email address
+      # Creates a new HelloSign account. The user will still need to confirm their email address
       # to complete the creation process.
       #
       # Note: This request does not require authentication.
       #
       # @option opts [String] email_address New user's email address
-      # @option opts [String] password New user's password
       #
       # @return [HelloSign::Resource::Account] New user's account information
       #
       # @example
-      #   account = @client.create_account :email_address => 'newuser@example.com', :password => 'securePW'
+      #   account = @client.create_account :email_address => 'newuser@example.com'
       #
       def create_account(opts)
         HelloSign::Resource::Account.new post('/account/create', :body => opts)

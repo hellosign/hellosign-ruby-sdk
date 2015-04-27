@@ -1,8 +1,8 @@
 #
 # The MIT License (MIT)
-# 
+#
 # Copyright (C) 2014 hellosign.com
-# 
+#
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
@@ -37,7 +37,7 @@ module HelloSign
   # signatures to updating account information.
   #
   # @example
-  #   client = HelloSign::Client.new :email_address => "me@hellosign.com", :password => "mypassword"
+  #   client = HelloSign::Client.new :email_address => "me@example.com", :password => "mypassword"
   #
   # @author [hellosign]
   class Client
