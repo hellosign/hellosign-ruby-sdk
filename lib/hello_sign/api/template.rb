@@ -55,7 +55,7 @@ module HelloSign
       #   template = @client.get_template :template_id => 'f57db65d3f933b5316d398057a36176831451a35'
       #
       def delete_template(opts)
-        post("/template/#{opts[:template_id]}")
+        post("/template/delete/#{opts[:template_id]}")
       end
 
       #
