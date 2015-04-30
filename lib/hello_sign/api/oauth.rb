@@ -73,7 +73,12 @@ module HelloSign
       # @example
       #   client.refresh_oauth_token :refresh_token => 'hNTI2MTFmM2VmZDQxZTZjOWRmZmFjZmVmMGMyNGFjMzI2MGI5YzgzNmE3'
       def refresh_oauth_token(refresh_token)
-        post('/oauth/token', { :body => { :grant_type => 'refresh_token', :refresh_token => refresh_token }, :oauth_request => true })
+        opts[:client_id] = self.client_id
+        opts[:client_secret] = self.client_secret
+        opts[:grant_type] = 'refresh_token'
+        opts[:refresh_token] = refresh_token
+        "I AM A TEST STRING"
+        # post('/oauth/token', { :body => opts, :oauth_request => true })
       end
 
 
