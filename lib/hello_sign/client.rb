@@ -1,3 +1,27 @@
+#
+# The MIT License (MIT)
+#
+# Copyright (C) 2014 hellosign.com
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+#
+
 require 'faraday'
 require 'multi_json'
 require 'hello_sign/error'
@@ -13,7 +37,7 @@ module HelloSign
   # signatures to updating account information.
   #
   # @example
-  #   client = HelloSign::Client.new :email_address => "me@hellosign.com", :password => "mypassword"
+  #   client = HelloSign::Client.new :email_address => "me@example.com", :password => "mypassword"
   #
   # @author [hellosign]
   class Client
@@ -153,7 +177,7 @@ module HelloSign
       elsif response.body.strip.empty?
         {}
       else
-        MultiJson.load response.body
+        MultiJson.load response.body.strip
       end
     end
 
@@ -167,7 +191,7 @@ module HelloSign
       if opts[:files]
         opts[:files].each_with_index do |file, index|
           if file.is_a? String
-            opts[:"file[#{index}]"] = Faraday::UploadIO.new(file, 'application/pdf')
+            opts[:"file[#{index}]"] = Faraday::UploadIO.new(StringIO.new(file), 'application/pdf')
           elsif defined? ActionDispatch::Http::UploadedFile
             if file.is_a? ActionDispatch::Http::UploadedFile
               opts[:"file[#{index}]"] = UploadIO.new(file.tempfile, 'application/pdf')
@@ -195,6 +219,14 @@ module HelloSign
 
     def prepare_templates(opts)
       prepare opts, :template_ids
+    end
+
+    def prepare_cc_roles(opts)
+      prepare opts, :merge_fields
+    end
+
+    def prepare_signer_roles(opts)
+      prepare opts, :signer_roles
     end
 
     def prepare(opts, key)
