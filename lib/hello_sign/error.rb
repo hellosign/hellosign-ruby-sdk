@@ -71,5 +71,8 @@ module HelloSign
 
     # Raised when API endpoint returns the HTTP status code 503.
     class NotSupportedType < Error; end
+
+    # Raised when API endpoint returns error which is not defined in sdk.
+    class UnknownError < Error; end
   end
 end
