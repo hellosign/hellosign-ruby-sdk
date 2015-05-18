@@ -1,8 +1,8 @@
 #
 # The MIT License (MIT)
-# 
+#
 # Copyright (C) 2014 hellosign.com
-# 
+#
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
@@ -70,6 +70,7 @@ module HelloSign
       def get_templates(opts={})
         path = '/template/list'
         path += opts[:page] ? "?page=#{opts[:page]}" : ''
+        path += opts[:page_size] ? "&page_size=#{opts[:page_size]}" : ''
         HelloSign::Resource::ResourceArray.new get(path, opts), 'templates', HelloSign::Resource::Template
       end
 
