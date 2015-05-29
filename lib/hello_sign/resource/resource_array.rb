@@ -1,8 +1,8 @@
 #
 # The MIT License (MIT)
-# 
+#
 # Copyright (C) 2014 hellosign.com
-# 
+#
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
@@ -46,6 +46,7 @@ module HelloSign
         @num_pages = hash['list_info']['num_pages']
         @num_results = hash['list_info']['num_results']
         @page_size = hash['list_info']['page_size']
+        @warnings = hash['warnings'] ? hash['warnings'] : nil
         hash[key] && hash[key].each do |resouce|
           self << resource_class.new(resouce, nil)
         end

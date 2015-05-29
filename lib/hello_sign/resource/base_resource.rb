@@ -1,8 +1,8 @@
 #
 # The MIT License (MIT)
-# 
+#
 # Copyright (C) 2014 hellosign.com
-# 
+#
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
@@ -41,6 +41,8 @@ module HelloSign
       # @return [HelloSign::Resource::BaseResource] a new BaseResource
       def initialize(hash, key=nil)
         @raw_data = key ? hash[key] : hash
+        @warnings = hash['warnings'] ? hash['warnings'] : nil
+        puts @warnings
         @data = @raw_data.inject({}) do |data, (key, value)|
           data[key.to_s] = if value.is_a? Hash
             value = BaseResource.new(value)
@@ -51,6 +53,7 @@ module HelloSign
           end
           data
         end
+        puts @data
       end
 
       #
