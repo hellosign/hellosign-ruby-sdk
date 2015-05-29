@@ -56,6 +56,29 @@ from the root of your project run <code>rake spec</code>.
 
 ## Additional notes
 
+## Warnings
+Any warnings returned from the API can be accessed by using the 'warnings' accessor on a returned object or list:
+
+````ruby
+my_signature_requests = client.get_signature_requests
+puts my_signature_requests.warnings
+````
+
+and will give output of warnings in the following format (as an array of hashes):
+
+````
+[
+    [0] {
+         "warning_msg" => "Parameter hodor was ignored. Hodor.",
+        "warning_name" => "parameter_ignored"
+    },
+    [1] {
+         "warning_msg" => "Email address sirjorah@targarian.org is unconfirmed. Please pledge your allegiance to the queen first.",
+        "warning_name" => "unconfirmed"
+    }
+]
+````
+
 ### Local callbacks
 We do not allow app callbacks (event or OAuth) to be set to localhost. However it is still possible to test callbacks against a local server. Tunneling services such as ngrok (http://ngrok.com) can help you set this up.
 
