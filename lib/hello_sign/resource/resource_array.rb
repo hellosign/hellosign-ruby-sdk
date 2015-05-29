@@ -31,7 +31,7 @@ module HelloSign
     # @author [hellosign]
     #
     class ResourceArray < Array
-      attr_reader :page, :num_pages, :num_results, :page_size
+      attr_reader :page, :num_pages, :num_results, :page_size, :warnings
 
       #
       # create a new ResourceArray from a hash

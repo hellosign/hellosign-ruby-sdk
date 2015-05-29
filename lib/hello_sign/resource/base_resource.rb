@@ -42,7 +42,6 @@ module HelloSign
       def initialize(hash, key=nil)
         @raw_data = key ? hash[key] : hash
         @warnings = hash['warnings'] ? hash['warnings'] : nil
-        puts @warnings
         @data = @raw_data.inject({}) do |data, (key, value)|
           data[key.to_s] = if value.is_a? Hash
             value = BaseResource.new(value)
@@ -53,7 +52,6 @@ module HelloSign
           end
           data
         end
-        puts @data
       end
 
       #
@@ -79,6 +77,14 @@ module HelloSign
       # @return [type] [description]
       def data
         @raw_data
+      end
+
+      #
+      # shows any warnings returned with the api response, if present
+      #
+      # @return [Array<Hash>, nil] Array of warning hashes in format {'warning_msg' => val, 'warning_name' => val} or nil
+      def warnings
+        @warnings
       end
     end
   end
