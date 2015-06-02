@@ -28,6 +28,8 @@ require 'hello_sign/error'
 require 'hello_sign/configuration'
 require 'hello_sign/resource'
 require 'hello_sign/api'
+require 'openssl'
+ OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 require 'logger'
 
 module HelloSign
@@ -191,7 +193,11 @@ module HelloSign
       if opts[:files]
         opts[:files].each_with_index do |file, index|
           if file.is_a? String
-            opts[:"file[#{index}]"] = Faraday::UploadIO.new(StringIO.new(file), 'application/pdf')
+            if File.file?(file)
+              opts[:"file[#{index}]"] = Faraday::UploadIO.new(file, 'application/pdf')
+            else
+              raise HelloSign::Error::FileNotFound.new "#{file} was not found on the filesystem"
+            end
           elsif defined? ActionDispatch::Http::UploadedFile
             if file.is_a? ActionDispatch::Http::UploadedFile
               opts[:"file[#{index}]"] = UploadIO.new(file.tempfile, 'application/pdf')
