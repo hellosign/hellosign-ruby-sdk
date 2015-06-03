@@ -24,6 +24,7 @@
 
 require 'faraday'
 require 'multi_json'
+require 'mime/types'
 require 'hello_sign/error'
 require 'hello_sign/configuration'
 require 'hello_sign/resource'
@@ -189,18 +190,44 @@ module HelloSign
       "Message: #{response.body}"
     end
 
+    def MIMEfromName(name)
+      parts = name.split('.')
+      #default to pdf if no extension
+      if parts.length < 2
+        return 'application/pdf'
+      end
+      extension = parts[-1]
+      types = MIME::Types.type_for(extension)
+      types[0]
+    end
+
+    def MIMEfromIO(file)
+      begin
+        path = File.path file
+        MIMEfromName path
+      # in case of error in type detection, return default type
+      rescue
+        return 'application/pdf'
+      end
+    end
+
     def prepare_files(opts)
       if opts[:files]
         opts[:files].each_with_index do |file, index|
           if file.is_a? String
             if File.file?(file)
-              opts[:"file[#{index}]"] = Faraday::UploadIO.new(file, 'application/pdf')
+              mime_type = MIMEfromName file
+              opts[:"file[#{index}]"] = Faraday::UploadIO.new(file, mime_type)
             else
               raise HelloSign::Error::FileNotFound.new "#{file} was not found on the filesystem"
             end
+          elsif file.is_a? File
+            mime_type = MIMEfromIO file
+            opts[:"file[#{index}]"] = Faraday::UploadIO.new(file, mime_type)
           elsif defined? ActionDispatch::Http::UploadedFile
             if file.is_a? ActionDispatch::Http::UploadedFile
-              opts[:"file[#{index}]"] = UploadIO.new(file.tempfile, 'application/pdf')
+              mime_type MIMEfromIO file
+              opts[:"file[#{index}]"] = UploadIO.new(file.tempfile, mime_type)
             end
           else
             raise HelloSign::Error::NotSupportedType.new "#{file.class} is not a supported. Must be a string or ActionDispatch::Http::UploadedFile"
