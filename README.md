@@ -48,6 +48,12 @@ If you need to authenticate for multiple users and you want a separated client f
 client2 = HelloSign::Client.new :api_key => 'your_user_api_key'
 user_account = client2.get_account
 ```
+### Specifying files
+
+When using request endpoints that send files, such as a signature request, you can specify files either as
+1. A string representing the path
+2. A Ruby File Object (File.open, then assign to a variable)
+3. A Rails ActionDispatch::Http::UploadedFile
 
 ##Testing
 
