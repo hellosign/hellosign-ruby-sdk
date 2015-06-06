@@ -29,8 +29,6 @@ require 'hello_sign/error'
 require 'hello_sign/configuration'
 require 'hello_sign/resource'
 require 'hello_sign/api'
-require 'openssl'
- OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 require 'logger'
 
 module HelloSign
