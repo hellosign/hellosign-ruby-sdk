@@ -36,7 +36,7 @@ module HelloSign
     VALID_OPTIONS_KEYS = [:end_point, :oauth_end_point, :api_version, :user_agent, :client_id, :client_secret, :email_address, :password, :api_key, :auth_token, :log_level, :logging]
 
 
-    DEFAULT_USER_AGENT = "hellosign-ruby-sdk #{HelloSign::VERSION}"
+    DEFAULT_USER_AGENT = "hellosign-ruby-sdk/" + HelloSign::VERSION
 
     attr_accessor *VALID_OPTIONS_KEYS
 
