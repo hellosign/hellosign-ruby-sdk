@@ -64,4 +64,15 @@ describe HelloSign::Api::Template do
       expect(@template).to be_an HelloSign::Resource::Template
     end
   end
+
+  describe '#get_template_files' do
+    before do
+      stub_get('/template/files/1', 'file')
+      @files = HelloSign.get_template_files :template_id => 1
+    end
+
+    it 'should get the correct resource' do
+      expect(a_get('/template/files/1')).to have_been_made
+    end
+  end
 end
