@@ -157,6 +157,10 @@ module HelloSign
         prepare_signer_roles opts
         HelloSign::Resource::TemplateDraft.new post("/template/create_embedded_draft", :body => opts)
       end
+
+      def get_template_files(opts)
+        get("/template/files/#{opts[:template_id]}")
+      end
     end
   end
 end
