@@ -1,7 +1,7 @@
 #
 # The MIT License (MIT)
 #
-# Copyright (C) 2014 hellosign.com
+# Copyright (C) 2015 hellosign.com
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -23,5 +23,26 @@
 #
 
 module HelloSign
-  VERSION = '3.1.1'
+  module Resource
+
+    #
+    # Contains information about an team and its members.
+    # Take a look at our {https://www.hellosign.com/api/reference#ApiApp API Application resource document}
+    # for more information about this.
+    #
+    # @author [hellosign]
+    #
+    class ApiApp < BaseResource
+
+      #
+      # create a new ApiApp from a hash. If a key is defined then team data with be the value of hash[key], otherwise the hash itself
+      # @param  hash [Hash] API Application data
+      # @param  key [String] (api_app) key of the hash, point to where API application data is. If nil then the hash itself
+      #
+      # @return [HelloSign::Resource:ApiApp] an ApiApp resource
+      def initialize(hash, key='api_app')
+        super
+      end
+    end
+  end
 end
