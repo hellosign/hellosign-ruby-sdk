@@ -26,7 +26,7 @@ module HelloSign
   module Api
 
     #
-    # Contains all the api calls for the Team resource.
+    # Contains all the api calls for the ApiApp resource.
     # Take a look at our {https://www.hellosign.com/api/reference#Team team api document}
     # for more information about this.
     #
@@ -40,10 +40,10 @@ module HelloSign
       # @return [HelloSign::Resource::ApiApp] the API App
       #
       # @example
-      #   app = @client.get_api_app :api_app_id => 'fa5c8a0b0f492d768749333ad6fcc214c111e967'
+      #   app = @client.get_api_app :client_id => 'fa5c8a0b0f492d768749333ad6fcc214c111e967'
       #
       def get_api_app(opts)
-        HelloSign::Resource::ApiApp.new get("/api_app/#{opts[:api_app_id]}")
+        HelloSign::Resource::ApiApp.new get("/api_app/#{opts[:client_id]}")
       end
 
       #
@@ -82,7 +82,7 @@ module HelloSign
 
       #
       # Updates parameters for a specific API Application on your account, referenced by ID
-      # @oprion opts [String] api_app_id (REQUIRED) The ID of the app you want to update
+      # @oprion opts [String] client_id (REQUIRED) The ID of the app you want to update
       # @option opts [String] name (optional) The name you want to assign to the ApiApp.
       # @option opts [String] domain (optional) The domain name the ApiApp will be associated with.
       # @option opts [String] callback_url (optional) The URL at which the ApiApp should receive event callbacks.
@@ -95,7 +95,7 @@ module HelloSign
       # @example
       #   app = @client.update_api_app :name => 'My Newly Renamed App', :domain => 'example2.com', :'oauth[callback_url]' => 'https://example2.com/oauth', 'oauth[scopes]' => 'basic_account_info,request_signature'
       def update_api_app(opts)
-        id = opts.delete('api_app_id')
+        id = opts.delete(:client_id)
         path = '/api_app/' + id
         HelloSign::Resource::ApiApp.new put(path, :body => opts)
       end
@@ -104,9 +104,9 @@ module HelloSign
       # Deletes an API App. Can only be invoked for apps you own.
       #
       # @example
-      #   result = @client.delete_api_app
+      #   result = @client.delete_api_app :client_id => 'hdialuhfilaudshfa'
       def delete_api_app(opts)
-        path = '/api_app/' + opts[:id]
+        path = '/api_app/' + opts[:client_id]
         delete(path)
       end
     end
