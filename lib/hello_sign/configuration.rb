@@ -33,7 +33,7 @@ module HelloSign
     DEFAULT_ENDPOINT = 'https://api.hellosign.com'
     DEFAULT_API_VERSION = '/v3'
     DEFAULT_OAUTH_ENDPOINT = 'https://www.hellosign.com'
-    VALID_OPTIONS_KEYS = [:end_point, :oauth_end_point, :api_version, :user_agent, :client_id, :client_secret, :email_address, :password, :api_key, :auth_token, :log_level, :logging]
+    VALID_OPTIONS_KEYS = [:end_point, :oauth_end_point, :api_version, :user_agent, :client_id, :client_secret, :email_address, :password, :api_key, :auth_token, :log_level, :logging, :proxy_uri, :proxy_user, :proxy_pass]
 
 
     DEFAULT_USER_AGENT = "hellosign-ruby-sdk/" + HelloSign::VERSION
@@ -74,6 +74,9 @@ module HelloSign
       self.user_agent = DEFAULT_USER_AGENT
       self.log_level = 3
       self.logging = true
+      self.proxy_uri = nil
+      self.proxy_user = nil
+      self.proxy_pass = nil
     end
   end
 end
