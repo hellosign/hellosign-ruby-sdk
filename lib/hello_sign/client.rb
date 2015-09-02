@@ -51,7 +51,7 @@ module HelloSign
     include Api::OAuth
     include Api::ApiApp
 
-    attr_accessor :end_point, :oauth_end_point, :api_version, :user_agent, :client_id, :client_secret, :email_address, :password, :api_key, :auth_token, :logging, :log_level
+    attr_accessor :end_point, :oauth_end_point, :api_version, :user_agent, :client_id, :client_secret, :email_address, :password, :api_key, :auth_token, :logging, :log_level, :proxy_uri, :proxy_user, :proxy_pass
 
     ERRORS = {
       400 => Error::BadRequest,
@@ -162,6 +162,13 @@ module HelloSign
       elsif email_address
         connection.basic_auth email_address, password
       else
+      end
+      if proxy_uri
+        connection.options.proxy = {
+          :uri      => proxy_uri,
+          :user     => proxy_user,
+          :password => proxy_pass
+        }
       end
       connection
     end

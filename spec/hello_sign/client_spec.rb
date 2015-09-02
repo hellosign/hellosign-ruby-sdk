@@ -25,7 +25,10 @@ describe HelloSign::Client do
           :client_secret => 'client_secret',
           :auth_token => 'auth_token',
           :log_level => 5,
-          :logging => false
+          :logging => false,
+          :proxy_uri => 'proxy_uri',
+          :proxy_user => 'proxy_user',
+          :proxy_pass => 'proxy_pass'
         }
       }
       subject(:client) { HelloSign::Client.new custom_client }
