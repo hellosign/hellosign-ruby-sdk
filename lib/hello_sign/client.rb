@@ -165,7 +165,7 @@ module HelloSign
       end
       if proxy_uri
         connection.options.proxy = {
-          :uri      => URI(proxy_uri),
+          :uri      => proxy_uri.nil? ? nil : URI(proxy_uri),
           :user     => proxy_user,
           :password => proxy_pass
         }
