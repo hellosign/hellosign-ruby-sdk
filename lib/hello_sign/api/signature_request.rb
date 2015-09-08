@@ -37,6 +37,7 @@ module HelloSign
       #
       # Retrieves a Signature Request with the given ID.
       # @option opts [String] signature_request_id The id of the SignatureRequest to retrieve.
+      # @option opts [Integer] ux_version sets the version of the signer page to use
       #
       # @return [HelloSign::Resource::SignatureRequest] a SignatureRequest object
       #
@@ -44,12 +45,15 @@ module HelloSign
       #   signature_request = @client.get_signature_request :signature_request_id => 'fa5c8a0b0f492d768749333ad6fcc214c111e967'
       #
       def get_signature_request(opts)
-        HelloSign::Resource::SignatureRequest.new get("/signature_request/#{opts[:signature_request_id]}")
+          path = "/signature_request/#{opts[:signature_request_id]}"
+          path += opts[:ux_version] ? "?ux_version=#{opts[:ux_version]}" : ""
+        HelloSign::Resource::SignatureRequest.new get(path)
       end
 
       #
       # Returns a list of SignatureRequests that you can access. This includes SignatureRequests you have sent as well as received, but not ones that you have been CCed on.
       # @option opts [Integer] page (1) Which page number of the Template List to return.
+      # @option opts [Integer] ux_version sets the version of the signer page to use
       #
       # @return [HelloSign::Resource::ResourceArray]
       #
@@ -60,6 +64,7 @@ module HelloSign
         path = '/signature_request/list'
         path += opts[:page] ? "?page=#{opts[:page]}" : ''
         path += opts[:page_size] ? "&page_size=#{opts[:page_size]}" : ''
+        path += opts[:ux_version] ? "&ux_version=#{opts[:ux_version]}" : ""
         HelloSign::Resource::ResourceArray.new get(path, opts), 'signature_requests',  HelloSign::Resource::SignatureRequest
       end
 
@@ -131,6 +136,7 @@ module HelloSign
       #   * :pin (Integer) The 4- to 12-character access code that will secure this signer's signature page. You must have a business plan to use this feature.
       # @option opts [Array<Hash>] ccs The email addresses CC destinations. Required when a CC role exists for the Template.
       # @option opts [Array<Hash>] custom_fields The value to fill in for the custom field with the name of CustomFieldName. Required when a CustomField exists in the Template.
+      # @option opts [Integer] ux_version sets the version of the signer page to use
       #
       # @return [HelloSign::Resource::SignatureRequest] a SignatureRequest
       # @example
@@ -202,6 +208,7 @@ module HelloSign
       # Sends an email to the signer reminding them to sign the signature request.
       # @option opts [String] signature_request_id The id of the SignatureRequest to send a reminder for.
       # @option opts [String] email_address The email address of the signer to send a reminder to.
+      # @option opts [Integer] ux_version sets the version of the signer page to use
       #
       # @return [HelloSign::Resource::SignatureRequest] a SignatureRequest
       # @example
@@ -258,6 +265,7 @@ module HelloSign
       #   * :pin (Integer) The 4- to 12-character access code that will secure this signer's signature page. You must have a business plan to use this feature.
       # @option opts [Array<String>] cc_email_addresses The email addresses that should be CCed.
       # @option opts [String] form_fields_per_document
+      # @option opts [Integer] ux_version sets the version of the signer page to use
       #
       # @return [HelloSign::Resource::SignatureRequest] a SignatureRequest
       # @example
@@ -312,6 +320,8 @@ module HelloSign
       #   * :pin (Integer) The 4- to 12-character access code that will secure this signer's signature page. You must have a business plan to use this feature.
       # @option opts [Hash] ccs The email address of the CC filling the role of RoleName. Required when a CC role exists for the Template.
       # @option opts [Hash] custom_fields The value to fill in for custom field with the name of CustomFieldName. Required when a CustomField exists in the Template.
+      # @option opts [Integer] ux_version sets the version of the signer page to use
+      #
       # @return [HelloSign::Resource::SignatureRequest] a SignatureRequest
       # @example
       #   request = @client.create_embedded_signature_request_with_template(
