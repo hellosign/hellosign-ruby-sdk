@@ -46,7 +46,8 @@ module HelloSign
       #
       def get_signature_request(opts)
           path = "/signature_request/#{opts[:signature_request_id]}"
-          path += opts[:ux_version] ? "?ux_version=#{opts[:ux_version]}" : ""
+          query = create_query_string(opts, [:ux_version])
+          path += query
         HelloSign::Resource::SignatureRequest.new get(path)
       end
 
@@ -62,9 +63,8 @@ module HelloSign
       #
       def get_signature_requests(opts={})
         path = '/signature_request/list'
-        path += opts[:page] ? "?page=#{opts[:page]}" : ''
-        path += opts[:page_size] ? "&page_size=#{opts[:page_size]}" : ''
-        path += opts[:ux_version] ? "&ux_version=#{opts[:ux_version]}" : ""
+        query = create_query_string(opts, [:page, :page_size, :ux_version])
+        path += query
         HelloSign::Resource::ResourceArray.new get(path, opts), 'signature_requests',  HelloSign::Resource::SignatureRequest
       end
 

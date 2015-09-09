@@ -248,6 +248,27 @@ module HelloSign
       end
     end
 
+    # Takes options given to an API endpoint as a hash, plus an array of parameters (as symbols), and creates a
+    # query string out of any listed parameters present (that also have values)
+
+    def create_query_string(opts, parameterList)
+        result = ""
+        is_first = true
+        parameterList.each do |param|
+            if (opts.has_key?(param) && opts[param])
+                if (!is_first)
+                    result += "&"
+                end
+                is_first = false
+                result += "#{param}=#{opts[param]}"
+            end
+        end
+        if (result.length > 0)
+            result = "?" + result
+        end
+        result
+    end
+
     def prepare_signers(opts)
       prepare opts, :signers
     end
