@@ -49,6 +49,8 @@ module HelloSign
       #
       # Retrieves the edit url for an embedded template.
       # @option opts [String] template_id The id of the template to get a edit url for
+      # @option opts [Integer] skip_signer_roles Whether editing signer roles should be skipped
+      # @option opts [Integer] skip_subject_message Whether editing subject/message should be skipped
       #
       # @return [HelloSign::Resource::Embedded] Returns an Embedded object
       # @example
