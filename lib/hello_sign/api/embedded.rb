@@ -55,7 +55,10 @@ module HelloSign
       #   edit_url = @client.get_embedded_template_edit_url :template_id => '39e3387f738adfa7ddd4cbd4c00d2a8ab6e4194b'
       #
       def get_embedded_template_edit_url(opts)
-        HelloSign::Resource::Embedded.new get("/embedded/edit_url/#{opts[:template_id]}")
+        defaults = { :skip_signer_roles => 0, :skip_subject_message => 0 }
+        opts = defaults.merge(opts)
+
+        HelloSign::Resource::Embedded.new get("/embedded/edit_url/#{opts[:template_id]}?skip_signer_roles=#{opts[:skip_signers_roles]}&skip_subject_message=#{opts[:skip_subject_message]}")
       end
     end
   end
