@@ -40,7 +40,7 @@ my_account = HelloSign.get_account
 my_signature_requests = HelloSign.get_signature_requests
 
 # view a specific signature request
-signature_request = HelloSign.get_signature_requests :signature_request_id => '42383e7327eda33f4b8b91217cbe95408cc1285f'
+signature_request = HelloSign.get_signature_request :signature_request_id => '42383e7327eda33f4b8b91217cbe95408cc1285f'
 ```
 
 If you need to authenticate for multiple users and you want a separated client for them, you can run:
