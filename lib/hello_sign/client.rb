@@ -183,6 +183,8 @@ module HelloSign
     def parse(response)
       if response['content-type'] == 'application/pdf'
         response.body
+      elsif response['content-type'] == 'application/zip'
+        response.body
       elsif response.body.strip.empty?
         {}
       else
