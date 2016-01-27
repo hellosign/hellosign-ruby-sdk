@@ -53,8 +53,9 @@ module HelloSign
 
       #
       # Returns a list of SignatureRequests that you can access. This includes SignatureRequests you have sent as well as received, but not ones that you have been CCed on.
-      # @option opts [Integer] page (1) Which page number of the Template List to return.
-      # @option opts [Integer] ux_version sets the version of the signer page to use
+      # @option opts[:page] [Integer] page (1) Which page number of the Template List to return.
+      # @option opts[:ux_version] [Integer] ux_version sets the version of the signer page to use
+      # @option opts[:query] [String] query string to search on, such as "title:Field Trip Release AND from:me"
       #
       # @return [HelloSign::Resource::ResourceArray]
       #
@@ -63,7 +64,8 @@ module HelloSign
       #
       def get_signature_requests(opts={})
         path = '/signature_request/list'
-        query = create_query_string(opts, [:page, :page_size, :ux_version])
+        opts[:query] = create_search_string(opts[:query])
+        query = create_query_string(opts, [:page, :page_size, :ux_version, :query])
         path += query
         HelloSign::Resource::ResourceArray.new get(path, opts), 'signature_requests',  HelloSign::Resource::SignatureRequest
       end

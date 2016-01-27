@@ -269,6 +269,10 @@ module HelloSign
         result
     end
 
+    def create_search_string(raw_string)
+        raw_string.tr(" ", "+")
+    end
+
     def prepare_signers(opts)
       prepare opts, :signers
     end
