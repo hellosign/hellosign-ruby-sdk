@@ -137,7 +137,8 @@ module HelloSign
       #   * :order (Integer) The order the signer is required to sign in
       #   * :pin (Integer) The 4- to 12-character access code that will secure this signer's signature page. You must have a business plan to use this feature.
       # @option opts [Array<Hash>] ccs The email addresses CC destinations. Required when a CC role exists for the Template.
-      # @option opts [Array<Hash>] custom_fields The value to fill in for the custom field with the name of CustomFieldName. Required when a CustomField exists in the Template.
+      # @option opts [Hash] custom_fields (deprecated) The value to fill in for the custom field with the name of CustomFieldName.
+      # @option opts [Array<Hash>] custom_fields An array of custom merge fields, representing those present in the template. Only specify this when NOT specifying custom_fields by hash (the old way).
       # @option opts [Integer] ux_version sets the version of the signer page to use
       #
       # @return [HelloSign::Resource::SignatureRequest] a SignatureRequest
@@ -322,7 +323,8 @@ module HelloSign
       #   * :order (Integer) The order the signer is required to sign in
       #   * :pin (Integer) The 4- to 12-character access code that will secure this signer's signature page. You must have a business plan to use this feature.
       # @option opts [Hash] ccs The email address of the CC filling the role of RoleName. Required when a CC role exists for the Template.
-      # @option opts [Hash] custom_fields The value to fill in for custom field with the name of CustomFieldName. Required when a CustomField exists in the Template.
+      # @option opts [Hash] custom_fields (deprecated) The value to fill in for custom field with the name of CustomFieldName.
+      # @option opts [Array<Hash>] custom_fields An array of custom merge fields, representing those present in the template. Only specify this when NOT specifying custom_fields by hash (the old way)
       # @option opts [Integer] ux_version sets the version of the signer page to use
       #
       # @return [HelloSign::Resource::SignatureRequest] a SignatureRequest
