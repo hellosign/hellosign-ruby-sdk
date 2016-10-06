@@ -235,6 +235,7 @@ module HelloSign
       #
       # Download the PDF copy of the current documents specified by the signature_request_id parameter.
       # @option opts [String] file_type Either 'pdf' or 'zip' depending on the file type desired. Defaults to pdf.
+      # @option opts [String] get_url Boolean. If true, the response will contain a url link to the file instead. Links are only available for PDFs and have a TTL of 3 days.Either 'pdf' or 'zip' depending on the file type desired. Defaults to false.
       # @option opts [String] signature_request_id The id of the SignatureRequest to retrieve.
       #
       # @return a PDF
@@ -246,6 +247,10 @@ module HelloSign
         path = "/signature_request/files/#{opts[:signature_request_id]}"
         if opts[:file_type]
           path = path + "?file_type=#{opts[:file_type]}"
+        end
+        if opts[:get_url]
+          separator = opts[:file_type] ? '?' : '&'
+          path = path + "#{separator}get_url=#{opts[:get_url]}"
         end
         get(path)
       end
