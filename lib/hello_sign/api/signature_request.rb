@@ -249,7 +249,7 @@ module HelloSign
           path = path + "?file_type=#{opts[:file_type]}"
         end
         if opts[:get_url]
-          separator = opts[:file_type] ? '?' : '&'
+          separator = opts[:file_type].nil? ? '?' : '&'
           path = path + "#{separator}get_url=#{opts[:get_url]}"
         end
         get(path)
