@@ -94,6 +94,7 @@ module HelloSign
       # @example
       #   signature_request = @client.send_signature_request(
       #     :test_mode => 1,
+      #     :allow_decline => 1,
       #     :title => 'NDA with Acme Co.',
       #     :subject => 'The NDA we talked about',
       #     :message => 'Please sign this NDA and then we can discuss more. Let me know if you have any questions.',
@@ -145,6 +146,7 @@ module HelloSign
       # @example
       #  signature_request = @client.send_signature_request_with_template(
       #    :test_mode => 1,
+      #    :allow_decline => 1,
       #    :template_ids => [
       #               'c26b8a16784a872da37ea946b9ddec7c1e11dff6',
       #               'c7ab48e9a9ee7102dd6229dbbc719abc7d90ff9f'
@@ -172,6 +174,7 @@ module HelloSign
       # @example
       #  signature_request = @client.send_signature_request_with_template(
       #    :test_mode => 1,
+      #    :allow_decline => 0,
       #    :template_id => 'c26b8a16784a872da37ea946b9ddec7c1e11dff6',
       #    :title => 'Purchase Order',
       #    :subject => 'Purchase Order',
@@ -275,6 +278,7 @@ module HelloSign
       # @example
       #   request = @client.create_embedded_signature_request(
       #     :test_mode => 1,
+      #     :allow_decline => 1,
       #     :client_id => 'b6b8e7deaf8f0b95c029dca049356d4a2cf9710a',
       #     :title => 'NDA with Acme Co.',
       #     :subject => 'The NDA we talked about',
@@ -331,6 +335,7 @@ module HelloSign
       # @example
       #   request = @client.create_embedded_signature_request_with_template(
       #     :test_mode => 1,
+      #     :allow_decline => 1,
       #     :client_id => 'b6b8e7deaf8f0b95c029dca049356d4a2cf9710a',
       #     :template_id => 'c26b8a16784a872da37ea946b9ddec7c1e11dff6',
       #     :title => 'Purchase Order',
