@@ -176,7 +176,11 @@ module HelloSign
     def validate(response)
       if response.status >= 400
         error_class = ERRORS[response.status] || HelloSign::Error::UnknownError
-        raise error_class.new error_message(response)
+        error = error_class.new
+        error.response_status = response.status
+        error.response_body = response.body
+        error.request_uri = response.to_hash[:url].to_s
+        raise error
       end
     end
 
@@ -190,12 +194,6 @@ module HelloSign
       else
         MultiJson.load response.body.strip
       end
-    end
-
-    def error_message(response)
-      "Server responded with code #{response.status}\n" \
-      "Request URI: #{response.to_hash[:url].to_s}\n"\
-      "Message: #{response.body}"
     end
 
     def MIMEfromName(name)
