@@ -56,7 +56,7 @@ describe HelloSign::Api::ApiApp do
 
   describe '#update_api_app' do
     before do
-      stub_put('/api_app/5e365c014bea2e9a05a9d0834f3e7ca4', 'api_app')
+      stub_post('/api_app/5e365c014bea2e9a05a9d0834f3e7ca4', 'api_app')
       @api_app = HelloSign.update_api_app(
         :client_id => '5e365c014bea2e9a05a9d0834f3e7ca4',
         :name => 'Herbert App',
@@ -65,7 +65,7 @@ describe HelloSign::Api::ApiApp do
     end
 
     it 'should get the correct resource' do
-      expect(a_put('/api_app/5e365c014bea2e9a05a9d0834f3e7ca4')).to have_been_made
+      expect(a_post('/api_app/5e365c014bea2e9a05a9d0834f3e7ca4')).to have_been_made
     end
 
     it 'should return an ApiApp' do

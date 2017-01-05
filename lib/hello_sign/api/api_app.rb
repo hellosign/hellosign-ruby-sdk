@@ -97,7 +97,7 @@ module HelloSign
       def update_api_app(opts)
         id = opts.delete(:client_id)
         path = '/api_app/' + id
-        HelloSign::Resource::ApiApp.new put(path, :body => opts)
+        HelloSign::Resource::ApiApp.new post(path, :body => opts)
       end
 
       #
