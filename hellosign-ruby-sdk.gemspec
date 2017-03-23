@@ -32,7 +32,7 @@ Gem::Specification.new do |spec|
   spec.name          = 'hellosign-ruby-sdk'
   spec.version       = HelloSign::VERSION
   spec.authors       = 'HelloSign'
-  spec.email         = 'support@hellosign.com'
+  spec.email         = 'dblackbeer@gmail.com'
   spec.summary       = 'A Ruby SDK for the HelloSign API.'
   spec.description   = ''
   spec.homepage      = 'http://www.hellosign.com'
