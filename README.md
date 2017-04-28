@@ -1,7 +1,7 @@
 # HelloSign Ruby SDK
 
 In addition to this readme, checkout our quickstart guide here:
-https://www.hellosign.com/api/gettingStarted#QuickStart
+https://app.hellosign.com/api/documentation#QuickStart
 
 ## Installation
 
