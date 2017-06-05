@@ -237,6 +237,16 @@ module HelloSign
       end
 
       #
+      # Removes your access to a completed a SignatureRequest.
+      # @option opts [String] signature_request_id The id of the SignatureRequest to remove.
+      #
+      # @example
+      #   @client.remove_signature_request :signature_request_id => '75cdf7dc8b323d43b347e4a3614d1f822bd09491'
+      def remove_signature_request(opts)
+        post("/signature_request/remove/#{opts[:signature_request_id]}", :body => opts)
+      end
+
+      #
       # Download the PDF copy of the current documents specified by the signature_request_id parameter.
       # @option opts [String] file_type Either 'pdf' or 'zip' depending on the file type desired. Defaults to pdf.
       # @option opts [String] get_url Boolean. If true, the response will contain a url link to the file instead. Links are only available for PDFs and have a TTL of 3 days.Either 'pdf' or 'zip' depending on the file type desired. Defaults to false.
