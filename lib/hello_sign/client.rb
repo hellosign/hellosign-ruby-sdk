@@ -287,10 +287,6 @@ module HelloSign
       prepare opts, :template_ids
     end
 
-    def prepare_cc_roles(opts)
-      prepare opts, :merge_fields
-    end
-
     def prepare_signer_roles(opts)
       prepare opts, :signer_roles
     end
@@ -298,6 +294,13 @@ module HelloSign
     def prepare_custom_fields(opts)
         if (opts[:custom_fields] and opts[:custom_fields].is_a? Array)
             opts[:custom_fields] = MultiJson.dump(opts[:custom_fields])
+        end
+        #ignore if it's already a string, or not present
+    end
+
+    def prepare_merge_fields(opts)
+        if (opts[:merge_fields] and opts[:merge_fields].is_a? Array)
+            opts[:merge_fields] = MultiJson.dump(opts[:merge_fields])
         end
         #ignore if it's already a string, or not present
     end
