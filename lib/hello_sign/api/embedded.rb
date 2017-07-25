@@ -1,8 +1,8 @@
 #
 # The MIT License (MIT)
-# 
+#
 # Copyright (C) 2014 hellosign.com
-# 
+#
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
@@ -28,7 +28,7 @@ module HelloSign
     #
     # HelloSign allows you to embed the signing page on your site in an iFrame
     # without the need for the end-user to create a HelloSign account.
-    # Take a look at our {https://www.hellosign.com/api/embeddedSigningWalkthrough embedded signing walkthrough}
+    # Take a look at our {https://app.hellosign.com/api/embeddedSigningWalkthrough embedded signing walkthrough}
     # for more information about this.
     #
     # @author [hellosign]
