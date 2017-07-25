@@ -33,6 +33,14 @@ describe HelloSign::Api::SignatureRequest do
     it 'each of Array is an SignatureRequest' do
       expect(@signature_requests[0]).to be_an HelloSign::Resource::SignatureRequest
     end
+
+    it 'should return list_info as a BaseResource in results' do
+      expect(@signature_requests[0].list_info).to be_an HelloSign::Resource::BaseResource
+    end
+
+    it 'should return page numbers as an integer' do
+      expect(@signature_requests[0].list_info.page).to be_an Integer
+    end
   end
 
   describe '#send_signature_request' do

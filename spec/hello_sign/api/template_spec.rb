@@ -33,6 +33,14 @@ describe HelloSign::Api::Template do
     it 'each of Array is an Template' do
       expect(@template[0]).to be_an HelloSign::Resource::Template
     end
+
+    it 'should return list_info as a BaseResource in results' do
+      expect(@template[0].list_info).to be_an HelloSign::Resource::BaseResource
+    end
+
+    it 'should return page numbers as an integer' do
+      expect(@template[0].list_info.page).to be_an Integer
+    end
   end
 
   describe '#add_user_to_template' do
