@@ -179,5 +179,9 @@ describe HelloSign::Api::SignatureRequest do
     it 'should get the correct resource' do
       expect(a_post('/signature_request/update/1')).to have_been_made
     end
+
+    it 'should return a Signature Request' do
+      expect(@signature_request).to be_a HelloSign::Resource::SignatureRequest
+    end
   end
 end
