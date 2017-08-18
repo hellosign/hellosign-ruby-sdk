@@ -6,9 +6,9 @@
 
 #
 # The MIT License (MIT)
-# 
+#
 # Copyright (C) 2014 hellosign.com
-# 
+#
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
@@ -70,6 +70,8 @@ def a_get(path)
 end
 
 def stub_post(path, fixture, status_code=200)
+  p "#{HelloSign.end_point}#{HelloSign.api_version}#{path}"
+  p fixture
   stub_request(:post, "#{HelloSign.end_point}#{HelloSign.api_version}#{path}").
     to_return(:body => load_fixture(fixture), :status => status_code)
 end

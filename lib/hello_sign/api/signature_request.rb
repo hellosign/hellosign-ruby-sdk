@@ -378,6 +378,12 @@ module HelloSign
 
         HelloSign::Resource::SignatureRequest.new post('/signature_request/create_embedded_with_template', :body => opts)
       end
+
+      def update_signature_request(opts)
+        signature_request_id = opts.delete(:signature_request_id)
+        path = "/signature_request/#{signature_request_id}"
+        HelloSign::Resource::ResourceArray.new post(path, :body => opts)
+      end
     end
   end
 end

@@ -165,4 +165,19 @@ describe HelloSign::Api::SignatureRequest do
       expect(a_post('/signature_request/create_embedded_with_template')).to have_been_made
     end
   end
+
+  describe '#update_signature_request' do
+    before do
+      stub_post('/signature_request/update/1', 'signature_request')
+      @signature_request = HelloSign.update_signature_request(
+        :signature_request_id => '1',
+        :signature_id => 'signature_id',
+        :email_address => 'updated_signer_email_address@example.com'
+        )
+    end
+
+    it 'should get the correct resource' do
+      expect(a_post('/signature_request/update/1')).to have_been_made
+    end
+  end
 end
