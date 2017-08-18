@@ -381,8 +381,8 @@ module HelloSign
 
       def update_signature_request(opts)
         signature_request_id = opts.delete(:signature_request_id)
-        path = "/signature_request/#{signature_request_id}"
-        HelloSign::Resource::ResourceArray.new post(path, :body => opts)
+        path = "/signature_request/update/#{signature_request_id}"
+        HelloSign::Resource::SignatureRequest.new post(path, :body => opts)
       end
     end
   end
