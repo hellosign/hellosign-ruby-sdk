@@ -27,7 +27,7 @@ module HelloSign
 
     #
     # Contains all the api calls for the Template resource.
-    # Take a look at our {https://www.hellosign.com/api/templatesAndApiWalkthrough template form api document}
+    # Take a look at our {https://app.hellosign.com/api/embeddedTemplatesWalkthrough template form api document}
     # for more information about this.
     #
     # @author [hellosign]
