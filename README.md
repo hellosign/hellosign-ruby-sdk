@@ -1,7 +1,7 @@
 # HelloSign Ruby SDK
 
 In addition to this readme, checkout our quickstart guide here:
-https://www.hellosign.com/api/gettingStarted#QuickStart
+https://app.hellosign.com/api/documentation#QuickStart
 
 ## Installation
 
@@ -15,8 +15,8 @@ And then execute:
 
 ## Configuration
 
-Create a config block. At a minimum you'll want to set your [API Key](https://www.hellosign.com/home/myAccount/current_tab/integrations#api) but depending on your usage you'll possibly
-want to set your app's [Client ID](https://www.hellosign.com/oauth/createAppForm) and [Client Secret](https://www.hellosign.com/oauth/createAppForm). In Rails you can place it in `config/initializers/hello_sign.rb`
+Create a config block. At a minimum you'll want to set your [API Key](https://app.hellosign.com/home/myAccount/current_tab/integrations#api) but depending on your usage you'll possibly
+want to set your app's [Client ID](https://app.hellosign.com/oauth/createAppForm) and [Client Secret](https://app.hellosign.com/oauth/createAppForm). In Rails you can place it in `config/initializers/hello_sign.rb`
 
 ```ruby
 require 'hello_sign'

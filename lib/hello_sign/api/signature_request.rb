@@ -27,7 +27,7 @@ module HelloSign
 
     #
     # Contains all the api about the SignatureRequest resource.
-    # Take a look at our {https://www.hellosign.com/api/reference#SignatureRequest signature request api document}
+    # Take a look at our {https://app.hellosign.com/api/reference#SignatureRequest signature request api document}
     # for more information about this.
     #
     # @author [hellosign]
@@ -274,7 +274,7 @@ module HelloSign
       # If form_fields_per_document is not specified, a signature page will be affixed where all signers will be required to add their signature, signifying their agreement to all contained documents.
       # Note that embedded signature requests can only be signed in embedded iFrames whereas normal signature requests can only be signed on HelloSign.
       # @option opts [Integer] test_mode (0) Whether this is a test, the signature request will not be legally binding if set to 1.
-      # @option opts [String] client_id Client id of the app you're using to create this embedded signature request. Visit our  {https://www.hellosign.com/api/reference#Embedded embedded page} page to learn more about this parameter.
+      # @option opts [String] client_id Client id of the app you're using to create this embedded signature request. Visit our  {https://app.hellosign.com/api/reference#Embedded embedded page} page to learn more about this parameter.
       # @option opts [Array<String>] files Use files to indicate the uploaded file(s) to send for signature. Currently we only support use of either the files parameter or file_urls parameter, not both.
       # @option opts [Array<String>] file_urls Use file_urls to have HelloSign download the file(s) to send for signature. Currently we only support use of either the files parameter or file_urls parameter, not both.
       # @option opts [String] title The title you want to assign to the SignatureRequest.
@@ -329,7 +329,7 @@ module HelloSign
       # Creates a new SignatureRequest based on the given Template to be signed in an embedded iFrame.
       # Note that embedded signature requests can only be signed in embedded iFrames whereas normal signature requests can only be signed on HelloSign.
       # @option opts [Integer] test_mode (0) Whether this is a test, the signature request will not be legally binding if set to 1.
-      # @option opts [String] client_id Client id of the app you're using to create this embedded signature request. Visit our  {https://www.hellosign.com/api/reference#Embedded embedded page} page to learn more about this parameter.
+      # @option opts [String] client_id Client id of the app you're using to create this embedded signature request. Visit our  {https://app.hellosign.com/api/reference#Embedded embedded page} page to learn more about this parameter.
       # @option opts [String] template_id The id of the Template to use when creating the SignatureRequest.
       # @option opts [String] title The title you want to assign to the SignatureRequest.
       # @option opts [String] subject The subject in the email that will be sent to the signers.

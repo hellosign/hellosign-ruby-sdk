@@ -27,7 +27,7 @@ module HelloSign
 
     #
     # Contains all the api calls for the UnclaimedDraft resource.
-    # Take a look at our {https://www.hellosign.com/api/reference#UnclaimedDraft unclaimed draft document}
+    # Take a look at our {https://app.hellosign.com/api/reference#UnclaimedDraft unclaimed draft document}
     # for more information about this.
     #
     # @author [hellosign]

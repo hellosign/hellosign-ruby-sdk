@@ -27,7 +27,7 @@ module HelloSign
 
     #
     # Contains information about an account and its settings.
-    # Take a look at our {https://www.hellosign.com/api/reference#Account account resource document}
+    # Take a look at our {https://app.hellosign.com/api/reference#Account account resource document}
     # for more information about this.
     #
     # @author [hellosign]

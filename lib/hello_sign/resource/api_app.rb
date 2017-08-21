@@ -27,7 +27,7 @@ module HelloSign
 
     #
     # Contains information about an team and its members.
-    # Take a look at our {https://www.hellosign.com/api/reference#ApiApp API Application resource document}
+    # Take a look at our {https://app.hellosign.com/api/reference#ApiApp API Application resource document}
     # for more information about this.
     #
     # @author [hellosign]

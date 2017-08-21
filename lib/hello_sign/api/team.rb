@@ -27,7 +27,7 @@ module HelloSign
 
     #
     # Contains all the api calls for the Team resource.
-    # Take a look at our {https://www.hellosign.com/api/reference#Team team api document}
+    # Take a look at our {https://app.hellosign.com/api/reference#Team team api document}
     # for more information about this.
     #
     # @author [hellosign]

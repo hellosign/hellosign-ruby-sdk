@@ -27,7 +27,7 @@ module HelloSign
 
     #
     # Contains all the api calls for the Account resource.
-    # Take a look at our {https://www.hellosign.com/api/reference#Account account api document}
+    # Take a look at our {https://app.hellosign.com/api/reference#Account account api document}
     # for more information about this.
     #
     # @author [hellosign]

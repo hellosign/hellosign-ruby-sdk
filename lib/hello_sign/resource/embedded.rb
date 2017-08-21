@@ -27,7 +27,7 @@ module HelloSign
 
     #
     # An object that contains necessary information to set up embedded signing.
-    # Take a look at our {https://www.hellosign.com/api/reference#Embedded account resource document}
+    # Take a look at our {https://app.hellosign.com/api/reference#Embedded account resource document}
     # for more information about this.
     #
     # @author [hellosign]
