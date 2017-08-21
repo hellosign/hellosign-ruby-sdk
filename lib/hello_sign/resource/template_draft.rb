@@ -27,7 +27,7 @@ module HelloSign
 
     #
     # A group of documents that a user can take ownership of by going to the claim URL
-    # Take a look at our {https://www.hellosign.com/api/reference}
+    # Take a look at our {https://app.hellosign.com/api/reference}
     # for more information about this.
     #
     # @author [hellosign]

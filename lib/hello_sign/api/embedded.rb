@@ -51,6 +51,7 @@ module HelloSign
       # @option opts [String] template_id The id of the template to get a edit url for
       # @option opts [Integer] skip_signer_roles Whether editing signer roles should be skipped
       # @option opts [Integer] skip_subject_message Whether editing subject/message should be skipped
+      # @option opts [Array<Hash>] merge_fields Merge fields that can be placed in the template
       #
       # @return [HelloSign::Resource::Embedded] Returns an Embedded object
       # @example
@@ -60,7 +61,9 @@ module HelloSign
         defaults = { :skip_signer_roles => 0, :skip_subject_message => 0, :test_mode => 0 }
         opts = defaults.merge(opts)
 
-        HelloSign::Resource::Embedded.new get("/embedded/edit_url/#{opts[:template_id]}?skip_signer_roles=#{opts[:skip_signer_roles]}&skip_subject_message=#{opts[:skip_subject_message]}&test_mode=#{opts[:test_mode]}")
+        prepare_merge_fields opts
+
+        HelloSign::Resource::Embedded.new post("/embedded/edit_url/#{opts[:template_id]}", :body => opts)
       end
     end
   end

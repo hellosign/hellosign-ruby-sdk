@@ -87,6 +87,17 @@ describe HelloSign::Api::SignatureRequest do
     end
   end
 
+  describe '#remove_signature_request' do
+    before do
+      stub_post('/signature_request/remove/1', 'signature_request')
+      @signature_request = HelloSign.remove_signature_request(:signature_request_id => 1)
+    end
+
+    it 'should get the correct resource' do
+      expect(a_post('/signature_request/remove/1')).to have_been_made
+    end
+  end
+
   describe '#signature_request_files' do
     before do
       stub_get('/signature_request/files/1', 'file')
