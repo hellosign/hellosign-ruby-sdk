@@ -83,4 +83,39 @@ describe HelloSign::Api::Template do
       expect(a_get('/template/files/1')).to have_been_made
     end
   end
+
+  describe '#get_template_files with options' do
+    describe ':get_url' do
+      before do
+        stub_get('/template/files/1?get_url=true', 'file')
+        @files = HelloSign.get_template_files(:template_id => 1, :get_url => true)
+      end
+
+      it 'should get the correct resource' do
+        expect(a_get('/template/files/1?get_url=true')).to have_been_made
+      end
+    end
+
+    describe ':file_type' do
+      before do
+        stub_get('/template/files/1?file_type=pdf', 'file')
+        @files = HelloSign.get_template_files(:template_id => 1, :file_type => 'pdf')
+      end
+
+      it 'should get the correct resource' do
+        expect(a_get('/template/files/1?file_type=pdf')).to have_been_made
+      end
+    end
+
+    describe ':file_type and :get_url' do
+      before do
+        stub_get('/template/files/1?file_type=pdf&get_url=true', 'file')
+        @files = HelloSign.get_template_files(:template_id => 1, :file_type => 'pdf', :get_url => true)
+      end
+
+      it 'should get the correct resource' do
+        expect(a_get('/template/files/1?file_type=pdf&get_url=true')).to have_been_made
+      end
+    end
+  end
 end

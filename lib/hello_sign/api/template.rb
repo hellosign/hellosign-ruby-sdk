@@ -158,8 +158,27 @@ module HelloSign
         HelloSign::Resource::TemplateDraft.new post("/template/create_embedded_draft", :body => opts)
       end
 
+      #
+      # Obtain a copy of the original files specified by the template_id parameter.
+      # @option opts [String] file_type Either 'pdf' or 'zip' depending on the file type desired. Defaults to pdf.
+      # @option opts [String] get_url Boolean. If true, the response will contain a url link to the file instead. Links are only available for PDFs and have a TTL of 3 days.Either 'pdf' or 'zip' depending on the file type desired. Defaults to false.
+      # @option opts [String] template_id The id of the SignatureRequest to retrieve.
+      #
+      # @return a PDF or ZIP file, or if get_url is set, a JSON object with a url to the file (PDFs only).
+      #
+      # @example
+      #   pdf = @client.get_template_files :template_id => '39e3387f738adfa7ddd4cbd4c00d2a8ab6e4194b'
+      #
       def get_template_files(opts)
-        get("/template/files/#{opts[:template_id]}")
+        path = "/template/files/#{opts[:template_id]}"
+        if opts[:file_type]
+          path = path + "?file_type=#{opts[:file_type]}"
+        end
+        if opts[:get_url]
+          separator = opts[:file_type].nil? ? '?' : '&'
+          path = path + "#{separator}get_url=#{opts[:get_url]}"
+        end
+        get(path)
       end
     end
   end
