@@ -23,5 +23,5 @@
 #
 
 module HelloSign
-  VERSION = '3.2.15'
+  VERSION = '3.4.0'
 end

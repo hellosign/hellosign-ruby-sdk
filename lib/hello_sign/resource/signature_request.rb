@@ -27,7 +27,7 @@ module HelloSign
 
     #
     # Contains information regarding documents that need to be signed
-    # Take a look at our {https://www.hellosign.com/api/reference#SignatureRequest signature request resource document}
+    # Take a look at our {https://app.hellosign.com/api/reference#SignatureRequest signature request resource document}
     # for more information about this.
     #
     # @author [hellosign]

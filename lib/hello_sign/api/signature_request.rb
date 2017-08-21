@@ -27,7 +27,7 @@ module HelloSign
 
     #
     # Contains all the api about the SignatureRequest resource.
-    # Take a look at our {https://www.hellosign.com/api/reference#SignatureRequest signature request api document}
+    # Take a look at our {https://app.hellosign.com/api/reference#SignatureRequest signature request api document}
     # for more information about this.
     #
     # @author [hellosign]
@@ -237,6 +237,16 @@ module HelloSign
       end
 
       #
+      # Removes your access to a completed a SignatureRequest.
+      # @option opts [String] signature_request_id The id of the SignatureRequest to remove.
+      #
+      # @example
+      #   @client.remove_signature_request :signature_request_id => '75cdf7dc8b323d43b347e4a3614d1f822bd09491'
+      def remove_signature_request(opts)
+        post("/signature_request/remove/#{opts[:signature_request_id]}", :body => opts)
+      end
+
+      #
       # Download the PDF copy of the current documents specified by the signature_request_id parameter.
       # @option opts [String] file_type Either 'pdf' or 'zip' depending on the file type desired. Defaults to pdf.
       # @option opts [String] get_url Boolean. If true, the response will contain a url link to the file instead. Links are only available for PDFs and have a TTL of 3 days.Either 'pdf' or 'zip' depending on the file type desired. Defaults to false.
@@ -264,7 +274,7 @@ module HelloSign
       # If form_fields_per_document is not specified, a signature page will be affixed where all signers will be required to add their signature, signifying their agreement to all contained documents.
       # Note that embedded signature requests can only be signed in embedded iFrames whereas normal signature requests can only be signed on HelloSign.
       # @option opts [Integer] test_mode (0) Whether this is a test, the signature request will not be legally binding if set to 1.
-      # @option opts [String] client_id Client id of the app you're using to create this embedded signature request. Visit our  {https://www.hellosign.com/api/reference#Embedded embedded page} page to learn more about this parameter.
+      # @option opts [String] client_id Client id of the app you're using to create this embedded signature request. Visit our  {https://app.hellosign.com/api/reference#Embedded embedded page} page to learn more about this parameter.
       # @option opts [Array<String>] files Use files to indicate the uploaded file(s) to send for signature. Currently we only support use of either the files parameter or file_urls parameter, not both.
       # @option opts [Array<String>] file_urls Use file_urls to have HelloSign download the file(s) to send for signature. Currently we only support use of either the files parameter or file_urls parameter, not both.
       # @option opts [String] title The title you want to assign to the SignatureRequest.
@@ -319,7 +329,7 @@ module HelloSign
       # Creates a new SignatureRequest based on the given Template to be signed in an embedded iFrame.
       # Note that embedded signature requests can only be signed in embedded iFrames whereas normal signature requests can only be signed on HelloSign.
       # @option opts [Integer] test_mode (0) Whether this is a test, the signature request will not be legally binding if set to 1.
-      # @option opts [String] client_id Client id of the app you're using to create this embedded signature request. Visit our  {https://www.hellosign.com/api/reference#Embedded embedded page} page to learn more about this parameter.
+      # @option opts [String] client_id Client id of the app you're using to create this embedded signature request. Visit our  {https://app.hellosign.com/api/reference#Embedded embedded page} page to learn more about this parameter.
       # @option opts [String] template_id The id of the Template to use when creating the SignatureRequest.
       # @option opts [String] title The title you want to assign to the SignatureRequest.
       # @option opts [String] subject The subject in the email that will be sent to the signers.
@@ -377,6 +387,12 @@ module HelloSign
         prepare_custom_fields opts
 
         HelloSign::Resource::SignatureRequest.new post('/signature_request/create_embedded_with_template', :body => opts)
+      end
+
+      def update_signature_request(opts)
+        signature_request_id = opts.delete(:signature_request_id)
+        path = "/signature_request/update/#{signature_request_id}"
+        HelloSign::Resource::SignatureRequest.new post(path, :body => opts)
       end
     end
   end
