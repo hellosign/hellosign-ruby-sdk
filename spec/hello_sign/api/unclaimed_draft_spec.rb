@@ -34,7 +34,7 @@ describe HelloSign::Api::UnclaimedDraft do
 
     context 'edit_and_resend' do
       before do
-        stub_post('/unclaimed_draft/edit_and_resend', 'unclaimed_draft')
+        stub_post('/unclaimed_draft/edit_and_resend/1', 'unclaimed_draft')
         @unclaimed_draft = HelloSign.edit_and_resend_unclaimed_draft(
           :signature_request_id => '1',
           :client_id => '5e365c014bea2e9a05a9d0834f3e7ca4'
