@@ -1,8 +1,8 @@
 #
 # The MIT License (MIT)
-# 
+#
 # Copyright (C) 2014 hellosign.com
-# 
+#
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
@@ -206,6 +206,12 @@ module HelloSign
         prepare_ccs opts
         prepare_templates opts
         HelloSign::Resource::UnclaimedDraft.new post('/unclaimed_draft/create_embedded_with_template', :body => opts)
+      end
+
+      def edit_and_resend_unclaimed_draft(opts)
+        signature_request_id = opts.delete(:signature_request_id)
+        path = "/unclaimed_draft/edit_and_resend/#{signature_request_id}"
+        HelloSign::Resource::UnclaimedDraft.new post(path, :body => opts)
       end
     end
   end

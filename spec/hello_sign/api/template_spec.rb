@@ -83,4 +83,19 @@ describe HelloSign::Api::Template do
       expect(a_get('/template/files/1')).to have_been_made
     end
   end
+
+  describe '#update_template_files' do
+    before do
+      stub_post('/template/update_files/1', 'template')
+      @template = HelloSign.update_template_files :template_id => 1, :file_url => 'http://hellosign.com/test.pdf'
+    end
+
+    it 'should return a Template' do
+      expect(@template).to be_an HelloSign::Resource::Template
+    end
+
+    it 'should get the correct resource' do
+      expect(a_post('/template/update_files/1')).to have_been_made
+    end
+  end
 end
