@@ -121,6 +121,7 @@ module HelloSign
       def send_signature_request(opts)
         prepare_files opts
         prepare_signers opts
+        prepare_form_fields opts
 
         HelloSign::Resource::SignatureRequest.new post('/signature_request/send', :body => opts)
       end
@@ -321,6 +322,7 @@ module HelloSign
         opts[:client_id] ||= self.client_id
         prepare_files opts
         prepare_signers opts
+        prepare_form_fields opts
 
         HelloSign::Resource::SignatureRequest.new post('/signature_request/create_embedded', :body => opts)
       end
