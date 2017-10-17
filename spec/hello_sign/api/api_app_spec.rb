@@ -44,8 +44,6 @@ describe HelloSign::Api::ApiApp do
         :domain => 'herbert.com',
         :white_labeling_options => {"primary_button_color":"#00b3e6","primary_button_text_color":"#ffffff"}
       )
-
-      p @api_app
     end
 
     it 'should get the correct resource' do
