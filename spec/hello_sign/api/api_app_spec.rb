@@ -41,7 +41,8 @@ describe HelloSign::Api::ApiApp do
       stub_post('/api_app', 'api_app')
       @api_app = HelloSign.create_api_app(
         :name => 'Herbert App',
-        :domain => 'herbert.com'
+        :domain => 'herbert.com',
+        :white_labeling_options => {"primary_button_color":"#00b3e6","primary_button_text_color":"#ffffff"}
       )
     end
 
