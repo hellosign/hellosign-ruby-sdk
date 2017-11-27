@@ -180,6 +180,7 @@ module HelloSign
       #    :title => 'Purchase Order',
       #    :subject => 'Purchase Order',
       #    :message => 'Glad we could come to an agreement.',
+      #    :files => ['NDA.pdf', 'AppendixA.pdf'],
       #    :metadata => {
       #      :client_id => '1234',
       #      :custom_text => 'NDA #9'
@@ -358,6 +359,7 @@ module HelloSign
       #     :title => 'Purchase Order',
       #     :subject => 'Purchase Order',
       #     :message => 'Glad we could come to an agreement.',
+      #     :files => ['NDA.pdf', 'AppendixA.pdf'],
       #     :metadata => {
       #      :client_id => '1234',
       #      :custom_text => 'NDA #9'
