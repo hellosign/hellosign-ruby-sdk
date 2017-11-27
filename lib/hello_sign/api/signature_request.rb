@@ -208,6 +208,7 @@ module HelloSign
         prepare_ccs opts
         prepare_templates opts
         prepare_custom_fields opts
+        prepare_files opts
 
         HelloSign::Resource::SignatureRequest.new post('/signature_request/send_with_template', :body => opts)
       end
@@ -385,6 +386,7 @@ module HelloSign
         prepare_ccs opts
         prepare_templates opts
         prepare_custom_fields opts
+        prepare_files opts
 
         HelloSign::Resource::SignatureRequest.new post('/signature_request/create_embedded_with_template', :body => opts)
       end
