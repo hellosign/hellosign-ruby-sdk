@@ -291,6 +291,13 @@ module HelloSign
       prepare opts, :signer_roles
     end
 
+    def prepare_form_fields(opts)
+        if (opts[:form_fields_per_document] and opts[:form_fields_per_document].is_a? Array)
+            opts[:form_fields_per_document] = MultiJson.dump(opts[:form_fields_per_document])
+        end
+        #ignore if it's already a string, or not present
+    end
+
     def prepare_custom_fields(opts)
         if (opts[:custom_fields] and opts[:custom_fields].is_a? Array)
             opts[:custom_fields] = MultiJson.dump(opts[:custom_fields])
