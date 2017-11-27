@@ -205,6 +205,7 @@ module HelloSign
         prepare_signers opts
         prepare_ccs opts
         prepare_templates opts
+        prepare_files opts
         HelloSign::Resource::UnclaimedDraft.new post('/unclaimed_draft/create_embedded_with_template', :body => opts)
       end
 
