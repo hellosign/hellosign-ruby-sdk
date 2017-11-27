@@ -181,6 +181,7 @@ module HelloSign
       #    :title => 'Purchase Order',
       #    :subject => 'Purchase Order',
       #    :message => 'Glad we could come to an agreement.',
+      #    :files => ['NDA.pdf', 'AppendixA.pdf'],
       #    :metadata => {
       #      :client_id => '1234',
       #      :custom_text => 'NDA #9'
@@ -209,6 +210,7 @@ module HelloSign
         prepare_ccs opts
         prepare_templates opts
         prepare_custom_fields opts
+        prepare_files opts
 
         HelloSign::Resource::SignatureRequest.new post('/signature_request/send_with_template', :body => opts)
       end
@@ -359,6 +361,7 @@ module HelloSign
       #     :title => 'Purchase Order',
       #     :subject => 'Purchase Order',
       #     :message => 'Glad we could come to an agreement.',
+      #     :files => ['NDA.pdf', 'AppendixA.pdf'],
       #     :metadata => {
       #      :client_id => '1234',
       #      :custom_text => 'NDA #9'
@@ -387,6 +390,7 @@ module HelloSign
         prepare_ccs opts
         prepare_templates opts
         prepare_custom_fields opts
+        prepare_files opts
 
         HelloSign::Resource::SignatureRequest.new post('/signature_request/create_embedded_with_template', :body => opts)
       end
