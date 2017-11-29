@@ -169,7 +169,6 @@ module HelloSign
         end
 
         get(path)
-        # get("/template/files/#{opts[:template_id]}")
       end
 
       def update_template_files(opts)
