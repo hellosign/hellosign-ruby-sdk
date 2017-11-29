@@ -159,7 +159,14 @@ module HelloSign
       end
 
       def get_template_files(opts)
-        get("/template/files/#{opts[:template_id]}")
+        path = "/template/files/#{opts[:template_id]}"
+        if opts[:get_url]
+          separator = opts[:file_type].nil? ? '?' : '&'
+          path = path + "#{separator}get_url=#{opts[:get_url]}"
+        end
+
+        get(path)
+        # get("/template/files/#{opts[:template_id]}")
       end
 
       def update_template_files(opts)
