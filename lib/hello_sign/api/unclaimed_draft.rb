@@ -178,6 +178,7 @@ module HelloSign
       #     :template_id => 'c26b8a16784a872da37ea946b9ddec7c1e11dff6',
       #     :requester_email_address => requester@example.com",
       #     :message => 'Please sign this NDA and then we can discuss more. Let me know if you have any questions.',
+      #     :files => ['NDA.pdf', 'AppendixA.pdf'],
       #     :metadata => {
       #      :client_id => '1234',
       #      :custom_text => 'NDA #9'
@@ -205,6 +206,7 @@ module HelloSign
         prepare_signers opts
         prepare_ccs opts
         prepare_templates opts
+        prepare_files opts
         HelloSign::Resource::UnclaimedDraft.new post('/unclaimed_draft/create_embedded_with_template', :body => opts)
       end
 
