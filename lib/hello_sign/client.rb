@@ -62,6 +62,7 @@ module HelloSign
       405 => Error::MethodNotAllowed,
       409 => Error::Conflict,
       410 => Error::Gone,
+      429 => Error::ExceededRate,
       500 => Error::InternalServerError,
       502 => Error::BadGateway,
       503 => Error::ServiceUnavailable
