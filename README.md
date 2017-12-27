@@ -29,7 +29,7 @@ HelloSign.configure do |config|
 end
 ```
 
-##Usage
+## Usage
 When you have configured your app like above, you can start using it:
 
 ```ruby
@@ -55,7 +55,7 @@ When using request endpoints that send files, such as a signature request, you c
 2. A Ruby File Object (File.open, then assign to a variable)
 3. A Rails ActionDispatch::Http::UploadedFile
 
-##Testing
+## Testing
 
 Testing relies on built in hard-coded fixtures. You can run the tests without affecting your actual account data. To do so
 from the root of your project run <code>rake spec</code>.
