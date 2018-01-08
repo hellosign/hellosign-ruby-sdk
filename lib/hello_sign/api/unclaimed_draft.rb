@@ -90,6 +90,7 @@ module HelloSign
       #
       def create_unclaimed_draft opts
         prepare_files opts
+        prepare_form_fields opts
         if opts[:type] == 'request_signature'
           prepare_signers opts
         end
