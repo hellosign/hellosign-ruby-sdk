@@ -25,7 +25,22 @@
 module HelloSign
   module Error
     # Custom error class for rescuing from all HelloSign errors.
-    class Error < StandardError; end
+    class Error < StandardError;
+      attr_accessor :request_uri
+      attr_accessor :response_body
+      attr_accessor :response_status
+
+      def initialize(message = nil)
+        super(message || human_readable_message)
+      end
+
+      private
+      def human_readable_message
+        "Server responded with code #{response_status}\n" \
+          "Request URI: #{request_uri}\n"\
+          "Message: #{response_body}"
+      end
+    end
 
     # Raise when attributes are missing.
     class MissingAttributes < Error; end

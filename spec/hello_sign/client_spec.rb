@@ -72,6 +72,40 @@ describe HelloSign::Client do
         expect { get_request(504) }.to raise_error(HelloSign::Error::UnknownError)
       end
     end
+
+    describe 'error keys are set' do
+      let(:error) do
+        begin
+          get_request(400)
+        rescue => e
+          e
+        else
+          # Defense exception:
+          raise 'Expected stub to throw exception'
+        end
+      end
+
+      describe 'message' do
+        subject  { error.message }
+        # Following test proves backwards compatibility
+        it { is_expected.to match(/Server responded.*/) }
+      end
+
+      describe 'response_body' do
+        subject { error.response_body }
+        it { is_expected.to eql(load_fixture('error').read) }
+      end
+
+      describe 'response_status' do
+        subject { error.response_status }
+        it { is_expected.to eql(400) }
+      end
+
+      describe 'request_uri' do
+        subject { error.request_uri }
+        it { is_expected.to eql('https://api.hellosign.com/v3/account') }
+      end
+    end
   end
 
   describe 'prepare' do
