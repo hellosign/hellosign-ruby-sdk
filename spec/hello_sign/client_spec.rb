@@ -28,7 +28,8 @@ describe HelloSign::Client do
           :logging => false,
           :proxy_uri => 'proxy_uri',
           :proxy_user => 'proxy_user',
-          :proxy_pass => 'proxy_pass'
+          :proxy_pass => 'proxy_pass',
+          :timeout => 240
         }
       }
       subject(:client) { HelloSign::Client.new custom_client }
