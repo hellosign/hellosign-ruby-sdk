@@ -28,7 +28,8 @@ describe HelloSign::Client do
           :logging => false,
           :proxy_uri => 'proxy_uri',
           :proxy_user => 'proxy_user',
-          :proxy_pass => 'proxy_pass'
+          :proxy_pass => 'proxy_pass',
+          :timeout => 240
         }
       }
       subject(:client) { HelloSign::Client.new custom_client }
@@ -36,6 +37,14 @@ describe HelloSign::Client do
         it "should set #{key}" do
           expect(client.send(key)).to eql(custom_client[key])
         end
+      end
+
+      it "should create a new HelloSign Client" do
+        expect(client).to be_an_instance_of(HelloSign::Client)
+      end
+
+      it "should have 'timeout' as a parameter" do
+        expect(client.timeout).to eq(240)
       end
     end
   end

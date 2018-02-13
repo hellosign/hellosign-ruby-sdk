@@ -51,7 +51,7 @@ module HelloSign
     include Api::OAuth
     include Api::ApiApp
 
-    attr_accessor :end_point, :oauth_end_point, :api_version, :user_agent, :client_id, :client_secret, :email_address, :password, :api_key, :auth_token, :logging, :log_level, :proxy_uri, :proxy_user, :proxy_pass
+    attr_accessor :end_point, :oauth_end_point, :api_version, :user_agent, :client_id, :client_secret, :email_address, :password, :api_key, :auth_token, :logging, :log_level, :proxy_uri, :proxy_user, :proxy_pass, :timeout
 
     ERRORS = {
       400 => Error::BadRequest,
@@ -154,6 +154,7 @@ module HelloSign
         faraday.request :url_encoded
         faraday.response :logger, logger if @logging
         faraday.adapter :net_http
+        faraday.options[:timeout] = timeout if timeout
       end
       if options[:no_auth]
       elsif auth_token
