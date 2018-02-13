@@ -189,14 +189,3 @@ describe HelloSign::Client do
     end
   end
 end
-
-
-# def timeout_request
-#   stub_post('/account/create', 'error').to_timeout
-# end
-#
-# it "times out" do
-#   p timeout_request
-#   p "****"
-#   p timeout_request.response
-# end
