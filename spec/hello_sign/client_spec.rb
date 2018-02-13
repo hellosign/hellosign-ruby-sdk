@@ -38,6 +38,14 @@ describe HelloSign::Client do
           expect(client.send(key)).to eql(custom_client[key])
         end
       end
+
+      it "should create a new HelloSign Client" do
+        expect(client).to be_an_instance_of(HelloSign::Client)
+      end
+
+      it "should have 'timeout' as a parameter" do
+        expect(client.timeout).to eq(240)
+      end
     end
   end
 
@@ -181,3 +189,14 @@ describe HelloSign::Client do
     end
   end
 end
+
+
+# def timeout_request
+#   stub_post('/account/create', 'error').to_timeout
+# end
+#
+# it "times out" do
+#   p timeout_request
+#   p "****"
+#   p timeout_request.response
+# end
