@@ -11,6 +11,10 @@ describe HelloSign::Api::SignatureRequest do
       expect(a_get('/signature_request/1')).to have_been_made
     end
 
+    it 'should return response headers' do
+      expect(@signature_request.headers).to_not be_nil
+    end
+    
     it 'should return a SignatureRequest' do
       expect(@signature_request).to be_an HelloSign::Resource::SignatureRequest
     end
