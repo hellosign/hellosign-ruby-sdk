@@ -90,7 +90,8 @@ module HelloSign
     def get(path, options={})
       response = request(path, :get, options)
       validate response
-      parse response
+      parsed_response = parse response
+      data = { headers: response.headers, body: parsed_response }
     end
 
     #

@@ -40,8 +40,9 @@ module HelloSign
       #
       # @return [HelloSign::Resource::BaseResource] a new BaseResource
       def initialize(hash, key=nil)
-        @raw_data = key ? hash[key] : hash
-        @warnings = hash['warnings'] ? hash['warnings'] : nil
+        @headers = hash[:headers]
+        @raw_data = key ? hash[:body][key] : hash
+        @warnings = hash['warnings'] ? hash[:body]['warnings'] : nil
         @data = @raw_data.inject({}) do |data, (key, value)|
           data[key.to_s] = if value.is_a? Hash
             value = BaseResource.new(value)
@@ -85,6 +86,14 @@ module HelloSign
       # @return [Array<Hash>, nil] Array of warning hashes in format {'warning_msg' => val, 'warning_name' => val} or nil
       def warnings
         @warnings
+      end
+
+      #
+      # shows headers returned with the api response, if present
+      #
+      # @return [Hash, nil] Hash of response header data in format {'header_date' => val, 'content-type' => val} or nil
+      def headers
+        @headers
       end
     end
   end
