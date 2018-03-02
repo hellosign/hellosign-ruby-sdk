@@ -11,6 +11,10 @@ describe HelloSign::Api::Template do
       expect(a_get('/template/1')).to have_been_made
     end
 
+    it 'should return response headers' do
+      expect(@template.headers).to_not be_nil
+    end
+
     it 'should return a Template' do
       expect(@template).to be_an HelloSign::Resource::Template
     end
