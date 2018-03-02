@@ -11,6 +11,10 @@ describe HelloSign::Api::Team do
       expect(a_get('/team')).to have_been_made
     end
 
+    it 'should return response headers' do
+      expect(@team.headers).to_not be_nil
+    end
+
     it 'should return user\'s team' do
       expect(@team).to be_an HelloSign::Resource::Team
     end
