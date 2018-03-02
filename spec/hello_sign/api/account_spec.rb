@@ -11,6 +11,10 @@ describe HelloSign::Api::Account do
       expect(a_get('/account')).to have_been_made
     end
 
+    it 'should have headers' do
+      expect(@account.headers).to_not be_nil
+    end
+
     it 'should return current user account' do
       expect(@account).to be_an HelloSign::Resource::Account
     end
