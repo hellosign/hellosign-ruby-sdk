@@ -11,7 +11,7 @@ describe HelloSign::Api::Account do
       expect(a_get('/account')).to have_been_made
     end
 
-    it 'should have headers' do
+    it 'should have response headers' do
       expect(@account.headers).to_not be_nil
     end
 
