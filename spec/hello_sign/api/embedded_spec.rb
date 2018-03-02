@@ -12,6 +12,10 @@ describe HelloSign::Api::Embedded do
       expect(a_get("/embedded/sign_url/#{signature_id}")).to have_been_made
     end
 
+    it 'should return response headers' do
+      expect(@embedded.headers).to_not be_nil
+    end
+
     it 'should return a UnclaimedDraft' do
       expect(@embedded).to be_an HelloSign::Resource::Embedded
     end
