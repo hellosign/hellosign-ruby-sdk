@@ -31,6 +31,10 @@ describe HelloSign::Api::Account do
       expect(a_post('/account/create')).to have_been_made
     end
 
+    it 'should return response headers' do
+      expect(@account.headers).to_not be_nil
+    end
+
     it 'should return information about a created account' do
       expect(@account.email_address).to eql('test@example.com')
     end
