@@ -32,6 +32,8 @@ module HelloSign
     #
     class BaseResource
 
+      attr_reader :data, :raw_data, :warnings, :headers
+
       #
       # recursively convert hash data into BaseResource.
       #
@@ -70,30 +72,6 @@ module HelloSign
       #   resource.not_in_hash_keys # => nil
       def method_missing(method)
         @data.key?(method.to_s) ? @data[method.to_s] : nil
-      end
-
-      #
-      # raw response data from the server in json
-      #
-      # @return [type] [description]
-      def data
-        @raw_data
-      end
-
-      #
-      # shows any warnings returned with the api response, if present
-      #
-      # @return [Array<Hash>, nil] Array of warning hashes in format {'warning_msg' => val, 'warning_name' => val} or nil
-      def warnings
-        @warnings
-      end
-
-      #
-      # shows headers returned with the api response, if present
-      #
-      # @return [Hash, nil] Hash of response header data in format {'header_date' => val, 'content-type' => val} or nil
-      def headers
-        @headers
       end
     end
   end

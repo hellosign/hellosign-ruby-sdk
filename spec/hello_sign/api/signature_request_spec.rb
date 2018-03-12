@@ -14,7 +14,7 @@ describe HelloSign::Api::SignatureRequest do
     it 'should return response headers' do
       expect(@signature_request.headers).to_not be_nil
     end
-    
+
     it 'should return a SignatureRequest' do
       expect(@signature_request).to be_an HelloSign::Resource::SignatureRequest
     end
@@ -28,6 +28,10 @@ describe HelloSign::Api::SignatureRequest do
 
     it 'should get the correct resource' do
       expect(a_get('/signature_request/list')).to have_been_made
+    end
+
+    it 'should return response headers' do
+      expect(@signature_requests.headers).to_not be_nil
     end
 
     it 'should return a SignatureRequestArray' do
