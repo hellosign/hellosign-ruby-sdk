@@ -30,6 +30,10 @@ describe HelloSign::Api::Team do
       expect(a_post('/team/create')).to have_been_made
     end
 
+    it 'should return response headers' do
+      expect(@team.headers).to_not be_nil
+    end
+
     it 'should return information about a created team' do
       expect(@team.name).to eql('Team HelloSign')
     end
@@ -45,6 +49,10 @@ describe HelloSign::Api::Team do
       expect(a_post('/team')).to have_been_made
     end
 
+    it 'should return response headers' do
+      expect(@team.headers).to_not be_nil
+    end
+
     it 'should return information about a updated team' do
       expect(@team.name).to eql('Team HelloSign')
     end
@@ -55,7 +63,7 @@ describe HelloSign::Api::Team do
       stub_post('/team/destroy', 'team')
       @team = HelloSign.destroy_team
     end
-
+    
     it 'should get the correct resource' do
       expect(a_post('/team/destroy')).to have_been_made
     end
