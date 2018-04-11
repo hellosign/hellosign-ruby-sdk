@@ -75,6 +75,10 @@ describe HelloSign::Api::Team do
       @team = HelloSign.add_member_to_team :email_address => 'george@example.com'
     end
 
+    it 'should return response headers' do
+      expect(@team.headers).to_not be_nil
+    end
+
     it 'should get the correct resource' do
       expect(a_post('/team/add_member')).to have_been_made
     end
@@ -84,6 +88,10 @@ describe HelloSign::Api::Team do
     before do
       stub_post('/team/remove_member', 'team')
       @team = HelloSign.remove_member_from_team :email_address => 'george@example.com'
+    end
+
+    it 'should return response headers' do
+      expect(@team.headers).to_not be_nil
     end
 
     it 'should get the correct resource' do
