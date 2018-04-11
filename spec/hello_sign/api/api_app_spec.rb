@@ -31,6 +31,10 @@ describe HelloSign::Api::ApiApp do
       expect(a_get('/api_app/list')).to have_been_made
     end
 
+    it 'should return response headers' do
+      expect(@api_apps.headers).to_not be_nil
+    end
+
     it 'should return a Resource Array' do
       expect(@api_apps).to be_an HelloSign::Resource::ResourceArray
     end
