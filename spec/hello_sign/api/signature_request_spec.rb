@@ -195,6 +195,10 @@ describe HelloSign::Api::SignatureRequest do
     it 'should get the correct resource' do
       expect(a_post('/signature_request/create_embedded_with_template')).to have_been_made
     end
+
+    it 'should return response headers' do
+      expect(@signature_request.headers).to_not be_nil
+    end
   end
 
   describe '#update_signature_request' do
@@ -209,6 +213,10 @@ describe HelloSign::Api::SignatureRequest do
 
     it 'should get the correct resource' do
       expect(a_post('/signature_request/update/1')).to have_been_made
+    end
+
+    it 'should return response headers' do
+      expect(@signature_request.headers).to_not be_nil
     end
 
     it 'should return a Signature Request' do
