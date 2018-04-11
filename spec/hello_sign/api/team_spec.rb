@@ -63,17 +63,6 @@ describe HelloSign::Api::Team do
       stub_post('/team/destroy', 'team')
       @team = HelloSign.destroy_team
     end
-    
-    it 'should get the correct resource' do
-      expect(a_post('/team/destroy')).to have_been_made
-    end
-  end
-
-  describe '#destroy_team' do
-    before do
-      stub_post('/team/destroy', 'team')
-      @team = HelloSign.destroy_team
-    end
 
     it 'should get the correct resource' do
       expect(a_post('/team/destroy')).to have_been_made
