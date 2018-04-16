@@ -61,6 +61,10 @@ describe HelloSign::Api::Template do
       expect(a_post('/template/add_user/1')).to have_been_made
     end
 
+    it 'should return response headers' do
+      expect(@template.headers).to_not be_nil
+    end
+
     it 'should return a Template' do
       expect(@template).to be_an HelloSign::Resource::Template
     end
@@ -74,6 +78,10 @@ describe HelloSign::Api::Template do
 
     it 'should get the correct resource' do
       expect(a_post('/template/remove_user/1')).to have_been_made
+    end
+
+    it 'should return response headers' do
+      expect(@template.headers).to_not be_nil
     end
 
     it 'should return a Template' do
@@ -90,6 +98,10 @@ describe HelloSign::Api::Template do
     it 'should get the correct resource' do
       expect(a_get('/template/files/1')).to have_been_made
     end
+
+    it 'should return response headers' do
+      expect(@files[:headers]).to_not be_nil
+    end
   end
 
   describe '#get_template_files with options' do
@@ -102,6 +114,10 @@ describe HelloSign::Api::Template do
       it 'should get the correct resource' do
         expect(a_get('/template/files/1?get_url=true')).to have_been_made
       end
+
+      it 'should return response headers' do
+        expect(@files[:headers]).to_not be_nil
+      end
     end
 
     describe ':file_type' do
@@ -113,6 +129,10 @@ describe HelloSign::Api::Template do
       it 'should get the correct resource' do
         expect(a_get('/template/files/1?file_type=pdf')).to have_been_made
       end
+
+      it 'should return response headers' do
+        expect(@files[:headers]).to_not be_nil
+      end
     end
 
     describe ':file_type and :get_url' do
@@ -123,6 +143,10 @@ describe HelloSign::Api::Template do
 
       it 'should get the correct resource' do
         expect(a_get('/template/files/1?file_type=pdf&get_url=true')).to have_been_made
+      end
+
+      it 'should return response headers' do
+        expect(@files[:headers]).to_not be_nil
       end
     end
   end
@@ -139,6 +163,10 @@ describe HelloSign::Api::Template do
 
     it 'should get the correct resource' do
       expect(a_post('/template/update_files/1')).to have_been_made
+    end
+
+    it 'should return response headers' do
+      expect(@template.headers).to_not be_nil
     end
   end
 end
