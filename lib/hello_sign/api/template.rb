@@ -174,6 +174,7 @@ module HelloSign
       def update_template_files(opts)
         template_id = opts.delete(:template_id)
         path = "/template/update_files/#{template_id}"
+        prepare_files opts
         HelloSign::Resource::Template.new post(path, :body => opts)
       end
     end
