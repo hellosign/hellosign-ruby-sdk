@@ -30,6 +30,10 @@ describe HelloSign::Api::Template do
       expect(a_get('/template/list')).to have_been_made
     end
 
+    it 'returns reponse headers' do
+      expect(@template.headers).to_not be_nil
+    end
+
     it 'should return a ResourceArray' do
       expect(@template).to be_an HelloSign::Resource::ResourceArray
     end
