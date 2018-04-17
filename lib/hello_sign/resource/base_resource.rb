@@ -42,7 +42,6 @@ module HelloSign
       #
       # @return [HelloSign::Resource::BaseResource] a new BaseResource
       def initialize(hash, key=nil)
-
         @headers = hash[:headers]
         @raw_data = key ? hash[:body][key] : hash
         @warnings = hash['warnings'] ? hash[:body]['warnings'] : nil
