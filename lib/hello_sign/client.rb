@@ -116,7 +116,8 @@ module HelloSign
     def put(path, options={})
       response = request(path, :put, options)
       validate response
-      parse response
+      responsed_response = parse response
+      data = { headers: response.headers, body: parsed_response }
     end
 
     #
@@ -127,7 +128,8 @@ module HelloSign
     def delete(path, options={})
       response = request(path, :delete, options)
       validate response
-      parse response
+      parsed_response = parse response
+      data = { headers: response.headers, body: parsed_response }
     end
 
     private
