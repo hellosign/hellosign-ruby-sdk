@@ -88,6 +88,7 @@ module HelloSign
       #   * :order (Integer) The order the signer is required to sign in
       #   * :pin (Integer) The 4- to 12-character access code that will secure this signer's signature page. You must have a business plan to use this feature.
       # @option opts [Array<String>] cc_email_addresses The email addresses that should be CCed.
+      # @option opts [Array<Hash>] custom_fields An array of custom merge fields, representing those present on the document with Text Tags.
       # @option opts [String] form_fields_per_document
       #
       # @return [HelloSign::Resource::SignatureRequest] a SignatureRequest
@@ -122,6 +123,7 @@ module HelloSign
         prepare_files opts
         prepare_signers opts
         prepare_form_fields opts
+        prepare_custom_fields opts
 
         HelloSign::Resource::SignatureRequest.new post('/signature_request/send', :body => opts)
       end
@@ -290,6 +292,7 @@ module HelloSign
       #   * :order (Integer) The order the signer is required to sign in
       #   * :pin (Integer) The 4- to 12-character access code that will secure this signer's signature page. You must have a business plan to use this feature.
       # @option opts [Array<String>] cc_email_addresses The email addresses that should be CCed.
+      # @option opts [Array<Hash>] custom_fields An array of custom merge fields, representing those present on the document with Text Tags.
       # @option opts [String] form_fields_per_document
       # @option opts [Integer] ux_version sets the version of the signer page to use
       #
@@ -325,6 +328,7 @@ module HelloSign
         prepare_files opts
         prepare_signers opts
         prepare_form_fields opts
+        prepare_custom_fields opts
 
         HelloSign::Resource::SignatureRequest.new post('/signature_request/create_embedded', :body => opts)
       end
