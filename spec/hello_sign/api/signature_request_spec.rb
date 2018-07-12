@@ -83,6 +83,10 @@ describe HelloSign::Api::SignatureRequest do
       expect(@signature_request.headers).to_not be_nil
     end
 
+    it 'should return response warnings' do
+      expect(@signature_request.warnings).to_not be_nil
+    end
+
     it 'should return a SignatureRequest' do
       expect(@signature_request).to be_an HelloSign::Resource::SignatureRequest
     end

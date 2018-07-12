@@ -44,17 +44,10 @@ module HelloSign
       def initialize(hash, key=nil)
         @headers = hash[:headers]
         @raw_data = key ? hash[:body][key] : hash
-
-        # if hash[:body]['warnings']
-        #   @warnings = hash[:body]['warnings']
-        # else
-        #   @warnings = nil
-        # end
         if hash[:body]
           @warnings = hash[:body]['warnings'] ? hash[:body]['warnings'] : nil
         end
-        # @warnings = hash['warnings'] ? hash['warnings'] : nil
-
+        
         @data = @raw_data.inject({}) do |data, (key, value)|
           data[key.to_s] = if value.is_a? Hash
             value = BaseResource.new(value)

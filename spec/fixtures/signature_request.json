@@ -34,5 +34,12 @@
             "last_reminded_at": 1393389852
         }],
         "cc_email_addresses": []
-    }
+    },
+
+    "warnings": [
+      {
+        "warning_msg": "No data provided for custom field checkbox, will default to false.",
+        "warning_name": "parameter_missing"
+        }
+      ]
 }
