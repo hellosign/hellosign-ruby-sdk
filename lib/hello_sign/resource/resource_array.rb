@@ -48,7 +48,7 @@ module HelloSign
         @num_pages = @list_info['num_pages']
         @num_results = @list_info['num_results']
         @page_size = @list_info['page_size']
-        @warnings = hash['warnings'] ? hash['warnings'] : nil
+        @warnings = hash[:body]['warnings'] ? hash[:body]['warnings'] : nil
         self << resource_class.new(hash[:body], nil)
 
         hash[key] && hash[key].each do |resource|
