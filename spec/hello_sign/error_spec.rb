@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe HelloSign::Error do
   # another test to prove backwards compatibility
-  describe 'custom error message' do
-    subject { HelloSign::Error::Error.new('Foo').message }
-    it { is_expected.to eql('Foo') }
+  it 'raises an error with any message' do
+    error = HelloSign::Error::Error.new(404, 'test error message', 'http://www.test.com')
+    expect(error).to be_instance_of(HelloSign::Error::Error)
   end
-end
 
+end

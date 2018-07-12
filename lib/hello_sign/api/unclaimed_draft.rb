@@ -55,6 +55,7 @@ module HelloSign
       #   * :order (Integer) The order the signer is required to sign in (optional)
       #   * :pin (Integer) The 4-digit code that will secure this signer's signature page. You must have a business plan to use this feature. (optional)
       # @option opts [Array<String>] cc_email_addresses The email addresses that should be CCed.
+      # @option opts [Array<Hash>] custom_fields An array of custom merge fields, representing those present on the document with Text Tags.
       # @option opts [String] form_fields_per_document
       #
       # @return [HelloSign::Resource::UnclaimedDraft] a UnclaimedDraft object
@@ -91,6 +92,8 @@ module HelloSign
       def create_unclaimed_draft opts
         prepare_files opts
         prepare_form_fields opts
+        prepare_custom_fields opts
+
         if opts[:type] == 'request_signature'
           prepare_signers opts
         end
@@ -116,6 +119,7 @@ module HelloSign
       #   * :order (Integer) The order the signer is required to sign in (optional)
       #   * :pin (Integer) The 4-digit code that will secure this signer's signature page. You must have a business plan to use this feature. (optional)
       # @option opts [Array<String>] cc_email_addresses The email addresses that should be CCed.
+      # @option opts [Array<Hash>] custom_fields An array of custom merge fields, representing those present on the document with Text Tags.
       #
       # @return [HelloSign::Resource::UnclaimedDraft] a UnclaimedDraft object
       #
@@ -147,6 +151,8 @@ module HelloSign
       def create_embedded_unclaimed_draft(opts)
         opts[:client_id] ||= self.client_id
         prepare_files opts
+        prepare_custom_fields opts
+        
         if opts[:type] == 'request_signature' || opts[:type] == 'send_document'
           prepare_signers opts
         end
