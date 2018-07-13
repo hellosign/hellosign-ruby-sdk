@@ -68,7 +68,6 @@ module HelloSign
         query = create_query_string(opts, [:page, :page_size, :ux_version, :query])
         path += query
         HelloSign::Resource::ResourceArray.new get(path, opts), 'signature_requests', HelloSign::Resource::SignatureRequest
-
       end
 
       #
@@ -125,7 +124,7 @@ module HelloSign
         prepare_form_fields opts
         prepare_custom_fields opts
 
-        HelloSign::Resource::SignatureRequest.new post('/signature_request/send', :body => opts)
+        request = HelloSign::Resource::SignatureRequest.new post('/signature_request/send', :body => opts)
       end
 
       #

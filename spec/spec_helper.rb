@@ -62,7 +62,7 @@ end
 
 def stub_get(path, fixture, status_code=200)
   stub_request(:get, "#{HelloSign.end_point}#{HelloSign.api_version}#{path}").
-    to_return(:body => load_fixture(fixture), :status => status_code)
+    to_return(:headers => load_fixture("headers"), :body => load_fixture(fixture), :status => status_code)
 end
 
 def a_get(path)
@@ -71,7 +71,7 @@ end
 
 def stub_post(path, fixture, status_code=200)
   stub_request(:post, "#{HelloSign.end_point}#{HelloSign.api_version}#{path}").
-    to_return(:body => load_fixture(fixture), :status => status_code)
+    to_return(:headers => load_fixture("headers"), :body => load_fixture(fixture), :status => status_code)
 end
 
 def stub_post_oauth(path, fixture, status_code=200)

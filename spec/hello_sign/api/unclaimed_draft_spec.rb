@@ -12,6 +12,10 @@ describe HelloSign::Api::UnclaimedDraft do
         expect(a_post('/unclaimed_draft/create')).to have_been_made
       end
 
+      it 'should return response headers' do
+        expect(@unclaimed_draft.headers).to_not be_nil
+      end
+
       it 'should return a UnclaimedDraft' do
         expect(@unclaimed_draft).to be_an HelloSign::Resource::UnclaimedDraft
       end
@@ -25,6 +29,10 @@ describe HelloSign::Api::UnclaimedDraft do
 
       it 'should get the correct resource' do
         expect(a_post('/unclaimed_draft/create')).to have_been_made
+      end
+
+      it 'should return response headers' do
+        expect(@unclaimed_draft.headers).to_not be_nil
       end
 
       it 'should return a UnclaimedDraft' do
@@ -45,6 +53,10 @@ describe HelloSign::Api::UnclaimedDraft do
         expect(a_post('/unclaimed_draft/edit_and_resend/1')).to have_been_made
       end
 
+      it 'should return response headers' do
+        expect(@unclaimed_draft.headers).to_not be_nil
+      end
+
       it 'should return an UnclaimedDraft response' do
         expect(@unclaimed_draft).to be_a HelloSign::Resource::UnclaimedDraft
       end
@@ -62,6 +74,10 @@ describe HelloSign::Api::UnclaimedDraft do
         expect(a_post('/unclaimed_draft/create_embedded')).to have_been_made
       end
 
+      it 'should return response headers' do
+        expect(@unclaimed_draft.headers).to_not be_nil
+      end
+
       it 'should return a UnclaimedDraft' do
         expect(@unclaimed_draft).to be_an HelloSign::Resource::UnclaimedDraft
       end
@@ -75,6 +91,10 @@ describe HelloSign::Api::UnclaimedDraft do
 
       it 'should get the correct resource' do
         expect(a_post('/unclaimed_draft/create_embedded')).to have_been_made
+      end
+
+      it 'should return response headers' do
+        expect(@unclaimed_draft.headers).to_not be_nil
       end
 
       it 'should return a UnclaimedDraft' do
@@ -94,6 +114,10 @@ describe HelloSign::Api::UnclaimedDraft do
         expect(a_post('/unclaimed_draft/create_embedded_with_template')).to have_been_made
       end
 
+      it 'should return response headers' do
+        expect(@unclaimed_draft.headers).to_not be_nil
+      end
+
       it 'should return a UnclaimedDraft' do
         expect(@unclaimed_draft).to be_an HelloSign::Resource::UnclaimedDraft
       end
@@ -107,6 +131,10 @@ describe HelloSign::Api::UnclaimedDraft do
 
       it 'should get the correct resource' do
         expect(a_post('/unclaimed_draft/create_embedded_with_template')).to have_been_made
+      end
+
+      it 'should return response headers' do
+        expect(@unclaimed_draft.headers).to_not be_nil
       end
 
       it 'should return a UnclaimedDraft' do

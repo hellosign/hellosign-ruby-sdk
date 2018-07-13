@@ -12,6 +12,10 @@ describe HelloSign::Api::ApiApp do
       expect(a_get('/api_app/5e365c014bea2e9a05a9d0834f3e7ca4')).to have_been_made
     end
 
+    it 'should return response headers' do
+      expect(@api_app.headers).to_not be_nil
+    end
+
     it 'should return current user account' do
       expect(@api_app).to be_an HelloSign::Resource::ApiApp
     end
@@ -25,6 +29,10 @@ describe HelloSign::Api::ApiApp do
 
     it 'should get the correct resource' do
       expect(a_get('/api_app/list')).to have_been_made
+    end
+
+    it 'should return response headers' do
+      expect(@api_apps.headers).to_not be_nil
     end
 
     it 'should return a Resource Array' do
@@ -50,6 +58,10 @@ describe HelloSign::Api::ApiApp do
       expect(a_post('/api_app')).to have_been_made
     end
 
+    it 'should return response headers' do
+      expect(@api_app.headers).to_not be_nil
+    end
+
     it 'should return an ApiApp' do
       expect(@api_app).to be_an HelloSign::Resource::ApiApp
     end
@@ -67,6 +79,10 @@ describe HelloSign::Api::ApiApp do
 
     it 'should get the correct resource' do
       expect(a_post('/api_app/5e365c014bea2e9a05a9d0834f3e7ca4')).to have_been_made
+    end
+
+    it 'should return response headers' do
+      expect(@api_app.headers).to_not be_nil
     end
 
     it 'should return an ApiApp' do
