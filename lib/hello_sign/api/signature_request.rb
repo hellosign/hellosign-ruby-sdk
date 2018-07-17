@@ -27,7 +27,7 @@ module HelloSign
 
     #
     # Contains all the api about the SignatureRequest resource.
-    # Take a look at our {https://app.hellosign.com/api/reference#SignatureRequest signature request api document}
+    # Take a look at our API Documentation for sending Signature Requests (https://app.hellosign.com/api/reference#SignatureRequest)
     # for more information about this.
     #
     # @author [hellosign]
@@ -37,7 +37,6 @@ module HelloSign
       #
       # Retrieves a Signature Request with the given ID.
       # @option opts [String] signature_request_id The id of the SignatureRequest to retrieve.
-      # @option opts [Integer] ux_version sets the version of the signer page to use
       #
       # @return [HelloSign::Resource::SignatureRequest] a SignatureRequest object
       #
@@ -52,10 +51,11 @@ module HelloSign
       end
 
       #
-      # Returns a list of SignatureRequests that you can access. This includes SignatureRequests you have sent as well as received, but not ones that you have been CCed on.
-      # @option opts[:page] [Integer] page (1) Which page number of the Template List to return.
-      # @option opts[:ux_version] [Integer] ux_version sets the version of the signer page to use
-      # @option opts[:query] [String] query string to search on, such as "title:Field Trip Release AND from:me"
+      # Returns a list of SignatureRequests that you can access. This includes SignatureRequests you have sent as well as received, but not ones that you have been CC'd on.
+      # @option opts [String] account_id Indicates which account to return SignatureRequests for. Defaults to your account. (optional)
+      # @option opts [Integer] page Sets the page number of the list to return. Defaults to 1. (optional)
+      # @option opts [Integer] page_size Determines the number of SignatureRequests returned per page. Defaults to 20. (optional)
+      # @option opts [String] query Search terms and/or fields to filter the SignatureRequests. (optional)
       #
       # @return [HelloSign::Resource::ResourceArray]
       #
@@ -75,8 +75,8 @@ module HelloSign
       # If form_fields_per_document is not specified or use_text_tags is not enabled, a signature page will be affixed at the end
       # and all signers will be required to add their signature there.
       # @option opts [Boolean] test_mode Indicates if this is a test SignatureRequest, it will not be legally binding if set to 1. A boolean value is also accepted. Defaults to 0. (optional)
-      # @option opts [Array<String>] files Use files to indicate the uploaded file(s) to send for signature. Currently we only support use of either the files parameter or file_urls parameter, not both.
-      # @option opts [Array<String>] file_urls Use file_urls to have HelloSign download the file(s) to send for signature. Currently we only support use of either the files parameter or file_urls parameter, not both.
+      # @option opts [Array<String>] files Specified file path(s) to upload file(s) to send for signature. Currently we only support use of either the files parameter or file_urls parameter, not both.
+      # @option opts [Array<String>] file_urls URL(s) for HelloSign to download the file(s) to send for signature. Currently we only support use of either the files parameter or file_urls parameter, not both.
       # @option opts [String] title The title you want to assign to the SignatureRequest. (optional)
       # @option opts [String] subject The subject in the email that will be sent to the signer(s). (optional)
       # @option opts [String] message The custom message in the email that will be sent to the signer(s). (optional)
@@ -467,7 +467,7 @@ module HelloSign
       #   :signature_id => '5064ca698bde9581ad75f6d62450eb4b',
       #   :email_address => 'newEmail@example.com'
       #   )
-      
+
       def update_signature_request(opts)
         signature_request_id = opts.delete(:signature_request_id)
         path = "/signature_request/update/#{signature_request_id}"
