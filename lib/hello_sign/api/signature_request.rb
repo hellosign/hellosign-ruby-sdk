@@ -455,6 +455,19 @@ module HelloSign
         HelloSign::Resource::SignatureRequest.new post('/signature_request/create_embedded_with_template', :body => opts)
       end
 
+      #
+      # Updates the email address on a SignatureRequest.
+      # @option opts [String] signature_request_id The ID of the SignatureRequest to update.
+      # @option opts [String] signature_id The Signature ID of the recipient to update.
+      # @option opts [String] email_address The new email address of the recipient.
+      #
+      # @example
+      #   @client.update_signature_request(
+      #   :signature_request_id => '75cdf7dc8b323d43b347e4a3614d1f822bd09491',
+      #   :signature_id => '5064ca698bde9581ad75f6d62450eb4b',
+      #   :email_address => 'newEmail@example.com'
+      #   )
+      
       def update_signature_request(opts)
         signature_request_id = opts.delete(:signature_request_id)
         path = "/signature_request/update/#{signature_request_id}"
