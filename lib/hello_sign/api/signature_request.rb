@@ -261,9 +261,9 @@ module HelloSign
 
       #
       # Sends an email to the signer reminding them to sign the signature request.
-      # @option opts [String] signature_request_id The id of the SignatureRequest to send a reminder for.
-      # @option opts [String] email_address The email address of the signer to send a reminder to.
-      # @option opts [Integer] ux_version sets the version of the signer page to use
+      # @option opts [String] signature_request_id Indicates the ID of the SignatureRequest to send a reminder.
+      # @option opts [String] email_address The email address of the signer who will receive a reminder.
+      # @option opts [String] name The name of the signer who will receive a reminder. (optional)
       #
       # @return [HelloSign::Resource::SignatureRequest] a SignatureRequest
       # @example
