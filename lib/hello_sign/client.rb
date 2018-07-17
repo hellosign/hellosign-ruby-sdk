@@ -160,6 +160,7 @@ module HelloSign
         faraday.adapter :net_http
         faraday.options[:timeout] = timeout if timeout
       end
+
       if options[:no_auth]
       elsif auth_token
         connection.authorization :Bearer, auth_token
@@ -183,9 +184,6 @@ module HelloSign
       if response.status >= 400
         error_class = ERRORS[response.status] || HelloSign::Error::UnknownError
         error = error_class.new(response.status, response.body, response.to_hash[:url].to_s)
-        # error.response_status = response.status
-        # error.response_body = response.body
-        # error.request_uri = response.to_hash[:url].to_s
         raise error
       end
     end

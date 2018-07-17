@@ -88,7 +88,7 @@ module HelloSign
       #   * :pin (Integer) The 4- to 12-character access code that will secure this signer's signature page. You must have a business plan to use this feature. (optional)
       # @option opts [Array<Hash>] custom_fields An array of custom merge fields, representing those present on the document with Text Tags or form_fields_per_document (optional)
       #   * :name (String) Custom field name or "Field Label"
-      #   * :value (String) The value of the field. This data will appear on the SignatureRequest
+      #   * :value (String) The value of the field. This data will appear on the SignatureRequest.
       #   * :editor (String) The signer name indicated on the Text Tag or form_fields_per_document that can edit the value of the field. (optional)
       #   * :required (Boolean) Determines if the field is required or not. (optional)
       # @option opts [Array<String>] cc_email_addresses The email addresses that should be CCed on the SignatureRequest. (optional)
@@ -124,7 +124,31 @@ module HelloSign
       #       }
       #     ],
       #     :cc_email_addresses => ['lawyer@example.com', 'lawyer@example2.com'],
-      #     :files => ['NDA.pdf', 'AppendixA.pdf']
+      #     :files => ['NDA.pdf', 'AppendixA.pdf'],
+      #     :form_fields_per_document => [
+            #   [
+            #     {
+            #       "name": "address",
+            #       "type": "text",
+            #       "x": 160,
+            #       "y": 80,
+            #       "width": 206,
+            #       "height": 32,
+            #       "signer": 0
+            #     }
+            #   ],
+            #   [
+            #     {
+            #       "name": "phone",
+            #       "type": "text",
+            #       "x": 160,
+            #       "y": 150,
+            #       "width": 206,
+            #       "height": 32,
+            #       "signer": 1
+            #       }
+            #   ]
+            # ]
       #   )
       #
 
@@ -139,22 +163,30 @@ module HelloSign
 
       #
       # Creates and sends a new SignatureRequest based off of the Template specified with the template_id parameter.
-      # @option opts [Integer] test_mode (0) Whether this is a test, the signature request will not be legally binding if set to 1.
-      # @option opts [String] template_id The id of the Template to use when creating the SignatureRequest.
-      # @option opts [String] title The title you want to assign to the SignatureRequest.
-      # @option opts [String] subject The subject in the email that will be sent to the signers.
-      # @option opts [String] message The custom message in the email that will be sent to the signers.
-      # @option opts [String] signing_redirect_url The URL you want the signer redirected to after they successfully sign. (optional)
+      # @option opts [Boolean] test_mode Indicates if this is a test SignatureRequest, it will not be legally binding if set to 1. A boolean value is also accepted. Defaults to 0. (optional)
+      # @option opts [String] template_id The Template ID to use when creating the SignatureRequest.
+      #   * Use template_ids[%i%] if using multiple templates, replacing %i% with an integer to indicate the order of the Templates
+      # @option opts [String] title The title you want to assign to the SignatureRequest. (optional)
+      # @option opts [String] subject The subject in the email that will be sent to the signer(s). (optional)
+      # @option opts [String] message The custom message in the email that will be sent to the signer(s). (optional)
+      # @option opts [String] signing_redirect_url The URL you want the signer(s) redirected to after they successfully sign. (optional)
       # @option opts [Array<Hash>] signers List of signers
-      #   * :name (String) Sender' name
-      #   * :email_address (String) Sender's email address
-      #   * :order (Integer) The order the signer is required to sign in
-      #   * :pin (Integer) The 4- to 12-character access code that will secure this signer's signature page. You must have a business plan to use this feature.
-      # @option opts [Array<Hash>] ccs The email addresses CC destinations. Required when a CC role exists for the Template.
-      # @option opts [Hash] custom_fields (deprecated) The value to fill in for the custom field with the name of CustomFieldName.
-      # @option opts [Array<Hash>] custom_fields An array of custom merge fields, representing those present in the template. Only specify this when NOT specifying custom_fields by hash (the old way).
-      # @option opts [Integer] ux_version sets the version of the signer page to use
-      #
+      #   * :role (String) The signer role indicated on the Template. Note that the role name is case sensitive.
+      #   * :name (String) Signer's name
+      #   * :email_address (String) Signer's email address
+      #   * :pin (Integer) The 4- to 12-character access code that will secure this signer's signature page. You must have a business plan to use this feature. (optional)
+      # @option opts [Array<Hash>] ccs The individual(s) to be CC'd on the SignatureRequest. Required when a CC role exists for the Template.
+      #   * :role (String) The CC role indicated on the Template. Note that the role name is case sensitive.
+      #   * :email_address (String) CC Recipient's email address
+      # @option opts [Array<Hash>] custom_fields An array of custom merge fields, representing those present in the Template. (optional)
+      #   * :name (String) Custom field name or "Field Label"
+      #   * :value (String) The value of the field. This data will appear on the SignatureRequest.
+      #   * :editor (String) The signer name indicated on the Text Tag or form_fields_per_document that can edit the value of the field. (optional)
+      #   * :required (Boolean) Determines if the field is required or not. (optional)
+      # @option opts [Hash] metadata Key-value data attached to the SignatureRequest. (optional)
+      # @option opts [String] client_id The API App Client ID associated with the SignatureRequest. (optional)
+      # @option opts [Array<String>] files Use files to indicate the uploaded file(s) to append to the SignatureRequest. (optional)
+      # @option opts [Array<String>] file_urls Use file_urls to have HelloSign download the file(s) to append to the SignatureRequest. (optional)
       # @return [HelloSign::Resource::SignatureRequest] a SignatureRequest
       # @example
       #  signature_request = @client.send_signature_request_with_template(
@@ -210,10 +242,11 @@ module HelloSign
       #        :role => "Accounting"
       #      }
       #    ],
-      #    :custom_fields =>
-      #    {
-      #      :CustomFieldName => '$20,000'
-      #    }
+      #    :custom_fields => [
+      #     {
+      #       :CustomFieldName => '$20,000'
+      #     }
+      #   ]
       #  )
       #
       def send_signature_request_with_template(opts)
