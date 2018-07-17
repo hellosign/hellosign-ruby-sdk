@@ -275,7 +275,7 @@ module HelloSign
 
       #
       # Cancels a SignatureRequest.
-      # @option opts [String] signature_request_id The id of the SignatureRequest to cancel.
+      # @option opts [String] signature_request_id The ID of the incomplete SignatureRequest to cancel.
       #
       # @example
       #   @client.cancel_signature_request :signature_request_id => '75cdf7dc8b323d43b347e4a3614d1f822bd09491'
@@ -285,7 +285,7 @@ module HelloSign
 
       #
       # Removes your access to a completed a SignatureRequest.
-      # @option opts [String] signature_request_id The id of the SignatureRequest to remove.
+      # @option opts [String] signature_request_id The ID of the completed SignatureRequest to remove access.
       #
       # @example
       #   @client.remove_signature_request :signature_request_id => '75cdf7dc8b323d43b347e4a3614d1f822bd09491'
