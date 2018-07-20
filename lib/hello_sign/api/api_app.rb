@@ -36,8 +36,9 @@ module HelloSign
 
       #
       # Retrieves information about a specific API App by a given ID
+      # @option opts [String] client_id The Client ID of the ApiApp.
       #
-      # @return [HelloSign::Resource::ApiApp] the API App
+      # @return [HelloSign::Resource::ApiApp] the ApiApp
       #
       # @example
       #   app = @client.get_api_app :client_id => 'fa5c8a0b0f492d768749333ad6fcc214c111e967'
@@ -48,8 +49,8 @@ module HelloSign
 
       #
       # Returns a list of ApiApps that you currently have access to on your account
-      # @option opts [Integer] page (1) Which page number of the list to return.
-      # @option opts [Integer] page_size (5) Number of results for each page
+      # @option opts [Integer] page Sets the page number of the list to return. Defaults to 1. (optional)
+      # @option opts [Integer] page_size Determines the number of ApiApps returned per page. Defaults to 20. (optional)
       #
       # @return [HelloSign::Resource::ResourceArray]
       #
@@ -65,12 +66,14 @@ module HelloSign
 
       #
       # Creates a new API Application on your account
-      # @option opts [String] name The name you want to assign to the ApiApp.
-      # @option opts [String] domain The domain name the ApiApp will be associated with.
-      # @option opts [String] callback_url (optional) The URL at which the ApiApp should receive event callbacks.
-      # @option opts [String] custom_logo_file (optional) An image file to use as a custom logo in embedded contexts. (Only applies to some API plans)
-      # @option opts [String] oauth[callback_url] (optional) The callback URL to be used for OAuth flows. (Required if oauth[scopes] is provided)
-      # @option opts [String] oauth[scopes] (optional) A comma-separated list of OAuth scopes to be granted to the app. (Required if oauth[callback_url] is provided)
+      # @option opts [String] name The name assigned to the ApiApp.
+      # @option opts [String] domain The domain associated with the ApiApp.
+      # @option opts [String] callback_url The URL that will receive callback events for the ApiApp. (optional)
+      # @option opts [String] custom_logo_file An image file to use as a custom logo in embedded workflows, if available in the API subscription. (optional)
+      # @option opts [String] oauth[callback_url] The callback URL to be used for OAuth flows. (optional)
+      # @option opts [String] oauth[scopes] A comma-separated list of OAuth scopes to be granted to the app. (optional)
+      # @option opts [String<Hash>] white_labeling_options Object with elements and values serialized to a string to customize the signer page, if available in the API subscription. (optional)
+      # @option opts [Boolean] options[can_insert_everywhere] Determines if signers can "Insert Everywhere" when signing a document. (optional)
       #
       # @return [HelloSign::Resource::ApiApp] newly created ApiApp object
       #
@@ -81,14 +84,16 @@ module HelloSign
       end
 
       #
-      # Updates parameters for a specific API Application on your account, referenced by ID
-      # @oprion opts [String] client_id (REQUIRED) The ID of the app you want to update
-      # @option opts [String] name (optional) The name you want to assign to the ApiApp.
-      # @option opts [String] domain (optional) The domain name the ApiApp will be associated with.
-      # @option opts [String] callback_url (optional) The URL at which the ApiApp should receive event callbacks.
-      # @option opts [String] custom_logo_file (optional) An image file to use as a custom logo in embedded contexts. (Only applies to some API plans)
-      # @option opts [String] oauth[callback_url] (optional) The callback URL to be used for OAuth flows. (Required if oauth[scopes] is provided)
-      # @option opts [String] oauth[scopes] (optional) A comma-separated list of OAuth scopes to be granted to the app. (Required if oauth[callback_url] is provided)
+      # Updates settings for a specific ApiApp on your account
+      # @option opts [String] client_id The Client ID of the ApiApp you want to update.
+      # @option opts [String] name The name assigned to the ApiApp. (optional)
+      # @option opts [String] domain The domain associated with the ApiApp. (optional)
+      # @option opts [String] callback_url The URL that will receive callback events for the ApiApp. (optional)
+      # @option opts [String] custom_logo_file An image file to use as a custom logo in embedded workflows, if available in the API subscription. (optional)
+      # @option opts [String] oauth[callback_url] The callback URL to be used for OAuth flows. (optional)
+      # @option opts [String] oauth[scopes] A comma-separated list of OAuth scopes to be granted to the app. (optional)
+      # @option opts [String<Hash>] white_labeling_options Object with elements and values serialized to a string to customize the signer page, if available in the API subscription. (optional)
+      # @option opts [Boolean] options[can_insert_everywhere] Determines if signers can "Insert Everywhere" when signing a document. (optional)
       #
       # @return [HelloSign::Resource::ApiApp] an ApiApp object
       #
@@ -101,10 +106,11 @@ module HelloSign
       end
 
       #
-      # Deletes an API App. Can only be invoked for apps you own.
+      # Deletes an ApiApp. Only available for ApiApps you own.
+      # @option opts [String] client_id The Client ID of the ApiApp you want to delete.
       #
       # @example
-      #   result = @client.delete_api_app :client_id => 'hdialuhfilaudshfa'
+      #   result = @client.delete_api_app :client_id => 'fa5c8a0b0f492d768749333ad6fcc214c111e967'
       def delete_api_app(opts)
         path = '/api_app/' + opts[:client_id]
         delete(path)
