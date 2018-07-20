@@ -26,8 +26,8 @@ module HelloSign
   module Api
 
     #
-    # Contains all the api calls for the Account resource.
-    # Take a look at our {https://app.hellosign.com/api/reference#Account account api document}
+    # Contains all the API calls for the Account resource.
+    # Take a look at our API Documentation on the Account resource (https://app.hellosign.com/api/reference#Account)
     # for more information about this.
     #
     # @author [hellosign]
@@ -47,7 +47,7 @@ module HelloSign
       end
 
       #
-      # Creates a new HelloSign account. The user will still need to confirm their email address
+      # Creates a new HelloSign account. The user will still need to confirm the email address
       # to complete the creation process.
       #
       # Note: This request does not require authentication.
