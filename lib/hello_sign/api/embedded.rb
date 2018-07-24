@@ -27,8 +27,8 @@ module HelloSign
 
     #
     # HelloSign allows you to embed the signing page on your site in an iFrame
-    # without the need for the end-user to create a HelloSign account.
-    # Take a look at our {https://app.hellosign.com/api/embeddedSigningWalkthrough embedded signing walkthrough}
+    # without the need for the signer/preparer to create a HelloSign account.
+    # Take a look at our Embedded Signing Walkthrough (https://app.hellosign.com/api/embeddedSigningWalkthrough)
     # for more information about this.
     #
     # @author [hellosign]
@@ -36,8 +36,9 @@ module HelloSign
     module Embedded
 
       #
-      # Retrieves the embedded signature request url.
-      # @option opts [String] signature_id The id of the signature to get a signature url for
+      # Retrieves the embedded signature sign_url.
+      #
+      # @option opts [String] signature_id The Signature ID to retrieve the embedded sign_url for.
       #
       # @return [HelloSign::Resource::Embedded] Returns an Embedded object
       # @example
@@ -47,11 +48,15 @@ module HelloSign
         HelloSign::Resource::Embedded.new get("/embedded/sign_url/#{opts[:signature_id]}")
       end
       #
-      # Retrieves the edit url for an embedded template.
-      # @option opts [String] template_id The id of the template to get a edit url for
-      # @option opts [Integer] skip_signer_roles Whether editing signer roles should be skipped
-      # @option opts [Integer] skip_subject_message Whether editing subject/message should be skipped
-      # @option opts [Array<Hash>] merge_fields Merge fields that can be placed in the template
+      # Retrieves the edit_url for an embedded template.
+      # @option opts [Boolean] test_mode Indicates if this is a test Embedded Template. A boolean value is also accepted. Defaults to 0. (optional)
+      # @option opts [String] template_id The Template ID to retreive the embedded edit_url for.
+      # @option opts [Array<Hash>] cc_roles The CC roles that must be assigned when using the Embedded Template to create a SignatureRequest. (optional)
+      # @option opts [String<Array><Hash>] merge_fields List of fields that can be pre-populated by your application when using the Embedded Template to send a SignatureRequest. (optional)
+      #   * :name (String) Merge field name
+      #   * :type (String) Field type - either "text" or "checkbox"
+      # @option opts [Boolean] skip_signer_roles Removes the prompt to edit signer roles, if already provided. Defaults to 0. (optional)
+      # @option opts [Boolean] skip_subject_message Removes the prompt to edit the subject and message, if already provided. Defaults to 0. (optional)
       #
       # @return [HelloSign::Resource::Embedded] Returns an Embedded object
       # @example
