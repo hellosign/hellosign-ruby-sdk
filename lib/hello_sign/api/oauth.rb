@@ -27,18 +27,19 @@ module HelloSign
 
     #
     # OAuth allows you to perform actions on behalf of other users after they grant you the authorization to do so.
-    # For example, you could send signature requests on behalf of your users. This page lays out the basic steps to do that.
-    # IMPORTANT
+    # For example, you could send signature requests on behalf of your users.
+    # For more information, see our OAuth API documentation (https://app.hellosign.com/api/oauthWalkthrough).
     #
-    # With OAuth, you (the app owner) will be charged for all signature requests sent on behalf of other users via your app.
+    # IMPORTANT: With some OAuth scopes, you (the app owner) will be charged for all signature requests sent on behalf of other users via your app.
     #
     # @author [hellosign]
     #
     module OAuth
 
       #
-      # Return the oath url where users can give permission for your application to perform actions on their behalf.
-      # @param  state [String] used for security and must match throughout the flow for a given user.
+      # Returns the OAuth URL where users can give permission for your application to perform actions on their behalf.
+      #
+      # @param state [String] used for security and must match throughout the flow for a given user.
       # It can be set to the value of your choice (preferably something random). You should verify it matches the expected value when validating the OAuth callback.
       # @return [type] [description]
       def oauth_url(state)
@@ -46,12 +47,14 @@ module HelloSign
       end
 
       #
-      # Retrieving the OAuth token
+      # Retrieves the OAuth token
       #
-      # @option opts [String] state variable that was used when you created oauth_url for a specific user
-      # @option opts [String] code The authorization code passed to your callback when the user granted access
+      # @option opts [String] state Random value that was used when you created oauth_url for a specific user.
+      # @option opts [String] code The code passed to your callback when the user granted access.
+      # @option opts [String] client_id The API App Client ID.
+      # @option opts [String] client_secret The secret token of your API App.
       #
-      # @return [Hash] oauth data of the user
+      # @return [Hash] OAuth data of the user
       #
       # @example
       #   client = HelloSign::Client.new :api_key => '%apikey%', :client_id => 'cc91c61d00f8bb2ece1428035716b', :client_secret => '1d14434088507ffa390e6f5528465'
@@ -64,11 +67,11 @@ module HelloSign
       end
 
       #
-      # refresh user oauth token.
+      # Refreshes the user's OAuth token.
       #
-      # @return [Hash] refreshed oauth info
-      # @example
-      #   client = HelloSign::Client.new :api_key => '%apikey%', :client_id => 'cc91c61d00f8bb2ece1428035716b', :client_secret => '1d14434088507ffa390e6f5528465'
+      # @option opts [String] refresh_token The refresh provided when the access token has expired.
+      #
+      # @return [Hash] Refreshed OAuth info
       #
       # @example
       #   client.refresh_oauth_token :refresh_token => 'hNTI2MTFmM2VmZDQxZTZjOWRmZmFjZmVmMGMyNGFjMzI2MGI5YzgzNmE3'
@@ -79,12 +82,16 @@ module HelloSign
         post('/oauth/token', { :body => opts, :oauth_request => true })
       end
 
-
       #
-      # Create new user and get their OAuth token. The user will receive an email asking them to confirm the access being granted. Your app will not be able to perform actions on behalf of this user until they confirm.
-      # @option opts [String] email_address new user email address
+      # Create new user and get their OAuth token. The user will receive an email asking them to confirm the access being granted.
+      # Your app will not be able to perform actions on behalf of this user until they confirm.
       #
-      # @return [Hash] details about new user, including oath data
+      # @option opts [String] email_address New user email address.
+      #
+      # @example
+      #   client.oauth_create_account :email_address => 'new_user@example.com'
+      #
+      # @return [Hash] details about new user, including OAuth data
       def oauth_create_account(opts)
         opts[:client_id] = self.client_id
         opts[:client_secret] = self.client_secret
