@@ -26,7 +26,7 @@ module HelloSign
   module Api
 
     #
-    # Contains all the API calls about the SignatureRequest resource.
+    # Contains all the API calls for the SignatureRequest resource.
     # Take a look at our API Documentation for sending Signature Requests (https://app.hellosign.com/api/reference#SignatureRequest)
     # for more information about this.
     #
