@@ -27,7 +27,7 @@ module HelloSign
 
     #
     # Contains all the API calls for the ApiApp resource.
-    # Take a look at our {https://app.hellosign.com/api/reference#Team team api document}
+    # Take a look at our API Documentation for ApiApps (https://app.hellosign.com/api/reference#ApiApp)
     # for more information about this.
     #
     # @author [hellosign]
