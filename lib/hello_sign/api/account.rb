@@ -33,7 +33,6 @@ module HelloSign
     # @author [hellosign]
     #
     module Account
-
       #
       # Returns the current user's account information.
       #

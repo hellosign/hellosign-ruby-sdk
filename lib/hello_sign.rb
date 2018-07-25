@@ -1,8 +1,8 @@
 #
 # The MIT License (MIT)
-# 
+#
 # Copyright (C) 2014 hellosign.com
-# 
+#
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
@@ -28,9 +28,8 @@ require 'hello_sign/client'
 
 module HelloSign
   extend Configuration
-
   #
-  # # If HelloSign module don't respond_to? method, then delegate it to HelloSign::Client
+  # # If HelloSign module doesn't respond to method, then delegates it to HelloSign::Client
   # @param  method [Symbol] method name
   # @param  *args [Array] arguments passed into the method
   # @param  &block [Block] a block passed into the method
@@ -41,7 +40,7 @@ module HelloSign
   end
 
   #
-  # If HelloSign module don't respond_to? method, ask HelloSign::Client whether it respond or not
+  # If HelloSign module don't respond to method, asks HelloSign::Client whether it responded or not
   # @param  method [Symbol] method name
   #
   def self.respond_to?(method, include_all=false)

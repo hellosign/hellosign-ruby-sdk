@@ -24,7 +24,6 @@
 
 module HelloSign
   module Api
-
     #
     # Contains all the API calls for the Team resource.
     # Take a look at our API Documentation on the Team Resource (https://app.hellosign.com/api/reference#Team)
@@ -33,7 +32,6 @@ module HelloSign
     # @author [hellosign]
     #
     module Team
-
       #
       # Returns information about your Team as well as a list of its members.
       # If you do not belong to a Team, HelloSign::Error::NotFound will be raised

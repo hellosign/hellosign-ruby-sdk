@@ -24,7 +24,6 @@
 
 module HelloSign
   module Api
-
     #
     # HelloSign allows you to embed the signing page on your site in an iFrame
     # without the need for the signer/preparer to create a HelloSign account.

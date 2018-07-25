@@ -23,7 +23,6 @@
 #
 
 module HelloSign
-
   #
   # Define config attributes and default values for HelloSign module
   #

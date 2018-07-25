@@ -1,8 +1,8 @@
 #
 # The MIT License (MIT)
-# 
+#
 # Copyright (C) 2014 hellosign.com
-# 
+#
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
@@ -26,8 +26,8 @@ module HelloSign
   module Resource
 
     #
-    # A group of documents that a user can take ownership of by going to the claim URL
-    # Take a look at our {https://app.hellosign.com/api/reference#UnclaimedDraft unclaimed draft resource document}
+    # A group of documents that a user can take ownership of by going to the claim_url.
+    # Take a look at our API documentation for creating UnclaimedDrafts (https://app.hellosign.com/api/reference#UnclaimedDraft)
     # for more information about this.
     #
     # @author [hellosign]
@@ -35,11 +35,11 @@ module HelloSign
     class UnclaimedDraft < BaseResource
 
       #
-      # create a new UnclaimedDraft from a hash. If a key is defined then unclaimed draft data with be the value of hash[key], otherwise the hash itself
-      # @param  hash [Hash] unclaimed draft's data
-      # @param  key [String] (unclaimed_draft) key of the hash, point to where unclaimed draft data is. If nil then the hash itself
+      # create a new UnclaimedDraft from a hash. If a key is defined then UnclaimedDraft data with be the value of hash[key], otherwise the hash itself.
+      # @param  hash [Hash] UnclaimedDraft's data
+      # @param  key [String] (unclaimed_draft) Key of the hash, point to where UnclaimedDraft data is. If nil, then the hash itself.
       #
-      # @return [HelloSign::Resource:Team] a Team resource
+      # @return [HelloSign::Resource:Team] an UnclaimedDraft resource
       def initialize(hash, key='unclaimed_draft')
         super
       end

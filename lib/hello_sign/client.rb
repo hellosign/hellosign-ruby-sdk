@@ -32,7 +32,6 @@ require 'hello_sign/api'
 require 'logger'
 
 module HelloSign
-
   #
   # You'll need the HelloSign::Client to do just about everything, from creating
   # signatures to updating account information.
@@ -69,11 +68,11 @@ module HelloSign
     }
 
     #
-    # Creates a new HelloSign Client
+    # Initiates a new HelloSign Client
 
-    # @option opts [String] email_address email address
-    # @option opts [String] password password
-    # @option opts [String] api_key Api key
+    # @option opts [String] email_address The account's email address. (optional)
+    # @option opts [String] password The account's password, if authenticating with an email_address. (optional)
+    # @option opts [String] api_key The account's API key.
     # @return [HelloSign::Client] a new HelloSign::Client
     def initialize(opts={})
       options = HelloSign.options.merge(opts)
@@ -83,9 +82,9 @@ module HelloSign
     end
 
     #
-    # Make a http get request
-    # @param  path [String] relative path of the request
-    # @option options [Hash] params params of the url
+    # Makes an HTTP GET request
+    # @param  path [String] Relative path of the request.
+    # @option options [Hash] params Params of the URL.
     #
     def get(path, options={})
       response = request(path, :get, options)
@@ -95,10 +94,10 @@ module HelloSign
     end
 
     #
-    # Make a http post request
-    # @param  path [String] relative path of the request
-    # @option options [Hash] params params of the url
-    # @option options [Hash] body request body
+    # Makes an HTTP POST request
+    # @param  path [String] Relative path of the request.
+    # @option options [Hash] params Params of the URL.
+    # @option options [Hash] body Body of the request.
     #
     def post(path, options={})
       response = request(path, :post, options)
@@ -108,10 +107,10 @@ module HelloSign
     end
 
     #
-    # Make a http put request
-    # @param  path [String] relative path of the request
-    # @option options [Hash] params params of the url
-    # @option options [Hash] body request body
+    # Makes an HTTP PUT request
+    # @param  path [String] Relative path of the request.
+    # @option options [Hash] params Params of the URL.
+    # @option options [Hash] body Body of the request.
     #
     def put(path, options={})
       response = request(path, :put, options)
@@ -121,9 +120,9 @@ module HelloSign
     end
 
     #
-    # Make a http delete request
-    # @param  path [String] relative path of the request
-    # @option options [Hash] params params of the url
+    # Make an HTTP DELETE request
+    # @param  path [String] Relative path of the request.
+    # @option options [Hash] Params of the URL.
     #
     def delete(path, options={})
       response = request(path, :delete, options)
@@ -202,7 +201,7 @@ module HelloSign
 
     def MIMEfromName(name)
       parts = name.split('.')
-      #default to pdf if no extension
+      # defaults to pdf if no extension provided
       if parts.length < 2
         return 'application/pdf'
       end
@@ -297,21 +296,21 @@ module HelloSign
         if (opts[:form_fields_per_document] and opts[:form_fields_per_document].is_a? Array)
             opts[:form_fields_per_document] = MultiJson.dump(opts[:form_fields_per_document])
         end
-        #ignore if it's already a string, or not present
+        # ignore if it's already a string, or not present
     end
 
     def prepare_custom_fields(opts)
         if (opts[:custom_fields] and opts[:custom_fields].is_a? Array)
             opts[:custom_fields] = MultiJson.dump(opts[:custom_fields])
         end
-        #ignore if it's already a string, or not present
+        # ignore if it's already a string, or not present
     end
 
     def prepare_merge_fields(opts)
         if (opts[:merge_fields] and opts[:merge_fields].is_a? Array)
             opts[:merge_fields] = MultiJson.dump(opts[:merge_fields])
         end
-        #ignore if it's already a string, or not present
+        # ignore if it's already a string, or not present
     end
 
     def prepare(opts, key)
