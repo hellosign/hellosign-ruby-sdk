@@ -26,8 +26,8 @@ module HelloSign
   module Api
 
     #
-    # Contains all the api calls for the Template resource.
-    # Take a look at our {https://app.hellosign.com/api/embeddedTemplatesWalkthrough template form api document}
+    # Contains all the API calls for the Template resource.
+    # Take a look at our API Documentation for Templates (https://app.hellosign.com/api/reference#Template)
     # for more information about this.
     #
     # @author [hellosign]
@@ -36,7 +36,7 @@ module HelloSign
 
       #
       # Retrieves the Template specified by the id parameter.
-      # @option opts [String] template_id The id of the Template to retrieve.
+      # @option opts [String] template_id The Template ID to retrieve.
       #
       # @return [HelloSign::Resource::Template] a Template object
       #
@@ -48,20 +48,23 @@ module HelloSign
       end
 
       #
-      # Deletes the Template specified by the id parameter.
-      # @option opts [String] template_id The id of the Template to delete.
-      ##
+      # Deletes the specified Template.
+      # @option opts [String] template_id The Template ID to delete.
+      #
       # @example
-      #   template = @client.get_template :template_id => 'f57db65d3f933b5316d398057a36176831451a35'
+      #   template = @client.delete_template :template_id => 'f57db65d3f933b5316d398057a36176831451a35'
       #
       def delete_template(opts)
         post("/template/delete/#{opts[:template_id]}")
       end
 
       #
-      # Retrieves the Templates for the current user account.
+      # Retrieves the Templates for the accessible by the current user.
       #
-      # @option opts [Integer] page (1) Which page number of the Template List to return.
+      # @option opts [String] acount_id The Account ID to return Templates for and must be a team member. Use "all" for all team members. Defaults to current account. (optional)
+      # @option opts [Integer] page Sets the page number of the list to return. Defaults to 1. (optional)
+      # @option opts [Integer] page_size Determines the number of Templates returned per page. Defaults to 20. (optional)
+      # @option opts [String] query Search terms and/or fields to filter the Templates. (optional)
       #
       # @return [HelloSign::Resource::ResourceArray] a ResourceArray object
       # @example
@@ -75,11 +78,12 @@ module HelloSign
       end
 
       #
-      # Gives the specified Account on your team access to a Template
+      # Gives the specified Account access to a Template. The Account must be part of your Team.
       #
-      # @option opts [String] template_id The id of the Template to give access to.
-      # @option opts [String] account_id The id of the Account to get access. The account_id prevails if account_id and email_address are both provided.
-      # @option opts [String] email_address The email address of the Account to give access to the Template. The account_id prevails if account_id and email_address are both provided.
+      # @option opts [String] template_id The Template ID to give access to.
+      # @option opts [String] account_id The Account ID to receive access to the Template.
+      # @option opts [String] email_address The email address of the Account to receive access to the Template.
+      # Note: The account_id prevails if both email_address and acccount_id are provided.
       #
       # @return [Template] a Template object
       # @example
@@ -92,11 +96,12 @@ module HelloSign
       end
 
       #
-      # Removes the specified Account's access to the specified Template.
-      # The user can be designated using their account ID or email address.
-      # @option opts [String] template_id The id of the Template to remove the Account access to.
-      # @option opts [String] account_id The id of the Account to remove access to the Template. The account_id prevails if account_id and email_address are both provided.
-      # @option opts [String] email_address The email address of the Account to remove access to the Template. The account_id prevails if account_id and email_address are both provided.
+      # Removes the specified Account access to the specified Template.
+      #
+      # @option opts [String] template_id The Template ID to remove access to.
+      # @option opts [String] account_id The Account ID to remove access to the Template.
+      # @option opts [String] email_address The email address of the Account to remove access to the Template.
+      # Note: The account_id prevails if both email_address and acccount_id are provided.
       #
       # @return [Template] a Template object
       # @example
@@ -109,21 +114,25 @@ module HelloSign
       end
 
       #
-      # Creates a new embedded template draft object that can be launched in an iframe using the claim URL.
-      # @option opts [Integer] test_mode (0) Whether this is a test, the signature request will not be legally binding if set to 1.
-      # @option opts [Array<String>] files Use files to indicate the uploaded file(s) to send for signature. Currently we only support use of either the files parameter or file_urls parameter, not both.
-      # @option opts [Array<String>] file_urls Use file_urls to have HelloSign download the file(s) to send for signature. Currently we only support use of either the files parameter or file_urls parameter, not both.
-      # @option opts [String] title The default template email subject.
-      # @option opts [String] subject The subject in the email that will be sent to the signers.
-      # @option opts [String] requester_email_address The email address of the requester.
-      # @option opts [String] message The custom message in the email that will be sent to the signers.
-      # @option opts [Array<Hash>] signers List of signer_roles, each item is a Hash with these keys:
-      #   * :name (String) signer's role name
-      #   * :order (Integer) The order the signer is required to sign in (optional)
-      # @option opts [Array<Hash>] cc_roles The email addresses CC roles. Will mean the CC role will be Required when sending the template.
-      # @option opts [Array<Hash>] merge_fields List of fields that can be pre-populated by your application when using the resulting template to send a signature request
-      #   * :name (String) merge field name
-      #   * :type (String) <text|checkbox>
+      # Creates a new embedded template draft object that can be launched in an iFrame using the claim_url.
+      # @option opts [Boolean] test_mode Indicates if this is a test Template draft. SignatureRequests using this Template will not be legally binding if set to 1. Defaults to 0. (optional)
+      # @option opts [String] client_id The API App Client ID associated with the Template draft. (optional)
+      # @option opts [Array<String>] files Specified file path(s) to upload file(s) to send for signature. Currently we only support use of either the files parameter or file_urls parameter, not both.
+      # @option opts [Array<String>] file_urls URL(s) for HelloSign to download the file(s) to send for signature. Currently we only support use of either the files parameter or file_urls parameter, not both.
+      # @option opts [String] title The default Template title. (optional)
+      # @option opts [String] subject The default Template title alias. (optional)
+      # @option opts [String] message The default message in the email that will be sent to the signer(s). (optional)
+      # @option opts [Array<Hash>] signers List of signers displayed when the Template is used to create a SignatureRequest
+      #   * :name (String) Signer role name
+      #   * :order (Integer) The order the signer role is required to sign in. (optional)
+      # @option opts [Array<Hash>] cc_roles The CC roles that must be assigned when using the Template to create a SignatureRequest. (optional)
+      # @option opts [String<Array><Hash>] merge_fields List of fields that can be pre-populated by your application when using the Template to send a SignatureRequest. (optional)
+      #   * :name (String) Merge field name
+      #   * :type (String) Field type - either "text" or "checkbox"
+      # @option opts [Boolean] skip_me_now Sets the "Me (Now)" option for the Template preparer. Defaults to 0. (optional)
+      # @option opts [Boolean] use_preexisting_fields Sets the detection of predefined PDF fields. Defaults to 0. (optional)
+      # @option opts [Hash] metadata Key-value data attached to the Template and all SignatureRequests created from the Template. (optional)
+      # @option opts [Boolean] allow_reassign Sets the ability for signers to reassign the SignatureRequest to other signers. Defaults to 0. (optional)
       #
       # @example create_embedded_draft
       #   template_draft = @client.create_embedded_template_draft(
@@ -158,6 +167,17 @@ module HelloSign
         HelloSign::Resource::TemplateDraft.new post("/template/create_embedded_draft", :body => opts)
       end
 
+      #
+      # Downloads the original files of a specified Template.
+      #
+      # @option opts [String] template_id The Template ID to retrieve.
+      # @option opts [String] file_type Determines the format of the file - either 'pdf' or 'zip' depending on the file type desired. Defaults to pdf. (optional)
+      # @option opts [Boolean] get_url Response contains a URL link to the file if set to true. Links are only available for PDFs and have a TTL of 3 days. Defaults to false. (optional)
+      #
+      # @return a PDF or Zip
+      # @example
+      #   templates = @client.get_template_files :template_id => 'f57db65d3f933b5316d398057a36176831451a35', :file_type => 'zip'
+      #
       def get_template_files(opts)
         path = "/template/files/#{opts[:template_id]}"
         if opts[:file_type]
@@ -171,6 +191,21 @@ module HelloSign
         get(path)
       end
 
+      #
+      # Overlays a new file with the overlay of the specified Template.
+      #
+      # @option opts [String] template_id The Template ID to update.
+      # @option opts [Array<String>] files Specified file path(s) to upload file(s) to send for signature. Currently we only support use of either the files parameter or file_urls parameter, not both.
+      # @option opts [Array<String>] file_urls URL(s) for HelloSign to download the file(s) to send for signature. Currently we only support use of either the files parameter or file_urls parameter, not both.
+      # @option opts [String] subject The updated default Template title alias. (optional)
+      # @option opts [String] message The updated default message in the email that will be sent to the signer(s). (optional)
+      # @option opts [String] client_id The API App Client ID associated with the Template draft. (optional)
+      # @option opts [Boolean] test_mode Indicates if this is a test Template draft. SignatureRequests using this Template will not be legally binding if set to 1. Defaults to 0. (optional)
+      #
+      # @return a Template ID
+      # @example
+      #   templates = @client.update_template_files :template_id => 'f57db65d3f933b5316d398057a36176831451a35', :file => '@NDA.pdf'
+      #
       def update_template_files(opts)
         template_id = opts.delete(:template_id)
         path = "/template/update_files/#{template_id}"

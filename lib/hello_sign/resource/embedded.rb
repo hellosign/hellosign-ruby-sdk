@@ -1,8 +1,8 @@
 #
 # The MIT License (MIT)
-# 
+#
 # Copyright (C) 2014 hellosign.com
-# 
+#
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
@@ -24,22 +24,20 @@
 
 module HelloSign
   module Resource
-
     #
-    # An object that contains necessary information to set up embedded signing.
-    # Take a look at our {https://app.hellosign.com/api/reference#Embedded account resource document}
+    # An object that contains necessary information to set up Embedded signing.
+    # Take a look at our Embedded Signing Walkthrough (https://app.hellosign.com/api/embeddedSigningWalkthrough)
     # for more information about this.
     #
     # @author [hellosign]
     #
     class Embedded < BaseResource
-
       #
-      # create a new Embedded resource from a hash. If a key is defined then embedded data with be the value of hash[key], otherwise the hash itself
-      # @param  hash [Hash] embedded's data
-      # @param  key [String] (embedded) key of the hash, point to where embedded data is. If nil then the hash itself
+      # create a new Embedded resource from a hash. If a key is defined then embedded data with be the value of hash[key], otherwise the hash itself.
+      # @param  hash [Hash] Embedded's data
+      # @param  key [String] (embedded) Key of the hash, point to where Embedded data is. If nil, then the hash itself.
       #
-      # @return [HelloSign::Resource:Embedded] a Embedded resource
+      # @return [HelloSign::Resource:Embedded] an Embedded resource
       def initialize(hash, key='embedded')
         super
       end

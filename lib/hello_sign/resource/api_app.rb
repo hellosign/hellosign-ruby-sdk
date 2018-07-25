@@ -24,20 +24,18 @@
 
 module HelloSign
   module Resource
-
     #
-    # Contains information about an team and its members.
-    # Take a look at our {https://app.hellosign.com/api/reference#ApiApp API Application resource document}
+    # Contains information about the ApiApp resource.
+    # Take a look at our API Documentation for ApiApps (https://app.hellosign.com/api/reference#ApiApp)
     # for more information about this.
     #
     # @author [hellosign]
     #
     class ApiApp < BaseResource
-
       #
-      # create a new ApiApp from a hash. If a key is defined then team data with be the value of hash[key], otherwise the hash itself
-      # @param  hash [Hash] API Application data
-      # @param  key [String] (api_app) key of the hash, point to where API application data is. If nil then the hash itself
+      # Creates a new ApiApp from a hash. If a key is defined then ApiApp data with be the value of hash[key], otherwise the hash itself.
+      # @param hash [Hash] ApiApp data
+      # @param key [String] (api_app) key of the hash, point to where ApiApp data is. If nil, then the hash itself.
       #
       # @return [HelloSign::Resource:ApiApp] an ApiApp resource
       def initialize(hash, key='api_app')

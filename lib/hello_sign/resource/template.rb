@@ -1,8 +1,8 @@
 #
 # The MIT License (MIT)
-# 
+#
 # Copyright (C) 2014 hellosign.com
-# 
+#
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
@@ -24,22 +24,20 @@
 
 module HelloSign
   module Resource
-
     #
     # Contains information about the templates you and your team have created
-    # Take a look at our {https://app.hellosign.com/api/reference#Template Template resource document}
+    # Take a look at our API Documentation for Templates (https://app.hellosign.com/api/reference#Template)
     # for more information about this.
     #
     # @author [hellosign]
     #
     class Template < BaseResource
-
       #
-      # create a new Template from a hash. If a key is defined then template data will be the value of hash[key], otherwise the hash itself
-      # @param  hash [Hash] template's data
-      # @param  key [String] (template) key of the hash, point to where template data is. If nil then the hash itself
+      # Creates a new Template from a hash. If a key is defined then template data will be the value of hash[key], otherwise the hash itself.
+      # @param  hash [Hash] Template's data
+      # @param  key [String] (template) Key of the hash, point to where Template data is. If nil, then the hash itself.
       #
-      # @return [HelloSign::Resource:Team] a Team resource
+      # @return [HelloSign::Resource:Team] a Template resource
       def initialize(hash, key='template')
         super
       end
