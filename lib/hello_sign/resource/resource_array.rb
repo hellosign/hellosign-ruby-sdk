@@ -30,7 +30,7 @@ module HelloSign
     # @author [hellosign]
     #
     class ResourceArray < Array
-      attr_reader :page, :num_pages, :num_results, :page_size, :warnings, :headers, :list_info
+      attr_reader :page, :num_pages, :num_results, :page_size, :warnings, :headers, :list_info, :data
       #
       # create a new ResourceArray from a hash
       #
@@ -41,6 +41,7 @@ module HelloSign
       # @return [type] [description]
       def initialize(hash, key, resource_class)
         @headers = hash[:headers]
+        @data = hash[:body]
         @list_info = hash[:body]['list_info']
         @page = @list_info['page']
         @num_pages = @list_info['num_pages']
@@ -50,7 +51,7 @@ module HelloSign
         self << resource_class.new(hash[:body], nil)
 
         hash[key] && hash[key].each do |resource|
-          self << resource_class.new(resource, nil)
+          self << resource_class.new(resource, nil).raw_data
         end
       end
     end
