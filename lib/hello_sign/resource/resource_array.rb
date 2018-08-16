@@ -51,7 +51,7 @@ module HelloSign
         self << resource_class.new(hash[:body], nil)
 
         hash[key] && hash[key].each do |resource|
-          self << resource_class.new(resource, nil).raw_data
+          self << resource_class.new(resource, nil)
         end
       end
     end
