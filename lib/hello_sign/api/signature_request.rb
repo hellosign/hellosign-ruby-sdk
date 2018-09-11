@@ -313,6 +313,7 @@ module HelloSign
           separator = opts[:file_type].nil? ? '?' : '&'
           path = path + "#{separator}get_url=#{opts[:get_url]}"
         end
+
         get(path)[:body]
       end
 
