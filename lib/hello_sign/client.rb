@@ -236,7 +236,7 @@ module HelloSign
           elsif defined? ActionDispatch::Http::UploadedFile
             if file.is_a? ActionDispatch::Http::UploadedFile
               mime_type = MIMEfromIO file
-              opts[:"file[#{index}]"] = UploadIO.new(file.tempfile, mime_type)
+              opts[:"file[#{index}]"] = UploadIO.new(file.tempfile, mime_type, file.original_filename)
             end
           else
             raise HelloSign::Error::NotSupportedType.new "#{file.class} is not a supported. Must be a string or ActionDispatch::Http::UploadedFile"
