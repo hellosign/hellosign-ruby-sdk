@@ -167,6 +167,7 @@ module HelloSign
       def create_embedded_unclaimed_draft(opts)
         opts[:client_id] ||= self.client_id
         prepare_files opts
+        prepare_form_fields opts
         prepare_custom_fields opts
 
         if opts[:type] == 'request_signature' || opts[:type] == 'send_document'
