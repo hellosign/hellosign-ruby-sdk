@@ -72,8 +72,9 @@ module HelloSign
       #
       def get_templates(opts={})
         path = '/template/list'
-        path += opts[:page] ? "?page=#{opts[:page]}" : ''
-        path += opts[:page_size] ? "&page_size=#{opts[:page_size]}" : ''
+        opts[:query] = create_search_string(opts[:query]) if opts[:query]
+        query = create_query_string(opts, [:page, :page_size, :query])
+        path += query
         HelloSign::Resource::ResourceArray.new get(path, opts), 'templates', HelloSign::Resource::Template
       end
 
