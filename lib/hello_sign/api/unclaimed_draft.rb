@@ -95,13 +95,10 @@ module HelloSign
       #   )
       #
       def create_unclaimed_draft opts
+        prepare_signers opts
         prepare_files opts
         prepare_form_fields opts
         prepare_custom_fields opts
-
-        if opts[:type] == 'request_signature'
-          prepare_signers opts
-        end
 
         HelloSign::Resource::UnclaimedDraft.new post('/unclaimed_draft/create', :body => opts)
       end
@@ -166,13 +163,10 @@ module HelloSign
       #
       def create_embedded_unclaimed_draft(opts)
         opts[:client_id] ||= self.client_id
+        prepare_signers opts
         prepare_files opts
         prepare_form_fields opts
         prepare_custom_fields opts
-
-        if opts[:type] == 'request_signature' || opts[:type] == 'send_document'
-          prepare_signers opts
-        end
 
         HelloSign::Resource::UnclaimedDraft.new post('/unclaimed_draft/create_embedded', :body => opts)
       end
@@ -245,6 +239,7 @@ module HelloSign
         prepare_ccs opts
         prepare_templates opts
         prepare_files opts
+
         HelloSign::Resource::UnclaimedDraft.new post('/unclaimed_draft/create_embedded_with_template', :body => opts)
       end
 
@@ -270,6 +265,7 @@ module HelloSign
       def edit_and_resend_unclaimed_draft(opts)
         signature_request_id = opts.delete(:signature_request_id)
         path = "/unclaimed_draft/edit_and_resend/#{signature_request_id}"
+        
         HelloSign::Resource::UnclaimedDraft.new post(path, :body => opts)
       end
     end
