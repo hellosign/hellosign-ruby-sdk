@@ -99,6 +99,7 @@ module HelloSign
       # @option opts [Boolean] allow_decline Allows signers to decline the SignatureRequest. Defaults to 0. (optional)
       # @option opts [Boolean] allow_reassign Allows signers to reassign the SignatureRequest to another signer. Defaults to 0. (optional)
       # @option opts [Array<Hash>] form_fields_per_document The fields that should appear on the document. (optional)
+      # @option opts [Hash] signing_options Specifies the types allowed for creating a signature. (optional)
       #
       # @return [HelloSign::Resource::SignatureRequest] a SignatureRequest
       #
@@ -126,29 +127,36 @@ module HelloSign
       #     :cc_email_addresses => ['lawyer@example.com', 'lawyer@example2.com'],
       #     :files => ['NDA.pdf', 'AppendixA.pdf'],
       #     :form_fields_per_document => [
-            #   [
-            #     {
-            #       "name": "address",
-            #       "type": "text",
-            #       "x": 160,
-            #       "y": 80,
-            #       "width": 206,
-            #       "height": 32,
-            #       "signer": 0
-            #     }
-            #   ],
-            #   [
-            #     {
-            #       "name": "phone",
-            #       "type": "text",
-            #       "x": 160,
-            #       "y": 150,
-            #       "width": 206,
-            #       "height": 32,
-            #       "signer": 1
-            #       }
-            #   ]
-            # ]
+      #        [
+      #          {
+      #            "name": "address",
+      #            "type": "text",
+      #            "x": 160,
+      #            "y": 80,
+      #            "width": 206,
+      #            "height": 32,
+      #            "signer": 0
+      #          }
+      #        ],
+      #        [
+      #          {
+      #            "name": "phone",
+      #            "type": "text",
+      #            "x": 160,
+      #            "y": 150,
+      #            "width": 206,
+      #            "height": 32,
+      #            "signer": 1
+      #            }
+      #        ]
+      #      ],
+      #      :signing_options => {
+      #        "draw": true,
+      #        "type": true,
+      #        "upload": false,
+      #        "phone": true,
+      #        "default": "phone"
+      #      }
       #   )
       #
 
@@ -187,6 +195,7 @@ module HelloSign
       # @option opts [String] client_id The API App Client ID associated with the SignatureRequest. (optional)
       # @option opts [Array<String>] files Use files to indicate the uploaded file(s) to append to the SignatureRequest. (optional)
       # @option opts [Array<String>] file_urls Use file_urls to have HelloSign download the file(s) to append to the SignatureRequest. (optional)
+      # @option opts [Hash] signing_options Specifies the types allowed for creating a signature. (optional)
       # @return [HelloSign::Resource::SignatureRequest] a SignatureRequest
       # @example
       #  signature_request = @client.send_signature_request_with_template(
@@ -246,7 +255,14 @@ module HelloSign
       #     {
       #       :CustomFieldName => '$20,000'
       #     }
-      #   ]
+      #   ],
+      #    :signing_options => {
+      #      "draw": true,
+      #      "type": true,
+      #      "upload": false,
+      #      "phone": true,
+      #      "default": "phone"
+      #    }
       #  )
       #
       def send_signature_request_with_template(opts)
@@ -347,7 +363,7 @@ module HelloSign
       # @option opts [Boolean] allow_decline Allows signers to decline the SignatureRequest. Defaults to 0. (optional)
       # @option opts [Boolean] allow_reassign Allows signers to reassign the SignatureRequest to another signer. Defaults to 0. (optional)
       # @option opts [Array<Hash>] form_fields_per_document The fields that should appear on the document. (optional)
-      #
+      # @option opts [Hash] signing_options Specifies the types allowed for creating a signature. (optional)
       # @return [HelloSign::Resource::SignatureRequest] a SignatureRequest
       # @example
       #   request = @client.create_embedded_signature_request(
@@ -372,7 +388,14 @@ module HelloSign
       #       }
       #     ],
       #     :cc_email_addresses => ['lawyer@example.com', 'lawyer@example2.com'],
-      #     :files => ['NDA.pdf', 'AppendixA.pdf']
+      #     :files => ['NDA.pdf', 'AppendixA.pdf'],
+      #     :signing_options => {
+      #      "draw": true,
+      #      "type": true,
+      #      "upload": false,
+      #      "phone": true,
+      #      "default": "phone"
+      #    }
       #   )
       #
       def create_embedded_signature_request(opts)
@@ -411,7 +434,7 @@ module HelloSign
       # @option opts [Hash] metadata Key-value data attached to the SignatureRequest. (optional)
       # @option opts [Array<String>] files Use files to indicate the uploaded file(s) to append to the SignatureRequest. (optional)
       # @option opts [Array<String>] file_urls Use file_urls to have HelloSign download the file(s) to append to the SignatureRequest. (optional)
-      #
+      # @option opts [Hash] signing_options Specifies the types allowed for creating a signature. (optional)
       # @return [HelloSign::Resource::SignatureRequest] a SignatureRequest
       # @example
       #   request = @client.create_embedded_signature_request_with_template(
@@ -442,7 +465,14 @@ module HelloSign
       #     ],
       #     :custom_fields => {
       #       :Cost => '$20,000'
-      #     }
+      #     },
+      #    :signing_options => {
+      #      "draw": true,
+      #      "type": true,
+      #      "upload": false,
+      #      "phone": true,
+      #      "default": "phone"
+      #    }
       #   )
       #
       def create_embedded_signature_request_with_template(opts)

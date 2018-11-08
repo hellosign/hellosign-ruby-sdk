@@ -62,7 +62,7 @@ module HelloSign
       # @option opts [Boolean] allow_decline Allows signers to decline the SignatureRequest. Defaults to 0. (optional)
       # @option opts [Boolean] allow_reassign Allows signers to reassign the SignatureRequest to another signer. Defaults to 0. (optional)
       # @option opts [Array<Hash>] form_fields_per_document The fields that should appear on the document. (optional)
-      #
+      # @option opts [Hash] signing_options Specifies the types allowed for creating a signature. (optional)
       # @return [HelloSign::Resource::UnclaimedDraft] an UnclaimedDraft object
       #
       # @example type: send_document
@@ -91,7 +91,14 @@ module HelloSign
       #       }
       #     ],
       #     :cc_email_addresses => ['lawyer@example.com', 'lawyer@example2.com'],
-      #     :files => ['NDA.pdf', 'AppendixA.pdf']
+      #     :files => ['NDA.pdf', 'AppendixA.pdf'],
+      #    :signing_options => {
+      #      "draw": true,
+      #      "type": true,
+      #      "upload": false,
+      #      "phone": true,
+      #      "default": "phone"
+      #    }
       #   )
       #
       def create_unclaimed_draft opts
@@ -133,7 +140,7 @@ module HelloSign
       # @option opts [Boolean] allow_decline Allows signers to decline the SignatureRequest. Defaults to 0. (optional)
       # @option opts [Boolean] allow_reassign Allows signers to reassign the SignatureRequest to another signer. Defaults to 0. (optional)
       # @option opts [Array<Hash>] form_fields_per_document The fields that should appear on the document. (optional)
-      #
+      # @option opts [Hash] signing_options Specifies the types allowed for creating a signature. (optional)
       # @return [HelloSign::Resource::UnclaimedDraft] an UnclaimedDraft object
       #
       # @example request_signature
@@ -158,7 +165,14 @@ module HelloSign
       #       }
       #     ],
       #     :cc_email_addresses => ['lawyer@example.com', 'lawyer@example2.com'],
-      #     :files => ['NDA.pdf', 'AppendixA.pdf']
+      #     :files => ['NDA.pdf', 'AppendixA.pdf'],
+      #    :signing_options => {
+      #      "draw": true,
+      #      "type": true,
+      #      "upload": false,
+      #      "phone": true,
+      #      "default": "phone"
+      #    }
       #   )
       #
       def create_embedded_unclaimed_draft(opts)
@@ -199,7 +213,7 @@ module HelloSign
       # @option opts [Boolean] skip_me_now Disables the "Me (Now)" option for the preparer. Not available for type "send_document." Defaults to 0. (optional)
       # @option opts [Boolean] allow_decline Allows signers to decline the SignatureRequest. Defaults to 0. (optional)
       # @option opts [Boolean] allow_reassign Allows signers to reassign the SignatureRequest to another signer. Defaults to 0. (optional)
-      #
+      # @option opts [Hash] signing_options Specifies the types allowed for creating a signature. (optional)
       # @return [HelloSign::Resource::UnclaimedDraft] an UnclaimedDraft object
       #
       # @example request_signature
@@ -229,7 +243,14 @@ module HelloSign
       #     ],
       #     :custom_fields => {
       #       :Cost => '$20,000'
-      #     }
+      #     },
+      #    :signing_options => {
+      #      "draw": true,
+      #      "type": true,
+      #      "upload": false,
+      #      "phone": true,
+      #      "default": "phone"
+      #    }
       #   )
       #
       def create_embedded_unclaimed_draft_with_template(opts)
@@ -265,7 +286,7 @@ module HelloSign
       def edit_and_resend_unclaimed_draft(opts)
         signature_request_id = opts.delete(:signature_request_id)
         path = "/unclaimed_draft/edit_and_resend/#{signature_request_id}"
-        
+
         HelloSign::Resource::UnclaimedDraft.new post(path, :body => opts)
       end
     end
