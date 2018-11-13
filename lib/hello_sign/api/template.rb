@@ -33,7 +33,7 @@ module HelloSign
       # Retrieves the Template with the given ID.
       # @option opts [String] template_id The ID of the Template to retrieve.
       #
-      # @return [HelloSign::Resource::Template] Template
+      # @return [HelloSign::Resource::Template] a Template
       #
       # @example
       #   template = @client.get_template template_id: 'f57db65d3f933b5316d398057a36176831451a35'
@@ -76,7 +76,7 @@ module HelloSign
       # @option opts [String] email_address The email address of the Account to receive access to the Template.
       # Note: The account_id prevails if both email_address and acccount_id are provided.
       #
-      # @return [HelloSign::Resource::Template] Template
+      # @return [HelloSign::Resource::Template] a Template
       #
       # @example
       #   templates = @client.add_user_to_template template_id: 'f57db65d3f933b5316d398057a36176831451a35', email_address: 'george@example.com'
@@ -92,7 +92,7 @@ module HelloSign
       # @option opts [String] email_address The email address of the Account to remove access to the Template.
       # Note: The account_id prevails if both email_address and acccount_id are provided.
       #
-      # @return [HelloSign::Resource::Template] Template
+      # @return [HelloSign::Resource::Template] a Template
       #
       # @example
       #   templates = @client.remove_user_from_template template_id: 'f57db65d3f933b5316d398057a36176831451a35', email_address: 'george@example.com'
@@ -122,7 +122,7 @@ module HelloSign
       # @option opts [Hash] metadata Key-value data attached to the Template and all SignatureRequests created from the Template. (optional)
       # @option opts [Boolean] allow_reassign Sets the ability for signers to reassign the SignatureRequest to other signers. Defaults to 0. (optional)
       #
-      # @return [HelloSign::Resource::Template] Template
+      # @return [HelloSign::Resource::Template] a Template
       #
       # @example
       #   template_draft = @client.create_embedded_template_draft(
@@ -200,7 +200,7 @@ module HelloSign
         template_id = opts.delete(:template_id)
         path = "/template/update_files/#{template_id}"
         prepare_files opts
-        
+
         HelloSign::Resource::Template.new post(path, body: opts)
       end
     end

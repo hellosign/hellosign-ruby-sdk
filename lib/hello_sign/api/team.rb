@@ -44,7 +44,7 @@ module HelloSign
       # Creates a new Team and adds you as a member. You must not currently belong to a Team.
       # @option opts [String] name The name of the Team.
       #
-      # @return [HelloSign::Resource::Team]
+      # @return [HelloSign::Resource::Team] a Team
       #
       # @example
       #   team = @client.create_team name: 'Team America World Police'
@@ -81,7 +81,7 @@ module HelloSign
       # @option opts [String] email_address The user's email address to invite to your Team.
       # Note: The account_id prevails if both email_address and acccount_id are provided.
       #
-      # @return [HelloSign::Resource::Team]
+      # @return [HelloSign::Resource::Team] a Team
       #
       # @example
       #   team = @client.add_member_to_team email_address: 'george@example.com'
@@ -95,7 +95,7 @@ module HelloSign
       # @option opts [String] new_owner_email_address The Account's email address to receive all documents, API Apps (if applicable), and API key from removed account. (optional)
       # Note: The account_id prevails if both email_address and acccount_id are provided.
       #
-      # @return [HelloSign::Resource::Team] updated Team object
+      # @return [HelloSign::Resource::Team] updated Team
       #
       # @example
       #   team = @client.remove_member_from_team email_address: 'george@example.com'

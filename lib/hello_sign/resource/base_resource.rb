@@ -1,4 +1,3 @@
-#
 # The MIT License (MIT)
 #
 # Copyright (C) 2014 hellosign.com
@@ -20,20 +19,18 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-#
 
 module HelloSign
   module Resource
-    #
     # Stores the value of a hash. Use missing_method to create method to access it like an object
     #
     # @author [hellosign]
-    #
+
     class BaseResource
 
       attr_reader :data, :raw_data, :warnings, :headers
-      #
-      # recursively convert hash data into BaseResource.
+
+      # Converts hash data recursively into BaseResource.
       #
       # @param  hash [Hash] Data of the resource
       # @param  key [String] (nil) Key of the hash, point to where resource data is. If nil, then the hash itself.
@@ -58,15 +55,14 @@ module HelloSign
         end
       end
 
-      #
-      # Magic method, give class dynamic methods based on hash keys.
+      # Magic method, gives class dynamic methods based on hash keys.
       # If initialized hash has a key which matches the method name, return value of that key.
       # Otherwise, return nil.
       #
       # @param method [Symbol] Method's name
       #
       # @example
-      #   resource = BaseResource.new :email_address => "me@example.com"
+      #   resource = BaseResource.new email_address: "me@example.com"
       #   resource.email_address => "me@example.com"
       #   resource.not_in_hash_keys => nil
       def method_missing(method)
