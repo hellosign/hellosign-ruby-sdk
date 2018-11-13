@@ -1,4 +1,3 @@
-#
 # The MIT License (MIT)
 #
 # Copyright (C) 2014 hellosign.com
@@ -20,7 +19,6 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-#
 
 require 'faraday'
 require 'multi_json'
@@ -32,12 +30,9 @@ require 'hello_sign/api'
 require 'logger'
 
 module HelloSign
-  #
+
   # You'll need the HelloSign::Client to do just about everything, from creating
   # signatures to updating account information.
-  #
-  # @example
-  #   client = HelloSign::Client.new :email_address => "me@example.com", :password => "mypassword"
   #
   # @author [hellosign]
   class Client
@@ -67,13 +62,18 @@ module HelloSign
       503 => Error::ServiceUnavailable
     }
 
-    #
     # Initiates a new HelloSign Client
-
     # @option opts [String] email_address The account's email address. (optional)
     # @option opts [String] password The account's password, if authenticating with an email_address. (optional)
     # @option opts [String] api_key The account's API key.
+    #
     # @return [HelloSign::Client] a new HelloSign::Client
+    #
+    # @example Authenticating with username and password
+    #   client = HelloSign::Client.new email_address: 'me@example.com', password: 'mypassword'
+    #
+    # @example Authenticating with API key
+    #   client = HelloSign::Client.new api_key: '1234567890123456789012345678901234567890123456789012345678901234'
     def initialize(opts={})
       options = HelloSign.options.merge(opts)
       HelloSign::Configuration::VALID_OPTIONS_KEYS.each do |key|
@@ -81,11 +81,9 @@ module HelloSign
       end
     end
 
-    #
     # Makes an HTTP GET request
-    # @param  path [String] Relative path of the request.
+    # @param path [String] Relative path of the request.
     # @option options [Hash] params Params of the URL.
-    #
     def get(path, options={})
       response = request(path, :get, options)
       validate response
@@ -93,12 +91,10 @@ module HelloSign
       data = { headers: response.headers, body: parsed_response }
     end
 
-    #
     # Makes an HTTP POST request
-    # @param  path [String] Relative path of the request.
+    # @param path [String] Relative path of the request.
     # @option options [Hash] params Params of the URL.
     # @option options [Hash] body Body of the request.
-    #
     def post(path, options={})
       response = request(path, :post, options)
       validate response
@@ -106,12 +102,10 @@ module HelloSign
       data = { headers: response.headers, body: parsed_response }
     end
 
-    #
     # Makes an HTTP PUT request
-    # @param  path [String] Relative path of the request.
+    # @param path [String] Relative path of the request.
     # @option options [Hash] params Params of the URL.
     # @option options [Hash] body Body of the request.
-    #
     def put(path, options={})
       response = request(path, :put, options)
       validate response
@@ -119,11 +113,9 @@ module HelloSign
       data = { headers: response.headers, body: parsed_response }
     end
 
-    #
-    # Make an HTTP DELETE request
-    # @param  path [String] Relative path of the request.
+    # Makes an HTTP DELETE request
+    # @param path [String] Relative path of the request.
     # @option options [Hash] Params of the URL.
-    #
     def delete(path, options={})
       response = request(path, :delete, options)
       validate response

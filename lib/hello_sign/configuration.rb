@@ -1,4 +1,3 @@
-#
 # The MIT License (MIT)
 #
 # Copyright (C) 2014 hellosign.com
@@ -20,20 +19,17 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-#
 
 module HelloSign
-  #
-  # Define config attributes and default values for HelloSign module
+
+  # Defines config attributes and default values for HelloSign module
   #
   # @author [hellosign]
-  #
   module Configuration
     DEFAULT_ENDPOINT = 'https://api.hellosign.com'
     DEFAULT_API_VERSION = '/v3'
     DEFAULT_OAUTH_ENDPOINT = 'https://app.hellosign.com'
     VALID_OPTIONS_KEYS = [:end_point, :oauth_end_point, :api_version, :user_agent, :client_id, :client_secret, :email_address, :password, :api_key, :auth_token, :log_level, :logging, :proxy_uri, :proxy_user, :proxy_pass, :timeout]
-
 
     DEFAULT_USER_AGENT = "hellosign-ruby-sdk/" + HelloSign::VERSION
 
@@ -42,7 +38,7 @@ module HelloSign
     # Sets all configuration options to their default values
     # when this module is extended.
     #
-    # @param base [Object] new module or class extend thid module
+    # @param base [Object] New module or class extends this module
     def self.extended(base)
       base.reset
     end

@@ -1,4 +1,3 @@
-#
 # The MIT License (MIT)
 #
 # Copyright (C) 2014 hellosign.com
@@ -20,7 +19,6 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-#
 
 require 'hello_sign/version'
 require 'hello_sign/configuration'
@@ -28,21 +26,18 @@ require 'hello_sign/client'
 
 module HelloSign
   extend Configuration
-  #
-  # # If HelloSign module doesn't respond to method, then delegates it to HelloSign::Client
-  # @param  method [Symbol] method name
-  # @param  *args [Array] arguments passed into the method
-  # @param  &block [Block] a block passed into the method
-  #
+
+  # If HelloSign module doesn't respond to method, then delegates it to HelloSign::Client
+  # @param method [Symbol] method name
+  # @param *args [Array] arguments passed into the method
+  # @param &block [Block] a block passed into the method
   def self.method_missing(method, *args, &block)
     return super unless client.respond_to?(method)
     client.send(method, *args, &block)
   end
 
-  #
-  # If HelloSign module don't respond to method, asks HelloSign::Client whether it responded or not
-  # @param  method [Symbol] method name
-  #
+  # If HelloSign module doesn't respond to method, asks HelloSign::Client whether it responded or not
+  # @param method [Symbol] method name
   def self.respond_to?(method, include_all=false)
     return super || client.respond_to?(method)
   end
