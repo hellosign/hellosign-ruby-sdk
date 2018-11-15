@@ -284,6 +284,10 @@ module HelloSign
       prepare opts, :signer_roles
     end
 
+    def prepare_attachments(opts)
+      prepare opts, :attachments
+    end
+
     def prepare_form_fields(opts)
         if (opts[:form_fields_per_document] and opts[:form_fields_per_document].is_a? Array)
             opts[:form_fields_per_document] = MultiJson.dump(opts[:form_fields_per_document])

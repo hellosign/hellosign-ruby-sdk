@@ -22,7 +22,6 @@
 
 module HelloSign
   module Resource
-
     # Contains information about a Team and its members.
     # Take a look at our API Documentation on the Team Resource (https://app.hellosign.com/api/reference#Team)
     # for more information about this.

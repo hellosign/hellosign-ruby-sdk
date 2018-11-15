@@ -77,6 +77,11 @@ module HelloSign
       #   * email_address (String) Signer's email address
       #   * order (Integer) The order the signers are required to sign in (optional)
       #   * pin (Integer) Secures the SignatureRequest using this 4-12 character access code. A business plan is required to use this feature. (optional)
+      # @option opts [Array<Hash>] attachments Sets a list of attachments signers can upload
+      #   * name (String) Attachment name
+      #   * instructions (String) Instructions for uploading the attachment. (optional)
+      #   * signer_index (Integer) The signer's unique number.
+      #   * required (Boolean) Determines if the signer is required to upload this attachment. Defaults to 0. (Optional)
       # @option opts [Array<Hash>] custom_fields An array of custom merge fields, representing those present on the document with Text Tags or form_fields_per_document (optional)
       #   * name (String) Custom field name or "Field Label"
       #   * value (String) The value of the field. This data will appear on the SignatureRequest.
@@ -115,6 +120,19 @@ module HelloSign
       #       name: 'Jill',
       #       order: 1,
       #       }],
+      #     attachments: [{
+      #       name: 'Passport',
+      #       instructions: 'Upload your US Passport',
+      #       signer_index: 0,
+      #       required: true
+      #       },
+      #       {
+      #       name: 'Driver's License',
+      #       instructions: 'Upload your CA Driver's License',
+      #       signer_index: 1,
+      #       required: false
+      #       }
+      #     ],
       #     cc_email_addresses: ['lawyer@example.com', 'lawyer@example2.com'],
       #     files: ['NDA.pdf', 'AppendixA.pdf'],
       #     form_fields_per_document: [
@@ -154,6 +172,7 @@ module HelloSign
         prepare_signers opts
         prepare_form_fields opts
         prepare_custom_fields opts
+        prepare_attachments opts
 
         request = HelloSign::Resource::SignatureRequest.new post('/signature_request/send', body: opts)
       end
@@ -351,6 +370,19 @@ module HelloSign
       #         order: 1,
       #       }
       #     ],
+      #     attachments: [{
+      #       name: 'Passport',
+      #       instructions: 'Upload your US Passport',
+      #       signer_index: 0,
+      #       required: true
+      #       },
+      #       {
+      #       name: 'Driver's License',
+      #       instructions: 'Upload your CA Driver's License',
+      #       signer_index: 1,
+      #       required: false
+      #       }
+      #     ],
       #     cc_email_addresses: ['lawyer@example.com', 'lawyer@example2.com'],
       #     files: ['NDA.pdf', 'AppendixA.pdf'],
       #     signing_options: {
@@ -367,6 +399,7 @@ module HelloSign
         prepare_signers opts
         prepare_form_fields opts
         prepare_custom_fields opts
+        prepare_attachments opts
 
         HelloSign::Resource::SignatureRequest.new post('/signature_request/create_embedded', body: opts)
       end

@@ -22,13 +22,13 @@
 
 module HelloSign
   module Api
-      # Contains all the API calls for the UnclaimedDraft resource.
-      # Take a look at our API documentation for creating UnclaimedDrafts (https://app.hellosign.com/api/reference#UnclaimedDraft)
-      # for more information about this.
-      #
-      # @author [hellosign]
+    # Contains all the API calls for the UnclaimedDraft resource.
+    # Take a look at our API documentation for creating UnclaimedDrafts (https://app.hellosign.com/api/reference#UnclaimedDraft)
+    # for more information about this.
+    #
+    # @author [hellosign]
 
-      module UnclaimedDraft
+    module UnclaimedDraft
 
       # Creates a new UnclaimedDraft that can be claimed using the claim_url.
       # The first authenticated user to access the claim_url claims the Draft and will be shown either the "Sign and send" or the "Request signature" page with the Draft loaded.

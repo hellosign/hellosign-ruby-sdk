@@ -22,7 +22,6 @@
 
 module HelloSign
   module Resource
-
     # Contains information about an UnclaimedDraft.
     # Take a look at our API documentation for the UnclaimedDraft resource (https://app.hellosign.com/api/reference#UnclaimedDraft)
     # for more information about this.

@@ -22,7 +22,6 @@
 
 module HelloSign
   module Resource
-
     # Contains information about a TemplateDraft.
     # Take a look at our API Documentation for Templates (https://app.hellosign.com/api/reference#Template)
     # for more information about this.

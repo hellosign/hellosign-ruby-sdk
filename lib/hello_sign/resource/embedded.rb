@@ -22,7 +22,6 @@
 
 module HelloSign
   module Resource
-
     # Contains information about Embedded workflows.
     # Take a look at our Embedded Signing Walkthrough (https://app.hellosign.com/api/embeddedSigningWalkthrough)
     # for more information about this.
