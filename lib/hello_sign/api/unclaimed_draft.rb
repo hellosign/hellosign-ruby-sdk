@@ -45,6 +45,11 @@ module HelloSign
       #   * name (String) Signer's name
       #   * email_address (String) Signer's email address
       #   * order (Integer) The order the signers are required to sign in (optional)
+      # @option opts [Array<Hash>] attachments Sets a list of attachments signers can upload
+      #   * name (String) Attachment name
+      #   * instructions (String) Instructions for uploading the attachment. (optional)
+      #   * signer_index (Integer) The signer's unique number.
+      #   * required (Boolean) Determines if the signer is required to upload this attachment. Defaults to 0. (Optional)
       # @option opts [Array<Hash>] custom_fields An array of custom merge fields, representing those present on the document with Text Tags or form_fields_per_document (optional)
       #   * name (String) Custom field name or "Field Label"
       #   * value (String) The value of the field. This data will appear on the SignatureRequest.
@@ -89,6 +94,19 @@ module HelloSign
       #         order: 1
       #       }
       #     ],
+      #     attachments: [{
+      #       name: 'Passport',
+      #       instructions: 'Upload your US Passport',
+      #       signer_index: 0,
+      #       required: true
+      #       },
+      #       {
+      #       name: 'Driver's License',
+      #       instructions: 'Upload your CA Driver's License',
+      #       signer_index: 1,
+      #       required: false
+      #       }
+      #     ],
       #     cc_email_addresses: ['lawyer@example.com', 'lawyer@example2.com'],
       #     files: ['NDA.pdf', 'AppendixA.pdf'],
       #     signing_options: {
@@ -101,10 +119,11 @@ module HelloSign
       #   )
       #
       def create_unclaimed_draft opts
-        prepare_signers opts
         prepare_files opts
+        prepare_signers opts
         prepare_form_fields opts
         prepare_custom_fields opts
+        prepare_attachments opts
 
         HelloSign::Resource::UnclaimedDraft.new post('/unclaimed_draft/create', body: opts)
       end
@@ -124,6 +143,11 @@ module HelloSign
       #   * name (String) Signer's name
       #   * email_address (String) Signer's email address
       #   * order (Integer) The order the signers are required to sign in (optional)
+      # @option opts [Array<Hash>] attachments Sets a list of attachments signers can upload
+      #   * name (String) Attachment name
+      #   * instructions (String) Instructions for uploading the attachment. (optional)
+      #   * signer_index (Integer) The signer's unique number.
+      #   * required (Boolean) Determines if the signer is required to upload this attachment. Defaults to 0. (Optional)
       # @option opts [Array<String>] cc_email_addresses The email addresses that should be CCed on the SignatureRequest. (optional)
       # @option opts [String] signing_redirect_url Redirects the signer(s) to this URL after completing the SignatureRequest. (optional)
       # @option opts [Array<Hash>] custom_fields An array of custom merge fields, representing those present on the document with Text Tags or form_fields_per_document (optional)
@@ -165,6 +189,19 @@ module HelloSign
       #         order: 1
       #       }
       #     ],
+      #     attachments: [{
+      #       name: 'Passport',
+      #       instructions: 'Upload your US Passport',
+      #       signer_index: 0,
+      #       required: true
+      #       },
+      #       {
+      #       name: 'Driver's License',
+      #       instructions: 'Upload your CA Driver's License',
+      #       signer_index: 1,
+      #       required: false
+      #       }
+      #     ],
       #     cc_email_addresses: ['lawyer@example.com', 'lawyer@example2.com'],
       #     files: ['NDA.pdf', 'AppendixA.pdf'],
       #     signing_options: {
@@ -177,10 +214,11 @@ module HelloSign
       #   )
       def create_embedded_unclaimed_draft(opts)
         opts[:client_id] ||= self.client_id
-        prepare_signers opts
         prepare_files opts
+        prepare_signers opts
         prepare_form_fields opts
         prepare_custom_fields opts
+        prepare_attachments opts
 
         HelloSign::Resource::UnclaimedDraft.new post('/unclaimed_draft/create_embedded', body: opts)
       end

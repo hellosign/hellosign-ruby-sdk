@@ -113,6 +113,11 @@ module HelloSign
       # @option opts [Array<Hash>] signers List of signers displayed when the Template is used to create a SignatureRequest
       #   * name (String) Signer role name
       #   * order (Integer) The order the signer role is required to sign in. (optional)
+      # @option opts [Array<Hash>] attachments Sets a list of attachments signers can upload
+      #   * name (String) Attachment name
+      #   * instructions (String) Instructions for uploading the attachment. (optional)
+      #   * signer_index (Integer) The signer's unique number.
+      #   * required (Boolean) Determines if the signer is required to upload this attachment. Defaults to 0. (Optional)
       # @option opts [Array<Hash>] cc_roles The CC roles that must be assigned when using the Template to create a SignatureRequest. (optional)
       # @option opts [String<Array><Hash>] merge_fields List of fields that can be pre-populated by your application when using the Template to send a SignatureRequest. (optional)
       #   * name (String) Merge field name
@@ -140,6 +145,19 @@ module HelloSign
       #         order: 1
       #       }
       #     ],
+      #     attachments: [{
+      #       name: 'Passport',
+      #       instructions: 'Upload your US Passport',
+      #       signer_index: 0,
+      #       required: true
+      #       },
+      #       {
+      #       name: 'Driver's License',
+      #       instructions: 'Upload your CA Driver's License',
+      #       signer_index: 1,
+      #       required: false
+      #       }
+      #     ],
       #     cc_roles: ['HRManager'],
       #     files: ['NDA.pdf', 'AppendixA.pdf'],
       #     merge_fields: '[
@@ -157,6 +175,7 @@ module HelloSign
         opts[:client_id] ||= self.client_id
         prepare_files opts
         prepare_signer_roles opts
+        prepare_attachments opts
         HelloSign::Resource::TemplateDraft.new post("/template/create_embedded_draft", body: opts)
       end
 

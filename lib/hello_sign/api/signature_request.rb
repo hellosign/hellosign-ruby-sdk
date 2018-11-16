@@ -330,6 +330,11 @@ module HelloSign
       #   * email_address (String) Signer's email address
       #   * order (Integer) The order the signers are required to sign in (optional)
       #   * pin (Integer) Secures the SignatureRequest using this 4-12 character access code. A business plan is required to use this feature. (optional)
+      # @option opts [Array<Hash>] attachments Sets a list of attachments signers can upload
+      #   * name (String) Attachment name
+      #   * instructions (String) Instructions for uploading the attachment. (optional)
+      #   * signer_index (Integer) The signer's unique number.
+      #   * required (Boolean) Determines if the signer is required to upload this attachment. Defaults to 0. (Optional)
       # @option opts [Array<Hash>] custom_fields An array of custom merge fields, representing those present on the document with Text Tags or form_fields_per_document (optional)
       #   * name (String) Custom field name or "Field Label"
       #   * value (String) The value of the field. This data will appear on the SignatureRequest.
