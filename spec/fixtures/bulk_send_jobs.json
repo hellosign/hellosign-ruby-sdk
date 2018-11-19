@@ -1,0 +1,22 @@
+{
+    "list_info": {
+        "page": 1,
+        "num_pages": 1,
+        "num_results": 2,
+        "page_size": 20
+    },
+    "bulk_send_jobs": [
+        {
+            "bulk_send_job_id": "af299494bdcad318b4856aa34aa263dbdaaee9ab",
+            "total": 2,
+            "is_creator": true,
+            "created_at": 1542664362
+        },
+        {
+            "bulk_send_job_id": "d74f731b24b00fe6a61083bcff11d0aepl5bf927",
+            "total": 3,
+            "is_creator": true,
+            "created_at": 1542655564
+        }
+    ]
+}
