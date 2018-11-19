@@ -179,13 +179,14 @@ module HelloSign
 
       # Creates and sends a new SignatureRequest based off of the Template specified with the template_id parameter.
       # @option opts [Boolean] test_mode Indicates if this is a test SignatureRequest, it will not be legally binding if set to 1. Defaults to 0. (optional)
+      # @option opts [Boolean] allow_decline Allows signers to decline the SignatureRequest. Defaults to 0. (optional)
       # @option opts [String] template_id The Template ID to use when creating the SignatureRequest.
       #   * Use template_ids[%i%] if using multiple templates, replacing %i% with an integer to indicate the order of the Templates
       # @option opts [String] title Assigns a title to the SignatureRequest. (optional)
       # @option opts [String] subject Sets the subject in the email sent to the signer(s). (optional)
       # @option opts [String] message Sets the message in the email sent to the signer(s). (optional)
       # @option opts [String] signing_redirect_url Redirects the signer(s) to this URL after completing the SignatureRequest. (optional)
-      # @option opts [Array<Hash>] signers Sets a list of signers, each item is a Hash with these keys:
+      # @option opts [Array<Hash>] signer_file Sets a list of signers, each item is a Hash with these keys:
       #   * role (Integer) The signer role indicated on the Template.
       #   * name (String) Signer's name
       #   * email_address (String) Signer's email address
@@ -193,7 +194,7 @@ module HelloSign
       # @option opts [Array<Hash>] ccs The individual(s) to be CC'd on the SignatureRequest. Required when a CC role exists for the Template.
       #   * role (String) The CC role indicated on the Template. Note that the role name is case sensitive.
       #   * email_address (String) CC Recipient's email address
-      # @option opts [Array<Hash>] custom_fields An array of custom merge fields, representing those present on the document with Text Tags or form_fields_per_document (optional)
+      # @option opts [Array<Hash>] custom_fields An array of custom merge fields, representing those present on the Template. (optional)
       #   * name (String) Custom field name or "Field Label"
       #   * value (String) The value of the field. This data will appear on the SignatureRequest.
       #   * editor (String) The signer name indicated on the Text Tag or form_fields_per_document that can edit the value of the field. (optional)
@@ -229,7 +230,7 @@ module HelloSign
       #     ccs: [
       #       {
       #        email_address: 'accounting@example.com',
-      #        role: "Accounting"
+      #        role: 'Accounting'
       #       }
       #     ],
       #     custom_fields: [
@@ -255,6 +256,78 @@ module HelloSign
         HelloSign::Resource::SignatureRequest.new post('/signature_request/send_with_template', body: opts)
       end
 
+      # Creates a BulkSendJob based off of the Template specified with the template_id parameter.
+      # @option opts [Boolean] test_mode Indicates if this is a test BulkSendJob, its SignatureRequests will not be legally binding if set to 1. Defaults to 0. (optional)
+      # @option opts [String] template_id The Template ID to use when creating the SignatureRequest.
+      #   * Use template_ids[%i%] if using multiple templates, replacing %i% with an integer to indicate the order of the Templates
+      # @option opts [String] title Assigns a title to the SignatureRequest. (optional)
+      # @option opts [String] subject Sets the subject in the email sent to the signer(s). (optional)
+      # @option opts [String] message Sets the message in the email sent to the signer(s). (optional)
+      # @option opts [String] signing_redirect_url Redirects the signer(s) to this URL after completing the SignatureRequest. (optional)
+      # @option opts [String] signer_file Uploads a CSV file defining values and options for signer fields. Required if signer_list is not used.
+      # @option opts [String] signer_list A JSON array defining values and options for signer fields. Required if signer_file is not used.
+      # @option opts [Array<Hash>] custom_fields An array of custom merge fields, representing those present on the Template. (optional)
+      #   * name (String) Custom field name or "Field Label"
+      #   * value (String) The value of the field. This data will appear on the SignatureRequest.
+      #   * editor (String) The signer name indicated on the Text Tag or form_fields_per_document that can edit the value of the field. (optional)
+      #   * required (Boolean) Determines if the field is required or not. (optional)
+      # @option opts [Array<Hash>] ccs The individual(s) to be CC'd on the SignatureRequest. Required when a CC role exists for the Template.
+      #   * role (String) The CC role indicated on the Template. Note that the role name is case sensitive.
+      #   * email_address (String) CC Recipient's email address
+      # @option opts [Hash] metadata Key-value data attached to the SignatureRequest. (optional)
+      # @option opts [String] client_id The API App Client ID associated with the SignatureRequest. (optional)
+      #
+      # @return [HelloSign::Resource::BulkSendJob] a BulkSendJob
+      #
+      # @example
+      #   signature_request = @client.bulk_send_with_template(
+      #     test_mode: 1,
+      #     allow_decline: 0,
+      #     template_id: 'c26b8a16784a872da37ea946b9ddec7c1e11dff6',
+      #     title: 'Purchase Order',
+      #     subject: 'Purchase Order',
+      #     message: 'Glad we could come to an agreement.',
+      #     metadata: {
+      #       client_id: '1234',
+      #       custom_text: 'NDA #9'
+      #     },
+      #     signer_list: [
+      #       {
+      #         signers: {
+      #           Client: {
+      #             name: 'George',
+      #             email_address: 'bulksend1@example.com'
+      #           }
+      #         },
+      #         custom_fields: {
+      #           address: '100 Grand'
+      #         }
+      #       },
+      #       {
+      #         signers: {
+      #           Client: {
+      #             name: 'Mary',
+      #             email_address: 'bulksend2@example.com'
+      #           }
+      #         }
+      #       }
+      #     ],
+      #     ccs: [
+      #       {
+      #        email_address: 'accounting@example.com',
+      #        role: 'Accounting'
+      #       }
+      #     ]
+      #   )
+      def bulk_send_with_template(opts)
+        prepare_bulk_signers opts
+        prepare_ccs opts
+        prepare_templates opts
+        prepare_custom_fields opts
+
+        HelloSign::Resource::BulkSendJob.new post('/signature_request/bulk_send_with_template', body: opts)
+      end
+
       # Sends an email reminder to the signer about the SignatureRequest.
       # @option opts [String] signature_request_id Indicates the ID of the SignatureRequest to send a reminder.
       # @option opts [String] email_address The email address of the signer who will receive a reminder.
@@ -268,7 +341,7 @@ module HelloSign
       #     :email_address: 'john@example.com'
       #   )
       def remind_signature_request(opts)
-        HelloSign::Resource::SignatureRequest.new post("/signature_request/remind/#{opts[:signature_request_id]}", body: opts)
+        HelloSign::Resource::SignatureRequest.new post('/signature_request/remind/#{opts[:signature_request_id]}', body: opts)
       end
 
       # Cancels an incomplete SignatureRequest.
@@ -279,7 +352,7 @@ module HelloSign
       # @example
       #   @client.cancel_signature_request signature_request_id: '75cdf7dc8b323d43b347e4a3614d1f822bd09491'
       def cancel_signature_request(opts)
-        post("/signature_request/cancel/#{opts[:signature_request_id]}", body: opts)
+        post('/signature_request/cancel/#{opts[:signature_request_id]}', body: opts)
       end
 
       # Removes your access to a completed a SignatureRequest.
@@ -290,7 +363,7 @@ module HelloSign
       # @example
       #   @client.remove_signature_request signature_request_id: '75cdf7dc8b323d43b347e4a3614d1f822bd09491'
       def remove_signature_request(opts)
-        post("/signature_request/remove/#{opts[:signature_request_id]}", body: opts)
+        post('/signature_request/remove/#{opts[:signature_request_id]}', body: opts)
       end
 
       # Downloads a copy of the SignatureRequest documents.
@@ -503,7 +576,7 @@ module HelloSign
       #   )
       def update_signature_request(opts)
         signature_request_id = opts.delete(:signature_request_id)
-        path = "/signature_request/update/#{signature_request_id}"
+        path = '/signature_request/update/#{signature_request_id}'
         HelloSign::Resource::SignatureRequest.new post(path, body: opts)
       end
     end

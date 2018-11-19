@@ -309,6 +309,18 @@ module HelloSign
         # ignore if it's already a string, or not present
     end
 
+    def prepare_bulk_signers(opts)
+      if opts[:signer_file]
+        file = opts[:signer_file]
+        mime_type = MIMEfromIO file
+        opts[:signer_file] = Faraday::UploadIO.new(file, mime_type)
+      elsif opts[:signer_list]
+        opts[:signer_list] = MultiJson.dump(opts[:signer_list])
+      else
+        raise HelloSign::Error::NotSupportedType.new "Upload a CSV file or JSON list of signers"
+      end
+    end
+
     def prepare(opts, key)
       return unless opts[key]
       opts[key].each_with_index do |value, index|

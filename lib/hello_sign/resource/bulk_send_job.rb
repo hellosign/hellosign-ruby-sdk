@@ -20,14 +20,24 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-require 'hello_sign/resource/base_resource'
-require 'hello_sign/resource/resource_array'
-require 'hello_sign/resource/template_draft'
-require 'hello_sign/resource/account'
-require 'hello_sign/resource/embedded'
-require 'hello_sign/resource/template'
-require 'hello_sign/resource/signature_request'
-require 'hello_sign/resource/team'
-require 'hello_sign/resource/unclaimed_draft'
-require 'hello_sign/resource/api_app'
-require 'hello_sign/resource/bulk_send_job'
+module HelloSign
+  module Resource
+    # Contains information about a SignatureRequest.
+    # Take a look at our API Documentation for Signature Requests (https://app.hellosign.com/api/reference#SignatureRequest)
+    # for more information about this.
+    #
+    # @author [hellosign]
+
+    class BulkSendJob < BaseResource
+
+      # Creates a new BulkSendJob from a hash. If a key is defined then account data with be the value of hash[key], otherwise the hash itself.
+      # @param  hash [Hash] BulkSendJob's data
+      # @param  key [String] (bulk_send_job) Key of the hash, point to where BulkSendJob data is. If nil, then the hash itself.
+      #
+      # @return [HelloSign::Resource::BulkSendJob] a SignatureRequest
+      def initialize(hash, key='bulk_send_job')
+        super
+      end
+    end
+  end
+end
