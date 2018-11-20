@@ -55,7 +55,7 @@ module HelloSign
         path = '/bulk_send_job/list'
         path += opts[:page] ? "?page=#{opts[:page]}" : ''
         path += opts[:page_size] ? "&page_size=#{opts[:page_size]}" : ''
-        HelloSign::Resource::ResourceArray.new get(path, opts), 'bulk_send_jobs',  HelloSign::Resource::BulkSendJob
+        HelloSign::Resource::ResourceArray.new get(path, opts), 'bulk_send_jobs', HelloSign::Resource::BulkSendJob
       end
     end
   end
