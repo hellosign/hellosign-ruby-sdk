@@ -21,23 +21,45 @@
 # SOFTWARE.
 
 module HelloSign
-  module Resource
-    # Contains information about a BulkSendJob.
+  module Api
+    # Contains all the API calls for the BulkSendJob resource.
     # Take a look at our API Documentation on BulkSendJobs (https://app.hellosign.com/api/reference#BulkSendJob)
     # for more information about this.
     #
     # @author [hellosign]
 
-    class BulkSendJob < BaseResource
+    module BulkSendJob
 
-      # Creates a new BulkSendJob from a hash. If a key is defined then account data with be the value of hash[key], otherwise the hash itself.
-      # @param  hash [Hash] BulkSendJob's data
-      # @param  key [String] (bulk_send_job) Key of the hash, point to where BulkSendJob data is. If nil, then the hash itself.
+      # Retrieves a BulkSendJob with a given ID
+      # @option opts [String] bulk_send_job_id The BulkSendJob ID to retrieve.
       #
-      # @return [HelloSign::Resource::BulkSendJob] a BulkSendJob
-      def initialize(hash, key='bulk_send_job')
-        super
+      # @return [HelloSign::Resource::BulkSendJob]
+      #
+      # @example
+      #   app = @client.get_bulk_send_job bulk_send_job_id: 'af299494bdcad318b4856aa34aa263dbdaaee9ab'
+      def get_bulk_send_job(opts)
+        path = "/bulk_send_job/#{opts[:bulk_send_job_id]}"
+
+        HelloSign::Resource::BulkSendJob.new get(path)
       end
+
+      # Returns a list of ApiApps that your Account can access.
+      # @option opts [Integer] page Sets the page number of the list to return. Defaults to 1. (optional)
+      # @option opts [Integer] page_size Determines the number of ApiApps returned per page. Defaults to 20. (optional)
+      #
+      # @return [HelloSign::Resource::ResourceArray]
+      #
+      # @example
+      #   apps = @client.get_api_apps page: 1
+      # def get_api_apps(opts={})
+      #   path = '/api_app/list'
+      #   path += opts[:page] ? "?page=#{opts[:page]}" : ''
+      #   path += opts[:page_size] ? "&page_size=#{opts[:page_size]}" : ''
+      #   HelloSign::Resource::ResourceArray.new get(path, opts), 'api_apps',  HelloSign::Resource::ApiApp
+      # end
+
+
+
     end
   end
 end

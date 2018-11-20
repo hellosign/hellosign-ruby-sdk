@@ -44,6 +44,7 @@ module HelloSign
     include Api::Embedded
     include Api::OAuth
     include Api::ApiApp
+    include Api::BulkSendJob
 
     attr_accessor :end_point, :oauth_end_point, :api_version, :user_agent, :client_id, :client_secret, :email_address, :password, :api_key, :auth_token, :logging, :log_level, :proxy_uri, :proxy_user, :proxy_pass, :timeout
 
