@@ -36,30 +36,27 @@ module HelloSign
       # @return [HelloSign::Resource::BulkSendJob]
       #
       # @example
-      #   app = @client.get_bulk_send_job bulk_send_job_id: 'af299494bdcad318b4856aa34aa263dbdaaee9ab'
+      #   bulk_send_job = @client.get_bulk_send_job bulk_send_job_id: 'af299494bdcad318b4856aa34aa263dbdaaee9ab'
       def get_bulk_send_job(opts)
         path = "/bulk_send_job/#{opts[:bulk_send_job_id]}"
 
         HelloSign::Resource::BulkSendJob.new get(path)
       end
 
-      # Returns a list of ApiApps that your Account can access.
+      # Returns a list of BulkSendJobs that your Account can access.
       # @option opts [Integer] page Sets the page number of the list to return. Defaults to 1. (optional)
-      # @option opts [Integer] page_size Determines the number of ApiApps returned per page. Defaults to 20. (optional)
+      # @option opts [Integer] page_size Determines the number of BulkSendJobs returned per page. Defaults to 20. (optional)
       #
       # @return [HelloSign::Resource::ResourceArray]
       #
       # @example
-      #   apps = @client.get_api_apps page: 1
-      # def get_api_apps(opts={})
-      #   path = '/api_app/list'
-      #   path += opts[:page] ? "?page=#{opts[:page]}" : ''
-      #   path += opts[:page_size] ? "&page_size=#{opts[:page_size]}" : ''
-      #   HelloSign::Resource::ResourceArray.new get(path, opts), 'api_apps',  HelloSign::Resource::ApiApp
-      # end
-
-
-
+      #   bulk_send_jobs = @client.get_bulk_send_jobs page: 1
+      def get_bulk_send_jobs(opts={})
+        path = '/bulk_send_job/list'
+        path += opts[:page] ? "?page=#{opts[:page]}" : ''
+        path += opts[:page_size] ? "&page_size=#{opts[:page_size]}" : ''
+        HelloSign::Resource::ResourceArray.new get(path, opts), 'bulk_send_jobs',  HelloSign::Resource::BulkSendJob
+      end
     end
   end
 end
