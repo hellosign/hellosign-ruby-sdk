@@ -341,7 +341,7 @@ module HelloSign
       #     :email_address: 'john@example.com'
       #   )
       def remind_signature_request(opts)
-        HelloSign::Resource::SignatureRequest.new post('/signature_request/remind/#{opts[:signature_request_id]}', body: opts)
+        HelloSign::Resource::SignatureRequest.new post("/signature_request/remind/#{opts[:signature_request_id]}", body: opts)
       end
 
       # Cancels an incomplete SignatureRequest.
@@ -352,7 +352,7 @@ module HelloSign
       # @example
       #   @client.cancel_signature_request signature_request_id: '75cdf7dc8b323d43b347e4a3614d1f822bd09491'
       def cancel_signature_request(opts)
-        post('/signature_request/cancel/#{opts[:signature_request_id]}', body: opts)
+        post("/signature_request/cancel/#{opts[:signature_request_id]}", body: opts)
       end
 
       # Removes your access to a completed a SignatureRequest.
@@ -363,7 +363,7 @@ module HelloSign
       # @example
       #   @client.remove_signature_request signature_request_id: '75cdf7dc8b323d43b347e4a3614d1f822bd09491'
       def remove_signature_request(opts)
-        post('/signature_request/remove/#{opts[:signature_request_id]}', body: opts)
+        post("/signature_request/remove/#{opts[:signature_request_id]}", body: opts)
       end
 
       # Downloads a copy of the SignatureRequest documents.
