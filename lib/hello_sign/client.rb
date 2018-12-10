@@ -345,20 +345,23 @@ module HelloSign
 
     def prepare_signer_group(opts, key)
       opts[key].each_with_index do |value, index|
-        group_index = index
-        opts[:"signers[#{group_index}][group]"] = value[:group_name]
+        if value[:role]
+          group_index_or_role = value[:role]
+        else
+          group_index_or_role = index
+        end
+
+        opts[:"signers[#{group_index_or_role}][group]"] = value[:group_name]
         opts[key] = value[:signers]
-
-        prepare_signers_for_group(value[:signers], group_index, opts)
+        prepare_signers_for_group(value[:signers], group_index_or_role, opts)
       end
-
       opts.delete(key)
     end
 
-    def prepare_signers_for_group(signers, group_index, opts)
+    def prepare_signers_for_group(signers, group_index_or_role, opts)
       signers.each_with_index do |signer, index|
         signer.each do |param, data|
-          opts[:"signers[#{group_index}][#{index}][#{param}]"] = data
+          opts[:"signers[#{group_index_or_role}][#{index}][#{param}]"] = data
         end
       end
     end
