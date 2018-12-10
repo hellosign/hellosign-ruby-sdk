@@ -270,7 +270,11 @@ module HelloSign
     end
 
     def prepare_signers(opts)
-      prepare opts, :signers
+      if opts[:signer_group]
+        prepare_signer_group opts, :signer_group
+      else
+        prepare opts, :signers
+      end
     end
 
     def prepare_ccs(opts)
@@ -337,6 +341,26 @@ module HelloSign
         end
       end
       opts.delete(key)
+    end
+
+    def prepare_signer_group(opts, key)
+      opts[key].each_with_index do |value, index|
+        group_index = index
+        opts[:"signers[#{group_index}][group]"] = value[:group_name]
+        opts[key] = value[:signers]
+
+        prepare_signers_for_group(value[:signers], group_index, opts)
+      end
+
+      opts.delete(key)
+    end
+
+    def prepare_signers_for_group(signers, group_index, opts)
+      signers.each_with_index do |signer, index|
+        signer.each do |param, data|
+          opts[:"signers[#{group_index}][#{index}][#{param}]"] = data
+        end
+      end
     end
   end
 end
