@@ -270,10 +270,10 @@ module HelloSign
     end
 
     def prepare_signers(opts)
-      if opts[:signer_group]
-        prepare_signer_group opts, :signer_group
-      else
+      if opts[:signers]
         prepare opts, :signers
+      elsif opts[:signer_group]
+        prepare_signer_group opts, :signer_group
       end
     end
 
