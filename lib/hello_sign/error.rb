@@ -1,4 +1,3 @@
-#
 # The MIT License (MIT)
 #
 # Copyright (C) 2014 hellosign.com
@@ -20,10 +19,10 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-#
 
 module HelloSign
   module Error
+
     # Custom error class for rescuing from all HelloSign errors.
     class Error < StandardError;
       attr_accessor :request_uri, :response_body, :response_status
@@ -43,7 +42,7 @@ module HelloSign
       end
     end
 
-    # Raise when attributes are missing.
+    # Raised when attributes are missing.
     class MissingAttributes < Error; end
 
     # Raised when API endpoint credentials not configured.

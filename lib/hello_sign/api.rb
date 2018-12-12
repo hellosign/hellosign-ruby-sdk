@@ -1,4 +1,3 @@
-#
 # The MIT License (MIT)
 #
 # Copyright (C) 2014 hellosign.com
@@ -20,7 +19,6 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-#
 
 require 'hello_sign/api/account'
 require 'hello_sign/api/embedded'
@@ -30,3 +28,4 @@ require 'hello_sign/api/team'
 require 'hello_sign/api/unclaimed_draft'
 require 'hello_sign/api/oauth'
 require 'hello_sign/api/api_app'
+require 'hello_sign/api/bulk_send_job'

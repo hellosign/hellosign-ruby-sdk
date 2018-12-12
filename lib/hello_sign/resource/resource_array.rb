@@ -1,4 +1,3 @@
-#
 # The MIT License (MIT)
 #
 # Copyright (C) 2014 hellosign.com
@@ -20,25 +19,23 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-#
 
 module HelloSign
   module Resource
-    #
     # Stores an array of HelloSign BaseResource with paging information
     #
     # @author [hellosign]
-    #
+
     class ResourceArray < Array
       attr_reader :page, :num_pages, :num_results, :page_size, :warnings, :headers, :list_info, :data
+
+      # Creates a new ResourceArray from a hash
       #
-      # create a new ResourceArray from a hash
+      # @param hash [Hash] Data of the array.
+      # @param key [String] Key of the hash, point to where resource array data is.
+      # @param resource_class [Class] a ResourceClass object inherited from BaseResource. Uses the created array item from hash[key].
       #
-      # @param  hash [Hash] Data of the array.
-      # @param  key [String] Key of the hash, point to where resource array data is.
-      # @param  resource_class [Class] a ResourceClass object inherited from BaseResource. Uses the created array item from hash[key].
-      #
-      # @return [type] [description]
+      # @return [HelloSign::Resource::ResourceArray] a ResourceArray
       def initialize(hash, key, resource_class)
         @headers = hash[:headers]
         @data = hash[:body]

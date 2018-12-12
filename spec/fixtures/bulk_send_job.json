@@ -1,0 +1,88 @@
+{
+    "bulk_send_job": {
+        "bulk_send_job_id": "af299494bdcad318b4856aa34aa263dbdaaee9ab",
+        "total": 3,
+        "is_creator": true,
+        "created_at": 1536784104
+    },
+    "list_info": {
+        "page": 1,
+        "num_pages": 1,
+        "num_results": 2,
+        "page_size": 20
+    },
+    "signature_requests": [
+        {
+            "signature_request_id": "76cdec91655d6b26e403e8c10c1def40c26510ok",
+            "test_mode": true,
+            "title": "Please sign",
+            "original_title": "Please sign",
+            "subject": "This requires your signature",
+            "message": null,
+            "metadata": {},
+            "is_complete": false,
+            "is_declined": false,
+            "has_error": false,
+            "custom_fields": [],
+            "response_data": [],
+            "signing_url": "https://app.hellosign.com/sign/76cdec91655d6b26e403e8c10c1def40c26510ok",
+            "signing_redirect_url": null,
+            "final_copy_uri": "/v3/signature_request/final_copy/76cdec91655d6b26e403e8c10c1def40c26510ok",
+            "files_url": "https://api.hellosign.com/v3/signature_request/files/76cdec91655d6b26e403e8c10c1def40c26510ok",
+            "details_url": "https://app.hellosign.com/home/manage?guid=76cdec91655d6b26e403e8c10c1def40c26510ok",
+            "requester_email_address": "requester@example.com",
+            "signatures": [
+                {
+                    "signature_id": "1ccd835c064c4d7936012840924c0528",
+                    "has_pin": false,
+                    "signer_email_address": "bulksend1@example.com",
+                    "signer_name": "George Signer",
+                    "order": null,
+                    "status_code": "signed",
+                    "signed_at": 1542665401,
+                    "last_viewed_at": 1542665391,
+                    "last_reminded_at": null,
+                    "error": null
+                }
+            ],
+            "cc_email_addresses": [],
+            "bulk_send_job_id": "af299494bdcad318b4856aa34aa263dbdaaee9ab"
+        },
+        {
+            "signature_request_id": "b2c5c3dfc5ac596e02b7c615b59314b7948abc88",
+            "test_mode": true,
+            "title": "Please sign",
+            "original_title": "Please sign",
+            "subject": "This requires your signature",
+            "message": null,
+            "metadata": {},
+            "is_complete": false,
+            "is_declined": false,
+            "has_error": false,
+            "custom_fields": [],
+            "response_data": [],
+            "signing_url": "https://app.hellosign.com/sign/b2c5c3dfc5ac596e02b7c615b59314b7948abc88",
+            "signing_redirect_url": null,
+            "final_copy_uri": "/v3/signature_request/final_copy/b2c5c3dfc5ac596e02b7c615b59314b7948abc88",
+            "files_url": "https://api.hellosign.com/v3/signature_request/files/b2c5c3dfc5ac596e02b7c615b59314b7948abc88",
+            "details_url": "https://app.hellosign.com/home/manage?guid=b2c5c3dfc5ac596e02b7c615b59314b7948abc88",
+            "requester_email_address": "requester@example.com",
+            "signatures": [
+                {
+                    "signature_id": "2ad95d666374efcfb2bf299855591738",
+                    "has_pin": false,
+                    "signer_email_address": "bulksend2@example.com",
+                    "signer_name": "Mary Signer",
+                    "order": null,
+                    "status_code": "awaiting_signature",
+                    "signed_at": null,
+                    "last_viewed_at": null,
+                    "last_reminded_at": null,
+                    "error": null
+                }
+            ],
+            "cc_email_addresses": [],
+            "bulk_send_job_id": "af299494bdcad318b4856aa34aa263dbdaaee9ab"
+        }
+    ]
+}

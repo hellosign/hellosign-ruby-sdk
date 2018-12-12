@@ -1,4 +1,3 @@
-#
 # The MIT License (MIT)
 #
 # Copyright (C) 2014 hellosign.com
@@ -20,7 +19,6 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-#
 
 require 'faraday'
 require 'multi_json'
@@ -32,12 +30,9 @@ require 'hello_sign/api'
 require 'logger'
 
 module HelloSign
-  #
+
   # You'll need the HelloSign::Client to do just about everything, from creating
   # signatures to updating account information.
-  #
-  # @example
-  #   client = HelloSign::Client.new :email_address => "me@example.com", :password => "mypassword"
   #
   # @author [hellosign]
   class Client
@@ -49,6 +44,7 @@ module HelloSign
     include Api::Embedded
     include Api::OAuth
     include Api::ApiApp
+    include Api::BulkSendJob
 
     attr_accessor :end_point, :oauth_end_point, :api_version, :user_agent, :client_id, :client_secret, :email_address, :password, :api_key, :auth_token, :logging, :log_level, :proxy_uri, :proxy_user, :proxy_pass, :timeout
 
@@ -67,13 +63,18 @@ module HelloSign
       503 => Error::ServiceUnavailable
     }
 
-    #
     # Initiates a new HelloSign Client
-
     # @option opts [String] email_address The account's email address. (optional)
     # @option opts [String] password The account's password, if authenticating with an email_address. (optional)
     # @option opts [String] api_key The account's API key.
+    #
     # @return [HelloSign::Client] a new HelloSign::Client
+    #
+    # @example Authenticating with username and password
+    #   client = HelloSign::Client.new email_address: 'me@example.com', password: 'mypassword'
+    #
+    # @example Authenticating with API key
+    #   client = HelloSign::Client.new api_key: '1234567890123456789012345678901234567890123456789012345678901234'
     def initialize(opts={})
       options = HelloSign.options.merge(opts)
       HelloSign::Configuration::VALID_OPTIONS_KEYS.each do |key|
@@ -81,11 +82,9 @@ module HelloSign
       end
     end
 
-    #
     # Makes an HTTP GET request
-    # @param  path [String] Relative path of the request.
+    # @param path [String] Relative path of the request.
     # @option options [Hash] params Params of the URL.
-    #
     def get(path, options={})
       response = request(path, :get, options)
       validate response
@@ -93,12 +92,10 @@ module HelloSign
       data = { headers: response.headers, body: parsed_response }
     end
 
-    #
     # Makes an HTTP POST request
-    # @param  path [String] Relative path of the request.
+    # @param path [String] Relative path of the request.
     # @option options [Hash] params Params of the URL.
     # @option options [Hash] body Body of the request.
-    #
     def post(path, options={})
       response = request(path, :post, options)
       validate response
@@ -106,12 +103,10 @@ module HelloSign
       data = { headers: response.headers, body: parsed_response }
     end
 
-    #
     # Makes an HTTP PUT request
-    # @param  path [String] Relative path of the request.
+    # @param path [String] Relative path of the request.
     # @option options [Hash] params Params of the URL.
     # @option options [Hash] body Body of the request.
-    #
     def put(path, options={})
       response = request(path, :put, options)
       validate response
@@ -119,11 +114,9 @@ module HelloSign
       data = { headers: response.headers, body: parsed_response }
     end
 
-    #
-    # Make an HTTP DELETE request
-    # @param  path [String] Relative path of the request.
+    # Makes an HTTP DELETE request
+    # @param path [String] Relative path of the request.
     # @option options [Hash] Params of the URL.
-    #
     def delete(path, options={})
       response = request(path, :delete, options)
       validate response
@@ -277,7 +270,11 @@ module HelloSign
     end
 
     def prepare_signers(opts)
-      prepare opts, :signers
+      if opts[:signers]
+        prepare opts, :signers
+      elsif opts[:signer_group]
+        prepare_signer_group opts, :signer_group
+      end
     end
 
     def prepare_ccs(opts)
@@ -290,6 +287,10 @@ module HelloSign
 
     def prepare_signer_roles(opts)
       prepare opts, :signer_roles
+    end
+
+    def prepare_attachments(opts)
+      prepare opts, :attachments
     end
 
     def prepare_form_fields(opts)
@@ -313,6 +314,18 @@ module HelloSign
         # ignore if it's already a string, or not present
     end
 
+    def prepare_bulk_signers(opts)
+      if opts[:signer_file]
+        file = opts[:signer_file]
+        mime_type = MIMEfromIO file
+        opts[:signer_file] = Faraday::UploadIO.new(file, mime_type)
+      elsif opts[:signer_list]
+        opts[:signer_list] = MultiJson.dump(opts[:signer_list])
+      else
+        raise HelloSign::Error::NotSupportedType.new "Upload a CSV file or JSON list of signers"
+      end
+    end
+
     def prepare(opts, key)
       return unless opts[key]
       opts[key].each_with_index do |value, index|
@@ -328,6 +341,29 @@ module HelloSign
         end
       end
       opts.delete(key)
+    end
+
+    def prepare_signer_group(opts, key)
+      opts[key].each_with_index do |value, index|
+        if value[:role]
+          group_index_or_role = value[:role]
+        else
+          group_index_or_role = index
+        end
+
+        opts[:"signers[#{group_index_or_role}][group]"] = value[:group_name]
+        opts[key] = value[:signers]
+        prepare_signers_for_group(value[:signers], group_index_or_role, opts)
+      end
+      opts.delete(key)
+    end
+
+    def prepare_signers_for_group(signers, group_index_or_role, opts)
+      signers.each_with_index do |signer, index|
+        signer.each do |param, data|
+          opts[:"signers[#{group_index_or_role}][#{index}][#{param}]"] = data
+        end
+      end
     end
   end
 end

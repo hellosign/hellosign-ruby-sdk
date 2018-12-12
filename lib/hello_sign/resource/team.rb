@@ -1,4 +1,3 @@
-#
 # The MIT License (MIT)
 #
 # Copyright (C) 2014 hellosign.com
@@ -20,24 +19,22 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-#
 
 module HelloSign
   module Resource
-    #
     # Contains information about a Team and its members.
     # Take a look at our API Documentation on the Team Resource (https://app.hellosign.com/api/reference#Team)
     # for more information about this.
     #
     # @author [hellosign]
-    #
+
     class Team < BaseResource
-      #
+
       # Creates a new Team from a hash. If a key is defined then team data with be the value of hash[key], otherwise the hash itself.
       # @param  hash [Hash] Team's data
       # @param  key [String] (team) Key of the hash, point to where Team data is. If nil, then the hash itself.
       #
-      # @return [HelloSign::Resource:Team] a Team resource
+      # @return [HelloSign::Resource::Team] a Team
       def initialize(hash, key='team')
         super
       end

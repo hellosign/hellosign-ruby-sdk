@@ -1,4 +1,3 @@
-#
 # The MIT License (MIT)
 #
 # Copyright (C) 2014 hellosign.com
@@ -20,24 +19,22 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-#
 
 module HelloSign
   module Resource
-    #
-    # Contains information regarding documents that need to be signed.
-    # Take a look at our API Documentation for sending Signature Requests (https://app.hellosign.com/api/reference#SignatureRequest)
+    # Contains information about a SignatureRequest.
+    # Take a look at our API Documentation for Signature Requests (https://app.hellosign.com/api/reference#SignatureRequest)
     # for more information about this.
     #
     # @author [hellosign]
-    #
+
     class SignatureRequest < BaseResource
-      #
-      # create a new SignatureRequest from a hash. If a key is defined then account data with be the value of hash[key], otherwise the hash itself.
+
+      # Creates a new SignatureRequest from a hash. If a key is defined then account data with be the value of hash[key], otherwise the hash itself.
       # @param  hash [Hash] SignatureRequest's data
       # @param  key [String] (signature_request) Key of the hash, point to where SignatureRequest data is. If nil, then the hash itself.
       #
-      # @return [HelloSign::Resource::SignatureRequest] a SignatureRequest resource
+      # @return [HelloSign::Resource::SignatureRequest] a SignatureRequest
       def initialize(hash, key='signature_request')
         super
       end

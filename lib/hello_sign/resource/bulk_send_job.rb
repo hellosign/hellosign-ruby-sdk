@@ -22,20 +22,20 @@
 
 module HelloSign
   module Resource
-    # Contains information about Templates.
-    # Take a look at our API Documentation for Templates (https://app.hellosign.com/api/reference#Template)
+    # Contains information about a BulkSendJob.
+    # Take a look at our API Documentation on BulkSendJobs (https://app.hellosign.com/api/reference#BulkSendJob)
     # for more information about this.
     #
     # @author [hellosign]
 
-    class Template < BaseResource
+    class BulkSendJob < BaseResource
 
-      # Creates a new Template from a hash. If a key is defined then Template data will be the value of hash[key], otherwise the hash itself.
-      # @param  hash [Hash] Template's data
-      # @param  key [String] (template) Key of the hash, point to where Template data is. If nil, then the hash itself.
+      # Creates a new BulkSendJob from a hash. If a key is defined then account data with be the value of hash[key], otherwise the hash itself.
+      # @param  hash [Hash] BulkSendJob's data
+      # @param  key [String] (bulk_send_job) Key of the hash, point to where BulkSendJob data is. If nil, then the hash itself.
       #
-      # @return [HelloSign::Resource::Template] a Template
-      def initialize(hash, key='template')
+      # @return [HelloSign::Resource::BulkSendJob] a BulkSendJob
+      def initialize(hash, key='bulk_send_job')
         super
       end
     end
