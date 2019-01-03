@@ -328,7 +328,7 @@ module HelloSign
         HelloSign::Resource::BulkSendJob.new post('/signature_request/bulk_send_with_template', body: opts)
       end
 
-      # Creates a BulkSendJob based off of the Template specified with the template_id parameter.
+      # Creates an embedded BulkSendJob based off of the Template specified with the template_id parameter.
       # @option opts [Boolean] test_mode Indicates if this is a test BulkSendJob, its SignatureRequests will not be legally binding if set to 1. Defaults to 0. (optional)
       # @option opts [String] template_id The Template ID to use when creating the SignatureRequest.
       #   * Use template_ids[%i%] if using multiple templates, replacing %i% with an integer to indicate the order of the Templates
