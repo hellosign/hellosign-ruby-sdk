@@ -328,6 +328,80 @@ module HelloSign
         HelloSign::Resource::BulkSendJob.new post('/signature_request/bulk_send_with_template', body: opts)
       end
 
+      # Creates an embedded BulkSendJob based off of the Template specified with the template_id parameter.
+      # @option opts [Boolean] test_mode Indicates if this is a test BulkSendJob, its SignatureRequests will not be legally binding if set to 1. Defaults to 0. (optional)
+      # @option opts [String] template_id The Template ID to use when creating the SignatureRequest.
+      #   * Use template_ids[%i%] if using multiple templates, replacing %i% with an integer to indicate the order of the Templates
+      # @option opts [String] client_id The API App Client ID associated with this embedded BulkSendJob.
+      # @option opts [String] title Assigns a title to the SignatureRequest. (optional)
+      # @option opts [String] subject Sets the subject in the email sent to the signer(s). (optional)
+      # @option opts [String] message Sets the message in the email sent to the signer(s). (optional)
+      # @option opts [String] signing_redirect_url Redirects the signer(s) to this URL after completing the SignatureRequest. (optional)
+      # @option opts [String] signer_file Uploads a CSV file defining values and options for signer fields. Required if signer_list is not used.
+      # @option opts [String] signer_list A JSON array defining values and options for signer fields. Required if signer_file is not used.
+      # @option opts [Array<Hash>] custom_fields An array of custom merge fields, representing those present on the Template. (optional)
+      #   * name (String) Custom field name or "Field Label"
+      #   * value (String) The value of the field. This data will appear on the SignatureRequest.
+      #   * editor (String) The signer name indicated on the Text Tag or form_fields_per_document that can edit the value of the field. (optional)
+      #   * required (Boolean) Determines if the field is required or not. (optional)
+      # @option opts [Array<Hash>] ccs The individual(s) to be CC'd on the SignatureRequest. Required when a CC role exists for the Template.
+      #   * role (String) The CC role indicated on the Template. Note that the role name is case sensitive.
+      #   * email_address (String) CC Recipient's email address
+      # @option opts [Hash] metadata Key-value data attached to the SignatureRequest. (optional)
+      # @option opts [String] client_id The API App Client ID associated with the SignatureRequest. (optional)
+      #
+      # @return [HelloSign::Resource::BulkSendJob] a BulkSendJob
+      #
+      # @example
+      #   signature_request = @client.embedded_bulk_send_with_template(
+      #     test_mode: 1,
+      #     allow_decline: 0,
+      #     template_id: 'c26b8a16784a872da37ea946b9ddec7c1e11dff6',
+      #     client_id: 'b6b8e7deaf8f0b95c029dca049356d4a2cf9710a',
+      #     title: 'Purchase Order',
+      #     subject: 'Purchase Order',
+      #     message: 'Glad we could come to an agreement.',
+      #     metadata: {
+      #       client_id: '1234',
+      #       custom_text: 'NDA #9'
+      #     },
+      #     signer_list: [
+      #       {
+      #         signers: {
+      #           Client: {
+      #             name: 'George',
+      #             email_address: 'bulksend1@example.com'
+      #           }
+      #         },
+      #         custom_fields: {
+      #           address: '100 Grand'
+      #         }
+      #       },
+      #       {
+      #         signers: {
+      #           Client: {
+      #             name: 'Mary',
+      #             email_address: 'bulksend2@example.com'
+      #           }
+      #         }
+      #       }
+      #     ],
+      #     ccs: [
+      #       {
+      #        email_address: 'accounting@example.com',
+      #        role: 'Accounting'
+      #       }
+      #     ]
+      #   )
+      def embedded_bulk_send_with_template(opts)
+        prepare_bulk_signers opts
+        prepare_ccs opts
+        prepare_templates opts
+        prepare_custom_fields opts
+
+        HelloSign::Resource::BulkSendJob.new post('/signature_request/bulk_create_embedded_with_template', body: opts)
+      end
+
       # Sends an email reminder to the signer about the SignatureRequest.
       # @option opts [String] signature_request_id Indicates the ID of the SignatureRequest to send a reminder.
       # @option opts [String] email_address The email address of the signer who will receive a reminder.
@@ -380,7 +454,7 @@ module HelloSign
         if opts[:file_type]
           path = path + "?file_type=#{opts[:file_type]}"
         end
-        
+
         if opts[:get_url]
           separator = opts[:file_type].nil? ? '?' : '&'
           path = path + "#{separator}get_url=#{opts[:get_url]}"
@@ -396,7 +470,7 @@ module HelloSign
       # If form_fields_per_document is not specified or use_text_tags is not enabled, a signature page will be affixed at the end.
       # See our Embedded Signing Walkthrough for more information on Embedded Signing: https://app.hellosign.com/api/embeddedSigningWalkthrough.
       # @option opts [Boolean] test_mode Indicates if this is a test SignatureRequest, it will not be legally binding if set to 1. Defaults to 0. (optional)
-      # @option opts [String] client_id The API App Client ID associated with the this embedded SignatureRequest.
+      # @option opts [String] client_id The API App Client ID associated with this embedded SignatureRequest.
       # @option opts [Array<String>] files Use files to indicate the uploaded file(s) to send for signature. Currently we only support use of either the files parameter or file_urls parameter, not both.
       # @option opts [Array<String>] file_urls Use file_urls to have HelloSign download the file(s) to send for signature. Currently we only support use of either the files parameter or file_urls parameter, not both.
       # @option opts [String] title Assigns a title to the SignatureRequest. (optional)
@@ -489,7 +563,7 @@ module HelloSign
       # Creates a new SignatureRequest based on the given Template to be signed in an embedded iFrame.
       # See our Embedded Signing Walkthrough for more information on Embedded Signing: https://app.hellosign.com/api/embeddedSigningWalkthrough.
       # @option opts [Boolean] test_mode Indicates if this is a test SignatureRequest, it will not be legally binding if set to 1. Defaults to 0. (optional)
-      # @option opts [String] client_id The API App Client ID associated with the this embedded SignatureRequest.
+      # @option opts [String] client_id The API App Client ID associated with this embedded SignatureRequest.
       # @option opts [String] template_id The Template ID to use when creating the SignatureRequest.
       #   * Use template_ids[%i%] if using multiple templates, replacing %i% with an integer to indicate the order of the Templates
       # @option opts [String] title Assigns a title to the SignatureRequest. (optional)
@@ -563,6 +637,17 @@ module HelloSign
         prepare_files opts
 
         HelloSign::Resource::SignatureRequest.new post('/signature_request/create_embedded_with_template', body: opts)
+      end
+
+      # Releases a held SignatureRequest that was claimed and prepared from an UnclaimedDraft.
+      # @option opts [String] signature_request_id The ID of the SignatureRequest to release.
+      #
+      # @return [HelloSign::Resource::SignatureRequest] a SignatureRequest
+      #
+      # @example
+      #   @client.release_signature_request signature_request_id: '75cdf7dc8b323d43b347e4a3614d1f822bd09491'
+      def release_hold_signature_request(opts)
+      HelloSign::Resource::SignatureRequest.new post("/signature_request/release_hold/#{opts[:signature_request_id]}", body: opts)
       end
 
       # Updates the email address on a SignatureRequest.
