@@ -205,6 +205,25 @@ describe HelloSign::Api::SignatureRequest do
     end
   end
 
+  describe '#release_on_hold_signature_request' do
+    before do
+      stub_post('/signature_request/release_hold/1', 'signature_request')
+      @signature_request = HelloSign.release_on_hold_signature_request(:signature_request_id => 1)
+    end
+
+    it 'should get the correct resource' do
+      expect(a_post('/signature_request/release_hold/1')).to have_been_made
+    end
+
+    it 'should return response headers' do
+      expect(@signature_request.headers).to_not be_nil
+    end
+
+    it 'should return a SignatureRequest' do
+      expect(@signature_request).to be_an HelloSign::Resource::SignatureRequest
+    end
+  end
+
   describe '#update_signature_request' do
     before do
       stub_post('/signature_request/update/1', 'signature_request')
