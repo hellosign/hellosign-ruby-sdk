@@ -24,6 +24,6 @@ module HelloSign
 <<<<<<< HEAD
   VERSION = '3.7.8'
 =======
-  VERSION = '3.7.7'
+  VERSION = '3.7.8'
 >>>>>>> 504ba8714b5919f40a297e1f1ed7bd63b1cca6c2
 end
