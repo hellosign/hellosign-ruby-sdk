@@ -657,6 +657,17 @@ module HelloSign
         path = "/signature_request/update/#{signature_request_id}"
         HelloSign::Resource::SignatureRequest.new post(path, body: opts)
       end
+
+      # Releases a held SignatureRequest that was claimed and prepared from an UnclaimedDraft.
+      # @option opts [String] signature_request_id The ID of the SignatureRequest to release.
+      #
+      # @return [HelloSign::Resource::SignatureRequest] a SignatureRequest
+      #
+      # @example
+      #   @client.release_signature_request signature_request_id: '75cdf7dc8b323d43b347e4a3614d1f822bd09491'
+      def release_hold_signature_request(opts)
+      HelloSign::Resource::SignatureRequest.new post("/signature_request/release_hold/#{opts[:signature_request_id]}", body: opts)
+      end
     end
   end
 end
