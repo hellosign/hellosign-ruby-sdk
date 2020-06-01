@@ -645,8 +645,8 @@ module HelloSign
       # @return [HelloSign::Resource::SignatureRequest] a SignatureRequest
       #
       # @example
-      #   @client.release_signature_request signature_request_id: '75cdf7dc8b323d43b347e4a3614d1f822bd09491'
-      def release_hold_signature_request(opts)
+      #   @client.release_on_signature_request signature_request_id: '75cdf7dc8b323d43b347e4a3614d1f822bd09491'
+      def release_on_hold_signature_request(opts)
       HelloSign::Resource::SignatureRequest.new post("/signature_request/release_hold/#{opts[:signature_request_id]}", body: opts)
       end
 

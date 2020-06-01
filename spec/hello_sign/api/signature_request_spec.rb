@@ -205,10 +205,10 @@ describe HelloSign::Api::SignatureRequest do
     end
   end
 
-  describe '#release_hold_signature_request' do
+  describe '#release_on_hold_signature_request' do
     before do
       stub_post('/signature_request/release_hold/1', 'signature_request')
-      @signature_request = HelloSign.release_hold_signature_request(:signature_request_id => 1)
+      @signature_request = HelloSign.release_on_hold_signature_request(:signature_request_id => 1)
     end
 
     it 'should get the correct resource' do
