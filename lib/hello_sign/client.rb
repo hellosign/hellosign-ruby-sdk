@@ -226,6 +226,8 @@ module HelloSign
           elsif file.is_a? File
             mime_type = MIMEfromIO file
             opts[:"file[#{index}]"] = Faraday::UploadIO.new(file, mime_type)
+          elsif file.is_a? StringIO
+            opts[:"file[#{index}]"] = Faraday::UploadIO.new(file, 'application/pdf')
           elsif defined? ActionDispatch::Http::UploadedFile
             if file.is_a? ActionDispatch::Http::UploadedFile
               mime_type = MIMEfromIO file
