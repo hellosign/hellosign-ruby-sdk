@@ -27,7 +27,7 @@ module HelloSign
     class Error < StandardError;
       attr_accessor :request_uri, :response_body, :response_status
 
-      def initialize(response_status, response_body = nil, request_uri)
+      def initialize(response_status, response_body = nil, request_uri = nil)
         @request_uri = request_uri
         @response_body = response_body
         @response_status = response_status
