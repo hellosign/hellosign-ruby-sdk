@@ -103,11 +103,12 @@ module HelloSign
       #   signature_request = @client.send_signature_request(
       #     test_mode: 1,
       #     allow_decline: 1,
+      #     client_id: 'b6b8e7deaf8f0b95c029dca049356d4a2cf9710a',
       #     title: 'NDA with Acme Co.',
       #     subject: 'The NDA we talked about',
       #     message: 'Please sign this NDA and then we can discuss more. Let me know if you have any questions.',
       #     metadata: {
-      #       client_id: '1234',
+      #       client_name: 'John Doe',
       #       custom_text: 'NDA #9'
       #     },
       #     signers: [{
@@ -168,6 +169,7 @@ module HelloSign
       #       }
       #     )
       def send_signature_request(opts)
+        opts[:client_id] ||= self.client_id
         prepare_files opts
         prepare_signers opts
         prepare_form_fields opts
@@ -211,13 +213,14 @@ module HelloSign
       #   signature_request = @client.send_signature_request_with_template(
       #     test_mode: 1,
       #     allow_decline: 0,
+      #     client_id: 'b6b8e7deaf8f0b95c029dca049356d4a2cf9710a',
       #     template_id: 'c26b8a16784a872da37ea946b9ddec7c1e11dff6',
       #     title: 'Purchase Order',
       #     subject: 'Purchase Order',
       #     message: 'Glad we could come to an agreement.',
       #     files: ['NDA.pdf', 'AppendixA.pdf'],
       #     metadata: {
-      #       client_id: '1234',
+      #       client_name: 'John Doe',
       #       custom_text: 'NDA #9'
       #     },
       #     signers: [
@@ -247,6 +250,7 @@ module HelloSign
       #      }
       #   )
       def send_signature_request_with_template(opts)
+        opts[:client_id] ||= self.client_id
         prepare_signers opts
         prepare_ccs opts
         prepare_templates opts
@@ -283,12 +287,13 @@ module HelloSign
       #   signature_request = @client.bulk_send_with_template(
       #     test_mode: 1,
       #     allow_decline: 0,
+      #     client_id: 'b6b8e7deaf8f0b95c029dca049356d4a2cf9710a',
       #     template_id: 'c26b8a16784a872da37ea946b9ddec7c1e11dff6',
       #     title: 'Purchase Order',
       #     subject: 'Purchase Order',
       #     message: 'Glad we could come to an agreement.',
       #     metadata: {
-      #       client_id: '1234',
+      #       client_name: 'John Doe',
       #       custom_text: 'NDA #9'
       #     },
       #     signer_list: [
@@ -320,6 +325,7 @@ module HelloSign
       #     ]
       #   )
       def bulk_send_with_template(opts)
+        opts[:client_id] ||= self.client_id
         prepare_bulk_signers opts
         prepare_ccs opts
         prepare_templates opts
@@ -362,7 +368,7 @@ module HelloSign
       #     subject: 'Purchase Order',
       #     message: 'Glad we could come to an agreement.',
       #     metadata: {
-      #       client_id: '1234',
+      #       client_name: 'John Doe',
       #       custom_text: 'NDA #9'
       #     },
       #     signer_list: [
@@ -394,6 +400,7 @@ module HelloSign
       #     ]
       #   )
       def embedded_bulk_send_with_template(opts)
+        opts[:client_id] ||= self.client_id
         prepare_bulk_signers opts
         prepare_ccs opts
         prepare_templates opts
@@ -511,7 +518,7 @@ module HelloSign
       #     subject: 'The NDA we talked about',
       #     message: 'Please sign this NDA and then we can discuss more. Let me know if you have any questions.',
       #     metadata: {
-      #       client_id: '1234',
+      #       client_name: 'John Doe',
       #       custom_text: 'NDA #9'
       #     },
       #     signers: [
@@ -600,7 +607,7 @@ module HelloSign
       #     message: 'Glad we could come to an agreement.',
       #     files: ['NDA.pdf', 'AppendixA.pdf'],
       #     metadata: {
-      #       client_id: '1234',
+      #       client_name: 'John Doe',
       #       custom_text: 'NDA #9'
       #     },
       #     signers: [
