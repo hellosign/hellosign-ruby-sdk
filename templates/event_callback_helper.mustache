@@ -1,0 +1,24 @@
+=begin
+{{> api_info}}
+=end
+
+require 'openssl'
+
+module HelloSign
+  class EventCallbackHelper
+    # Verify that a callback came from HelloSign.com
+    #
+    # @param [String] api_key
+    # @param [EventCallbackRequestEvent] event
+    # @return bool
+    def self.is_valid(api_key, event)
+      hash = OpenSSL::HMAC.hexdigest(
+        "SHA256",
+        api_key,
+        "#{event.event_time}#{event.event_type}",
+      )
+
+      return event.event_hash === hash
+    end
+  end
+end

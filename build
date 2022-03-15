@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+# see https://github.com/OpenAPITools/openapi-generator/tree/08296c2b1dc732829e3aaa2c2cad7c2c8c44eb8d/modules/openapi-generator/src/main/resources/ruby-client
+
+set -e
+
+WORKINGDIR="/app/ruby"
+
+docker run --rm \
+  -v "${PWD}/:/local" \
+  openapitools/openapi-generator-cli:v5.3.0 generate \
+    -i "/local/oas/openapi-sdk.yaml" \
+    -c "/local/openapi-config.yaml" \
+    -t "/local/templates" \
+    -o "/local/"
+
+printf "\nInstalling composer dependencies ...\n"
+mkdir -p "${PWD}/vendor"
+bash "${PWD}/bin/php" composer install
+printf "\n"
+
+printf "Adding examples to /examples ...\n"
+rm -f "${PWD}/examples/"*.rb
+cp -r "${PWD}/oas/examples/"*.rb "${PWD}/examples/"
+
+printf "Adding examples to Docs ...\n"
+bash "${PWD}/bin/php" ./bin/generate-examples.php
+
+printf "Install Ruby dependencies ...\n"
+bash "${PWD}/bin/ruby" bundle
+
+printf "Replacing strings ...\n"
+docker run -it --rm \
+  -v "${PWD}:${WORKINGDIR}" \
+  -w "${WORKINGDIR}" \
+  perl bash ./bin/replace
+
+printf "Scanning for prohibited keywords ...\n"
+docker run -it --rm \
+  -v "${PWD}:${WORKINGDIR}" \
+  -w "${WORKINGDIR}" \
+  perl bash ./bin/scan_for
+
+printf "Running tests ...\n"
+bash "${PWD}/bin/ruby" bundle exec rspec
+
+printf "Success!\n"

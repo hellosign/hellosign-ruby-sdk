@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+set -e
+DIR=$(cd `dirname $0` && pwd)
+ROOT_DIR="${DIR}/.."
+
+printf "\nRemoving AllOf references ...\n"
+perl -pi -e 's/(.*)AllOf.md\)\n//g' "${ROOT_DIR}/README.md"
+perl -pi -e "s#require '(.*)/models/(.*)_all_of'\n##g" \
+  "${ROOT_DIR}/lib/hello_sign.rb"

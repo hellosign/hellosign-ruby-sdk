@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -e
+DIR=$(cd `dirname $0` && pwd)
+ROOT_DIR="${DIR}/.."
+WORKINGDIR="/app/ruby"
+
+docker run -it --rm \
+  -e GEM_HOME="/.gem-cache" \
+  -e BUNDLE_PATH="/.bundle-cache" \
+  -v "hellosign-sdk-gem-cache:/.gem-cache" \
+  -v "hellosign-sdk-bundle-cache:/.bundle-cache" \
+  -v "${PWD}:${WORKINGDIR}" \
+  -w "${WORKINGDIR}" \
+  ruby:3.1 "$@"

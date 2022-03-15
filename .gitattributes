@@ -1,0 +1,8 @@
+/.openapi-generator export-ignore
+/bin                export-ignore
+/templates          export-ignore
+/spec               export-ignore
+
+/.openapi-generator-ignore  export-ignore
+/.travis.yml                export-ignore
+/build                      export-ignore
