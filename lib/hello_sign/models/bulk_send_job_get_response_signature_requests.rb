@@ -75,8 +75,6 @@ module HelloSign
 
     attr_accessor :signatures
 
-    attr_accessor :warnings
-
     # The id of the BulkSendJob.
     attr_accessor :bulk_send_job_id
 
@@ -104,7 +102,6 @@ module HelloSign
         :'custom_fields' => :'custom_fields',
         :'response_data' => :'response_data',
         :'signatures' => :'signatures',
-        :'warnings' => :'warnings',
         :'bulk_send_job_id' => :'bulk_send_job_id'
       }
     end
@@ -143,7 +140,6 @@ module HelloSign
         :'custom_fields' => :'Array<SignatureRequestResponseCustomField>',
         :'response_data' => :'Array<SignatureRequestResponseData>',
         :'signatures' => :'Array<SignatureRequestResponseSignatures>',
-        :'warnings' => :'Array<WarningResponse>',
         :'bulk_send_job_id' => :'String'
       }
     end
@@ -279,12 +275,6 @@ module HelloSign
         end
       end
 
-      if attributes.key?(:'warnings')
-        if (value = attributes[:'warnings']).is_a?(Array)
-          self.warnings = value
-        end
-      end
-
       if attributes.key?(:'bulk_send_job_id')
         self.bulk_send_job_id = attributes[:'bulk_send_job_id']
       end
@@ -329,7 +319,6 @@ module HelloSign
           custom_fields == o.custom_fields &&
           response_data == o.response_data &&
           signatures == o.signatures &&
-          warnings == o.warnings &&
           bulk_send_job_id == o.bulk_send_job_id
     end
 
@@ -342,7 +331,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [test_mode, signature_request_id, requester_email_address, title, original_title, subject, message, metadata, created_at, is_complete, is_declined, has_error, final_copy_uri, files_url, signing_url, details_url, cc_email_addresses, signing_redirect_url, custom_fields, response_data, signatures, warnings, bulk_send_job_id].hash
+      [test_mode, signature_request_id, requester_email_address, title, original_title, subject, message, metadata, created_at, is_complete, is_declined, has_error, final_copy_uri, files_url, signing_url, details_url, cc_email_addresses, signing_redirect_url, custom_fields, response_data, signatures, bulk_send_job_id].hash
     end
 
     # Builds the object from hash

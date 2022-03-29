@@ -10,7 +10,7 @@ end
 
 api = HelloSign::SignatureRequestApi.new
 
-signer_list_1_signer = HelloSign::SubBulkSignerListSigner.new
+signer_list_1_signer = HelloSign::SubSignatureRequestTemplateSigner.new
 signer_list_1_signer.role = "Client"
 signer_list_1_signer.name = "George"
 signer_list_1_signer.email_address = "george@example.com"
@@ -24,7 +24,7 @@ signer_list_1 = HelloSign::SubBulkSignerList.new
 signer_list_1.signers = [signer_list_1_signer]
 signer_list_1.custom_fields = [signer_list_1_custom_fields]
 
-signer_list_2_signer = HelloSign::SubBulkSignerListSigner.new
+signer_list_2_signer = HelloSign::SubSignatureRequestTemplateSigner.new
 signer_list_2_signer.role = "Client"
 signer_list_2_signer.name = "Mary"
 signer_list_2_signer.email_address = "mary@example.com"

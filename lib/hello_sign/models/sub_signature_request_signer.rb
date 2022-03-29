@@ -21,16 +21,13 @@ module HelloSign
     # The email address of the signer.
     attr_accessor :email_address
 
-    # Name of group. Use this value across multiple signers to group them together. Any of the signers is eligible to sign for the entire group.  Grouped signers will not use the `order`, `pin`, or `sms_phone_number` fields.
-    attr_accessor :group
-
     # The order the signer is required to sign in.
     attr_accessor :order
 
     # The 4- to 12-character access code that will secure this signer's signature page.
     attr_accessor :pin
 
-    # An E.164 formatted phone number that will receive a code via SMS to access this signer's signature page.  **Note**: Not available in test mode and requires a Platinum plan or higher.
+    # An E.164 formatted phone number that will receive a code via SMS to access this signer's signature page.  **Note**: Not available in test mode and requires a Standard plan or higher.
     attr_accessor :sms_phone_number
 
     # Attribute mapping from ruby-style variable name to JSON key.
@@ -38,7 +35,6 @@ module HelloSign
       {
         :'name' => :'name',
         :'email_address' => :'email_address',
-        :'group' => :'group',
         :'order' => :'order',
         :'pin' => :'pin',
         :'sms_phone_number' => :'sms_phone_number'
@@ -60,7 +56,6 @@ module HelloSign
       {
         :'name' => :'String',
         :'email_address' => :'String',
-        :'group' => :'String',
         :'order' => :'Integer',
         :'pin' => :'String',
         :'sms_phone_number' => :'String'
@@ -104,10 +99,6 @@ module HelloSign
 
       if attributes.key?(:'email_address')
         self.email_address = attributes[:'email_address']
-      end
-
-      if attributes.key?(:'group')
-        self.group = attributes[:'group']
       end
 
       if attributes.key?(:'order')
@@ -177,7 +168,6 @@ module HelloSign
       self.class == o.class &&
           name == o.name &&
           email_address == o.email_address &&
-          group == o.group &&
           order == o.order &&
           pin == o.pin &&
           sms_phone_number == o.sms_phone_number
@@ -192,7 +182,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [name, email_address, group, order, pin, sms_phone_number].hash
+      [name, email_address, order, pin, sms_phone_number].hash
     end
 
     # Builds the object from hash

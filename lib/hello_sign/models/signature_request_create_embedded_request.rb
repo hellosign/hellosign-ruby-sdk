@@ -126,7 +126,7 @@ module HelloSign
         :'form_fields_per_document' => :'Array<Array<SubFormFieldsPerDocumentBase>>',
         :'message' => :'String',
         :'metadata' => :'Hash<String, Object>',
-        :'signers' => :'Array<SubSignatureRequestEmbeddedSigner>',
+        :'signers' => :'Array<SubSignatureRequestSigner>',
         :'signing_options' => :'SubSigningOptions',
         :'subject' => :'String',
         :'test_mode' => :'Boolean',

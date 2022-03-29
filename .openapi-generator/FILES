@@ -38,6 +38,7 @@ docs/EmbeddedEditUrlResponseEmbedded.md
 docs/EmbeddedSignUrlResponse.md
 docs/EmbeddedSignUrlResponseEmbedded.md
 docs/ErrorResponse.md
+docs/ErrorResponseError.md
 docs/EventCallbackAccountRequest.md
 docs/EventCallbackAccountRequestPayload.md
 docs/EventCallbackApiAppRequest.md
@@ -72,7 +73,6 @@ docs/SignatureRequestUpdateRequest.md
 docs/SubAttachment.md
 docs/SubBulkSignerList.md
 docs/SubBulkSignerListCustomField.md
-docs/SubBulkSignerListSigner.md
 docs/SubCC.md
 docs/SubCustomField.md
 docs/SubEditorOptions.md
@@ -96,15 +96,12 @@ docs/SubFormFieldsPerDocumentTypeEnum.md
 docs/SubMergeField.md
 docs/SubOAuth.md
 docs/SubOptions.md
-docs/SubSignatureRequestEmbeddedSigner.md
-docs/SubSignatureRequestEmbeddedTemplateSigner.md
 docs/SubSignatureRequestSigner.md
 docs/SubSignatureRequestTemplateSigner.md
 docs/SubSigningOptions.md
 docs/SubTemplateRole.md
-docs/SubUnclaimedDraftEmbeddedSigner.md
-docs/SubUnclaimedDraftEmbeddedTemplateSigner.md
 docs/SubUnclaimedDraftSigner.md
+docs/SubUnclaimedDraftTemplateSigner.md
 docs/SubWhiteLabelingOptions.md
 docs/TeamAddMemberRequest.md
 docs/TeamApi.md
@@ -189,6 +186,7 @@ lib/hello_sign/models/embedded_edit_url_response_embedded.rb
 lib/hello_sign/models/embedded_sign_url_response.rb
 lib/hello_sign/models/embedded_sign_url_response_embedded.rb
 lib/hello_sign/models/error_response.rb
+lib/hello_sign/models/error_response_error.rb
 lib/hello_sign/models/event_callback_account_request.rb
 lib/hello_sign/models/event_callback_account_request_payload.rb
 lib/hello_sign/models/event_callback_api_app_request.rb
@@ -220,7 +218,6 @@ lib/hello_sign/models/signature_request_update_request.rb
 lib/hello_sign/models/sub_attachment.rb
 lib/hello_sign/models/sub_bulk_signer_list.rb
 lib/hello_sign/models/sub_bulk_signer_list_custom_field.rb
-lib/hello_sign/models/sub_bulk_signer_list_signer.rb
 lib/hello_sign/models/sub_cc.rb
 lib/hello_sign/models/sub_custom_field.rb
 lib/hello_sign/models/sub_editor_options.rb
@@ -244,15 +241,12 @@ lib/hello_sign/models/sub_form_fields_per_document_type_enum.rb
 lib/hello_sign/models/sub_merge_field.rb
 lib/hello_sign/models/sub_o_auth.rb
 lib/hello_sign/models/sub_options.rb
-lib/hello_sign/models/sub_signature_request_embedded_signer.rb
-lib/hello_sign/models/sub_signature_request_embedded_template_signer.rb
 lib/hello_sign/models/sub_signature_request_signer.rb
 lib/hello_sign/models/sub_signature_request_template_signer.rb
 lib/hello_sign/models/sub_signing_options.rb
 lib/hello_sign/models/sub_template_role.rb
-lib/hello_sign/models/sub_unclaimed_draft_embedded_signer.rb
-lib/hello_sign/models/sub_unclaimed_draft_embedded_template_signer.rb
 lib/hello_sign/models/sub_unclaimed_draft_signer.rb
+lib/hello_sign/models/sub_unclaimed_draft_template_signer.rb
 lib/hello_sign/models/sub_white_labeling_options.rb
 lib/hello_sign/models/team_add_member_request.rb
 lib/hello_sign/models/team_create_request.rb

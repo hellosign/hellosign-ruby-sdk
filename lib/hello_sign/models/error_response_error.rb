@@ -14,30 +14,19 @@ require 'date'
 require 'time'
 
 module HelloSign
-  class SubSignatureRequestEmbeddedSigner
-    # The name of the signer.
-    attr_accessor :name
+  class ErrorResponseError
+    attr_accessor :error_msg
 
-    # The email address of the signer.
-    attr_accessor :email_address
+    attr_accessor :error_name
 
-    # The order the signer is required to sign in.
-    attr_accessor :order
-
-    # The 4- to 12-character access code that will secure this signer's signature page.
-    attr_accessor :pin
-
-    # An E.164 formatted phone number that will receive a code via SMS to access this signer's signature page.  **Note**: Not available in test mode and requires a Platinum plan or higher.
-    attr_accessor :sms_phone_number
+    attr_accessor :error_path
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'name' => :'name',
-        :'email_address' => :'email_address',
-        :'order' => :'order',
-        :'pin' => :'pin',
-        :'sms_phone_number' => :'sms_phone_number'
+        :'error_msg' => :'error_msg',
+        :'error_name' => :'error_name',
+        :'error_path' => :'error_path'
       }
     end
 
@@ -54,11 +43,9 @@ module HelloSign
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'name' => :'String',
-        :'email_address' => :'String',
-        :'order' => :'Integer',
-        :'pin' => :'String',
-        :'sms_phone_number' => :'String'
+        :'error_msg' => :'String',
+        :'error_name' => :'String',
+        :'error_path' => :'String'
       }
     end
 
@@ -82,35 +69,27 @@ module HelloSign
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `HelloSign::SubSignatureRequestEmbeddedSigner` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `HelloSign::ErrorResponseError` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!self.class.merged_attributes.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `HelloSign::SubSignatureRequestEmbeddedSigner`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `HelloSign::ErrorResponseError`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'name')
-        self.name = attributes[:'name']
+      if attributes.key?(:'error_msg')
+        self.error_msg = attributes[:'error_msg']
       end
 
-      if attributes.key?(:'email_address')
-        self.email_address = attributes[:'email_address']
+      if attributes.key?(:'error_name')
+        self.error_name = attributes[:'error_name']
       end
 
-      if attributes.key?(:'order')
-        self.order = attributes[:'order']
-      end
-
-      if attributes.key?(:'pin')
-        self.pin = attributes[:'pin']
-      end
-
-      if attributes.key?(:'sms_phone_number')
-        self.sms_phone_number = attributes[:'sms_phone_number']
+      if attributes.key?(:'error_path')
+        self.error_path = attributes[:'error_path']
       end
     end
 
@@ -118,20 +97,12 @@ module HelloSign
     # @return Array for valid properties with the reasons
     def list_invalid_properties
       invalid_properties = Array.new
-      if @name.nil?
-        invalid_properties.push('invalid value for "name", name cannot be nil.')
+      if @error_msg.nil?
+        invalid_properties.push('invalid value for "error_msg", error_msg cannot be nil.')
       end
 
-      if @email_address.nil?
-        invalid_properties.push('invalid value for "email_address", email_address cannot be nil.')
-      end
-
-      if !@pin.nil? && @pin.to_s.length > 12
-        invalid_properties.push('invalid value for "pin", the character length must be smaller than or equal to 12.')
-      end
-
-      if !@pin.nil? && @pin.to_s.length < 4
-        invalid_properties.push('invalid value for "pin", the character length must be great than or equal to 4.')
+      if @error_name.nil?
+        invalid_properties.push('invalid value for "error_name", error_name cannot be nil.')
       end
 
       invalid_properties
@@ -140,25 +111,9 @@ module HelloSign
     # Check to see if the all the properties in the model are valid
     # @return true if the model is valid
     def valid?
-      return false if @name.nil?
-      return false if @email_address.nil?
-      return false if !@pin.nil? && @pin.to_s.length > 12
-      return false if !@pin.nil? && @pin.to_s.length < 4
+      return false if @error_msg.nil?
+      return false if @error_name.nil?
       true
-    end
-
-    # Custom attribute writer method with validation
-    # @param [Object] pin Value to be assigned
-    def pin=(pin)
-      if !pin.nil? && pin.to_s.length > 12
-        fail ArgumentError, 'invalid value for "pin", the character length must be smaller than or equal to 12.'
-      end
-
-      if !pin.nil? && pin.to_s.length < 4
-        fail ArgumentError, 'invalid value for "pin", the character length must be great than or equal to 4.'
-      end
-
-      @pin = pin
     end
 
     # Checks equality by comparing each attribute.
@@ -166,11 +121,9 @@ module HelloSign
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          name == o.name &&
-          email_address == o.email_address &&
-          order == o.order &&
-          pin == o.pin &&
-          sms_phone_number == o.sms_phone_number
+          error_msg == o.error_msg &&
+          error_name == o.error_name &&
+          error_path == o.error_path
     end
 
     # @see the `==` method
@@ -182,7 +135,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [name, email_address, order, pin, sms_phone_number].hash
+      [error_msg, error_name, error_path].hash
     end
 
     # Builds the object from hash

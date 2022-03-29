@@ -17,10 +17,13 @@ module HelloSign
   class SignatureRequestGetResponse
     attr_accessor :signature_request
 
+    attr_accessor :warnings
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'signature_request' => :'signature_request'
+        :'signature_request' => :'signature_request',
+        :'warnings' => :'warnings'
       }
     end
 
@@ -37,7 +40,8 @@ module HelloSign
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'signature_request' => :'SignatureRequestResponse'
+        :'signature_request' => :'SignatureRequestResponse',
+        :'warnings' => :'Array<WarningResponse>'
       }
     end
 
@@ -75,6 +79,12 @@ module HelloSign
       if attributes.key?(:'signature_request')
         self.signature_request = attributes[:'signature_request']
       end
+
+      if attributes.key?(:'warnings')
+        if (value = attributes[:'warnings']).is_a?(Array)
+          self.warnings = value
+        end
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -95,7 +105,8 @@ module HelloSign
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          signature_request == o.signature_request
+          signature_request == o.signature_request &&
+          warnings == o.warnings
     end
 
     # @see the `==` method
@@ -107,7 +118,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [signature_request].hash
+      [signature_request, warnings].hash
     end
 
     # Builds the object from hash

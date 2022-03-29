@@ -149,7 +149,7 @@ module HelloSign
         :'preview_only' => :'Boolean',
         :'requesting_redirect_url' => :'String',
         :'show_preview' => :'Boolean',
-        :'signers' => :'Array<SubUnclaimedDraftEmbeddedTemplateSigner>',
+        :'signers' => :'Array<SubUnclaimedDraftTemplateSigner>',
         :'signing_options' => :'SubSigningOptions',
         :'signing_redirect_url' => :'String',
         :'skip_me_now' => :'Boolean',

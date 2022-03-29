@@ -27,7 +27,7 @@
 | `message` | ```String``` |  The custom message in the email that will be sent to the signers.  |  |
 | `metadata` | ```Hash<String, Object>``` |  Key-value data that should be attached to the signature request. This metadata is included in all API responses and events involving the signature request. For example, use the metadata field to store a signer&#39;s order number for look up when receiving events for the signature request.<br><br>Each request can include up to 10 metadata keys, with key names up to 40 characters long and values up to 1000 characters long.  |  |
 | `show_preview` | ```Boolean``` |  This allows the requester to enable the editor/preview experience.<br><br>- `show_preview&#x3D;true`: Allows requesters to enable the editor/preview experience. - `show_preview&#x3D;false`: Allows requesters to disable the editor/preview experience.  |  |
-| `signers` | [```Array<SubUnclaimedDraftEmbeddedSigner>```](SubUnclaimedDraftEmbeddedSigner.md) |  Add Signers to your Unclaimed Draft Signature Request.  |  |
+| `signers` | [```Array<SubUnclaimedDraftSigner>```](SubUnclaimedDraftSigner.md) |  Add Signers to your Unclaimed Draft Signature Request.  |  |
 | `signing_options` | [```SubSigningOptions```](SubSigningOptions.md) |    |  |
 | `signing_redirect_url` | ```String``` |  The URL you want signers redirected to after they successfully sign.  |  |
 | `skip_me_now` | ```Boolean``` |  Disables the &quot;Me (Now)&quot; option for the person preparing the document. Does not work with type `send_document`. Defaults to `false`.  |  [default to false] |

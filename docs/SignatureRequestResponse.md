@@ -27,5 +27,4 @@
 | `custom_fields` | [```Array<SignatureRequestResponseCustomField>```](SignatureRequestResponseCustomField.md) |    |  |
 | `response_data` | [```Array<SignatureRequestResponseData>```](SignatureRequestResponseData.md) |    |  |
 | `signatures` | [```Array<SignatureRequestResponseSignatures>```](SignatureRequestResponseSignatures.md) |    |  |
-| `warnings` | [```Array<WarningResponse>```](WarningResponse.md) |    |  |
 

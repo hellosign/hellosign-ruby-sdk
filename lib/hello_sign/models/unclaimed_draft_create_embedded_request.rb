@@ -193,7 +193,7 @@ module HelloSign
         :'message' => :'String',
         :'metadata' => :'Hash<String, Object>',
         :'show_preview' => :'Boolean',
-        :'signers' => :'Array<SubUnclaimedDraftEmbeddedSigner>',
+        :'signers' => :'Array<SubUnclaimedDraftSigner>',
         :'signing_options' => :'SubSigningOptions',
         :'signing_redirect_url' => :'String',
         :'skip_me_now' => :'Boolean',

@@ -19,9 +19,6 @@ module HelloSign
     attr_accessor :num_pages
 
     # Total number of objects available
-    attr_accessor :num_response
-
-    # Total number of objects available
     attr_accessor :num_results
 
     # Number of the page being returned
@@ -34,7 +31,6 @@ module HelloSign
     def self.attribute_map
       {
         :'num_pages' => :'num_pages',
-        :'num_response' => :'num_response',
         :'num_results' => :'num_results',
         :'page' => :'page',
         :'page_size' => :'page_size'
@@ -55,7 +51,6 @@ module HelloSign
     def self.openapi_types
       {
         :'num_pages' => :'Integer',
-        :'num_response' => :'Integer',
         :'num_results' => :'Integer',
         :'page' => :'Integer',
         :'page_size' => :'Integer'
@@ -70,7 +65,6 @@ module HelloSign
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
-        :'num_response',
         :'num_results',
       ])
     end
@@ -97,10 +91,6 @@ module HelloSign
 
       if attributes.key?(:'num_pages')
         self.num_pages = attributes[:'num_pages']
-      end
-
-      if attributes.key?(:'num_response')
-        self.num_response = attributes[:'num_response']
       end
 
       if attributes.key?(:'num_results')
@@ -135,7 +125,6 @@ module HelloSign
       return true if self.equal?(o)
       self.class == o.class &&
           num_pages == o.num_pages &&
-          num_response == o.num_response &&
           num_results == o.num_results &&
           page == o.page &&
           page_size == o.page_size
@@ -150,7 +139,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [num_pages, num_response, num_results, page, page_size].hash
+      [num_pages, num_results, page, page_size].hash
     end
 
     # Builds the object from hash

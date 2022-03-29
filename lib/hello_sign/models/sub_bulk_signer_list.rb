@@ -18,7 +18,7 @@ module HelloSign
     # An array of custom field values.
     attr_accessor :custom_fields
 
-    # Add Signers to your Templated-based Signature Request. Allows the requester to specify editor options when a preparing a document
+    # Add Signers to your Templated-based Signature Request. Allows the requester to specify editor options when a preparing a document.  Currently only templates with a single role are supported. All signers must have the same `role` value.
     attr_accessor :signers
 
     # Attribute mapping from ruby-style variable name to JSON key.
@@ -43,7 +43,7 @@ module HelloSign
     def self.openapi_types
       {
         :'custom_fields' => :'Array<SubBulkSignerListCustomField>',
-        :'signers' => :'Array<SubBulkSignerListSigner>'
+        :'signers' => :'Array<SubSignatureRequestTemplateSigner>'
       }
     end
 

@@ -10,12 +10,12 @@ end
 
 api = HelloSign::SignatureRequestApi.new
 
-signer_1 = HelloSign::SubSignatureRequestEmbeddedSigner.new
+signer_1 = HelloSign::SubSignatureRequestSigner.new
 signer_1.email_address = "jack@example.com"
 signer_1.name = "Jack"
 signer_1.order = 0
 
-signer_2 = HelloSign::SubSignatureRequestEmbeddedSigner.new
+signer_2 = HelloSign::SubSignatureRequestSigner.new
 signer_2.email_address = "jill@example.com"
 signer_2.name = "Jill"
 signer_2.order = 1

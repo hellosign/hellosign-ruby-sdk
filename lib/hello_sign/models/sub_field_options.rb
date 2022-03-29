@@ -16,7 +16,7 @@ require 'time'
 module HelloSign
   # This allows the requester to specify field options for a signature request.
   class SubFieldOptions
-    # Allows requester to specify the date format (see list of allowed [formats](https://app.hellosign.com/api/reference#DateFormats))  **Note**: Only available for Platinum and higher.
+    # Allows requester to specify the date format (see list of allowed [formats](https://app.hellosign.com/api/reference#DateFormats))  **Note**: Only available for Premium and higher.
     attr_accessor :date_format
 
     class EnumAttributeValidator

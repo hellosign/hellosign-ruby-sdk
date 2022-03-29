@@ -99,7 +99,7 @@ module HelloSign
         :'file_url' => :'Array<String>',
         :'message' => :'String',
         :'metadata' => :'Hash<String, Object>',
-        :'signers' => :'Array<SubSignatureRequestEmbeddedTemplateSigner>',
+        :'signers' => :'Array<SubSignatureRequestTemplateSigner>',
         :'signing_options' => :'SubSigningOptions',
         :'subject' => :'String',
         :'test_mode' => :'Boolean',

@@ -10,7 +10,7 @@ end
 
 api = HelloSign::UnclaimedDraftApi.new
 
-signer_1 = HelloSign::SubUnclaimedDraftEmbeddedTemplateSigner.new
+signer_1 = HelloSign::SubUnclaimedDraftTemplateSigner.new
 signer_1.role = "Client"
 signer_1.name = "George"
 signer_1.email_address = "george@example.com"

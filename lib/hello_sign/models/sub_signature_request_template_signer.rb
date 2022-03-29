@@ -15,7 +15,7 @@ require 'time'
 
 module HelloSign
   class SubSignatureRequestTemplateSigner
-    # Must match an existing role in chosen Template(s). If multiple signers share the same `role` name they will be grouped together. Any of these grouped signers is eligible to sign for the entire group.  Grouped signers will not use the `pin` or `sms_phone_number` fields.
+    # Must match an existing role in chosen Template(s).
     attr_accessor :role
 
     # The name of the signer.
@@ -27,7 +27,7 @@ module HelloSign
     # The 4- to 12-character access code that will secure this signer's signature page.
     attr_accessor :pin
 
-    # An E.164 formatted phone number that will receive a code via SMS to access this signer's signature page.  **Note**: Not available in test mode and requires a Platinum plan or higher.
+    # An E.164 formatted phone number that will receive a code via SMS to access this signer's signature page.  **Note**: Not available in test mode and requires a Standard plan or higher.
     attr_accessor :sms_phone_number
 
     # Attribute mapping from ruby-style variable name to JSON key.

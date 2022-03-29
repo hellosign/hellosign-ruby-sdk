@@ -14,30 +14,22 @@ require 'date'
 require 'time'
 
 module HelloSign
-  class SubBulkSignerListSigner
-    # Must match the single existing role in chosen Template(s). Currently only templates with a single role are supported. All signers must have the same `role` value.
+  class SubUnclaimedDraftTemplateSigner
+    # Must match an existing role in chosen Template(s).
     attr_accessor :role
 
-    # The name of the signer.
+    # The name of the signer filling the role of `role`.
     attr_accessor :name
 
-    # The email address of the signer.
+    # The email address of the signer filling the role of `role`.
     attr_accessor :email_address
-
-    # The 4- to 12-character access code that will secure this signer's signature page.
-    attr_accessor :pin
-
-    # An E.164 formatted phone number that will receive a code via SMS to access this signer's signature page.  **Note**: Not available in test mode and requires a Platinum plan or higher.
-    attr_accessor :sms_phone_number
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'role' => :'role',
         :'name' => :'name',
-        :'email_address' => :'email_address',
-        :'pin' => :'pin',
-        :'sms_phone_number' => :'sms_phone_number'
+        :'email_address' => :'email_address'
       }
     end
 
@@ -56,9 +48,7 @@ module HelloSign
       {
         :'role' => :'String',
         :'name' => :'String',
-        :'email_address' => :'String',
-        :'pin' => :'String',
-        :'sms_phone_number' => :'String'
+        :'email_address' => :'String'
       }
     end
 
@@ -82,13 +72,13 @@ module HelloSign
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `HelloSign::SubBulkSignerListSigner` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `HelloSign::SubUnclaimedDraftTemplateSigner` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!self.class.merged_attributes.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `HelloSign::SubBulkSignerListSigner`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `HelloSign::SubUnclaimedDraftTemplateSigner`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
@@ -103,14 +93,6 @@ module HelloSign
 
       if attributes.key?(:'email_address')
         self.email_address = attributes[:'email_address']
-      end
-
-      if attributes.key?(:'pin')
-        self.pin = attributes[:'pin']
-      end
-
-      if attributes.key?(:'sms_phone_number')
-        self.sms_phone_number = attributes[:'sms_phone_number']
       end
     end
 
@@ -130,14 +112,6 @@ module HelloSign
         invalid_properties.push('invalid value for "email_address", email_address cannot be nil.')
       end
 
-      if !@pin.nil? && @pin.to_s.length > 12
-        invalid_properties.push('invalid value for "pin", the character length must be smaller than or equal to 12.')
-      end
-
-      if !@pin.nil? && @pin.to_s.length < 4
-        invalid_properties.push('invalid value for "pin", the character length must be great than or equal to 4.')
-      end
-
       invalid_properties
     end
 
@@ -147,23 +121,7 @@ module HelloSign
       return false if @role.nil?
       return false if @name.nil?
       return false if @email_address.nil?
-      return false if !@pin.nil? && @pin.to_s.length > 12
-      return false if !@pin.nil? && @pin.to_s.length < 4
       true
-    end
-
-    # Custom attribute writer method with validation
-    # @param [Object] pin Value to be assigned
-    def pin=(pin)
-      if !pin.nil? && pin.to_s.length > 12
-        fail ArgumentError, 'invalid value for "pin", the character length must be smaller than or equal to 12.'
-      end
-
-      if !pin.nil? && pin.to_s.length < 4
-        fail ArgumentError, 'invalid value for "pin", the character length must be great than or equal to 4.'
-      end
-
-      @pin = pin
     end
 
     # Checks equality by comparing each attribute.
@@ -173,9 +131,7 @@ module HelloSign
       self.class == o.class &&
           role == o.role &&
           name == o.name &&
-          email_address == o.email_address &&
-          pin == o.pin &&
-          sms_phone_number == o.sms_phone_number
+          email_address == o.email_address
     end
 
     # @see the `==` method
@@ -187,7 +143,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [role, name, email_address, pin, sms_phone_number].hash
+      [role, name, email_address].hash
     end
 
     # Builds the object from hash

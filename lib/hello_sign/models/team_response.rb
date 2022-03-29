@@ -23,15 +23,12 @@ module HelloSign
     # A list of all Accounts that have an outstanding invitation to join your Team. Note that this response is a subset of the response parameters found in `GET /account`.
     attr_accessor :invited_accounts
 
-    attr_accessor :warnings
-
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'name' => :'name',
         :'accounts' => :'accounts',
-        :'invited_accounts' => :'invited_accounts',
-        :'warnings' => :'warnings'
+        :'invited_accounts' => :'invited_accounts'
       }
     end
 
@@ -50,8 +47,7 @@ module HelloSign
       {
         :'name' => :'String',
         :'accounts' => :'Array<AccountResponse>',
-        :'invited_accounts' => :'Array<AccountResponse>',
-        :'warnings' => :'Array<WarningResponse>'
+        :'invited_accounts' => :'Array<AccountResponse>'
       }
     end
 
@@ -101,12 +97,6 @@ module HelloSign
           self.invited_accounts = value
         end
       end
-
-      if attributes.key?(:'warnings')
-        if (value = attributes[:'warnings']).is_a?(Array)
-          self.warnings = value
-        end
-      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -129,8 +119,7 @@ module HelloSign
       self.class == o.class &&
           name == o.name &&
           accounts == o.accounts &&
-          invited_accounts == o.invited_accounts &&
-          warnings == o.warnings
+          invited_accounts == o.invited_accounts
     end
 
     # @see the `==` method
@@ -142,7 +131,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [name, accounts, invited_accounts, warnings].hash
+      [name, accounts, invited_accounts].hash
     end
 
     # Builds the object from hash

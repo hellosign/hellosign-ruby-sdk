@@ -15,18 +15,12 @@ require 'time'
 
 module HelloSign
   class ErrorResponse
-    attr_accessor :error_msg
-
-    attr_accessor :error_name
-
-    attr_accessor :error_path
+    attr_accessor :error
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'error_msg' => :'error_msg',
-        :'error_name' => :'error_name',
-        :'error_path' => :'error_path'
+        :'error' => :'error'
       }
     end
 
@@ -43,9 +37,7 @@ module HelloSign
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'error_msg' => :'String',
-        :'error_name' => :'String',
-        :'error_path' => :'String'
+        :'error' => :'ErrorResponseError'
       }
     end
 
@@ -80,16 +72,8 @@ module HelloSign
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'error_msg')
-        self.error_msg = attributes[:'error_msg']
-      end
-
-      if attributes.key?(:'error_name')
-        self.error_name = attributes[:'error_name']
-      end
-
-      if attributes.key?(:'error_path')
-        self.error_path = attributes[:'error_path']
+      if attributes.key?(:'error')
+        self.error = attributes[:'error']
       end
     end
 
@@ -97,12 +81,8 @@ module HelloSign
     # @return Array for valid properties with the reasons
     def list_invalid_properties
       invalid_properties = Array.new
-      if @error_msg.nil?
-        invalid_properties.push('invalid value for "error_msg", error_msg cannot be nil.')
-      end
-
-      if @error_name.nil?
-        invalid_properties.push('invalid value for "error_name", error_name cannot be nil.')
+      if @error.nil?
+        invalid_properties.push('invalid value for "error", error cannot be nil.')
       end
 
       invalid_properties
@@ -111,8 +91,7 @@ module HelloSign
     # Check to see if the all the properties in the model are valid
     # @return true if the model is valid
     def valid?
-      return false if @error_msg.nil?
-      return false if @error_name.nil?
+      return false if @error.nil?
       true
     end
 
@@ -121,9 +100,7 @@ module HelloSign
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          error_msg == o.error_msg &&
-          error_name == o.error_name &&
-          error_path == o.error_path
+          error == o.error
     end
 
     # @see the `==` method
@@ -135,7 +112,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [error_msg, error_name, error_path].hash
+      [error].hash
     end
 
     # Builds the object from hash

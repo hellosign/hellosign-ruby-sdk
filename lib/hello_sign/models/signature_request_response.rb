@@ -75,8 +75,6 @@ module HelloSign
 
     attr_accessor :signatures
 
-    attr_accessor :warnings
-
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
@@ -100,8 +98,7 @@ module HelloSign
         :'signing_redirect_url' => :'signing_redirect_url',
         :'custom_fields' => :'custom_fields',
         :'response_data' => :'response_data',
-        :'signatures' => :'signatures',
-        :'warnings' => :'warnings'
+        :'signatures' => :'signatures'
       }
     end
 
@@ -138,8 +135,7 @@ module HelloSign
         :'signing_redirect_url' => :'String',
         :'custom_fields' => :'Array<SignatureRequestResponseCustomField>',
         :'response_data' => :'Array<SignatureRequestResponseData>',
-        :'signatures' => :'Array<SignatureRequestResponseSignatures>',
-        :'warnings' => :'Array<WarningResponse>'
+        :'signatures' => :'Array<SignatureRequestResponseSignatures>'
       }
     end
 
@@ -273,12 +269,6 @@ module HelloSign
           self.signatures = value
         end
       end
-
-      if attributes.key?(:'warnings')
-        if (value = attributes[:'warnings']).is_a?(Array)
-          self.warnings = value
-        end
-      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -319,8 +309,7 @@ module HelloSign
           signing_redirect_url == o.signing_redirect_url &&
           custom_fields == o.custom_fields &&
           response_data == o.response_data &&
-          signatures == o.signatures &&
-          warnings == o.warnings
+          signatures == o.signatures
     end
 
     # @see the `==` method
@@ -332,7 +321,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [test_mode, signature_request_id, requester_email_address, title, original_title, subject, message, metadata, created_at, is_complete, is_declined, has_error, final_copy_uri, files_url, signing_url, details_url, cc_email_addresses, signing_redirect_url, custom_fields, response_data, signatures, warnings].hash
+      [test_mode, signature_request_id, requester_email_address, title, original_title, subject, message, metadata, created_at, is_complete, is_declined, has_error, final_copy_uri, files_url, signing_url, details_url, cc_email_addresses, signing_redirect_url, custom_fields, response_data, signatures].hash
     end
 
     # Builds the object from hash
