@@ -21,6 +21,28 @@ describe HelloSign::AccountApi do
   context 'AccountApiTest' do
     api = HelloSign::AccountApi.new
 
+    it 'testHttpCodeRange' do
+      request_class = 'AccountCreateRequest'
+      request_data = get_fixture_data(request_class)[:default]
+
+      response_class = 'ErrorResponse'
+      response_data = get_fixture_data(response_class)[:default]
+
+      code = rand(400..499)
+
+      set_expected_response(code, JSON.dump(response_data))
+      expected = api_client.convert_to_type(response_data, response_class)
+      obj = api_client.convert_to_type(request_data, request_class)
+
+      begin
+        result = api.account_create(obj)
+        fail_with("Should have thrown error: #{result}")
+      rescue HelloSign::ApiError => e
+        expect(e.response_body.class.to_s).to eq("HelloSign::#{response_class}")
+        expect(e.response_body.to_json).to be_json_eql(expected.to_json)
+      end
+    end
+
     it 'testAccountCreate' do
       request_class = 'AccountCreateRequest'
       request_data = get_fixture_data(request_class)[:default]
