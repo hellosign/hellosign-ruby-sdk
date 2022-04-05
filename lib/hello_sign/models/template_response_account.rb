@@ -63,7 +63,7 @@ module HelloSign
         :'is_locked' => :'Boolean',
         :'is_paid_hs' => :'Boolean',
         :'is_paid_hf' => :'Boolean',
-        :'quotas' => :'Array<TemplateResponseAccountQuota>'
+        :'quotas' => :'TemplateResponseAccountQuota'
       }
     end
 
@@ -119,9 +119,7 @@ module HelloSign
       end
 
       if attributes.key?(:'quotas')
-        if (value = attributes[:'quotas']).is_a?(Array)
-          self.quotas = value
-        end
+        self.quotas = attributes[:'quotas']
       end
     end
 

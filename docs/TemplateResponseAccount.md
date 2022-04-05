@@ -11,5 +11,5 @@ An array of the Accounts that can use this Template.
 | `is_locked` | ```Boolean``` |  Returns true if the user has been locked out of their account by a team admin.  |  |
 | `is_paid_hs` | ```Boolean``` |  Returns true if the user has a paid HelloSign account.  |  |
 | `is_paid_hf` | ```Boolean``` |  Returns true if the user has a paid HelloFax account.  |  |
-| `quotas` | [```Array<TemplateResponseAccountQuota>```](TemplateResponseAccountQuota.md) |    |  |
+| `quotas` | [```TemplateResponseAccountQuota```](TemplateResponseAccountQuota.md) |    |  |
 
