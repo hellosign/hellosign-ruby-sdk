@@ -19,7 +19,7 @@ module HelloSign
     # The name of the form field group.
     attr_accessor :name
 
-    # The rule used to validate checkboxes in the form field group. See [checkbox field grouping](https://app.hellosign.com/api/reference#CheckboxFieldGrouping).
+    # The rule used to validate checkboxes in the form field group. See [checkbox field grouping](/api/reference/constants/#checkbox-field-grouping).
     attr_accessor :rule
 
     # Attribute mapping from ruby-style variable name to JSON key.

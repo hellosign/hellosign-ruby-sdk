@@ -724,7 +724,7 @@ module HelloSign
     end
 
     # List Signature Requests
-    # Returns a list of SignatureRequests that you can access. This includes SignatureRequests you have sent as well as received, but not ones that you have been CCed on.  Take a look at our [search guide](https://app.hellosign.com/api/reference#Search) to learn more about querying signature requests.
+    # Returns a list of SignatureRequests that you can access. This includes SignatureRequests you have sent as well as received, but not ones that you have been CCed on.  Take a look at our [search guide](/api/reference/search/) to learn more about querying signature requests.
     # @param [Hash] opts the optional parameters
     # @option opts [String] :account_id Which account to return SignatureRequests for. Must be a team member. Use &#x60;all&#x60; to indicate all team members. Defaults to your account.
     # @option opts [Integer] :page Which page number of the SignatureRequest List to return. Defaults to &#x60;1&#x60;. (default to 1)
@@ -737,7 +737,7 @@ module HelloSign
     end
 
     # List Signature Requests
-    # Returns a list of SignatureRequests that you can access. This includes SignatureRequests you have sent as well as received, but not ones that you have been CCed on.  Take a look at our [search guide](https://app.hellosign.com/api/reference#Search) to learn more about querying signature requests.
+    # Returns a list of SignatureRequests that you can access. This includes SignatureRequests you have sent as well as received, but not ones that you have been CCed on.  Take a look at our [search guide](/api/reference/search/) to learn more about querying signature requests.
     # @param [Hash] opts the optional parameters
     # @option opts [String] :account_id Which account to return SignatureRequests for. Must be a team member. Use &#x60;all&#x60; to indicate all team members. Defaults to your account.
     # @option opts [Integer] :page Which page number of the SignatureRequest List to return. Defaults to &#x60;1&#x60;.
@@ -824,7 +824,7 @@ module HelloSign
     end
 
     # Release On-Hold Signature Request
-    # Releases a held SignatureRequest that was claimed and prepared from an [UnclaimedDraft](https://app.hellosign.com/api/reference#UnclaimedDraft). The owner of the Draft must indicate at Draft creation that the SignatureRequest created from the Draft should be held. Releasing the SignatureRequest will send requests to all signers.
+    # Releases a held SignatureRequest that was claimed and prepared from an [UnclaimedDraft](/api/reference/tag/Unclaimed-Draft). The owner of the Draft must indicate at Draft creation that the SignatureRequest created from the Draft should be held. Releasing the SignatureRequest will send requests to all signers.
     # @param signature_request_id [String] The id of the SignatureRequest to release.
     # @param [Hash] opts the optional parameters
     # @return [SignatureRequestGetResponse]
@@ -834,7 +834,7 @@ module HelloSign
     end
 
     # Release On-Hold Signature Request
-    # Releases a held SignatureRequest that was claimed and prepared from an [UnclaimedDraft](https://app.hellosign.com/api/reference#UnclaimedDraft). The owner of the Draft must indicate at Draft creation that the SignatureRequest created from the Draft should be held. Releasing the SignatureRequest will send requests to all signers.
+    # Releases a held SignatureRequest that was claimed and prepared from an [UnclaimedDraft](/api/reference/tag/Unclaimed-Draft). The owner of the Draft must indicate at Draft creation that the SignatureRequest created from the Draft should be held. Releasing the SignatureRequest will send requests to all signers.
     # @param signature_request_id [String] The id of the SignatureRequest to release.
     # @param [Hash] opts the optional parameters
     # @return [Array<(SignatureRequestGetResponse, Integer, Hash)>] SignatureRequestGetResponse data, response status code and response headers

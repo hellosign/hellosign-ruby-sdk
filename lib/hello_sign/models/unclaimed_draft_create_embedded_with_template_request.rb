@@ -46,7 +46,7 @@ module HelloSign
     # **file** or **file_url** is required, but not both.  Append additional files to the signature request. HelloSign will parse the files for [text tags](https://app.hellosign.com/api/textTagsWalkthrough). Text tags for signers not on the template(s) will be ignored.  Use `file_url[]` to have HelloSign download the file(s).  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.
     attr_accessor :file_url
 
-    # The request from this draft will not automatically send to signers post-claim if set to 1. Requester must [release](https://app.hellosign.com/api/reference#release_on-hold_signature_request) the request from hold when ready to send. Defaults to `false`.
+    # The request from this draft will not automatically send to signers post-claim if set to 1. Requester must [release](/api/reference/operation/signatureRequestReleaseHold/) the request from hold when ready to send. Defaults to `false`.
     attr_accessor :hold_request
 
     # The request created from this draft will also be signable in embedded mode if set to `true`. Defaults to `false`.

@@ -22,10 +22,10 @@ module HelloSign
     # Placeholder value for text field.
     attr_accessor :placeholder
 
-    # Auto fill type for populating fields automatically. Check out the list of [auto fill types](https://app.hellosign.com/api/reference#AutoFillTypes) to learn more about the possible values.
+    # Auto fill type for populating fields automatically. Check out the list of [auto fill types](/api/reference/constants/#auto-fill-types) to learn more about the possible values.
     attr_accessor :auto_fill_type
 
-    # Masks entered data. For more information see [Masking sensitive information](https://app.hellosign.com/api/reference#:~:text=Masking%20sensitive%20information). `true` for masking the data in a text field, otherwise `false`.
+    # Masks entered data. For more information see [Masking sensitive information](https://faq.hellosign.com/hc/en-us/articles/360040742811-Masking-sensitive-information). `true` for masking the data in a text field, otherwise `false`.
     attr_accessor :masked
 
     # Each text field may contain a `validation_type` parameter. Check out the list of [validation types](https://faq.hellosign.com/hc/en-us/articles/217115577) to learn more about the possible values.  **NOTE**: When using `custom_regex` you are required to pass a second parameter `validation_custom_regex` and you can optionally provide `validation_custom_regex_format_label` for the error message the user will see in case of an invalid value.

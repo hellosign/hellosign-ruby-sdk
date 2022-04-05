@@ -22,7 +22,7 @@ module HelloSign
     # The name of the form field.
     attr_accessor :name
 
-    # The type of this form field. See [field types](https://app.hellosign.com/api/reference#FieldTypes).
+    # The type of this form field. See [field types](/api/reference/constants/#field-types).
     attr_accessor :type
 
     # The horizontal offset in pixels for this form field.

@@ -512,7 +512,7 @@ module HelloSign
     end
 
     # List Templates
-    # Returns a list of the Templates that are accessible by you.  Take a look at our [search guide](https://app.hellosign.com/api/reference#Search) to learn more about querying templates.
+    # Returns a list of the Templates that are accessible by you.  Take a look at our [search guide](/api/reference/search/) to learn more about querying templates.
     # @param [Hash] opts the optional parameters
     # @option opts [String] :account_id Which account to return Templates for. Must be a team member. Use &#x60;all&#x60; to indicate all team members. Defaults to your account.
     # @option opts [Integer] :page Which page number of the Template List to return. Defaults to &#x60;1&#x60;. (default to 1)
@@ -525,7 +525,7 @@ module HelloSign
     end
 
     # List Templates
-    # Returns a list of the Templates that are accessible by you.  Take a look at our [search guide](https://app.hellosign.com/api/reference#Search) to learn more about querying templates.
+    # Returns a list of the Templates that are accessible by you.  Take a look at our [search guide](/api/reference/search/) to learn more about querying templates.
     # @param [Hash] opts the optional parameters
     # @option opts [String] :account_id Which account to return Templates for. Must be a team member. Use &#x60;all&#x60; to indicate all team members. Defaults to your account.
     # @option opts [Integer] :page Which page number of the Template List to return. Defaults to &#x60;1&#x60;.
