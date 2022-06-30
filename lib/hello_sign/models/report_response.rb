@@ -14,6 +14,7 @@ require 'date'
 require 'time'
 
 module HelloSign
+  # Contains information about the report request.
   class ReportResponse
     # A message indicating the requested operation's success
     attr_accessor :success
@@ -26,8 +27,6 @@ module HelloSign
 
     # The type(s) of the report you are requesting. Allowed values are \"user_activity\" and \"document_status\". User activity reports contain list of all users and their activity during the specified date range. Document status report contain a list of signature requests created in the specified time range (and their status).
     attr_accessor :report_type
-
-    attr_accessor :warnings
 
     class EnumAttributeValidator
       attr_reader :datatype
@@ -57,8 +56,7 @@ module HelloSign
         :'success' => :'success',
         :'start_date' => :'start_date',
         :'end_date' => :'end_date',
-        :'report_type' => :'report_type',
-        :'warnings' => :'warnings'
+        :'report_type' => :'report_type'
       }
     end
 
@@ -78,8 +76,7 @@ module HelloSign
         :'success' => :'String',
         :'start_date' => :'String',
         :'end_date' => :'String',
-        :'report_type' => :'Array<String>',
-        :'warnings' => :'Array<WarningResponse>'
+        :'report_type' => :'Array<String>'
       }
     end
 
@@ -131,12 +128,6 @@ module HelloSign
           self.report_type = value
         end
       end
-
-      if attributes.key?(:'warnings')
-        if (value = attributes[:'warnings']).is_a?(Array)
-          self.warnings = value
-        end
-      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -160,8 +151,7 @@ module HelloSign
           success == o.success &&
           start_date == o.start_date &&
           end_date == o.end_date &&
-          report_type == o.report_type &&
-          warnings == o.warnings
+          report_type == o.report_type
     end
 
     # @see the `==` method
@@ -173,7 +163,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [success, start_date, end_date, report_type, warnings].hash
+      [success, start_date, end_date, report_type].hash
     end
 
     # Builds the object from hash
@@ -278,16 +268,17 @@ module HelloSign
 
     # Returns the object in the form of hash
     # @return [Hash] Returns the object in the form of hash
-    def to_hash
+    def to_hash(include_nil = true)
       hash = {}
       self.class.merged_attributes.each_pair do |attr, param|
         value = self.send(attr)
         if value.nil?
+          next unless include_nil
           is_nullable = self.class.merged_nullable.include?(attr)
           next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))
         end
 
-        hash[param] = _to_hash(value)
+        hash[param] = _to_hash(value, include_nil)
       end
       hash
     end
@@ -296,15 +287,15 @@ module HelloSign
     # For object, use to_hash. Otherwise, just return the value
     # @param [Object] value Any valid value
     # @return [Hash] Returns the value in the form of hash
-    def _to_hash(value)
+    def _to_hash(value, include_nil = true)
       if value.is_a?(Array)
-        value.compact.map { |v| _to_hash(v) }
+        value.compact.map { |v| _to_hash(v, include_nil) }
       elsif value.is_a?(Hash)
         {}.tap do |hash|
-          value.each { |k, v| hash[k] = _to_hash(v) }
+          value.each { |k, v| hash[k] = _to_hash(v, include_nil) }
         end
       elsif value.respond_to? :to_hash
-        value.to_hash
+        value.to_hash(include_nil)
       else
         value
       end

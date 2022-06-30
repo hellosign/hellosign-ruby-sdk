@@ -19,8 +19,11 @@ module HelloSign
     # Use `template_ids` to create a SignatureRequest from one or more templates, in the order in which the template will be used.
     attr_accessor :template_ids
 
-    # Client id of the app you're using to create this embedded signature request. Visit our [embedded page](https://app.hellosign.com/api/embeddedSigningWalkthrough) to learn more about this parameter.
+    # Client id of the app you're using to create this embedded signature request. Used for security purposes.
     attr_accessor :client_id
+
+    # Add Signers to your Templated-based Signature Request.
+    attr_accessor :signers
 
     # Allows signers to decline to sign a document if `true`. Defaults to `false`.
     attr_accessor :allow_decline
@@ -28,13 +31,13 @@ module HelloSign
     # Add CC email recipients. Required when a CC role exists for the Template.
     attr_accessor :ccs
 
-    # An array defining values and options for custom fields. Required when defining when a custom field exists in the Template.
+    # An array defining values and options for custom fields. Required when a custom field exists in the Template.
     attr_accessor :custom_fields
 
-    # **file** or **file_url** is required, but not both.  Use `file[]` to indicate the uploaded file(s) to send for signature.  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.
+    # Use `file[]` to indicate the uploaded file(s) to send for signature.  This endpoint requires either **file** or **file_url[]**, but not both.
     attr_accessor :file
 
-    # **file_url** or **file** is required, but not both.  Use `file_url[]` to have HelloSign download the file(s) to send for signature.  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.
+    # Use `file_url[]` to have HelloSign download the file(s) to send for signature.  This endpoint requires either **file** or **file_url[]**, but not both.
     attr_accessor :file_url
 
     # The custom message in the email that will be sent to the signers.
@@ -42,9 +45,6 @@ module HelloSign
 
     # Key-value data that should be attached to the signature request. This metadata is included in all API responses and events involving the signature request. For example, use the metadata field to store a signer's order number for look up when receiving events for the signature request.  Each request can include up to 10 metadata keys, with key names up to 40 characters long and values up to 1000 characters long.
     attr_accessor :metadata
-
-    # Add Signers to your Templated-based Signature Request.
-    attr_accessor :signers
 
     attr_accessor :signing_options
 
@@ -62,6 +62,7 @@ module HelloSign
       {
         :'template_ids' => :'template_ids',
         :'client_id' => :'client_id',
+        :'signers' => :'signers',
         :'allow_decline' => :'allow_decline',
         :'ccs' => :'ccs',
         :'custom_fields' => :'custom_fields',
@@ -69,7 +70,6 @@ module HelloSign
         :'file_url' => :'file_url',
         :'message' => :'message',
         :'metadata' => :'metadata',
-        :'signers' => :'signers',
         :'signing_options' => :'signing_options',
         :'subject' => :'subject',
         :'test_mode' => :'test_mode',
@@ -92,6 +92,7 @@ module HelloSign
       {
         :'template_ids' => :'Array<String>',
         :'client_id' => :'String',
+        :'signers' => :'Array<SubSignatureRequestTemplateSigner>',
         :'allow_decline' => :'Boolean',
         :'ccs' => :'Array<SubCC>',
         :'custom_fields' => :'Array<SubCustomField>',
@@ -99,7 +100,6 @@ module HelloSign
         :'file_url' => :'Array<String>',
         :'message' => :'String',
         :'metadata' => :'Hash<String, Object>',
-        :'signers' => :'Array<SubSignatureRequestTemplateSigner>',
         :'signing_options' => :'SubSigningOptions',
         :'subject' => :'String',
         :'test_mode' => :'Boolean',
@@ -148,6 +148,12 @@ module HelloSign
         self.client_id = attributes[:'client_id']
       end
 
+      if attributes.key?(:'signers')
+        if (value = attributes[:'signers']).is_a?(Array)
+          self.signers = value
+        end
+      end
+
       if attributes.key?(:'allow_decline')
         self.allow_decline = attributes[:'allow_decline']
       else
@@ -188,12 +194,6 @@ module HelloSign
         end
       end
 
-      if attributes.key?(:'signers')
-        if (value = attributes[:'signers']).is_a?(Array)
-          self.signers = value
-        end
-      end
-
       if attributes.key?(:'signing_options')
         self.signing_options = attributes[:'signing_options']
       end
@@ -225,6 +225,10 @@ module HelloSign
         invalid_properties.push('invalid value for "client_id", client_id cannot be nil.')
       end
 
+      if @signers.nil?
+        invalid_properties.push('invalid value for "signers", signers cannot be nil.')
+      end
+
       if !@message.nil? && @message.to_s.length > 5000
         invalid_properties.push('invalid value for "message", the character length must be smaller than or equal to 5000.')
       end
@@ -245,6 +249,7 @@ module HelloSign
     def valid?
       return false if @template_ids.nil?
       return false if @client_id.nil?
+      return false if @signers.nil?
       return false if !@message.nil? && @message.to_s.length > 5000
       return false if !@subject.nil? && @subject.to_s.length > 255
       return false if !@title.nil? && @title.to_s.length > 255
@@ -294,6 +299,7 @@ module HelloSign
       self.class == o.class &&
           template_ids == o.template_ids &&
           client_id == o.client_id &&
+          signers == o.signers &&
           allow_decline == o.allow_decline &&
           ccs == o.ccs &&
           custom_fields == o.custom_fields &&
@@ -301,7 +307,6 @@ module HelloSign
           file_url == o.file_url &&
           message == o.message &&
           metadata == o.metadata &&
-          signers == o.signers &&
           signing_options == o.signing_options &&
           subject == o.subject &&
           test_mode == o.test_mode &&
@@ -317,7 +322,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [template_ids, client_id, allow_decline, ccs, custom_fields, file, file_url, message, metadata, signers, signing_options, subject, test_mode, title].hash
+      [template_ids, client_id, signers, allow_decline, ccs, custom_fields, file, file_url, message, metadata, signing_options, subject, test_mode, title].hash
     end
 
     # Builds the object from hash
@@ -422,16 +427,17 @@ module HelloSign
 
     # Returns the object in the form of hash
     # @return [Hash] Returns the object in the form of hash
-    def to_hash
+    def to_hash(include_nil = true)
       hash = {}
       self.class.merged_attributes.each_pair do |attr, param|
         value = self.send(attr)
         if value.nil?
+          next unless include_nil
           is_nullable = self.class.merged_nullable.include?(attr)
           next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))
         end
 
-        hash[param] = _to_hash(value)
+        hash[param] = _to_hash(value, include_nil)
       end
       hash
     end
@@ -440,15 +446,15 @@ module HelloSign
     # For object, use to_hash. Otherwise, just return the value
     # @param [Object] value Any valid value
     # @return [Hash] Returns the value in the form of hash
-    def _to_hash(value)
+    def _to_hash(value, include_nil = true)
       if value.is_a?(Array)
-        value.compact.map { |v| _to_hash(v) }
+        value.compact.map { |v| _to_hash(v, include_nil) }
       elsif value.is_a?(Hash)
         {}.tap do |hash|
-          value.each { |k, v| hash[k] = _to_hash(v) }
+          value.each { |k, v| hash[k] = _to_hash(v, include_nil) }
         end
       elsif value.respond_to? :to_hash
-        value.to_hash
+        value.to_hash(include_nil)
       else
         value
       end

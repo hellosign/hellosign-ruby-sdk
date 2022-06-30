@@ -1,6 +1,6 @@
 # HelloSign::SubOptions
 
-
+Additional options supported by API App.
 
 ## Properties
 

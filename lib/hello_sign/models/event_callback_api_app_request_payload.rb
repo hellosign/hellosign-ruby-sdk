@@ -17,10 +17,6 @@ module HelloSign
   class EventCallbackApiAppRequestPayload
     attr_accessor :event
 
-    attr_accessor :account_guid
-
-    attr_accessor :client_id
-
     attr_accessor :account
 
     attr_accessor :signature_request
@@ -31,8 +27,6 @@ module HelloSign
     def self.attribute_map
       {
         :'event' => :'event',
-        :'account_guid' => :'account_guid',
-        :'client_id' => :'client_id',
         :'account' => :'account',
         :'signature_request' => :'signature_request',
         :'template' => :'template'
@@ -53,8 +47,6 @@ module HelloSign
     def self.openapi_types
       {
         :'event' => :'EventCallbackRequestEvent',
-        :'account_guid' => :'String',
-        :'client_id' => :'String',
         :'account' => :'AccountResponse',
         :'signature_request' => :'SignatureRequestResponse',
         :'template' => :'TemplateResponse'
@@ -69,7 +61,6 @@ module HelloSign
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
-        :'client_id',
       ])
     end
 
@@ -95,14 +86,6 @@ module HelloSign
 
       if attributes.key?(:'event')
         self.event = attributes[:'event']
-      end
-
-      if attributes.key?(:'account_guid')
-        self.account_guid = attributes[:'account_guid']
-      end
-
-      if attributes.key?(:'client_id')
-        self.client_id = attributes[:'client_id']
       end
 
       if attributes.key?(:'account')
@@ -142,8 +125,6 @@ module HelloSign
       return true if self.equal?(o)
       self.class == o.class &&
           event == o.event &&
-          account_guid == o.account_guid &&
-          client_id == o.client_id &&
           account == o.account &&
           signature_request == o.signature_request &&
           template == o.template
@@ -158,7 +139,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [event, account_guid, client_id, account, signature_request, template].hash
+      [event, account, signature_request, template].hash
     end
 
     # Builds the object from hash
@@ -263,16 +244,17 @@ module HelloSign
 
     # Returns the object in the form of hash
     # @return [Hash] Returns the object in the form of hash
-    def to_hash
+    def to_hash(include_nil = true)
       hash = {}
       self.class.merged_attributes.each_pair do |attr, param|
         value = self.send(attr)
         if value.nil?
+          next unless include_nil
           is_nullable = self.class.merged_nullable.include?(attr)
           next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))
         end
 
-        hash[param] = _to_hash(value)
+        hash[param] = _to_hash(value, include_nil)
       end
       hash
     end
@@ -281,15 +263,15 @@ module HelloSign
     # For object, use to_hash. Otherwise, just return the value
     # @param [Object] value Any valid value
     # @return [Hash] Returns the value in the form of hash
-    def _to_hash(value)
+    def _to_hash(value, include_nil = true)
       if value.is_a?(Array)
-        value.compact.map { |v| _to_hash(v) }
+        value.compact.map { |v| _to_hash(v, include_nil) }
       elsif value.is_a?(Hash)
         {}.tap do |hash|
-          value.each { |k, v| hash[k] = _to_hash(v) }
+          value.each { |k, v| hash[k] = _to_hash(v, include_nil) }
         end
       elsif value.respond_to? :to_hash
-        value.to_hash
+        value.to_hash(include_nil)
       else
         value
       end

@@ -85,7 +85,7 @@ end
 
 ## `account_get`
 
-> `<AccountGetResponse> account_get`
+> `<AccountGetResponse> account_get(opts)`
 
 Get Account
 
@@ -119,12 +119,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> `<Array(<AccountGetResponse>, Integer, Hash)> account_get_with_http_info`
+> `<Array(<AccountGetResponse>, Integer, Hash)> account_get_with_http_info(opts)`
 
 ```ruby
 begin
   # Get Account
-  data, status_code, headers = api_instance.account_get_with_http_info
+  data, status_code, headers = api_instance.account_get_with_http_info(opts)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <AccountGetResponse>
@@ -135,7 +135,9 @@ end
 
 ### Parameters
 
-This endpoint does not need any parameter.
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| `account_id` | **String** | The ID of the Account | [optional] |
 
 ### Return type
 
@@ -157,7 +159,7 @@ This endpoint does not need any parameter.
 
 Update Account
 
-Updates the properties and settings of your Account.
+Updates the properties and settings of your Account. Currently only allows for updates to the [Callback URL](/api/reference/tag/Callbacks-and-Events) and locale.
 
 ### Examples
 
@@ -230,7 +232,7 @@ end
 
 Verify Account
 
-Verifies whether an HelloSign Account exists for the given email address.  **NOTE** This method is restricted to paid API users.
+Verifies whether an HelloSign Account exists for the given email address.
 
 ### Examples
 

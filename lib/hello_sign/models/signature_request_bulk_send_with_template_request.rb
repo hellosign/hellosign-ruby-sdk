@@ -30,7 +30,10 @@ module HelloSign
     # Add CC email recipients. Required when a CC role exists for the Template.
     attr_accessor :ccs
 
-    # An array defining values and options for custom fields. Required when defining pre-set values in `form_fields_per_document` or [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro).
+    # The client id of the API App you want to associate with this request. Used to apply the branding and callback url defined for the app.
+    attr_accessor :client_id
+
+    # When used together with merge fields, `custom_fields` allows users to add pre-filled data to their signature requests.  Pre-filled data can be used with \"send-once\" signature requests by adding merge fields with `form_fields_per_document` or [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro) while passing values back with `custom_fields` together in one API call.  For using pre-filled on repeatable signature requests, merge fields are added to templates in the HelloSign UI or by calling [/template/create_embedded_draft](/api/reference/operation/templateCreateEmbeddedDraft) and then passing `custom_fields` on subsequent signature requests referencing that template.
     attr_accessor :custom_fields
 
     # The custom message in the email that will be sent to the signers.
@@ -59,6 +62,7 @@ module HelloSign
         :'signer_list' => :'signer_list',
         :'allow_decline' => :'allow_decline',
         :'ccs' => :'ccs',
+        :'client_id' => :'client_id',
         :'custom_fields' => :'custom_fields',
         :'message' => :'message',
         :'metadata' => :'metadata',
@@ -87,6 +91,7 @@ module HelloSign
         :'signer_list' => :'Array<SubBulkSignerList>',
         :'allow_decline' => :'Boolean',
         :'ccs' => :'Array<SubCC>',
+        :'client_id' => :'String',
         :'custom_fields' => :'Array<SubCustomField>',
         :'message' => :'String',
         :'metadata' => :'Hash<String, Object>',
@@ -154,6 +159,10 @@ module HelloSign
         if (value = attributes[:'ccs']).is_a?(Array)
           self.ccs = value
         end
+      end
+
+      if attributes.key?(:'client_id')
+        self.client_id = attributes[:'client_id']
       end
 
       if attributes.key?(:'custom_fields')
@@ -270,6 +279,7 @@ module HelloSign
           signer_list == o.signer_list &&
           allow_decline == o.allow_decline &&
           ccs == o.ccs &&
+          client_id == o.client_id &&
           custom_fields == o.custom_fields &&
           message == o.message &&
           metadata == o.metadata &&
@@ -288,7 +298,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [template_ids, signer_file, signer_list, allow_decline, ccs, custom_fields, message, metadata, signing_redirect_url, subject, test_mode, title].hash
+      [template_ids, signer_file, signer_list, allow_decline, ccs, client_id, custom_fields, message, metadata, signing_redirect_url, subject, test_mode, title].hash
     end
 
     # Builds the object from hash
@@ -393,16 +403,17 @@ module HelloSign
 
     # Returns the object in the form of hash
     # @return [Hash] Returns the object in the form of hash
-    def to_hash
+    def to_hash(include_nil = true)
       hash = {}
       self.class.merged_attributes.each_pair do |attr, param|
         value = self.send(attr)
         if value.nil?
+          next unless include_nil
           is_nullable = self.class.merged_nullable.include?(attr)
           next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))
         end
 
-        hash[param] = _to_hash(value)
+        hash[param] = _to_hash(value, include_nil)
       end
       hash
     end
@@ -411,15 +422,15 @@ module HelloSign
     # For object, use to_hash. Otherwise, just return the value
     # @param [Object] value Any valid value
     # @return [Hash] Returns the value in the form of hash
-    def _to_hash(value)
+    def _to_hash(value, include_nil = true)
       if value.is_a?(Array)
-        value.compact.map { |v| _to_hash(v) }
+        value.compact.map { |v| _to_hash(v, include_nil) }
       elsif value.is_a?(Hash)
         {}.tap do |hash|
-          value.each { |k, v| hash[k] = _to_hash(v) }
+          value.each { |k, v| hash[k] = _to_hash(v, include_nil) }
         end
       elsif value.respond_to? :to_hash
-        value.to_hash
+        value.to_hash(include_nil)
       else
         value
       end

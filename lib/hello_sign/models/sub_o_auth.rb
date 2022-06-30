@@ -14,11 +14,12 @@ require 'date'
 require 'time'
 
 module HelloSign
+  # OAuth related parameters.
   class SubOAuth
     # The callback URL to be used for OAuth flows. (Required if `oauth[scopes]` is provided)
     attr_accessor :callback_url
 
-    # A list of OAuth scopes to be granted to the app. (Required if `oauth[callback_url]` is provided).
+    # A list of [OAuth scopes](/api/reference/tag/OAuth) to be granted to the app. (Required if `oauth[callback_url]` is provided).
     attr_accessor :scopes
 
     class EnumAttributeValidator
@@ -247,16 +248,17 @@ module HelloSign
 
     # Returns the object in the form of hash
     # @return [Hash] Returns the object in the form of hash
-    def to_hash
+    def to_hash(include_nil = true)
       hash = {}
       self.class.merged_attributes.each_pair do |attr, param|
         value = self.send(attr)
         if value.nil?
+          next unless include_nil
           is_nullable = self.class.merged_nullable.include?(attr)
           next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))
         end
 
-        hash[param] = _to_hash(value)
+        hash[param] = _to_hash(value, include_nil)
       end
       hash
     end
@@ -265,15 +267,15 @@ module HelloSign
     # For object, use to_hash. Otherwise, just return the value
     # @param [Object] value Any valid value
     # @return [Hash] Returns the value in the form of hash
-    def _to_hash(value)
+    def _to_hash(value, include_nil = true)
       if value.is_a?(Array)
-        value.compact.map { |v| _to_hash(v) }
+        value.compact.map { |v| _to_hash(v, include_nil) }
       elsif value.is_a?(Hash)
         {}.tap do |hash|
-          value.each { |k, v| hash[k] = _to_hash(v) }
+          value.each { |k, v| hash[k] = _to_hash(v, include_nil) }
         end
       elsif value.respond_to? :to_hash
-        value.to_hash
+        value.to_hash(include_nil)
       else
         value
       end

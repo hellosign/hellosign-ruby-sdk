@@ -14,13 +14,15 @@ require 'date'
 require 'time'
 
 module HelloSign
-  # An array of the designated CC roles that must be specified when sending a SignatureRequest using this Template.
   class TemplateResponseDocumentCustomField
     # The name of the Custom Field.
     attr_accessor :name
 
     # The type of this Custom Field. Only `text` and `checkbox` are currently supported.
     attr_accessor :type
+
+    # The signer of the Custom Field.
+    attr_accessor :signer
 
     # The horizontal offset in pixels for this form field.
     attr_accessor :x
@@ -37,12 +39,24 @@ module HelloSign
     # Boolean showing whether or not this field is required.
     attr_accessor :required
 
+    # The unique ID for this field.
+    attr_accessor :api_id
+
     # The name of the group this field is in. If this field is not a group, this defaults to `null`.
     attr_accessor :group
 
     attr_accessor :avg_text_length
 
-    # Use `form_fields` under the `documents` array instead.
+    # Whether this form field is multiline text.
+    attr_accessor :is_multiline
+
+    # Original font size used in this form field's text.
+    attr_accessor :original_font_size
+
+    # Font family used in this form field's text.
+    attr_accessor :font_family
+
+    # _t__TemplateResponseDocumentCustomField::NAMED_FORM_FIELDS
     attr_accessor :named_form_fields
 
     attr_accessor :reusable_form_id
@@ -74,13 +88,18 @@ module HelloSign
       {
         :'name' => :'name',
         :'type' => :'type',
+        :'signer' => :'signer',
         :'x' => :'x',
         :'y' => :'y',
         :'width' => :'width',
         :'height' => :'height',
         :'required' => :'required',
+        :'api_id' => :'api_id',
         :'group' => :'group',
         :'avg_text_length' => :'avg_text_length',
+        :'is_multiline' => :'isMultiline',
+        :'original_font_size' => :'originalFontSize',
+        :'font_family' => :'fontFamily',
         :'named_form_fields' => :'named_form_fields',
         :'reusable_form_id' => :'reusable_form_id'
       }
@@ -101,13 +120,18 @@ module HelloSign
       {
         :'name' => :'String',
         :'type' => :'String',
+        :'signer' => :'String',
         :'x' => :'Integer',
         :'y' => :'Integer',
         :'width' => :'Integer',
         :'height' => :'Integer',
         :'required' => :'Boolean',
+        :'api_id' => :'String',
         :'group' => :'String',
-        :'avg_text_length' => :'TemplateResponseDocumentCustomFieldAvgTextLength',
+        :'avg_text_length' => :'TemplateResponseFieldAvgTextLength',
+        :'is_multiline' => :'Boolean',
+        :'original_font_size' => :'Integer',
+        :'font_family' => :'String',
         :'named_form_fields' => :'Object',
         :'reusable_form_id' => :'String'
       }
@@ -122,6 +146,9 @@ module HelloSign
     def self.openapi_nullable
       Set.new([
         :'group',
+        :'is_multiline',
+        :'original_font_size',
+        :'font_family',
         :'named_form_fields',
         :'reusable_form_id'
       ])
@@ -155,6 +182,10 @@ module HelloSign
         self.type = attributes[:'type']
       end
 
+      if attributes.key?(:'signer')
+        self.signer = attributes[:'signer']
+      end
+
       if attributes.key?(:'x')
         self.x = attributes[:'x']
       end
@@ -175,12 +206,28 @@ module HelloSign
         self.required = attributes[:'required']
       end
 
+      if attributes.key?(:'api_id')
+        self.api_id = attributes[:'api_id']
+      end
+
       if attributes.key?(:'group')
         self.group = attributes[:'group']
       end
 
       if attributes.key?(:'avg_text_length')
         self.avg_text_length = attributes[:'avg_text_length']
+      end
+
+      if attributes.key?(:'is_multiline')
+        self.is_multiline = attributes[:'is_multiline']
+      end
+
+      if attributes.key?(:'original_font_size')
+        self.original_font_size = attributes[:'original_font_size']
+      end
+
+      if attributes.key?(:'font_family')
+        self.font_family = attributes[:'font_family']
       end
 
       if attributes.key?(:'named_form_fields')
@@ -224,13 +271,18 @@ module HelloSign
       self.class == o.class &&
           name == o.name &&
           type == o.type &&
+          signer == o.signer &&
           x == o.x &&
           y == o.y &&
           width == o.width &&
           height == o.height &&
           required == o.required &&
+          api_id == o.api_id &&
           group == o.group &&
           avg_text_length == o.avg_text_length &&
+          is_multiline == o.is_multiline &&
+          original_font_size == o.original_font_size &&
+          font_family == o.font_family &&
           named_form_fields == o.named_form_fields &&
           reusable_form_id == o.reusable_form_id
     end
@@ -244,7 +296,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [name, type, x, y, width, height, required, group, avg_text_length, named_form_fields, reusable_form_id].hash
+      [name, type, signer, x, y, width, height, required, api_id, group, avg_text_length, is_multiline, original_font_size, font_family, named_form_fields, reusable_form_id].hash
     end
 
     # Builds the object from hash
@@ -349,16 +401,17 @@ module HelloSign
 
     # Returns the object in the form of hash
     # @return [Hash] Returns the object in the form of hash
-    def to_hash
+    def to_hash(include_nil = true)
       hash = {}
       self.class.merged_attributes.each_pair do |attr, param|
         value = self.send(attr)
         if value.nil?
+          next unless include_nil
           is_nullable = self.class.merged_nullable.include?(attr)
           next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))
         end
 
-        hash[param] = _to_hash(value)
+        hash[param] = _to_hash(value, include_nil)
       end
       hash
     end
@@ -367,15 +420,15 @@ module HelloSign
     # For object, use to_hash. Otherwise, just return the value
     # @param [Object] value Any valid value
     # @return [Hash] Returns the value in the form of hash
-    def _to_hash(value)
+    def _to_hash(value, include_nil = true)
       if value.is_a?(Array)
-        value.compact.map { |v| _to_hash(v) }
+        value.compact.map { |v| _to_hash(v, include_nil) }
       elsif value.is_a?(Hash)
         {}.tap do |hash|
-          value.each { |k, v| hash[k] = _to_hash(v) }
+          value.each { |k, v| hash[k] = _to_hash(v, include_nil) }
         end
       elsif value.respond_to? :to_hash
-        value.to_hash
+        value.to_hash(include_nil)
       else
         value
       end

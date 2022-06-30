@@ -15,13 +15,21 @@ require 'time'
 
 module HelloSign
   class AccountUpdateRequest
+    # The ID of the Account
+    attr_accessor :account_id
+
     # The URL that HelloSign should POST events to.
     attr_accessor :callback_url
+
+    # The locale used in this Account. Check out the list of [supported locales](/api/reference/constants/#supported-locales) to learn more about the possible values.
+    attr_accessor :locale
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'callback_url' => :'callback_url'
+        :'account_id' => :'account_id',
+        :'callback_url' => :'callback_url',
+        :'locale' => :'locale'
       }
     end
 
@@ -38,7 +46,9 @@ module HelloSign
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'callback_url' => :'String'
+        :'account_id' => :'String',
+        :'callback_url' => :'String',
+        :'locale' => :'String'
       }
     end
 
@@ -50,6 +60,7 @@ module HelloSign
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'account_id',
       ])
     end
 
@@ -73,8 +84,16 @@ module HelloSign
         h[k.to_sym] = v
       }
 
+      if attributes.key?(:'account_id')
+        self.account_id = attributes[:'account_id']
+      end
+
       if attributes.key?(:'callback_url')
         self.callback_url = attributes[:'callback_url']
+      end
+
+      if attributes.key?(:'locale')
+        self.locale = attributes[:'locale']
       end
     end
 
@@ -96,7 +115,9 @@ module HelloSign
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          callback_url == o.callback_url
+          account_id == o.account_id &&
+          callback_url == o.callback_url &&
+          locale == o.locale
     end
 
     # @see the `==` method
@@ -108,7 +129,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [callback_url].hash
+      [account_id, callback_url, locale].hash
     end
 
     # Builds the object from hash
@@ -213,16 +234,17 @@ module HelloSign
 
     # Returns the object in the form of hash
     # @return [Hash] Returns the object in the form of hash
-    def to_hash
+    def to_hash(include_nil = true)
       hash = {}
       self.class.merged_attributes.each_pair do |attr, param|
         value = self.send(attr)
         if value.nil?
+          next unless include_nil
           is_nullable = self.class.merged_nullable.include?(attr)
           next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))
         end
 
-        hash[param] = _to_hash(value)
+        hash[param] = _to_hash(value, include_nil)
       end
       hash
     end
@@ -231,15 +253,15 @@ module HelloSign
     # For object, use to_hash. Otherwise, just return the value
     # @param [Object] value Any valid value
     # @return [Hash] Returns the value in the form of hash
-    def _to_hash(value)
+    def _to_hash(value, include_nil = true)
       if value.is_a?(Array)
-        value.compact.map { |v| _to_hash(v) }
+        value.compact.map { |v| _to_hash(v, include_nil) }
       elsif value.is_a?(Hash)
         {}.tap do |hash|
-          value.each { |k, v| hash[k] = _to_hash(v) }
+          value.each { |k, v| hash[k] = _to_hash(v, include_nil) }
         end
       elsif value.respond_to? :to_hash
-        value.to_hash
+        value.to_hash(include_nil)
       else
         value
       end

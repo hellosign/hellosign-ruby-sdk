@@ -25,6 +25,9 @@ module HelloSign
     # Auto fill type for populating fields automatically. Check out the list of [auto fill types](/api/reference/constants/#auto-fill-types) to learn more about the possible values.
     attr_accessor :auto_fill_type
 
+    # Link two or more text fields. Enter data into one linked text field, which automatically fill all other linked text fields.
+    attr_accessor :link_id
+
     # Masks entered data. For more information see [Masking sensitive information](https://faq.hellosign.com/hc/en-us/articles/360040742811-Masking-sensitive-information). `true` for masking the data in a text field, otherwise `false`.
     attr_accessor :masked
 
@@ -63,6 +66,7 @@ module HelloSign
         :'type' => :'type',
         :'placeholder' => :'placeholder',
         :'auto_fill_type' => :'auto_fill_type',
+        :'link_id' => :'link_id',
         :'masked' => :'masked',
         :'validation_type' => :'validation_type',
         :'validation_custom_regex' => :'validation_custom_regex',
@@ -86,6 +90,7 @@ module HelloSign
         :'type' => :'String',
         :'placeholder' => :'String',
         :'auto_fill_type' => :'String',
+        :'link_id' => :'String',
         :'masked' => :'Boolean',
         :'validation_type' => :'String',
         :'validation_custom_regex' => :'String',
@@ -139,6 +144,10 @@ module HelloSign
 
       if attributes.key?(:'auto_fill_type')
         self.auto_fill_type = attributes[:'auto_fill_type']
+      end
+
+      if attributes.key?(:'link_id')
+        self.link_id = attributes[:'link_id']
       end
 
       if attributes.key?(:'masked')
@@ -196,6 +205,7 @@ module HelloSign
           type == o.type &&
           placeholder == o.placeholder &&
           auto_fill_type == o.auto_fill_type &&
+          link_id == o.link_id &&
           masked == o.masked &&
           validation_type == o.validation_type &&
           validation_custom_regex == o.validation_custom_regex &&
@@ -211,7 +221,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [type, placeholder, auto_fill_type, masked, validation_type, validation_custom_regex, validation_custom_regex_format_label].hash
+      [type, placeholder, auto_fill_type, link_id, masked, validation_type, validation_custom_regex, validation_custom_regex_format_label].hash
     end
 
     # Builds the object from hash
@@ -317,16 +327,17 @@ module HelloSign
 
     # Returns the object in the form of hash
     # @return [Hash] Returns the object in the form of hash
-    def to_hash
+    def to_hash(include_nil = true)
       hash = super
       self.class.merged_attributes.each_pair do |attr, param|
         value = self.send(attr)
         if value.nil?
+          next unless include_nil
           is_nullable = self.class.merged_nullable.include?(attr)
           next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))
         end
 
-        hash[param] = _to_hash(value)
+        hash[param] = _to_hash(value, include_nil)
       end
       hash
     end
@@ -335,15 +346,15 @@ module HelloSign
     # For object, use to_hash. Otherwise, just return the value
     # @param [Object] value Any valid value
     # @return [Hash] Returns the value in the form of hash
-    def _to_hash(value)
+    def _to_hash(value, include_nil = true)
       if value.is_a?(Array)
-        value.compact.map { |v| _to_hash(v) }
+        value.compact.map { |v| _to_hash(v, include_nil) }
       elsif value.is_a?(Hash)
         {}.tap do |hash|
-          value.each { |k, v| hash[k] = _to_hash(v) }
+          value.each { |k, v| hash[k] = _to_hash(v, include_nil) }
         end
       elsif value.respond_to? :to_hash
-        value.to_hash
+        value.to_hash(include_nil)
       else
         value
       end

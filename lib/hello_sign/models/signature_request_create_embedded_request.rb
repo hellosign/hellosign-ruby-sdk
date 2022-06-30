@@ -16,27 +16,31 @@ require 'time'
 module HelloSign
   # Calls SignatureRequestSend in controller
   class SignatureRequestCreateEmbeddedRequest
-    # Client id of the app you're using to create this embedded signature request. Visit our [embedded page](https://app.hellosign.com/api/embeddedSigningWalkthrough) to learn more about this parameter.
+    # Client id of the app you're using to create this embedded signature request. Used for security purposes.
     attr_accessor :client_id
 
-    # **file** or **file_url** is required, but not both.  Use `file[]` to indicate the uploaded file(s) to send for signature.  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.
+    # Add Signers to your Signature Request.
+    attr_accessor :signers
+
+    # Use `file[]` to indicate the uploaded file(s) to send for signature.  This endpoint requires either **file** or **file_url[]**, but not both.
     attr_accessor :file
 
-    # **file_url** or **file** is required, but not both.  Use `file_url[]` to have HelloSign download the file(s) to send for signature.  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.
+    # Use `file_url[]` to have HelloSign download the file(s) to send for signature.  This endpoint requires either **file** or **file_url[]**, but not both.
     attr_accessor :file_url
 
     # Allows signers to decline to sign a document if `true`. Defaults to `false`.
     attr_accessor :allow_decline
 
-    # Allows signers to reassign their signature requests to other signers if set to `true`. Defaults to `false`.  **Note**: Only available for Gold plan and higher.
+    # Allows signers to reassign their signature requests to other signers if set to `true`. Defaults to `false`.  **Note**: Only available for Premium plan.
     attr_accessor :allow_reassign
 
+    # A list describing the attachments
     attr_accessor :attachments
 
     # The email addresses that should be CCed.
     attr_accessor :cc_email_addresses
 
-    # An array defining values and options for custom fields. Required when defining pre-set values in `form_fields_per_document` or [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro).
+    # When used together with merge fields, `custom_fields` allows users to add pre-filled data to their signature requests.  Pre-filled data can be used with \"send-once\" signature requests by adding merge fields with `form_fields_per_document` or [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro) while passing values back with `custom_fields` together in one API call.  For using pre-filled on repeatable signature requests, merge fields are added to templates in the HelloSign UI or by calling [/template/create_embedded_draft](/api/reference/operation/templateCreateEmbeddedDraft) and then passing `custom_fields` on subsequent signature requests referencing that template.
     attr_accessor :custom_fields
 
     attr_accessor :field_options
@@ -47,17 +51,17 @@ module HelloSign
     # Conditional Logic rules for fields defined in `form_fields_per_document`.
     attr_accessor :form_field_rules
 
-    # The fields that should appear on the document, expressed as a 2-dimensional JSON array serialized to a string. The main array represents documents, with each containing an array of form fields. One document array is required for each file provided by the `file[]` parameter. In the case of a file with no fields, an empty list must be specified.  **NOTE**: Fields like **text**, **dropdown**, **checkbox**, **radio**, and **hyperlink** have additional required and optional parameters. Check out the list of [additional parameters](/api/reference/constants/#form-fields-per-document) for these field types.  * Text Field use `SubFormFieldsPerDocumentText` * Dropdown Field use `SubFormFieldsPerDocumentDropdown` * Hyperlink Field use `SubFormFieldsPerDocumentHyperlink` * Checkbox Field use `SubFormFieldsPerDocumentCheckbox` * Radio Field use `SubFormFieldsPerDocumentRadio` * Signature Field use `SubFormFieldsPerDocumentSignature` * Date Signed Field use `SubFormFieldsPerDocumentDateSigned` * Initials Field use `SubFormFieldsPerDocumentInitials` * Text Merge Field use `SubFormFieldsPerDocumentTextMerge` * Checkbox Merge Field use `SubFormFieldsPerDocumentCheckboxMerge`
+    # The fields that should appear on the document, expressed as an array of objects.  **NOTE**: Fields like **text**, **dropdown**, **checkbox**, **radio**, and **hyperlink** have additional required and optional parameters. Check out the list of [additional parameters](/api/reference/constants/#form-fields-per-document) for these field types.  * Text Field use `SubFormFieldsPerDocumentText` * Dropdown Field use `SubFormFieldsPerDocumentDropdown` * Hyperlink Field use `SubFormFieldsPerDocumentHyperlink` * Checkbox Field use `SubFormFieldsPerDocumentCheckbox` * Radio Field use `SubFormFieldsPerDocumentRadio` * Signature Field use `SubFormFieldsPerDocumentSignature` * Date Signed Field use `SubFormFieldsPerDocumentDateSigned` * Initials Field use `SubFormFieldsPerDocumentInitials` * Text Merge Field use `SubFormFieldsPerDocumentTextMerge` * Checkbox Merge Field use `SubFormFieldsPerDocumentCheckboxMerge`
     attr_accessor :form_fields_per_document
+
+    # Enables automatic Text Tag removal when set to true.  **NOTE**: Removing text tags this way can cause unwanted clipping. We recommend leaving this setting on `false` and instead hiding your text tags using white text or a similar approach. See the [Text Tags Walkthrough](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro) for more information.
+    attr_accessor :hide_text_tags
 
     # The custom message in the email that will be sent to the signers.
     attr_accessor :message
 
     # Key-value data that should be attached to the signature request. This metadata is included in all API responses and events involving the signature request. For example, use the metadata field to store a signer's order number for look up when receiving events for the signature request.  Each request can include up to 10 metadata keys, with key names up to 40 characters long and values up to 1000 characters long.
     attr_accessor :metadata
-
-    # Add Signers to your Signature Request.
-    attr_accessor :signers
 
     attr_accessor :signing_options
 
@@ -77,6 +81,7 @@ module HelloSign
     def self.attribute_map
       {
         :'client_id' => :'client_id',
+        :'signers' => :'signers',
         :'file' => :'file',
         :'file_url' => :'file_url',
         :'allow_decline' => :'allow_decline',
@@ -88,9 +93,9 @@ module HelloSign
         :'form_field_groups' => :'form_field_groups',
         :'form_field_rules' => :'form_field_rules',
         :'form_fields_per_document' => :'form_fields_per_document',
+        :'hide_text_tags' => :'hide_text_tags',
         :'message' => :'message',
         :'metadata' => :'metadata',
-        :'signers' => :'signers',
         :'signing_options' => :'signing_options',
         :'subject' => :'subject',
         :'test_mode' => :'test_mode',
@@ -113,6 +118,7 @@ module HelloSign
     def self.openapi_types
       {
         :'client_id' => :'String',
+        :'signers' => :'Array<SubSignatureRequestSigner>',
         :'file' => :'Array<File>',
         :'file_url' => :'Array<String>',
         :'allow_decline' => :'Boolean',
@@ -123,10 +129,10 @@ module HelloSign
         :'field_options' => :'SubFieldOptions',
         :'form_field_groups' => :'Array<SubFormFieldGroup>',
         :'form_field_rules' => :'Array<SubFormFieldRule>',
-        :'form_fields_per_document' => :'Array<Array<SubFormFieldsPerDocumentBase>>',
+        :'form_fields_per_document' => :'Array<SubFormFieldsPerDocumentBase>',
+        :'hide_text_tags' => :'Boolean',
         :'message' => :'String',
         :'metadata' => :'Hash<String, Object>',
-        :'signers' => :'Array<SubSignatureRequestSigner>',
         :'signing_options' => :'SubSigningOptions',
         :'subject' => :'String',
         :'test_mode' => :'Boolean',
@@ -168,6 +174,12 @@ module HelloSign
 
       if attributes.key?(:'client_id')
         self.client_id = attributes[:'client_id']
+      end
+
+      if attributes.key?(:'signers')
+        if (value = attributes[:'signers']).is_a?(Array)
+          self.signers = value
+        end
       end
 
       if attributes.key?(:'file')
@@ -234,6 +246,12 @@ module HelloSign
         end
       end
 
+      if attributes.key?(:'hide_text_tags')
+        self.hide_text_tags = attributes[:'hide_text_tags']
+      else
+        self.hide_text_tags = false
+      end
+
       if attributes.key?(:'message')
         self.message = attributes[:'message']
       end
@@ -241,12 +259,6 @@ module HelloSign
       if attributes.key?(:'metadata')
         if (value = attributes[:'metadata']).is_a?(Hash)
           self.metadata = value
-        end
-      end
-
-      if attributes.key?(:'signers')
-        if (value = attributes[:'signers']).is_a?(Array)
-          self.signers = value
         end
       end
 
@@ -283,6 +295,10 @@ module HelloSign
         invalid_properties.push('invalid value for "client_id", client_id cannot be nil.')
       end
 
+      if @signers.nil?
+        invalid_properties.push('invalid value for "signers", signers cannot be nil.')
+      end
+
       if !@message.nil? && @message.to_s.length > 5000
         invalid_properties.push('invalid value for "message", the character length must be smaller than or equal to 5000.')
       end
@@ -302,6 +318,7 @@ module HelloSign
     # @return true if the model is valid
     def valid?
       return false if @client_id.nil?
+      return false if @signers.nil?
       return false if !@message.nil? && @message.to_s.length > 5000
       return false if !@subject.nil? && @subject.to_s.length > 255
       return false if !@title.nil? && @title.to_s.length > 255
@@ -350,6 +367,7 @@ module HelloSign
       return true if self.equal?(o)
       self.class == o.class &&
           client_id == o.client_id &&
+          signers == o.signers &&
           file == o.file &&
           file_url == o.file_url &&
           allow_decline == o.allow_decline &&
@@ -361,9 +379,9 @@ module HelloSign
           form_field_groups == o.form_field_groups &&
           form_field_rules == o.form_field_rules &&
           form_fields_per_document == o.form_fields_per_document &&
+          hide_text_tags == o.hide_text_tags &&
           message == o.message &&
           metadata == o.metadata &&
-          signers == o.signers &&
           signing_options == o.signing_options &&
           subject == o.subject &&
           test_mode == o.test_mode &&
@@ -380,7 +398,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [client_id, file, file_url, allow_decline, allow_reassign, attachments, cc_email_addresses, custom_fields, field_options, form_field_groups, form_field_rules, form_fields_per_document, message, metadata, signers, signing_options, subject, test_mode, title, use_text_tags].hash
+      [client_id, signers, file, file_url, allow_decline, allow_reassign, attachments, cc_email_addresses, custom_fields, field_options, form_field_groups, form_field_rules, form_fields_per_document, hide_text_tags, message, metadata, signing_options, subject, test_mode, title, use_text_tags].hash
     end
 
     # Builds the object from hash
@@ -485,16 +503,17 @@ module HelloSign
 
     # Returns the object in the form of hash
     # @return [Hash] Returns the object in the form of hash
-    def to_hash
+    def to_hash(include_nil = true)
       hash = {}
       self.class.merged_attributes.each_pair do |attr, param|
         value = self.send(attr)
         if value.nil?
+          next unless include_nil
           is_nullable = self.class.merged_nullable.include?(attr)
           next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))
         end
 
-        hash[param] = _to_hash(value)
+        hash[param] = _to_hash(value, include_nil)
       end
       hash
     end
@@ -503,15 +522,15 @@ module HelloSign
     # For object, use to_hash. Otherwise, just return the value
     # @param [Object] value Any valid value
     # @return [Hash] Returns the value in the form of hash
-    def _to_hash(value)
+    def _to_hash(value, include_nil = true)
       if value.is_a?(Array)
-        value.compact.map { |v| _to_hash(v) }
+        value.compact.map { |v| _to_hash(v, include_nil) }
       elsif value.is_a?(Hash)
         {}.tap do |hash|
-          value.each { |k, v| hash[k] = _to_hash(v) }
+          value.each { |k, v| hash[k] = _to_hash(v, include_nil) }
         end
       elsif value.respond_to? :to_hash
-        value.to_hash
+        value.to_hash(include_nil)
       else
         value
       end

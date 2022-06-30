@@ -14,18 +14,19 @@ require 'date'
 require 'time'
 
 module HelloSign
+  # Contains information about an API App.
   class ApiAppResponse
     # The app's callback URL (for events)
     attr_accessor :callback_url
 
-    # The app's client ID
+    # The app's client id
     attr_accessor :client_id
 
     # The time that the app was created
     attr_accessor :created_at
 
-    # The domain name associated with the app
-    attr_accessor :domain
+    # The domain name(s) associated with the app
+    attr_accessor :domains
 
     # The name of the app
     attr_accessor :name
@@ -41,22 +42,19 @@ module HelloSign
 
     attr_accessor :white_labeling_options
 
-    attr_accessor :warnings
-
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'callback_url' => :'callback_url',
         :'client_id' => :'client_id',
         :'created_at' => :'created_at',
-        :'domain' => :'domain',
+        :'domains' => :'domains',
         :'name' => :'name',
         :'is_approved' => :'is_approved',
         :'oauth' => :'oauth',
         :'options' => :'options',
         :'owner_account' => :'owner_account',
-        :'white_labeling_options' => :'white_labeling_options',
-        :'warnings' => :'warnings'
+        :'white_labeling_options' => :'white_labeling_options'
       }
     end
 
@@ -76,14 +74,13 @@ module HelloSign
         :'callback_url' => :'String',
         :'client_id' => :'String',
         :'created_at' => :'Integer',
-        :'domain' => :'String',
+        :'domains' => :'Array<String>',
         :'name' => :'String',
         :'is_approved' => :'Boolean',
         :'oauth' => :'ApiAppResponseOAuth',
         :'options' => :'ApiAppResponseOptions',
         :'owner_account' => :'ApiAppResponseOwnerAccount',
-        :'white_labeling_options' => :'ApiAppResponseWhiteLabelingOptions',
-        :'warnings' => :'Array<WarningResponse>'
+        :'white_labeling_options' => :'ApiAppResponseWhiteLabelingOptions'
       }
     end
 
@@ -133,8 +130,10 @@ module HelloSign
         self.created_at = attributes[:'created_at']
       end
 
-      if attributes.key?(:'domain')
-        self.domain = attributes[:'domain']
+      if attributes.key?(:'domains')
+        if (value = attributes[:'domains']).is_a?(Array)
+          self.domains = value
+        end
       end
 
       if attributes.key?(:'name')
@@ -160,12 +159,6 @@ module HelloSign
       if attributes.key?(:'white_labeling_options')
         self.white_labeling_options = attributes[:'white_labeling_options']
       end
-
-      if attributes.key?(:'warnings')
-        if (value = attributes[:'warnings']).is_a?(Array)
-          self.warnings = value
-        end
-      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -189,14 +182,13 @@ module HelloSign
           callback_url == o.callback_url &&
           client_id == o.client_id &&
           created_at == o.created_at &&
-          domain == o.domain &&
+          domains == o.domains &&
           name == o.name &&
           is_approved == o.is_approved &&
           oauth == o.oauth &&
           options == o.options &&
           owner_account == o.owner_account &&
-          white_labeling_options == o.white_labeling_options &&
-          warnings == o.warnings
+          white_labeling_options == o.white_labeling_options
     end
 
     # @see the `==` method
@@ -208,7 +200,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [callback_url, client_id, created_at, domain, name, is_approved, oauth, options, owner_account, white_labeling_options, warnings].hash
+      [callback_url, client_id, created_at, domains, name, is_approved, oauth, options, owner_account, white_labeling_options].hash
     end
 
     # Builds the object from hash
@@ -313,16 +305,17 @@ module HelloSign
 
     # Returns the object in the form of hash
     # @return [Hash] Returns the object in the form of hash
-    def to_hash
+    def to_hash(include_nil = true)
       hash = {}
       self.class.merged_attributes.each_pair do |attr, param|
         value = self.send(attr)
         if value.nil?
+          next unless include_nil
           is_nullable = self.class.merged_nullable.include?(attr)
           next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))
         end
 
-        hash[param] = _to_hash(value)
+        hash[param] = _to_hash(value, include_nil)
       end
       hash
     end
@@ -331,15 +324,15 @@ module HelloSign
     # For object, use to_hash. Otherwise, just return the value
     # @param [Object] value Any valid value
     # @return [Hash] Returns the value in the form of hash
-    def _to_hash(value)
+    def _to_hash(value, include_nil = true)
       if value.is_a?(Array)
-        value.compact.map { |v| _to_hash(v) }
+        value.compact.map { |v| _to_hash(v, include_nil) }
       elsif value.is_a?(Hash)
         {}.tap do |hash|
-          value.each { |k, v| hash[k] = _to_hash(v) }
+          value.each { |k, v| hash[k] = _to_hash(v, include_nil) }
         end
       elsif value.respond_to? :to_hash
-        value.to_hash
+        value.to_hash(include_nil)
       else
         value
       end

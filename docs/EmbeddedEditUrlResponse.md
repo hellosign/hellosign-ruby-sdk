@@ -7,5 +7,5 @@
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | `embedded` | [```EmbeddedEditUrlResponseEmbedded```](EmbeddedEditUrlResponseEmbedded.md) |    |  |
-| `warnings` | [```Array<WarningResponse>```](WarningResponse.md) |    |  |
+| `warnings` | [```Array<WarningResponse>```](WarningResponse.md) |  A list of warnings.  |  |
 

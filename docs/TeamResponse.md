@@ -1,6 +1,6 @@
 # HelloSign::TeamResponse
 
-
+Contains information about your team and its members
 
 ## Properties
 

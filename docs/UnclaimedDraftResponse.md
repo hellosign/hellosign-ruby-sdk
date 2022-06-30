@@ -1,6 +1,6 @@
 # HelloSign::UnclaimedDraftResponse
 
-
+A group of documents that a user can take ownership of via the claim URL.
 
 ## Properties
 
@@ -12,5 +12,4 @@
 | `requesting_redirect_url` | ```String``` |  The URL you want signers redirected to after they successfully request a signature (Will only be returned in the response if it is applicable to the request.).  |  |
 | `expires_at` | ```Integer``` |  When the link expires.  |  |
 | `test_mode` | ```Boolean``` |  Whether this is a test draft. Signature requests made from test drafts have no legal value.  |  |
-| `warnings` | [```Array<WarningResponse>```](WarningResponse.md) |    |  |
 

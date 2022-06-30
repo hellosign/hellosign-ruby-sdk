@@ -15,21 +15,25 @@ require 'time'
 
 module HelloSign
   class AccountCreateRequest
-    # The email address to create a new Account for.
+    # The email address which will be associated with the new Account.
     attr_accessor :email_address
 
-    # Used when creating a new account and requesting OAuth authorization.  See [OAuth 2.0 Authorization](https://app.hellosign.com/api/oauthWalkthrough#OAuthAuthorization)
+    # Used when creating a new account with OAuth authorization.  See [OAuth 2.0 Authorization](https://app.hellosign.com/api/oauthWalkthrough#OAuthAuthorization)
     attr_accessor :client_id
 
-    # Used when creating a new account and requesting OAuth authorization.  See [OAuth 2.0 Authorization](https://app.hellosign.com/api/oauthWalkthrough#OAuthAuthorization)
+    # Used when creating a new account with OAuth authorization.  See [OAuth 2.0 Authorization](https://app.hellosign.com/api/oauthWalkthrough#OAuthAuthorization)
     attr_accessor :client_secret
+
+    # The locale used in this Account. Check out the list of [supported locales](/api/reference/constants/#supported-locales) to learn more about the possible values.
+    attr_accessor :locale
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'email_address' => :'email_address',
         :'client_id' => :'client_id',
-        :'client_secret' => :'client_secret'
+        :'client_secret' => :'client_secret',
+        :'locale' => :'locale'
       }
     end
 
@@ -48,7 +52,8 @@ module HelloSign
       {
         :'email_address' => :'String',
         :'client_id' => :'String',
-        :'client_secret' => :'String'
+        :'client_secret' => :'String',
+        :'locale' => :'String'
       }
     end
 
@@ -94,6 +99,10 @@ module HelloSign
       if attributes.key?(:'client_secret')
         self.client_secret = attributes[:'client_secret']
       end
+
+      if attributes.key?(:'locale')
+        self.locale = attributes[:'locale']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -121,7 +130,8 @@ module HelloSign
       self.class == o.class &&
           email_address == o.email_address &&
           client_id == o.client_id &&
-          client_secret == o.client_secret
+          client_secret == o.client_secret &&
+          locale == o.locale
     end
 
     # @see the `==` method
@@ -133,7 +143,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [email_address, client_id, client_secret].hash
+      [email_address, client_id, client_secret, locale].hash
     end
 
     # Builds the object from hash
@@ -238,16 +248,17 @@ module HelloSign
 
     # Returns the object in the form of hash
     # @return [Hash] Returns the object in the form of hash
-    def to_hash
+    def to_hash(include_nil = true)
       hash = {}
       self.class.merged_attributes.each_pair do |attr, param|
         value = self.send(attr)
         if value.nil?
+          next unless include_nil
           is_nullable = self.class.merged_nullable.include?(attr)
           next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))
         end
 
-        hash[param] = _to_hash(value)
+        hash[param] = _to_hash(value, include_nil)
       end
       hash
     end
@@ -256,15 +267,15 @@ module HelloSign
     # For object, use to_hash. Otherwise, just return the value
     # @param [Object] value Any valid value
     # @return [Hash] Returns the value in the form of hash
-    def _to_hash(value)
+    def _to_hash(value, include_nil = true)
       if value.is_a?(Array)
-        value.compact.map { |v| _to_hash(v) }
+        value.compact.map { |v| _to_hash(v, include_nil) }
       elsif value.is_a?(Hash)
         {}.tap do |hash|
-          value.each { |k, v| hash[k] = _to_hash(v) }
+          value.each { |k, v| hash[k] = _to_hash(v, include_nil) }
         end
       elsif value.respond_to? :to_hash
-        value.to_hash
+        value.to_hash(include_nil)
       else
         value
       end

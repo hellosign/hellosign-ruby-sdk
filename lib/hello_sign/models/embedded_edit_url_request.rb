@@ -29,19 +29,17 @@ module HelloSign
     # Provide users the ability to review/edit the template subject and message.
     attr_accessor :force_subject_message
 
+    # Add additional merge fields to the template, which can be used used to pre-fill data by passing values into signature requests made with that template.      Remove all merge fields on the template by passing an empty array `[]`.
     attr_accessor :merge_fields
 
-    # This allows the requester to enable the preview experience experience.  **Note**: This parameter overwrites `show_preview=true` (if set).
+    # This allows the requester to enable the preview experience (i.e. does not allow the requester's end user to add any additional fields via the editor).  **Note**: This parameter overwrites `show_preview=true` (if set).
     attr_accessor :preview_only
 
     # This allows the requester to enable the editor/preview experience.
     attr_accessor :show_preview
 
-    # If signer roles are already provided, the user will not be prompted to edit them.  **Note**: this parameter will be deprecated in May 2020 and skipping the signer roles screen will become the default behavior. To enforce showing the signer roles screen, use the `force_signer_roles` parameter.
-    attr_accessor :skip_signer_roles
-
-    # If the subject and message has already been provided, the user will not be prompted to edit them.  **Note**: this parameter will be deprecated in May 2020 and skipping the subject message screen will become the default behavior. To enforce showing the subject message screen, use the `force_subject_message` parameter.
-    attr_accessor :skip_subject_message
+    # When only one step remains in the signature request process and this parameter is set to `false` then the progress stepper will be hidden.
+    attr_accessor :show_progress_stepper
 
     # Whether this is a test, locked templates will only be available for editing if this is set to `true`. Defaults to `false`.
     attr_accessor :test_mode
@@ -57,8 +55,7 @@ module HelloSign
         :'merge_fields' => :'merge_fields',
         :'preview_only' => :'preview_only',
         :'show_preview' => :'show_preview',
-        :'skip_signer_roles' => :'skip_signer_roles',
-        :'skip_subject_message' => :'skip_subject_message',
+        :'show_progress_stepper' => :'show_progress_stepper',
         :'test_mode' => :'test_mode'
       }
     end
@@ -84,8 +81,7 @@ module HelloSign
         :'merge_fields' => :'Array<SubMergeField>',
         :'preview_only' => :'Boolean',
         :'show_preview' => :'Boolean',
-        :'skip_signer_roles' => :'Boolean',
-        :'skip_subject_message' => :'Boolean',
+        :'show_progress_stepper' => :'Boolean',
         :'test_mode' => :'Boolean'
       }
     end
@@ -167,16 +163,10 @@ module HelloSign
         self.show_preview = false
       end
 
-      if attributes.key?(:'skip_signer_roles')
-        self.skip_signer_roles = attributes[:'skip_signer_roles']
+      if attributes.key?(:'show_progress_stepper')
+        self.show_progress_stepper = attributes[:'show_progress_stepper']
       else
-        self.skip_signer_roles = false
-      end
-
-      if attributes.key?(:'skip_subject_message')
-        self.skip_subject_message = attributes[:'skip_subject_message']
-      else
-        self.skip_subject_message = false
+        self.show_progress_stepper = true
       end
 
       if attributes.key?(:'test_mode')
@@ -212,8 +202,7 @@ module HelloSign
           merge_fields == o.merge_fields &&
           preview_only == o.preview_only &&
           show_preview == o.show_preview &&
-          skip_signer_roles == o.skip_signer_roles &&
-          skip_subject_message == o.skip_subject_message &&
+          show_progress_stepper == o.show_progress_stepper &&
           test_mode == o.test_mode
     end
 
@@ -226,7 +215,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [allow_edit_ccs, cc_roles, editor_options, force_signer_roles, force_subject_message, merge_fields, preview_only, show_preview, skip_signer_roles, skip_subject_message, test_mode].hash
+      [allow_edit_ccs, cc_roles, editor_options, force_signer_roles, force_subject_message, merge_fields, preview_only, show_preview, show_progress_stepper, test_mode].hash
     end
 
     # Builds the object from hash
@@ -331,16 +320,17 @@ module HelloSign
 
     # Returns the object in the form of hash
     # @return [Hash] Returns the object in the form of hash
-    def to_hash
+    def to_hash(include_nil = true)
       hash = {}
       self.class.merged_attributes.each_pair do |attr, param|
         value = self.send(attr)
         if value.nil?
+          next unless include_nil
           is_nullable = self.class.merged_nullable.include?(attr)
           next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))
         end
 
-        hash[param] = _to_hash(value)
+        hash[param] = _to_hash(value, include_nil)
       end
       hash
     end
@@ -349,15 +339,15 @@ module HelloSign
     # For object, use to_hash. Otherwise, just return the value
     # @param [Object] value Any valid value
     # @return [Hash] Returns the value in the form of hash
-    def _to_hash(value)
+    def _to_hash(value, include_nil = true)
       if value.is_a?(Array)
-        value.compact.map { |v| _to_hash(v) }
+        value.compact.map { |v| _to_hash(v, include_nil) }
       elsif value.is_a?(Hash)
         {}.tap do |hash|
-          value.each { |k, v| hash[k] = _to_hash(v) }
+          value.each { |k, v| hash[k] = _to_hash(v, include_nil) }
         end
       elsif value.respond_to? :to_hash
-        value.to_hash
+        value.to_hash(include_nil)
       else
         value
       end

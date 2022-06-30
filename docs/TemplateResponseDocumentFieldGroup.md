@@ -1,6 +1,6 @@
 # HelloSign::TemplateResponseDocumentFieldGroup
 
-An array of Form Field Group objects.
+
 
 ## Properties
 

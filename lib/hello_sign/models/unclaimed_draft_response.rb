@@ -14,6 +14,7 @@ require 'date'
 require 'time'
 
 module HelloSign
+  # A group of documents that a user can take ownership of via the claim URL.
   class UnclaimedDraftResponse
     # The ID of the signature request that is represented by this UnclaimedDraft.
     attr_accessor :signature_request_id
@@ -33,8 +34,6 @@ module HelloSign
     # Whether this is a test draft. Signature requests made from test drafts have no legal value.
     attr_accessor :test_mode
 
-    attr_accessor :warnings
-
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
@@ -43,8 +42,7 @@ module HelloSign
         :'signing_redirect_url' => :'signing_redirect_url',
         :'requesting_redirect_url' => :'requesting_redirect_url',
         :'expires_at' => :'expires_at',
-        :'test_mode' => :'test_mode',
-        :'warnings' => :'warnings'
+        :'test_mode' => :'test_mode'
       }
     end
 
@@ -66,8 +64,7 @@ module HelloSign
         :'signing_redirect_url' => :'String',
         :'requesting_redirect_url' => :'String',
         :'expires_at' => :'Integer',
-        :'test_mode' => :'Boolean',
-        :'warnings' => :'Array<WarningResponse>'
+        :'test_mode' => :'Boolean'
       }
     end
 
@@ -129,12 +126,6 @@ module HelloSign
       if attributes.key?(:'test_mode')
         self.test_mode = attributes[:'test_mode']
       end
-
-      if attributes.key?(:'warnings')
-        if (value = attributes[:'warnings']).is_a?(Array)
-          self.warnings = value
-        end
-      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -160,8 +151,7 @@ module HelloSign
           signing_redirect_url == o.signing_redirect_url &&
           requesting_redirect_url == o.requesting_redirect_url &&
           expires_at == o.expires_at &&
-          test_mode == o.test_mode &&
-          warnings == o.warnings
+          test_mode == o.test_mode
     end
 
     # @see the `==` method
@@ -173,7 +163,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [signature_request_id, claim_url, signing_redirect_url, requesting_redirect_url, expires_at, test_mode, warnings].hash
+      [signature_request_id, claim_url, signing_redirect_url, requesting_redirect_url, expires_at, test_mode].hash
     end
 
     # Builds the object from hash
@@ -278,16 +268,17 @@ module HelloSign
 
     # Returns the object in the form of hash
     # @return [Hash] Returns the object in the form of hash
-    def to_hash
+    def to_hash(include_nil = true)
       hash = {}
       self.class.merged_attributes.each_pair do |attr, param|
         value = self.send(attr)
         if value.nil?
+          next unless include_nil
           is_nullable = self.class.merged_nullable.include?(attr)
           next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))
         end
 
-        hash[param] = _to_hash(value)
+        hash[param] = _to_hash(value, include_nil)
       end
       hash
     end
@@ -296,15 +287,15 @@ module HelloSign
     # For object, use to_hash. Otherwise, just return the value
     # @param [Object] value Any valid value
     # @return [Hash] Returns the value in the form of hash
-    def _to_hash(value)
+    def _to_hash(value, include_nil = true)
       if value.is_a?(Array)
-        value.compact.map { |v| _to_hash(v) }
+        value.compact.map { |v| _to_hash(v, include_nil) }
       elsif value.is_a?(Hash)
         {}.tap do |hash|
-          value.each { |k, v| hash[k] = _to_hash(v) }
+          value.each { |k, v| hash[k] = _to_hash(v, include_nil) }
         end
       elsif value.respond_to? :to_hash
-        value.to_hash
+        value.to_hash(include_nil)
       else
         value
       end

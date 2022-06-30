@@ -14,19 +14,19 @@ require 'date'
 require 'time'
 
 module HelloSign
+  # An embedded template object.
   class EmbeddedEditUrlResponseEmbedded
+    # A template url that can be opened in an iFrame.
     attr_accessor :edit_url
 
+    # The specific time that the the `edit_url` link expires, in epoch.
     attr_accessor :expires_at
-
-    attr_accessor :warnings
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'edit_url' => :'edit_url',
-        :'expires_at' => :'expires_at',
-        :'warnings' => :'warnings'
+        :'expires_at' => :'expires_at'
       }
     end
 
@@ -44,8 +44,7 @@ module HelloSign
     def self.openapi_types
       {
         :'edit_url' => :'String',
-        :'expires_at' => :'Integer',
-        :'warnings' => :'Array<WarningResponse>'
+        :'expires_at' => :'Integer'
       }
     end
 
@@ -87,12 +86,6 @@ module HelloSign
       if attributes.key?(:'expires_at')
         self.expires_at = attributes[:'expires_at']
       end
-
-      if attributes.key?(:'warnings')
-        if (value = attributes[:'warnings']).is_a?(Array)
-          self.warnings = value
-        end
-      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -114,8 +107,7 @@ module HelloSign
       return true if self.equal?(o)
       self.class == o.class &&
           edit_url == o.edit_url &&
-          expires_at == o.expires_at &&
-          warnings == o.warnings
+          expires_at == o.expires_at
     end
 
     # @see the `==` method
@@ -127,7 +119,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [edit_url, expires_at, warnings].hash
+      [edit_url, expires_at].hash
     end
 
     # Builds the object from hash
@@ -232,16 +224,17 @@ module HelloSign
 
     # Returns the object in the form of hash
     # @return [Hash] Returns the object in the form of hash
-    def to_hash
+    def to_hash(include_nil = true)
       hash = {}
       self.class.merged_attributes.each_pair do |attr, param|
         value = self.send(attr)
         if value.nil?
+          next unless include_nil
           is_nullable = self.class.merged_nullable.include?(attr)
           next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))
         end
 
-        hash[param] = _to_hash(value)
+        hash[param] = _to_hash(value, include_nil)
       end
       hash
     end
@@ -250,15 +243,15 @@ module HelloSign
     # For object, use to_hash. Otherwise, just return the value
     # @param [Object] value Any valid value
     # @return [Hash] Returns the value in the form of hash
-    def _to_hash(value)
+    def _to_hash(value, include_nil = true)
       if value.is_a?(Array)
-        value.compact.map { |v| _to_hash(v) }
+        value.compact.map { |v| _to_hash(v, include_nil) }
       elsif value.is_a?(Hash)
         {}.tap do |hash|
-          value.each { |k, v| hash[k] = _to_hash(v) }
+          value.each { |k, v| hash[k] = _to_hash(v, include_nil) }
         end
       elsif value.respond_to? :to_hash
-        value.to_hash
+        value.to_hash(include_nil)
       else
         value
       end

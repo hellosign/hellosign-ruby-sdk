@@ -25,12 +25,16 @@ module HelloSign
     # Signature requests remaining.
     attr_accessor :documents_left
 
+    # SMS verifications remaining.
+    attr_accessor :sms_verifications_left
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'templates_left' => :'templates_left',
         :'api_signature_requests_left' => :'api_signature_requests_left',
-        :'documents_left' => :'documents_left'
+        :'documents_left' => :'documents_left',
+        :'sms_verifications_left' => :'sms_verifications_left'
       }
     end
 
@@ -49,7 +53,8 @@ module HelloSign
       {
         :'templates_left' => :'Integer',
         :'api_signature_requests_left' => :'Integer',
-        :'documents_left' => :'Integer'
+        :'documents_left' => :'Integer',
+        :'sms_verifications_left' => :'Integer'
       }
     end
 
@@ -95,6 +100,10 @@ module HelloSign
       if attributes.key?(:'documents_left')
         self.documents_left = attributes[:'documents_left']
       end
+
+      if attributes.key?(:'sms_verifications_left')
+        self.sms_verifications_left = attributes[:'sms_verifications_left']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -117,7 +126,8 @@ module HelloSign
       self.class == o.class &&
           templates_left == o.templates_left &&
           api_signature_requests_left == o.api_signature_requests_left &&
-          documents_left == o.documents_left
+          documents_left == o.documents_left &&
+          sms_verifications_left == o.sms_verifications_left
     end
 
     # @see the `==` method
@@ -129,7 +139,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [templates_left, api_signature_requests_left, documents_left].hash
+      [templates_left, api_signature_requests_left, documents_left, sms_verifications_left].hash
     end
 
     # Builds the object from hash
@@ -234,16 +244,17 @@ module HelloSign
 
     # Returns the object in the form of hash
     # @return [Hash] Returns the object in the form of hash
-    def to_hash
+    def to_hash(include_nil = true)
       hash = {}
       self.class.merged_attributes.each_pair do |attr, param|
         value = self.send(attr)
         if value.nil?
+          next unless include_nil
           is_nullable = self.class.merged_nullable.include?(attr)
           next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))
         end
 
-        hash[param] = _to_hash(value)
+        hash[param] = _to_hash(value, include_nil)
       end
       hash
     end
@@ -252,15 +263,15 @@ module HelloSign
     # For object, use to_hash. Otherwise, just return the value
     # @param [Object] value Any valid value
     # @return [Hash] Returns the value in the form of hash
-    def _to_hash(value)
+    def _to_hash(value, include_nil = true)
       if value.is_a?(Array)
-        value.compact.map { |v| _to_hash(v) }
+        value.compact.map { |v| _to_hash(v, include_nil) }
       elsif value.is_a?(Hash)
         {}.tap do |hash|
-          value.each { |k, v| hash[k] = _to_hash(v) }
+          value.each { |k, v| hash[k] = _to_hash(v, include_nil) }
         end
       elsif value.respond_to? :to_hash
-        value.to_hash
+        value.to_hash(include_nil)
       else
         value
       end

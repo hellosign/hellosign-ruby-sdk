@@ -15,17 +15,21 @@ require 'time'
 
 module HelloSign
   class TemplateAddUserRequest
-    # The id or email address of the Account to give access to the Template. The account id prevails if both are provided.
+    # The id of the Account to give access to the Template. <b>Note</b> The account id prevails if email address is also provided.
     attr_accessor :account_id
 
-    # The id or email address of the Account to give access to the Template. The account id prevails if both are provided.
+    # The email address of the Account to give access to the Template. <b>Note</b> The account id prevails if it is also provided.
     attr_accessor :email_address
+
+    # If set to `true`, the user does not receive an email notification when a template has been shared with them. Defaults to `false`.
+    attr_accessor :skip_notification
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'account_id' => :'account_id',
-        :'email_address' => :'email_address'
+        :'email_address' => :'email_address',
+        :'skip_notification' => :'skip_notification'
       }
     end
 
@@ -43,7 +47,8 @@ module HelloSign
     def self.openapi_types
       {
         :'account_id' => :'String',
-        :'email_address' => :'String'
+        :'email_address' => :'String',
+        :'skip_notification' => :'Boolean'
       }
     end
 
@@ -85,6 +90,12 @@ module HelloSign
       if attributes.key?(:'email_address')
         self.email_address = attributes[:'email_address']
       end
+
+      if attributes.key?(:'skip_notification')
+        self.skip_notification = attributes[:'skip_notification']
+      else
+        self.skip_notification = false
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -106,7 +117,8 @@ module HelloSign
       return true if self.equal?(o)
       self.class == o.class &&
           account_id == o.account_id &&
-          email_address == o.email_address
+          email_address == o.email_address &&
+          skip_notification == o.skip_notification
     end
 
     # @see the `==` method
@@ -118,7 +130,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [account_id, email_address].hash
+      [account_id, email_address, skip_notification].hash
     end
 
     # Builds the object from hash
@@ -223,16 +235,17 @@ module HelloSign
 
     # Returns the object in the form of hash
     # @return [Hash] Returns the object in the form of hash
-    def to_hash
+    def to_hash(include_nil = true)
       hash = {}
       self.class.merged_attributes.each_pair do |attr, param|
         value = self.send(attr)
         if value.nil?
+          next unless include_nil
           is_nullable = self.class.merged_nullable.include?(attr)
           next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))
         end
 
-        hash[param] = _to_hash(value)
+        hash[param] = _to_hash(value, include_nil)
       end
       hash
     end
@@ -241,15 +254,15 @@ module HelloSign
     # For object, use to_hash. Otherwise, just return the value
     # @param [Object] value Any valid value
     # @return [Hash] Returns the value in the form of hash
-    def _to_hash(value)
+    def _to_hash(value, include_nil = true)
       if value.is_a?(Array)
-        value.compact.map { |v| _to_hash(v) }
+        value.compact.map { |v| _to_hash(v, include_nil) }
       elsif value.is_a?(Hash)
         {}.tap do |hash|
-          value.each { |k, v| hash[k] = _to_hash(v) }
+          value.each { |k, v| hash[k] = _to_hash(v, include_nil) }
         end
       elsif value.respond_to? :to_hash
-        value.to_hash
+        value.to_hash(include_nil)
       else
         value
       end

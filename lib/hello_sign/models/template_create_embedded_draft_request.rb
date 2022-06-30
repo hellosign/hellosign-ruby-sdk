@@ -15,21 +15,22 @@ require 'time'
 
 module HelloSign
   class TemplateCreateEmbeddedDraftRequest
-    # Client id of the app you're using to create this draft.
+    # Client id of the app you're using to create this draft. Used to apply the branding and callback url defined for the app.
     attr_accessor :client_id
 
-    # **file** or **file_url** is required, but not both.  Use `file[]` to indicate the uploaded file(s) to use for the template  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.
+    # Use `file[]` to indicate the uploaded file(s) to send for signature.  This endpoint requires either **file** or **file_url[]**, but not both.
     attr_accessor :file
 
-    # **file_url** or **file** is required, but not both.  Use `file_url[]` to have HelloSign download the file(s) to use for the template.  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.
+    # Use `file_url[]` to have HelloSign download the file(s) to send for signature.  This endpoint requires either **file** or **file_url[]**, but not both.
     attr_accessor :file_url
 
     # This allows the requester to specify whether the user is allowed to provide email addresses to CC when creating a template.
     attr_accessor :allow_ccs
 
-    # Allows signers to reassign their signature requests to other signers if set to `true`. Defaults to `false`.  **Note**: Only available for Gold plan and higher.
+    # Allows signers to reassign their signature requests to other signers if set to `true`. Defaults to `false`.  **Note**: Only available for Premium plan and higher.
     attr_accessor :allow_reassign
 
+    # A list describing the attachments
     attr_accessor :attachments
 
     # The CC roles that must be assigned when using the template to send a signature request
@@ -39,15 +40,22 @@ module HelloSign
 
     attr_accessor :field_options
 
+    # Provide users the ability to review/edit the template signer roles.
+    attr_accessor :force_signer_roles
+
+    # Provide users the ability to review/edit the template subject and message.
+    attr_accessor :force_subject_message
+
     # Group information for fields defined in `form_fields_per_document`. String-indexed JSON array with `group_label` and `requirement` keys. `form_fields_per_document` must contain fields referencing a group defined in `form_field_groups`.
     attr_accessor :form_field_groups
 
     # Conditional Logic rules for fields defined in `form_fields_per_document`.
     attr_accessor :form_field_rules
 
-    # The fields that should appear on the document, expressed as a 2-dimensional JSON array serialized to a string. The main array represents documents, with each containing an array of form fields. One document array is required for each file provided by the `file[]` parameter. In the case of a file with no fields, an empty list must be specified.  **NOTE**: Fields like **text**, **dropdown**, **checkbox**, **radio**, and **hyperlink** have additional required and optional parameters. Check out the list of [additional parameters](/api/reference/constants/#form-fields-per-document) for these field types.  * Text Field use `SubFormFieldsPerDocumentText` * Dropdown Field use `SubFormFieldsPerDocumentDropdown` * Hyperlink Field use `SubFormFieldsPerDocumentHyperlink` * Checkbox Field use `SubFormFieldsPerDocumentCheckbox` * Radio Field use `SubFormFieldsPerDocumentRadio` * Signature Field use `SubFormFieldsPerDocumentSignature` * Date Signed Field use `SubFormFieldsPerDocumentDateSigned` * Initials Field use `SubFormFieldsPerDocumentInitials` * Text Merge Field use `SubFormFieldsPerDocumentTextMerge` * Checkbox Merge Field use `SubFormFieldsPerDocumentCheckboxMerge`
+    # The fields that should appear on the document, expressed as an array of objects.  **NOTE**: Fields like **text**, **dropdown**, **checkbox**, **radio**, and **hyperlink** have additional required and optional parameters. Check out the list of [additional parameters](/api/reference/constants/#form-fields-per-document) for these field types.  * Text Field use `SubFormFieldsPerDocumentText` * Dropdown Field use `SubFormFieldsPerDocumentDropdown` * Hyperlink Field use `SubFormFieldsPerDocumentHyperlink` * Checkbox Field use `SubFormFieldsPerDocumentCheckbox` * Radio Field use `SubFormFieldsPerDocumentRadio` * Signature Field use `SubFormFieldsPerDocumentSignature` * Date Signed Field use `SubFormFieldsPerDocumentDateSigned` * Initials Field use `SubFormFieldsPerDocumentInitials` * Text Merge Field use `SubFormFieldsPerDocumentTextMerge` * Checkbox Merge Field use `SubFormFieldsPerDocumentCheckboxMerge`
     attr_accessor :form_fields_per_document
 
+    # Add merge fields to the template. Merge fields are placed by the user creating the template and used to pre-fill data by passing values into signature requests with the `custom_fields` parameter.   If the signature request using that template *does not* pass a value into a merge field, then an empty field remains in the document.
     attr_accessor :merge_fields
 
     # The default template email message.
@@ -59,6 +67,10 @@ module HelloSign
     # This allows the requester to enable the editor/preview experience.  - `show_preview=true`: Allows requesters to enable the editor/preview experience. - `show_preview=false`: Allows requesters to disable the editor/preview experience.
     attr_accessor :show_preview
 
+    # When only one step remains in the signature request process and this parameter is set to `false` then the progress stepper will be hidden.
+    attr_accessor :show_progress_stepper
+
+    # An array of the designated signer roles that must be specified when sending a SignatureRequest using this Template.
     attr_accessor :signer_roles
 
     # Disables the \"Me (Now)\" option for the person preparing the document. Does not work with type `send_document`. Defaults to `false`.
@@ -88,6 +100,8 @@ module HelloSign
         :'cc_roles' => :'cc_roles',
         :'editor_options' => :'editor_options',
         :'field_options' => :'field_options',
+        :'force_signer_roles' => :'force_signer_roles',
+        :'force_subject_message' => :'force_subject_message',
         :'form_field_groups' => :'form_field_groups',
         :'form_field_rules' => :'form_field_rules',
         :'form_fields_per_document' => :'form_fields_per_document',
@@ -95,6 +109,7 @@ module HelloSign
         :'message' => :'message',
         :'metadata' => :'metadata',
         :'show_preview' => :'show_preview',
+        :'show_progress_stepper' => :'show_progress_stepper',
         :'signer_roles' => :'signer_roles',
         :'skip_me_now' => :'skip_me_now',
         :'subject' => :'subject',
@@ -126,13 +141,16 @@ module HelloSign
         :'cc_roles' => :'Array<String>',
         :'editor_options' => :'SubEditorOptions',
         :'field_options' => :'SubFieldOptions',
+        :'force_signer_roles' => :'Boolean',
+        :'force_subject_message' => :'Boolean',
         :'form_field_groups' => :'Array<SubFormFieldGroup>',
         :'form_field_rules' => :'Array<SubFormFieldRule>',
-        :'form_fields_per_document' => :'Array<Array<SubFormFieldsPerDocumentBase>>',
+        :'form_fields_per_document' => :'Array<SubFormFieldsPerDocumentBase>',
         :'merge_fields' => :'Array<SubMergeField>',
         :'message' => :'String',
         :'metadata' => :'Hash<String, Object>',
         :'show_preview' => :'Boolean',
+        :'show_progress_stepper' => :'Boolean',
         :'signer_roles' => :'Array<SubTemplateRole>',
         :'skip_me_now' => :'Boolean',
         :'subject' => :'String',
@@ -192,7 +210,7 @@ module HelloSign
       if attributes.key?(:'allow_ccs')
         self.allow_ccs = attributes[:'allow_ccs']
       else
-        self.allow_ccs = false
+        self.allow_ccs = true
       end
 
       if attributes.key?(:'allow_reassign')
@@ -219,6 +237,18 @@ module HelloSign
 
       if attributes.key?(:'field_options')
         self.field_options = attributes[:'field_options']
+      end
+
+      if attributes.key?(:'force_signer_roles')
+        self.force_signer_roles = attributes[:'force_signer_roles']
+      else
+        self.force_signer_roles = false
+      end
+
+      if attributes.key?(:'force_subject_message')
+        self.force_subject_message = attributes[:'force_subject_message']
+      else
+        self.force_subject_message = false
       end
 
       if attributes.key?(:'form_field_groups')
@@ -259,6 +289,12 @@ module HelloSign
         self.show_preview = attributes[:'show_preview']
       else
         self.show_preview = false
+      end
+
+      if attributes.key?(:'show_progress_stepper')
+        self.show_progress_stepper = attributes[:'show_progress_stepper']
+      else
+        self.show_progress_stepper = true
       end
 
       if attributes.key?(:'signer_roles')
@@ -362,6 +398,8 @@ module HelloSign
           cc_roles == o.cc_roles &&
           editor_options == o.editor_options &&
           field_options == o.field_options &&
+          force_signer_roles == o.force_signer_roles &&
+          force_subject_message == o.force_subject_message &&
           form_field_groups == o.form_field_groups &&
           form_field_rules == o.form_field_rules &&
           form_fields_per_document == o.form_fields_per_document &&
@@ -369,6 +407,7 @@ module HelloSign
           message == o.message &&
           metadata == o.metadata &&
           show_preview == o.show_preview &&
+          show_progress_stepper == o.show_progress_stepper &&
           signer_roles == o.signer_roles &&
           skip_me_now == o.skip_me_now &&
           subject == o.subject &&
@@ -386,7 +425,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [client_id, file, file_url, allow_ccs, allow_reassign, attachments, cc_roles, editor_options, field_options, form_field_groups, form_field_rules, form_fields_per_document, merge_fields, message, metadata, show_preview, signer_roles, skip_me_now, subject, test_mode, title, use_preexisting_fields].hash
+      [client_id, file, file_url, allow_ccs, allow_reassign, attachments, cc_roles, editor_options, field_options, force_signer_roles, force_subject_message, form_field_groups, form_field_rules, form_fields_per_document, merge_fields, message, metadata, show_preview, show_progress_stepper, signer_roles, skip_me_now, subject, test_mode, title, use_preexisting_fields].hash
     end
 
     # Builds the object from hash
@@ -491,16 +530,17 @@ module HelloSign
 
     # Returns the object in the form of hash
     # @return [Hash] Returns the object in the form of hash
-    def to_hash
+    def to_hash(include_nil = true)
       hash = {}
       self.class.merged_attributes.each_pair do |attr, param|
         value = self.send(attr)
         if value.nil?
+          next unless include_nil
           is_nullable = self.class.merged_nullable.include?(attr)
           next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))
         end
 
-        hash[param] = _to_hash(value)
+        hash[param] = _to_hash(value, include_nil)
       end
       hash
     end
@@ -509,15 +549,15 @@ module HelloSign
     # For object, use to_hash. Otherwise, just return the value
     # @param [Object] value Any valid value
     # @return [Hash] Returns the value in the form of hash
-    def _to_hash(value)
+    def _to_hash(value, include_nil = true)
       if value.is_a?(Array)
-        value.compact.map { |v| _to_hash(v) }
+        value.compact.map { |v| _to_hash(v, include_nil) }
       elsif value.is_a?(Hash)
         {}.tap do |hash|
-          value.each { |k, v| hash[k] = _to_hash(v) }
+          value.each { |k, v| hash[k] = _to_hash(v, include_nil) }
         end
       elsif value.respond_to? :to_hash
-        value.to_hash
+        value.to_hash(include_nil)
       else
         value
       end

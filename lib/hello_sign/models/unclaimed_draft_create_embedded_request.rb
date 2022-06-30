@@ -15,16 +15,16 @@ require 'time'
 
 module HelloSign
   class UnclaimedDraftCreateEmbeddedRequest
-    # Client id of the app you're using to create this draft. Visit our [embedded page](https://app.hellosign.com/api/embeddedSigningWalkthrough) to learn more about this parameter.
+    # Client id of the app used to create the draft. Used to apply the branding and callback url defined for the app.
     attr_accessor :client_id
 
     # The email address of the user that should be designated as the requester of this draft, if the draft type is `request_signature`.
     attr_accessor :requester_email_address
 
-    # **file** or **file_url** is required, but not both.  Use `file[]` to indicate the uploaded file(s) to send for signature.  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.
+    # Use `file[]` to indicate the uploaded file(s) to send for signature.  This endpoint requires either **file** or **file_url[]**, but not both.
     attr_accessor :file
 
-    # **file_url** or **file** is required, but not both.  Use `file_url[]` to have HelloSign download the file(s) to send for signature.  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.
+    # Use `file_url[]` to have HelloSign download the file(s) to send for signature.  This endpoint requires either **file** or **file_url[]**, but not both.
     attr_accessor :file_url
 
     # This allows the requester to specify whether the user is allowed to provide email addresses to CC when claiming the draft.
@@ -33,20 +33,27 @@ module HelloSign
     # Allows signers to decline to sign a document if `true`. Defaults to `false`.
     attr_accessor :allow_decline
 
-    # Allows signers to reassign their signature requests to other signers if set to `true`. Defaults to `false`.  **Note**: Only available for Gold plan and higher.
+    # Allows signers to reassign their signature requests to other signers if set to `true`. Defaults to `false`.  **Note**: Only available for Premium plan and higher.
     attr_accessor :allow_reassign
 
+    # A list describing the attachments
     attr_accessor :attachments
 
     # The email addresses that should be CCed.
     attr_accessor :cc_email_addresses
 
-    # An array defining values and options for custom fields. Required when defining pre-set values in `form_fields_per_document` or [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro).
+    # When used together with merge fields, `custom_fields` allows users to add pre-filled data to their signature requests.  Pre-filled data can be used with \"send-once\" signature requests by adding merge fields with `form_fields_per_document` or [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro) while passing values back with `custom_fields` together in one API call.  For using pre-filled on repeatable signature requests, merge fields are added to templates in the HelloSign UI or by calling [/template/create_embedded_draft](/api/reference/operation/templateCreateEmbeddedDraft) and then passing `custom_fields` on subsequent signature requests referencing that template.
     attr_accessor :custom_fields
 
     attr_accessor :editor_options
 
     attr_accessor :field_options
+
+    # Provide users the ability to review/edit the signers.
+    attr_accessor :force_signer_page
+
+    # Provide users the ability to review/edit the subject and message.
+    attr_accessor :force_subject_message
 
     # Group information for fields defined in `form_fields_per_document`. String-indexed JSON array with `group_label` and `requirement` keys. `form_fields_per_document` must contain fields referencing a group defined in `form_field_groups`.
     attr_accessor :form_field_groups
@@ -54,13 +61,13 @@ module HelloSign
     # Conditional Logic rules for fields defined in `form_fields_per_document`.
     attr_accessor :form_field_rules
 
-    # The fields that should appear on the document, expressed as a 2-dimensional JSON array serialized to a string. The main array represents documents, with each containing an array of form fields. One document array is required for each file provided by the `file[]` parameter. In the case of a file with no fields, an empty list must be specified.  **NOTE**: Fields like **text**, **dropdown**, **checkbox**, **radio**, and **hyperlink** have additional required and optional parameters. Check out the list of [additional parameters](/api/reference/constants/#form-fields-per-document) for these field types.  * Text Field use `SubFormFieldsPerDocumentText` * Dropdown Field use `SubFormFieldsPerDocumentDropdown` * Hyperlink Field use `SubFormFieldsPerDocumentHyperlink` * Checkbox Field use `SubFormFieldsPerDocumentCheckbox` * Radio Field use `SubFormFieldsPerDocumentRadio` * Signature Field use `SubFormFieldsPerDocumentSignature` * Date Signed Field use `SubFormFieldsPerDocumentDateSigned` * Initials Field use `SubFormFieldsPerDocumentInitials` * Text Merge Field use `SubFormFieldsPerDocumentTextMerge` * Checkbox Merge Field use `SubFormFieldsPerDocumentCheckboxMerge`
+    # The fields that should appear on the document, expressed as an array of objects.  **NOTE**: Fields like **text**, **dropdown**, **checkbox**, **radio**, and **hyperlink** have additional required and optional parameters. Check out the list of [additional parameters](/api/reference/constants/#form-fields-per-document) for these field types.  * Text Field use `SubFormFieldsPerDocumentText` * Dropdown Field use `SubFormFieldsPerDocumentDropdown` * Hyperlink Field use `SubFormFieldsPerDocumentHyperlink` * Checkbox Field use `SubFormFieldsPerDocumentCheckbox` * Radio Field use `SubFormFieldsPerDocumentRadio` * Signature Field use `SubFormFieldsPerDocumentSignature` * Date Signed Field use `SubFormFieldsPerDocumentDateSigned` * Initials Field use `SubFormFieldsPerDocumentInitials` * Text Merge Field use `SubFormFieldsPerDocumentTextMerge` * Checkbox Merge Field use `SubFormFieldsPerDocumentCheckboxMerge`
     attr_accessor :form_fields_per_document
 
     # Send with a value of `true` if you wish to enable automatic Text Tag removal. Defaults to `false`. When using Text Tags it is preferred that you set this to `false` and hide your tags with white text or something similar because the automatic removal system can cause unwanted clipping. See the [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro) walkthrough for more details.
     attr_accessor :hide_text_tags
 
-    # The request from this draft will not automatically send to signers post-claim if set to 1. Requester must [release](/api/reference/operation/signatureRequestReleaseHold/) the request from hold when ready to send. Defaults to `false`.
+    # The request from this draft will not automatically send to signers post-claim if set to `true`. Requester must [release](/api/reference/operation/signatureRequestReleaseHold/) the request from hold when ready to send. Defaults to `false`.
     attr_accessor :hold_request
 
     # The request created from this draft will also be signable in embedded mode if set to `true`. Defaults to `false`.
@@ -72,8 +79,14 @@ module HelloSign
     # Key-value data that should be attached to the signature request. This metadata is included in all API responses and events involving the signature request. For example, use the metadata field to store a signer's order number for look up when receiving events for the signature request.  Each request can include up to 10 metadata keys, with key names up to 40 characters long and values up to 1000 characters long.
     attr_accessor :metadata
 
+    # The URL you want signers redirected to after they successfully request a signature.
+    attr_accessor :requesting_redirect_url
+
     # This allows the requester to enable the editor/preview experience.  - `show_preview=true`: Allows requesters to enable the editor/preview experience. - `show_preview=false`: Allows requesters to disable the editor/preview experience.
     attr_accessor :show_preview
+
+    # When only one step remains in the signature request process and this parameter is set to `false` then the progress stepper will be hidden.
+    attr_accessor :show_progress_stepper
 
     # Add Signers to your Unclaimed Draft Signature Request.
     attr_accessor :signers
@@ -138,6 +151,8 @@ module HelloSign
         :'custom_fields' => :'custom_fields',
         :'editor_options' => :'editor_options',
         :'field_options' => :'field_options',
+        :'force_signer_page' => :'force_signer_page',
+        :'force_subject_message' => :'force_subject_message',
         :'form_field_groups' => :'form_field_groups',
         :'form_field_rules' => :'form_field_rules',
         :'form_fields_per_document' => :'form_fields_per_document',
@@ -146,7 +161,9 @@ module HelloSign
         :'is_for_embedded_signing' => :'is_for_embedded_signing',
         :'message' => :'message',
         :'metadata' => :'metadata',
+        :'requesting_redirect_url' => :'requesting_redirect_url',
         :'show_preview' => :'show_preview',
+        :'show_progress_stepper' => :'show_progress_stepper',
         :'signers' => :'signers',
         :'signing_options' => :'signing_options',
         :'signing_redirect_url' => :'signing_redirect_url',
@@ -184,15 +201,19 @@ module HelloSign
         :'custom_fields' => :'Array<SubCustomField>',
         :'editor_options' => :'SubEditorOptions',
         :'field_options' => :'SubFieldOptions',
+        :'force_signer_page' => :'Boolean',
+        :'force_subject_message' => :'Boolean',
         :'form_field_groups' => :'Array<SubFormFieldGroup>',
         :'form_field_rules' => :'Array<SubFormFieldRule>',
-        :'form_fields_per_document' => :'Array<Array<SubFormFieldsPerDocumentBase>>',
+        :'form_fields_per_document' => :'Array<SubFormFieldsPerDocumentBase>',
         :'hide_text_tags' => :'Boolean',
         :'hold_request' => :'Boolean',
         :'is_for_embedded_signing' => :'Boolean',
         :'message' => :'String',
         :'metadata' => :'Hash<String, Object>',
+        :'requesting_redirect_url' => :'String',
         :'show_preview' => :'Boolean',
+        :'show_progress_stepper' => :'Boolean',
         :'signers' => :'Array<SubUnclaimedDraftSigner>',
         :'signing_options' => :'SubSigningOptions',
         :'signing_redirect_url' => :'String',
@@ -259,7 +280,7 @@ module HelloSign
       if attributes.key?(:'allow_ccs')
         self.allow_ccs = attributes[:'allow_ccs']
       else
-        self.allow_ccs = false
+        self.allow_ccs = true
       end
 
       if attributes.key?(:'allow_decline')
@@ -298,6 +319,18 @@ module HelloSign
 
       if attributes.key?(:'field_options')
         self.field_options = attributes[:'field_options']
+      end
+
+      if attributes.key?(:'force_signer_page')
+        self.force_signer_page = attributes[:'force_signer_page']
+      else
+        self.force_signer_page = false
+      end
+
+      if attributes.key?(:'force_subject_message')
+        self.force_subject_message = attributes[:'force_subject_message']
+      else
+        self.force_subject_message = false
       end
 
       if attributes.key?(:'form_field_groups')
@@ -346,8 +379,18 @@ module HelloSign
         end
       end
 
+      if attributes.key?(:'requesting_redirect_url')
+        self.requesting_redirect_url = attributes[:'requesting_redirect_url']
+      end
+
       if attributes.key?(:'show_preview')
         self.show_preview = attributes[:'show_preview']
+      end
+
+      if attributes.key?(:'show_progress_stepper')
+        self.show_progress_stepper = attributes[:'show_progress_stepper']
+      else
+        self.show_progress_stepper = true
       end
 
       if attributes.key?(:'signers')
@@ -487,6 +530,8 @@ module HelloSign
           custom_fields == o.custom_fields &&
           editor_options == o.editor_options &&
           field_options == o.field_options &&
+          force_signer_page == o.force_signer_page &&
+          force_subject_message == o.force_subject_message &&
           form_field_groups == o.form_field_groups &&
           form_field_rules == o.form_field_rules &&
           form_fields_per_document == o.form_fields_per_document &&
@@ -495,7 +540,9 @@ module HelloSign
           is_for_embedded_signing == o.is_for_embedded_signing &&
           message == o.message &&
           metadata == o.metadata &&
+          requesting_redirect_url == o.requesting_redirect_url &&
           show_preview == o.show_preview &&
+          show_progress_stepper == o.show_progress_stepper &&
           signers == o.signers &&
           signing_options == o.signing_options &&
           signing_redirect_url == o.signing_redirect_url &&
@@ -516,7 +563,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [client_id, requester_email_address, file, file_url, allow_ccs, allow_decline, allow_reassign, attachments, cc_email_addresses, custom_fields, editor_options, field_options, form_field_groups, form_field_rules, form_fields_per_document, hide_text_tags, hold_request, is_for_embedded_signing, message, metadata, show_preview, signers, signing_options, signing_redirect_url, skip_me_now, subject, test_mode, type, use_preexisting_fields, use_text_tags].hash
+      [client_id, requester_email_address, file, file_url, allow_ccs, allow_decline, allow_reassign, attachments, cc_email_addresses, custom_fields, editor_options, field_options, force_signer_page, force_subject_message, form_field_groups, form_field_rules, form_fields_per_document, hide_text_tags, hold_request, is_for_embedded_signing, message, metadata, requesting_redirect_url, show_preview, show_progress_stepper, signers, signing_options, signing_redirect_url, skip_me_now, subject, test_mode, type, use_preexisting_fields, use_text_tags].hash
     end
 
     # Builds the object from hash
@@ -621,16 +668,17 @@ module HelloSign
 
     # Returns the object in the form of hash
     # @return [Hash] Returns the object in the form of hash
-    def to_hash
+    def to_hash(include_nil = true)
       hash = {}
       self.class.merged_attributes.each_pair do |attr, param|
         value = self.send(attr)
         if value.nil?
+          next unless include_nil
           is_nullable = self.class.merged_nullable.include?(attr)
           next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))
         end
 
-        hash[param] = _to_hash(value)
+        hash[param] = _to_hash(value, include_nil)
       end
       hash
     end
@@ -639,15 +687,15 @@ module HelloSign
     # For object, use to_hash. Otherwise, just return the value
     # @param [Object] value Any valid value
     # @return [Hash] Returns the value in the form of hash
-    def _to_hash(value)
+    def _to_hash(value, include_nil = true)
       if value.is_a?(Array)
-        value.compact.map { |v| _to_hash(v) }
+        value.compact.map { |v| _to_hash(v, include_nil) }
       elsif value.is_a?(Hash)
         {}.tap do |hash|
-          value.each { |k, v| hash[k] = _to_hash(v) }
+          value.each { |k, v| hash[k] = _to_hash(v, include_nil) }
         end
       elsif value.respond_to? :to_hash
-        value.to_hash
+        value.to_hash(include_nil)
       else
         value
       end

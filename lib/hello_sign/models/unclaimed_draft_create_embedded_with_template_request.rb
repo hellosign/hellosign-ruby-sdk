@@ -15,10 +15,10 @@ require 'time'
 
 module HelloSign
   class UnclaimedDraftCreateEmbeddedWithTemplateRequest
-    # Client id of the app you're using to create this draft. Visit our [embedded page](https://app.hellosign.com/api/embeddedSigningWalkthrough) to learn more about this parameter.
+    # Client id of the app used to create the draft. Used to apply the branding and callback url defined for the app.
     attr_accessor :client_id
 
-    # The email address of the user that should be designated as the requester of this draft, if the draft type is `request_signature`.
+    # The email address of the user that should be designated as the requester of this draft.
     attr_accessor :requester_email_address
 
     # Use `template_ids` to create a SignatureRequest from one or more templates, in the order in which the templates will be used.
@@ -27,24 +27,30 @@ module HelloSign
     # Allows signers to decline to sign a document if `true`. Defaults to `false`.
     attr_accessor :allow_decline
 
-    # Allows signers to reassign their signature requests to other signers if set to `true`. Defaults to `false`.  **Note**: Only available for Gold plan and higher.
+    # Allows signers to reassign their signature requests to other signers if set to `true`. Defaults to `false`.  **Note**: Only available for Premium plan and higher.
     attr_accessor :allow_reassign
 
     # Add CC email recipients. Required when a CC role exists for the Template.
     attr_accessor :ccs
 
-    # An array defining values and options for custom fields. Required when defining when a custom field exists in the Template.
+    # An array defining values and options for custom fields. Required when a custom field exists in the Template.
     attr_accessor :custom_fields
 
     attr_accessor :editor_options
 
     attr_accessor :field_options
 
-    # **file** or **file_url** is required, but not both.  Append additional files to the signature request. HelloSign will parse the files for [text tags](https://app.hellosign.com/api/textTagsWalkthrough). Text tags for signers not on the template(s) will be ignored.  Use `file[]` to pass the uploaded file(s).  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.
+    # Use `file[]` to append additional files to the signature request being created from the template. HelloSign will parse the files for [text tags](https://app.hellosign.com/api/textTagsWalkthrough) and append it to the signature request. Text tags for signers not on the template(s) will be ignored.  **file** or **file_url[]** is required, but not both.
     attr_accessor :file
 
-    # **file** or **file_url** is required, but not both.  Append additional files to the signature request. HelloSign will parse the files for [text tags](https://app.hellosign.com/api/textTagsWalkthrough). Text tags for signers not on the template(s) will be ignored.  Use `file_url[]` to have HelloSign download the file(s).  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.
+    # Use file_url[] to append additional files to the signature request being created from the template. HelloSign will download the file, then parse it for [text tags](https://app.hellosign.com/api/textTagsWalkthrough), and append to the signature request. Text tags for signers not on the template(s) will be ignored.  **file** or **file_url[]** is required, but not both.
     attr_accessor :file_url
+
+    # Provide users the ability to review/edit the template signer roles.
+    attr_accessor :force_signer_roles
+
+    # Provide users the ability to review/edit the template subject and message.
+    attr_accessor :force_subject_message
 
     # The request from this draft will not automatically send to signers post-claim if set to 1. Requester must [release](/api/reference/operation/signatureRequestReleaseHold/) the request from hold when ready to send. Defaults to `false`.
     attr_accessor :hold_request
@@ -58,7 +64,7 @@ module HelloSign
     # Key-value data that should be attached to the signature request. This metadata is included in all API responses and events involving the signature request. For example, use the metadata field to store a signer's order number for look up when receiving events for the signature request.  Each request can include up to 10 metadata keys, with key names up to 40 characters long and values up to 1000 characters long.
     attr_accessor :metadata
 
-    # This allows the requester to enable the preview experience experience.  - `preview_only=true`: Allows requesters to enable the preview only experience. - `preview_only=false`: Allows requesters to disable the preview only experience.  **Note**: This parameter overwrites `show_preview=1` (if set).
+    # This allows the requester to enable the preview experience (i.e. does not allow the requester's end user to add any additional fields via the editor).  - `preview_only=true`: Allows requesters to enable the preview only experience. - `preview_only=false`: Allows requesters to disable the preview only experience.  **Note**: This parameter overwrites `show_preview=1` (if set).
     attr_accessor :preview_only
 
     # The URL you want signers redirected to after they successfully request a signature.
@@ -66,6 +72,9 @@ module HelloSign
 
     # This allows the requester to enable the editor/preview experience.  - `show_preview=true`: Allows requesters to enable the editor/preview experience. - `show_preview=false`: Allows requesters to disable the editor/preview experience.
     attr_accessor :show_preview
+
+    # When only one step remains in the signature request process and this parameter is set to `false` then the progress stepper will be hidden.
+    attr_accessor :show_progress_stepper
 
     # Add Signers to your Templated-based Signature Request.
     attr_accessor :signers
@@ -101,6 +110,8 @@ module HelloSign
         :'field_options' => :'field_options',
         :'file' => :'file',
         :'file_url' => :'file_url',
+        :'force_signer_roles' => :'force_signer_roles',
+        :'force_subject_message' => :'force_subject_message',
         :'hold_request' => :'hold_request',
         :'is_for_embedded_signing' => :'is_for_embedded_signing',
         :'message' => :'message',
@@ -108,6 +119,7 @@ module HelloSign
         :'preview_only' => :'preview_only',
         :'requesting_redirect_url' => :'requesting_redirect_url',
         :'show_preview' => :'show_preview',
+        :'show_progress_stepper' => :'show_progress_stepper',
         :'signers' => :'signers',
         :'signing_options' => :'signing_options',
         :'signing_redirect_url' => :'signing_redirect_url',
@@ -142,6 +154,8 @@ module HelloSign
         :'field_options' => :'SubFieldOptions',
         :'file' => :'Array<File>',
         :'file_url' => :'Array<String>',
+        :'force_signer_roles' => :'Boolean',
+        :'force_subject_message' => :'Boolean',
         :'hold_request' => :'Boolean',
         :'is_for_embedded_signing' => :'Boolean',
         :'message' => :'String',
@@ -149,6 +163,7 @@ module HelloSign
         :'preview_only' => :'Boolean',
         :'requesting_redirect_url' => :'String',
         :'show_preview' => :'Boolean',
+        :'show_progress_stepper' => :'Boolean',
         :'signers' => :'Array<SubUnclaimedDraftTemplateSigner>',
         :'signing_options' => :'SubSigningOptions',
         :'signing_redirect_url' => :'String',
@@ -248,6 +263,18 @@ module HelloSign
         end
       end
 
+      if attributes.key?(:'force_signer_roles')
+        self.force_signer_roles = attributes[:'force_signer_roles']
+      else
+        self.force_signer_roles = false
+      end
+
+      if attributes.key?(:'force_subject_message')
+        self.force_subject_message = attributes[:'force_subject_message']
+      else
+        self.force_subject_message = false
+      end
+
       if attributes.key?(:'hold_request')
         self.hold_request = attributes[:'hold_request']
       else
@@ -284,6 +311,12 @@ module HelloSign
         self.show_preview = attributes[:'show_preview']
       else
         self.show_preview = false
+      end
+
+      if attributes.key?(:'show_progress_stepper')
+        self.show_progress_stepper = attributes[:'show_progress_stepper']
+      else
+        self.show_progress_stepper = true
       end
 
       if attributes.key?(:'signers')
@@ -416,6 +449,8 @@ module HelloSign
           field_options == o.field_options &&
           file == o.file &&
           file_url == o.file_url &&
+          force_signer_roles == o.force_signer_roles &&
+          force_subject_message == o.force_subject_message &&
           hold_request == o.hold_request &&
           is_for_embedded_signing == o.is_for_embedded_signing &&
           message == o.message &&
@@ -423,6 +458,7 @@ module HelloSign
           preview_only == o.preview_only &&
           requesting_redirect_url == o.requesting_redirect_url &&
           show_preview == o.show_preview &&
+          show_progress_stepper == o.show_progress_stepper &&
           signers == o.signers &&
           signing_options == o.signing_options &&
           signing_redirect_url == o.signing_redirect_url &&
@@ -441,7 +477,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [client_id, requester_email_address, template_ids, allow_decline, allow_reassign, ccs, custom_fields, editor_options, field_options, file, file_url, hold_request, is_for_embedded_signing, message, metadata, preview_only, requesting_redirect_url, show_preview, signers, signing_options, signing_redirect_url, skip_me_now, subject, test_mode, title].hash
+      [client_id, requester_email_address, template_ids, allow_decline, allow_reassign, ccs, custom_fields, editor_options, field_options, file, file_url, force_signer_roles, force_subject_message, hold_request, is_for_embedded_signing, message, metadata, preview_only, requesting_redirect_url, show_preview, show_progress_stepper, signers, signing_options, signing_redirect_url, skip_me_now, subject, test_mode, title].hash
     end
 
     # Builds the object from hash
@@ -546,16 +582,17 @@ module HelloSign
 
     # Returns the object in the form of hash
     # @return [Hash] Returns the object in the form of hash
-    def to_hash
+    def to_hash(include_nil = true)
       hash = {}
       self.class.merged_attributes.each_pair do |attr, param|
         value = self.send(attr)
         if value.nil?
+          next unless include_nil
           is_nullable = self.class.merged_nullable.include?(attr)
           next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))
         end
 
-        hash[param] = _to_hash(value)
+        hash[param] = _to_hash(value, include_nil)
       end
       hash
     end
@@ -564,15 +601,15 @@ module HelloSign
     # For object, use to_hash. Otherwise, just return the value
     # @param [Object] value Any valid value
     # @return [Hash] Returns the value in the form of hash
-    def _to_hash(value)
+    def _to_hash(value, include_nil = true)
       if value.is_a?(Array)
-        value.compact.map { |v| _to_hash(v) }
+        value.compact.map { |v| _to_hash(v, include_nil) }
       elsif value.is_a?(Hash)
         {}.tap do |hash|
-          value.each { |k, v| hash[k] = _to_hash(v) }
+          value.each { |k, v| hash[k] = _to_hash(v, include_nil) }
         end
       elsif value.respond_to? :to_hash
-        value.to_hash
+        value.to_hash(include_nil)
       else
         value
       end

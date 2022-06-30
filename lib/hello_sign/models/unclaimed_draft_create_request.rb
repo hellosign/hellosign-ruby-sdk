@@ -15,21 +15,28 @@ require 'time'
 
 module HelloSign
   class UnclaimedDraftCreateRequest
-    # **file** or **file_url** is required, but not both.  Use `file[]` to indicate the uploaded file(s) to send for signature.  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.
+    # The type of unclaimed draft to create. Use `send_document` to create a claimable file, and `request_signature` for a claimable signature request. If the type is `request_signature` then signers name and email_address are not optional.
+    attr_accessor :type
+
+    # Use `file[]` to indicate the uploaded file(s) to send for signature.  This endpoint requires either **file** or **file_url[]**, but not both.
     attr_accessor :file
 
-    # **file_url** or **file** is required, but not both.  Use `file_url[]` to have HelloSign download the file(s) to send for signature.  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.
+    # Use `file_url[]` to have HelloSign download the file(s) to send for signature.  This endpoint requires either **file** or **file_url[]**, but not both.
     attr_accessor :file_url
 
     # Allows signers to decline to sign a document if `true`. Defaults to `false`.
     attr_accessor :allow_decline
 
+    # A list describing the attachments
     attr_accessor :attachments
 
     # The email addresses that should be CCed.
     attr_accessor :cc_email_addresses
 
-    # An array defining values and options for custom fields. Required when defining pre-set values in `form_fields_per_document` or [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro).
+    # Client id of the app used to create the draft. Used to apply the branding and callback url defined for the app.
+    attr_accessor :client_id
+
+    # When used together with merge fields, `custom_fields` allows users to add pre-filled data to their signature requests.  Pre-filled data can be used with \"send-once\" signature requests by adding merge fields with `form_fields_per_document` or [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro) while passing values back with `custom_fields` together in one API call.  For using pre-filled on repeatable signature requests, merge fields are added to templates in the HelloSign UI or by calling [/template/create_embedded_draft](/api/reference/operation/templateCreateEmbeddedDraft) and then passing `custom_fields` on subsequent signature requests referencing that template.
     attr_accessor :custom_fields
 
     attr_accessor :field_options
@@ -40,7 +47,7 @@ module HelloSign
     # Conditional Logic rules for fields defined in `form_fields_per_document`.
     attr_accessor :form_field_rules
 
-    # The fields that should appear on the document, expressed as a 2-dimensional JSON array serialized to a string. The main array represents documents, with each containing an array of form fields. One document array is required for each file provided by the `file[]` parameter. In the case of a file with no fields, an empty list must be specified.  **NOTE**: Fields like **text**, **dropdown**, **checkbox**, **radio**, and **hyperlink** have additional required and optional parameters. Check out the list of [additional parameters](/api/reference/constants/#form-fields-per-document) for these field types.  * Text Field use `SubFormFieldsPerDocumentText` * Dropdown Field use `SubFormFieldsPerDocumentDropdown` * Hyperlink Field use `SubFormFieldsPerDocumentHyperlink` * Checkbox Field use `SubFormFieldsPerDocumentCheckbox` * Radio Field use `SubFormFieldsPerDocumentRadio` * Signature Field use `SubFormFieldsPerDocumentSignature` * Date Signed Field use `SubFormFieldsPerDocumentDateSigned` * Initials Field use `SubFormFieldsPerDocumentInitials` * Text Merge Field use `SubFormFieldsPerDocumentTextMerge` * Checkbox Merge Field use `SubFormFieldsPerDocumentCheckboxMerge`
+    # The fields that should appear on the document, expressed as an array of objects.  **NOTE**: Fields like **text**, **dropdown**, **checkbox**, **radio**, and **hyperlink** have additional required and optional parameters. Check out the list of [additional parameters](/api/reference/constants/#form-fields-per-document) for these field types.  * Text Field use `SubFormFieldsPerDocumentText` * Dropdown Field use `SubFormFieldsPerDocumentDropdown` * Hyperlink Field use `SubFormFieldsPerDocumentHyperlink` * Checkbox Field use `SubFormFieldsPerDocumentCheckbox` * Radio Field use `SubFormFieldsPerDocumentRadio` * Signature Field use `SubFormFieldsPerDocumentSignature` * Date Signed Field use `SubFormFieldsPerDocumentDateSigned` * Initials Field use `SubFormFieldsPerDocumentInitials` * Text Merge Field use `SubFormFieldsPerDocumentTextMerge` * Checkbox Merge Field use `SubFormFieldsPerDocumentCheckboxMerge`
     attr_accessor :form_fields_per_document
 
     # Send with a value of `true` if you wish to enable automatic Text Tag removal. Defaults to `false`. When using Text Tags it is preferred that you set this to `false` and hide your tags with white text or something similar because the automatic removal system can cause unwanted clipping. See the [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro) walkthrough for more details.
@@ -51,6 +58,9 @@ module HelloSign
 
     # Key-value data that should be attached to the signature request. This metadata is included in all API responses and events involving the signature request. For example, use the metadata field to store a signer's order number for look up when receiving events for the signature request.  Each request can include up to 10 metadata keys, with key names up to 40 characters long and values up to 1000 characters long.
     attr_accessor :metadata
+
+    # When only one step remains in the signature request process and this parameter is set to `false` then the progress stepper will be hidden.
+    attr_accessor :show_progress_stepper
 
     # Add Signers to your Unclaimed Draft Signature Request.
     attr_accessor :signers
@@ -65,9 +75,6 @@ module HelloSign
 
     # Whether this is a test, the signature request created from this draft will not be legally binding if set to `true`. Defaults to `false`.
     attr_accessor :test_mode
-
-    # The type of unclaimed draft to create. Use `send_document` to create a claimable file, and `request_signature` for a claimable signature request. If the type is `request_signature` then signers name and email_address are not optional.
-    attr_accessor :type
 
     # Set `use_text_tags` to `true` to enable [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro) parsing in your document (defaults to disabled, or `false`). Alternatively, if your PDF contains pre-defined fields, enable the detection of these fields by setting the `use_preexisting_fields` to `true` (defaults to disabled, or `false`). Currently we only support use of either `use_text_tags` or `use_preexisting_fields` parameter, not both.
     attr_accessor :use_preexisting_fields
@@ -100,11 +107,13 @@ module HelloSign
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
+        :'type' => :'type',
         :'file' => :'file',
         :'file_url' => :'file_url',
         :'allow_decline' => :'allow_decline',
         :'attachments' => :'attachments',
         :'cc_email_addresses' => :'cc_email_addresses',
+        :'client_id' => :'client_id',
         :'custom_fields' => :'custom_fields',
         :'field_options' => :'field_options',
         :'form_field_groups' => :'form_field_groups',
@@ -113,12 +122,12 @@ module HelloSign
         :'hide_text_tags' => :'hide_text_tags',
         :'message' => :'message',
         :'metadata' => :'metadata',
+        :'show_progress_stepper' => :'show_progress_stepper',
         :'signers' => :'signers',
         :'signing_options' => :'signing_options',
         :'signing_redirect_url' => :'signing_redirect_url',
         :'subject' => :'subject',
         :'test_mode' => :'test_mode',
-        :'type' => :'type',
         :'use_preexisting_fields' => :'use_preexisting_fields',
         :'use_text_tags' => :'use_text_tags'
       }
@@ -137,25 +146,27 @@ module HelloSign
     # Attribute type mapping.
     def self.openapi_types
       {
+        :'type' => :'String',
         :'file' => :'Array<File>',
         :'file_url' => :'Array<String>',
         :'allow_decline' => :'Boolean',
         :'attachments' => :'Array<SubAttachment>',
         :'cc_email_addresses' => :'Array<String>',
+        :'client_id' => :'String',
         :'custom_fields' => :'Array<SubCustomField>',
         :'field_options' => :'SubFieldOptions',
         :'form_field_groups' => :'Array<SubFormFieldGroup>',
         :'form_field_rules' => :'Array<SubFormFieldRule>',
-        :'form_fields_per_document' => :'Array<Array<SubFormFieldsPerDocumentBase>>',
+        :'form_fields_per_document' => :'Array<SubFormFieldsPerDocumentBase>',
         :'hide_text_tags' => :'Boolean',
         :'message' => :'String',
         :'metadata' => :'Hash<String, Object>',
+        :'show_progress_stepper' => :'Boolean',
         :'signers' => :'Array<SubUnclaimedDraftSigner>',
         :'signing_options' => :'SubSigningOptions',
         :'signing_redirect_url' => :'String',
         :'subject' => :'String',
         :'test_mode' => :'Boolean',
-        :'type' => :'String',
         :'use_preexisting_fields' => :'Boolean',
         :'use_text_tags' => :'Boolean'
       }
@@ -192,6 +203,10 @@ module HelloSign
         h[k.to_sym] = v
       }
 
+      if attributes.key?(:'type')
+        self.type = attributes[:'type']
+      end
+
       if attributes.key?(:'file')
         if (value = attributes[:'file']).is_a?(Array)
           self.file = value
@@ -220,6 +235,10 @@ module HelloSign
         if (value = attributes[:'cc_email_addresses']).is_a?(Array)
           self.cc_email_addresses = value
         end
+      end
+
+      if attributes.key?(:'client_id')
+        self.client_id = attributes[:'client_id']
       end
 
       if attributes.key?(:'custom_fields')
@@ -266,6 +285,12 @@ module HelloSign
         end
       end
 
+      if attributes.key?(:'show_progress_stepper')
+        self.show_progress_stepper = attributes[:'show_progress_stepper']
+      else
+        self.show_progress_stepper = true
+      end
+
       if attributes.key?(:'signers')
         if (value = attributes[:'signers']).is_a?(Array)
           self.signers = value
@@ -290,10 +315,6 @@ module HelloSign
         self.test_mode = false
       end
 
-      if attributes.key?(:'type')
-        self.type = attributes[:'type']
-      end
-
       if attributes.key?(:'use_preexisting_fields')
         self.use_preexisting_fields = attributes[:'use_preexisting_fields']
       else
@@ -311,6 +332,10 @@ module HelloSign
     # @return Array for valid properties with the reasons
     def list_invalid_properties
       invalid_properties = Array.new
+      if @type.nil?
+        invalid_properties.push('invalid value for "type", type cannot be nil.')
+      end
+
       if !@message.nil? && @message.to_s.length > 5000
         invalid_properties.push('invalid value for "message", the character length must be smaller than or equal to 5000.')
       end
@@ -325,11 +350,22 @@ module HelloSign
     # Check to see if the all the properties in the model are valid
     # @return true if the model is valid
     def valid?
-      return false if !@message.nil? && @message.to_s.length > 5000
-      return false if !@subject.nil? && @subject.to_s.length > 200
+      return false if @type.nil?
       type_validator = EnumAttributeValidator.new('String', ["send_document", "request_signature"])
       return false unless type_validator.valid?(@type)
+      return false if !@message.nil? && @message.to_s.length > 5000
+      return false if !@subject.nil? && @subject.to_s.length > 200
       true
+    end
+
+    # Custom attribute writer method checking allowed values (enum).
+    # @param [Object] type Object to be assigned
+    def type=(type)
+      validator = EnumAttributeValidator.new('String', ["send_document", "request_signature"])
+      unless validator.valid?(type)
+        fail ArgumentError, "invalid value for \"type\", must be one of #{validator.allowable_values}."
+      end
+      @type = type
     end
 
     # Custom attribute writer method with validation
@@ -358,26 +394,18 @@ module HelloSign
       @subject = subject
     end
 
-    # Custom attribute writer method checking allowed values (enum).
-    # @param [Object] type Object to be assigned
-    def type=(type)
-      validator = EnumAttributeValidator.new('String', ["send_document", "request_signature"])
-      unless validator.valid?(type)
-        fail ArgumentError, "invalid value for \"type\", must be one of #{validator.allowable_values}."
-      end
-      @type = type
-    end
-
     # Checks equality by comparing each attribute.
     # @param [Object] Object to be compared
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
+          type == o.type &&
           file == o.file &&
           file_url == o.file_url &&
           allow_decline == o.allow_decline &&
           attachments == o.attachments &&
           cc_email_addresses == o.cc_email_addresses &&
+          client_id == o.client_id &&
           custom_fields == o.custom_fields &&
           field_options == o.field_options &&
           form_field_groups == o.form_field_groups &&
@@ -386,12 +414,12 @@ module HelloSign
           hide_text_tags == o.hide_text_tags &&
           message == o.message &&
           metadata == o.metadata &&
+          show_progress_stepper == o.show_progress_stepper &&
           signers == o.signers &&
           signing_options == o.signing_options &&
           signing_redirect_url == o.signing_redirect_url &&
           subject == o.subject &&
           test_mode == o.test_mode &&
-          type == o.type &&
           use_preexisting_fields == o.use_preexisting_fields &&
           use_text_tags == o.use_text_tags
     end
@@ -405,7 +433,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [file, file_url, allow_decline, attachments, cc_email_addresses, custom_fields, field_options, form_field_groups, form_field_rules, form_fields_per_document, hide_text_tags, message, metadata, signers, signing_options, signing_redirect_url, subject, test_mode, type, use_preexisting_fields, use_text_tags].hash
+      [type, file, file_url, allow_decline, attachments, cc_email_addresses, client_id, custom_fields, field_options, form_field_groups, form_field_rules, form_fields_per_document, hide_text_tags, message, metadata, show_progress_stepper, signers, signing_options, signing_redirect_url, subject, test_mode, use_preexisting_fields, use_text_tags].hash
     end
 
     # Builds the object from hash
@@ -510,16 +538,17 @@ module HelloSign
 
     # Returns the object in the form of hash
     # @return [Hash] Returns the object in the form of hash
-    def to_hash
+    def to_hash(include_nil = true)
       hash = {}
       self.class.merged_attributes.each_pair do |attr, param|
         value = self.send(attr)
         if value.nil?
+          next unless include_nil
           is_nullable = self.class.merged_nullable.include?(attr)
           next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))
         end
 
-        hash[param] = _to_hash(value)
+        hash[param] = _to_hash(value, include_nil)
       end
       hash
     end
@@ -528,15 +557,15 @@ module HelloSign
     # For object, use to_hash. Otherwise, just return the value
     # @param [Object] value Any valid value
     # @return [Hash] Returns the value in the form of hash
-    def _to_hash(value)
+    def _to_hash(value, include_nil = true)
       if value.is_a?(Array)
-        value.compact.map { |v| _to_hash(v) }
+        value.compact.map { |v| _to_hash(v, include_nil) }
       elsif value.is_a?(Hash)
         {}.tap do |hash|
-          value.each { |k, v| hash[k] = _to_hash(v) }
+          value.each { |k, v| hash[k] = _to_hash(v, include_nil) }
         end
       elsif value.respond_to? :to_hash
-        value.to_hash
+        value.to_hash(include_nil)
       else
         value
       end

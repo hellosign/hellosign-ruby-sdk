@@ -6,12 +6,13 @@
 
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
-| `account_id` | ```String``` |    |  |
-| `email_address` | ```String``` |    |  |
-| `is_locked` | ```Boolean``` |    |  |
-| `is_paid_hs` | ```Boolean``` |    |  |
-| `is_paid_hf` | ```Boolean``` |    |  |
+| `account_id` | ```String``` |  The ID of the Account  |  |
+| `email_address` | ```String``` |  The email address associated with the Account.  |  |
+| `is_locked` | ```Boolean``` |  Returns `true` if the user has been locked out of their account by a team admin.  |  |
+| `is_paid_hs` | ```Boolean``` |  Returns `true` if the user has a paid HelloSign account.  |  |
+| `is_paid_hf` | ```Boolean``` |  Returns `true` if the user has a paid HelloFax account.  |  |
 | `quotas` | [```AccountResponseQuotas```](AccountResponseQuotas.md) |    |  |
-| `callback_url` | ```String``` |    |  |
-| `role_code` | ```String``` |    |  |
+| `callback_url` | ```String``` |  The URL that HelloSign events will `POST` to.  |  |
+| `role_code` | ```String``` |  The membership role for the team.  |  |
+| `locale` | ```String``` |  The locale used in this Account. Check out the list of [supported locales](/api/reference/constants/#supported-locales) to learn more about the possible values.  |  |
 

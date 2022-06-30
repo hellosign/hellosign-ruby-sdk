@@ -15,12 +15,12 @@ require 'time'
 
 module HelloSign
   class UnclaimedDraftEditAndResendRequest
-    # Client id of the app you're using to create this draft. Visit our [embedded page](https://app.hellosign.com/api/embeddedSigningWalkthrough) to learn more about this parameter.
+    # Client id of the app used to create the draft. Used to apply the branding and callback url defined for the app.
     attr_accessor :client_id
 
     attr_accessor :editor_options
 
-    # The request created from this draft will also be signable in embedded mode if set to `true`. Defaults to `false`.
+    # The request created from this draft will also be signable in embedded mode if set to `true`.
     attr_accessor :is_for_embedded_signing
 
     # The email address of the user that should be designated as the requester of this draft. If not set, original requester's email address will be used.
@@ -28,6 +28,9 @@ module HelloSign
 
     # The URL you want signers redirected to after they successfully request a signature.
     attr_accessor :requesting_redirect_url
+
+    # When only one step remains in the signature request process and this parameter is set to `false` then the progress stepper will be hidden.
+    attr_accessor :show_progress_stepper
 
     # The URL you want signers redirected to after they successfully sign.
     attr_accessor :signing_redirect_url
@@ -43,6 +46,7 @@ module HelloSign
         :'is_for_embedded_signing' => :'is_for_embedded_signing',
         :'requester_email_address' => :'requester_email_address',
         :'requesting_redirect_url' => :'requesting_redirect_url',
+        :'show_progress_stepper' => :'show_progress_stepper',
         :'signing_redirect_url' => :'signing_redirect_url',
         :'test_mode' => :'test_mode'
       }
@@ -66,6 +70,7 @@ module HelloSign
         :'is_for_embedded_signing' => :'Boolean',
         :'requester_email_address' => :'String',
         :'requesting_redirect_url' => :'String',
+        :'show_progress_stepper' => :'Boolean',
         :'signing_redirect_url' => :'String',
         :'test_mode' => :'Boolean'
       }
@@ -112,8 +117,6 @@ module HelloSign
 
       if attributes.key?(:'is_for_embedded_signing')
         self.is_for_embedded_signing = attributes[:'is_for_embedded_signing']
-      else
-        self.is_for_embedded_signing = false
       end
 
       if attributes.key?(:'requester_email_address')
@@ -122,6 +125,12 @@ module HelloSign
 
       if attributes.key?(:'requesting_redirect_url')
         self.requesting_redirect_url = attributes[:'requesting_redirect_url']
+      end
+
+      if attributes.key?(:'show_progress_stepper')
+        self.show_progress_stepper = attributes[:'show_progress_stepper']
+      else
+        self.show_progress_stepper = true
       end
 
       if attributes.key?(:'signing_redirect_url')
@@ -163,6 +172,7 @@ module HelloSign
           is_for_embedded_signing == o.is_for_embedded_signing &&
           requester_email_address == o.requester_email_address &&
           requesting_redirect_url == o.requesting_redirect_url &&
+          show_progress_stepper == o.show_progress_stepper &&
           signing_redirect_url == o.signing_redirect_url &&
           test_mode == o.test_mode
     end
@@ -176,7 +186,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [client_id, editor_options, is_for_embedded_signing, requester_email_address, requesting_redirect_url, signing_redirect_url, test_mode].hash
+      [client_id, editor_options, is_for_embedded_signing, requester_email_address, requesting_redirect_url, show_progress_stepper, signing_redirect_url, test_mode].hash
     end
 
     # Builds the object from hash
@@ -281,16 +291,17 @@ module HelloSign
 
     # Returns the object in the form of hash
     # @return [Hash] Returns the object in the form of hash
-    def to_hash
+    def to_hash(include_nil = true)
       hash = {}
       self.class.merged_attributes.each_pair do |attr, param|
         value = self.send(attr)
         if value.nil?
+          next unless include_nil
           is_nullable = self.class.merged_nullable.include?(attr)
           next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))
         end
 
-        hash[param] = _to_hash(value)
+        hash[param] = _to_hash(value, include_nil)
       end
       hash
     end
@@ -299,15 +310,15 @@ module HelloSign
     # For object, use to_hash. Otherwise, just return the value
     # @param [Object] value Any valid value
     # @return [Hash] Returns the value in the form of hash
-    def _to_hash(value)
+    def _to_hash(value, include_nil = true)
       if value.is_a?(Array)
-        value.compact.map { |v| _to_hash(v) }
+        value.compact.map { |v| _to_hash(v, include_nil) }
       elsif value.is_a?(Hash)
         {}.tap do |hash|
-          value.each { |k, v| hash[k] = _to_hash(v) }
+          value.each { |k, v| hash[k] = _to_hash(v, include_nil) }
         end
       elsif value.respond_to? :to_hash
-        value.to_hash
+        value.to_hash(include_nil)
       else
         value
       end

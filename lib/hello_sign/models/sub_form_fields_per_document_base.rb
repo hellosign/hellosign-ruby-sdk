@@ -14,12 +14,21 @@ require 'date'
 require 'time'
 
 module HelloSign
-  # The fields that should appear on the document, expressed as a 2-dimensional JSON array serialized to a string. The main array represents documents, with each containing an array of form fields. One document array is required for each file provided by the `file[]` parameter. In the case of a file with no fields, an empty list must be specified.  **NOTE**: Fields like **text**, **dropdown**, **checkbox**, **radio**, and **hyperlink** have additional required and optional parameters. Check out the list of [additional parameters](/api/reference/constants/#form-fields-per-document) for these field types.  * Text Field use `SubFormFieldsPerDocumentText` * Dropdown Field use `SubFormFieldsPerDocumentDropdown` * Hyperlink Field use `SubFormFieldsPerDocumentHyperlink` * Checkbox Field use `SubFormFieldsPerDocumentCheckbox` * Radio Field use `SubFormFieldsPerDocumentRadio` * Signature Field use `SubFormFieldsPerDocumentSignature` * Date Signed Field use `SubFormFieldsPerDocumentDateSigned` * Initials Field use `SubFormFieldsPerDocumentInitials` * Text Merge Field use `SubFormFieldsPerDocumentTextMerge` * Checkbox Merge Field use `SubFormFieldsPerDocumentCheckboxMerge`
+  # The fields that should appear on the document, expressed as an array of objects.  **NOTE**: Fields like **text**, **dropdown**, **checkbox**, **radio**, and **hyperlink** have additional required and optional parameters. Check out the list of [additional parameters](/api/reference/constants/#form-fields-per-document) for these field types.  * Text Field use `SubFormFieldsPerDocumentText` * Dropdown Field use `SubFormFieldsPerDocumentDropdown` * Hyperlink Field use `SubFormFieldsPerDocumentHyperlink` * Checkbox Field use `SubFormFieldsPerDocumentCheckbox` * Radio Field use `SubFormFieldsPerDocumentRadio` * Signature Field use `SubFormFieldsPerDocumentSignature` * Date Signed Field use `SubFormFieldsPerDocumentDateSigned` * Initials Field use `SubFormFieldsPerDocumentInitials` * Text Merge Field use `SubFormFieldsPerDocumentTextMerge` * Checkbox Merge Field use `SubFormFieldsPerDocumentCheckboxMerge`
   class SubFormFieldsPerDocumentBase
+    # Represents the integer index of the `file` or `file_url` document the field should be attached to.
+    attr_accessor :document_index
+
+    # An identifier for the field that is unique across all documents in the request.
+    attr_accessor :api_id
+
     # Size of the field in pixels.
     attr_accessor :height
 
-    # Signer index identified by the offset `%i%` in the `signers[%i%]` parameter, indicating which signer should fill out the field. If your type is `text-merge` you can set this to `sender`, so the field is non-editable by any signer.
+    # Whether this field is required.
+    attr_accessor :required
+
+    # Signer index identified by the offset in the signers parameter (0-based indexing), indicating which signer should fill out the field.  **NOTE**: If type is `text-merge` or `checkbox-merge`, you must set this to sender in order to use pre-filled data.
     attr_accessor :signer
 
     attr_accessor :type
@@ -33,31 +42,26 @@ module HelloSign
     # Location coordinates of the field in pixels.
     attr_accessor :y
 
-    # An identifier for the field that is unique across all documents in the request.
-    attr_accessor :api_id
-
     # Display name for the field.
     attr_accessor :name
 
     # Page in the document where the field should be placed (requires documents be PDF files).  - When the page number parameter is supplied, the API will use the new coordinate system. - Check out the differences between both [coordinate systems](https://faq.hellosign.com/hc/en-us/articles/217115577) and how to use them.
     attr_accessor :page
 
-    # Whether this field is required.
-    attr_accessor :required
-
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
+        :'document_index' => :'document_index',
+        :'api_id' => :'api_id',
         :'height' => :'height',
+        :'required' => :'required',
         :'signer' => :'signer',
         :'type' => :'type',
         :'width' => :'width',
         :'x' => :'x',
         :'y' => :'y',
-        :'api_id' => :'api_id',
         :'name' => :'name',
-        :'page' => :'page',
-        :'required' => :'required'
+        :'page' => :'page'
       }
     end
 
@@ -74,16 +78,17 @@ module HelloSign
     # Attribute type mapping.
     def self.openapi_types
       {
+        :'document_index' => :'Integer',
+        :'api_id' => :'String',
         :'height' => :'Integer',
+        :'required' => :'Boolean',
         :'signer' => :'String',
         :'type' => :'String',
         :'width' => :'Integer',
         :'x' => :'Integer',
         :'y' => :'Integer',
-        :'api_id' => :'String',
         :'name' => :'String',
-        :'page' => :'Integer',
-        :'required' => :'Boolean'
+        :'page' => :'Integer'
       }
     end
 
@@ -95,6 +100,7 @@ module HelloSign
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'page'
       ])
     end
 
@@ -160,8 +166,20 @@ module HelloSign
         h[k.to_sym] = v
       }
 
+      if attributes.key?(:'document_index')
+        self.document_index = attributes[:'document_index']
+      end
+
+      if attributes.key?(:'api_id')
+        self.api_id = attributes[:'api_id']
+      end
+
       if attributes.key?(:'height')
         self.height = attributes[:'height']
+      end
+
+      if attributes.key?(:'required')
+        self.required = attributes[:'required']
       end
 
       if attributes.key?(:'signer')
@@ -184,10 +202,6 @@ module HelloSign
         self.y = attributes[:'y']
       end
 
-      if attributes.key?(:'api_id')
-        self.api_id = attributes[:'api_id']
-      end
-
       if attributes.key?(:'name')
         self.name = attributes[:'name']
       end
@@ -195,18 +209,26 @@ module HelloSign
       if attributes.key?(:'page')
         self.page = attributes[:'page']
       end
-
-      if attributes.key?(:'required')
-        self.required = attributes[:'required']
-      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
     # @return Array for valid properties with the reasons
     def list_invalid_properties
       invalid_properties = Array.new
+      if @document_index.nil?
+        invalid_properties.push('invalid value for "document_index", document_index cannot be nil.')
+      end
+
+      if @api_id.nil?
+        invalid_properties.push('invalid value for "api_id", api_id cannot be nil.')
+      end
+
       if @height.nil?
         invalid_properties.push('invalid value for "height", height cannot be nil.')
+      end
+
+      if @required.nil?
+        invalid_properties.push('invalid value for "required", required cannot be nil.')
       end
 
       if @signer.nil?
@@ -235,7 +257,10 @@ module HelloSign
     # Check to see if the all the properties in the model are valid
     # @return true if the model is valid
     def valid?
+      return false if @document_index.nil?
+      return false if @api_id.nil?
       return false if @height.nil?
+      return false if @required.nil?
       return false if @signer.nil?
       return false if @type.nil?
       return false if @width.nil?
@@ -249,16 +274,17 @@ module HelloSign
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
+          document_index == o.document_index &&
+          api_id == o.api_id &&
           height == o.height &&
+          required == o.required &&
           signer == o.signer &&
           type == o.type &&
           width == o.width &&
           x == o.x &&
           y == o.y &&
-          api_id == o.api_id &&
           name == o.name &&
-          page == o.page &&
-          required == o.required
+          page == o.page
     end
 
     # @see the `==` method
@@ -270,7 +296,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [height, signer, type, width, x, y, api_id, name, page, required].hash
+      [document_index, api_id, height, required, signer, type, width, x, y, name, page].hash
     end
 
     # Builds the object from hash
@@ -382,16 +408,17 @@ module HelloSign
 
     # Returns the object in the form of hash
     # @return [Hash] Returns the object in the form of hash
-    def to_hash
+    def to_hash(include_nil = true)
       hash = {}
       self.class.merged_attributes.each_pair do |attr, param|
         value = self.send(attr)
         if value.nil?
+          next unless include_nil
           is_nullable = self.class.merged_nullable.include?(attr)
           next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))
         end
 
-        hash[param] = _to_hash(value)
+        hash[param] = _to_hash(value, include_nil)
       end
       hash
     end
@@ -400,15 +427,15 @@ module HelloSign
     # For object, use to_hash. Otherwise, just return the value
     # @param [Object] value Any valid value
     # @return [Hash] Returns the value in the form of hash
-    def _to_hash(value)
+    def _to_hash(value, include_nil = true)
       if value.is_a?(Array)
-        value.compact.map { |v| _to_hash(v) }
+        value.compact.map { |v| _to_hash(v, include_nil) }
       elsif value.is_a?(Hash)
         {}.tap do |hash|
-          value.each { |k, v| hash[k] = _to_hash(v) }
+          value.each { |k, v| hash[k] = _to_hash(v, include_nil) }
         end
       elsif value.respond_to? :to_hash
-        value.to_hash
+        value.to_hash(include_nil)
       else
         value
       end

@@ -130,7 +130,7 @@ module HelloSign
 
     # Delete API App
     # Deletes an API App. Can only be invoked for apps you own.
-    # @param client_id [String] The client id of the ApiApp to delete.
+    # @param client_id [String] The client id of the API App to delete.
     # @param [Hash] opts the optional parameters
     # @return [nil]
     def api_app_delete(client_id, opts = {})
@@ -140,7 +140,7 @@ module HelloSign
 
     # Delete API App
     # Deletes an API App. Can only be invoked for apps you own.
-    # @param client_id [String] The client id of the ApiApp to delete.
+    # @param client_id [String] The client id of the API App to delete.
     # @param [Hash] opts the optional parameters
     # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
     def api_app_delete_with_http_info(client_id, opts = {})
@@ -197,7 +197,7 @@ module HelloSign
 
     # Get API App
     # Returns an object with information about an API App.
-    # @param client_id [String] The client ID of the ApiApp to retrieve.
+    # @param client_id [String] The client id of the API App to retrieve.
     # @param [Hash] opts the optional parameters
     # @return [ApiAppGetResponse]
     def api_app_get(client_id, opts = {})
@@ -207,7 +207,7 @@ module HelloSign
 
     # Get API App
     # Returns an object with information about an API App.
-    # @param client_id [String] The client ID of the ApiApp to retrieve.
+    # @param client_id [String] The client id of the API App to retrieve.
     # @param [Hash] opts the optional parameters
     # @return [Array<(ApiAppGetResponse, Integer, Hash)>] ApiAppGetResponse data, response status code and response headers
     def api_app_get_with_http_info(client_id, opts = {})
@@ -292,7 +292,7 @@ module HelloSign
     # List API Apps
     # Returns a list of API Apps that are accessible by you. If you are on a team with an Admin or Developer role, this list will include apps owned by teammates.
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :page Which page number of the ApiApp List to return. Defaults to &#x60;1&#x60;. (default to 1)
+    # @option opts [Integer] :page Which page number of the API App List to return. Defaults to &#x60;1&#x60;. (default to 1)
     # @option opts [Integer] :page_size Number of objects to be returned per page. Must be between &#x60;1&#x60; and &#x60;100&#x60;. Default is &#x60;20&#x60;. (default to 20)
     # @return [ApiAppListResponse]
     def api_app_list(opts = {})
@@ -303,7 +303,7 @@ module HelloSign
     # List API Apps
     # Returns a list of API Apps that are accessible by you. If you are on a team with an Admin or Developer role, this list will include apps owned by teammates.
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :page Which page number of the ApiApp List to return. Defaults to &#x60;1&#x60;.
+    # @option opts [Integer] :page Which page number of the API App List to return. Defaults to &#x60;1&#x60;.
     # @option opts [Integer] :page_size Number of objects to be returned per page. Must be between &#x60;1&#x60; and &#x60;100&#x60;. Default is &#x60;20&#x60;.
     # @return [Array<(ApiAppListResponse, Integer, Hash)>] ApiAppListResponse data, response status code and response headers
     def api_app_list_with_http_info(opts = {})
@@ -385,7 +385,7 @@ module HelloSign
 
     # Update API App
     # Updates an existing API App. Can only be invoked for apps you own. Only the fields you provide will be updated. If you wish to clear an existing optional field, provide an empty string.
-    # @param client_id [String] The client ID of the ApiApp to update.
+    # @param client_id [String] The client id of the API App to update.
     # @param api_app_update_request [ApiAppUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [ApiAppGetResponse]
@@ -396,7 +396,7 @@ module HelloSign
 
     # Update API App
     # Updates an existing API App. Can only be invoked for apps you own. Only the fields you provide will be updated. If you wish to clear an existing optional field, provide an empty string.
-    # @param client_id [String] The client ID of the ApiApp to update.
+    # @param client_id [String] The client id of the API App to update.
     # @param api_app_update_request [ApiAppUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(ApiAppGetResponse, Integer, Hash)>] ApiAppGetResponse data, response status code and response headers

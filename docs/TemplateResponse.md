@@ -1,6 +1,6 @@
 # HelloSign::TemplateResponse
 
-
+Contains information about the templates you and your team have created.
 
 ## Properties
 
@@ -13,12 +13,12 @@
 | `is_embedded` | ```Boolean``` |  `true` if this template was created using an embedded flow, `false` if it was created on our website.  |  |
 | `is_creator` | ```Boolean``` |  `true` if you are the owner of this template, `false` if it&#39;s been shared with you by a team member.  |  |
 | `can_edit` | ```Boolean``` |  Indicates whether edit rights have been granted to you by the owner (always `true` if that&#39;s you).  |  |
-| `is_locked` | ```Boolean``` |  `true` if you exceed Template quota; these can only be used in test mode. `false` if the template is included with the Template quota; these can be used at any time.  |  |
+| `is_locked` | ```Boolean``` |  Indicates whether the template is locked.  If `true`, then the template was created outside your quota and can only be used in `test_mode`.  If `false`, then the template is within your quota and can be used to create signature requests.  |  |
 | `metadata` | ```Object``` |  The metadata attached to the template.  |  |
-| `signer_roles` | [```Array<TemplateResponseSignerRole>```](TemplateResponseSignerRole.md) |    |  |
-| `cc_roles` | [```Array<TemplateResponseCCRole>```](TemplateResponseCCRole.md) |    |  |
-| `documents` | [```Array<TemplateResponseDocument>```](TemplateResponseDocument.md) |    |  |
-| `custom_fields` | [```Array<TemplateResponseCustomField>```](TemplateResponseCustomField.md) |    |  |
-| `accounts` | [```Array<TemplateResponseAccount>```](TemplateResponseAccount.md) |    |  |
-| `warnings` | [```Array<WarningResponse>```](WarningResponse.md) |    |  |
+| `signer_roles` | [```Array<TemplateResponseSignerRole>```](TemplateResponseSignerRole.md) |  An array of the designated signer roles that must be specified when sending a SignatureRequest using this Template.  |  |
+| `cc_roles` | [```Array<TemplateResponseCCRole>```](TemplateResponseCCRole.md) |  An array of the designated CC roles that must be specified when sending a SignatureRequest using this Template.  |  |
+| `documents` | [```Array<TemplateResponseDocument>```](TemplateResponseDocument.md) |  An array describing each document associated with this Template. Includes form field data for each document.  |  |
+| `custom_fields` | [```Array<TemplateResponseCustomField>```](TemplateResponseCustomField.md) |  An array of Custom Field objects.  |  |
+| `named_form_fields` | [```Array<TemplateResponseNamedFormField>```](TemplateResponseNamedFormField.md) |  Use &quot;form_fields&quot; under the &quot;documents&quot; array instead.  |  |
+| `accounts` | [```Array<TemplateResponseAccount>```](TemplateResponseAccount.md) |  An array of the Accounts that can use this Template.  |  |
 

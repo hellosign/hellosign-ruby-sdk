@@ -14,11 +14,12 @@ require 'date'
 require 'time'
 
 module HelloSign
+  # Contains information about the BulkSendJob such as when it was created and how many signature requests are queued.
   class BulkSendJobResponse
     # The id of the BulkSendJob.
     attr_accessor :bulk_send_job_id
 
-    # The total amount of SignatureRequests queued for sending.
+    # The total amount of Signature Requests queued for sending.
     attr_accessor :total
 
     # True if you are the owner of this BulkSendJob, false if it's been shared with you by a team member.
@@ -27,16 +28,13 @@ module HelloSign
     # Time that the BulkSendJob was created.
     attr_accessor :created_at
 
-    attr_accessor :warnings
-
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'bulk_send_job_id' => :'bulk_send_job_id',
         :'total' => :'total',
         :'is_creator' => :'is_creator',
-        :'created_at' => :'created_at',
-        :'warnings' => :'warnings'
+        :'created_at' => :'created_at'
       }
     end
 
@@ -56,8 +54,7 @@ module HelloSign
         :'bulk_send_job_id' => :'String',
         :'total' => :'Integer',
         :'is_creator' => :'Boolean',
-        :'created_at' => :'Integer',
-        :'warnings' => :'Array<WarningResponse>'
+        :'created_at' => :'Integer'
       }
     end
 
@@ -108,12 +105,6 @@ module HelloSign
       if attributes.key?(:'created_at')
         self.created_at = attributes[:'created_at']
       end
-
-      if attributes.key?(:'warnings')
-        if (value = attributes[:'warnings']).is_a?(Array)
-          self.warnings = value
-        end
-      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -137,8 +128,7 @@ module HelloSign
           bulk_send_job_id == o.bulk_send_job_id &&
           total == o.total &&
           is_creator == o.is_creator &&
-          created_at == o.created_at &&
-          warnings == o.warnings
+          created_at == o.created_at
     end
 
     # @see the `==` method
@@ -150,7 +140,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [bulk_send_job_id, total, is_creator, created_at, warnings].hash
+      [bulk_send_job_id, total, is_creator, created_at].hash
     end
 
     # Builds the object from hash
@@ -255,16 +245,17 @@ module HelloSign
 
     # Returns the object in the form of hash
     # @return [Hash] Returns the object in the form of hash
-    def to_hash
+    def to_hash(include_nil = true)
       hash = {}
       self.class.merged_attributes.each_pair do |attr, param|
         value = self.send(attr)
         if value.nil?
+          next unless include_nil
           is_nullable = self.class.merged_nullable.include?(attr)
           next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))
         end
 
-        hash[param] = _to_hash(value)
+        hash[param] = _to_hash(value, include_nil)
       end
       hash
     end
@@ -273,15 +264,15 @@ module HelloSign
     # For object, use to_hash. Otherwise, just return the value
     # @param [Object] value Any valid value
     # @return [Hash] Returns the value in the form of hash
-    def _to_hash(value)
+    def _to_hash(value, include_nil = true)
       if value.is_a?(Array)
-        value.compact.map { |v| _to_hash(v) }
+        value.compact.map { |v| _to_hash(v, include_nil) }
       elsif value.is_a?(Hash)
         {}.tap do |hash|
-          value.each { |k, v| hash[k] = _to_hash(v) }
+          value.each { |k, v| hash[k] = _to_hash(v, include_nil) }
         end
       elsif value.respond_to? :to_hash
-        value.to_hash
+        value.to_hash(include_nil)
       else
         value
       end

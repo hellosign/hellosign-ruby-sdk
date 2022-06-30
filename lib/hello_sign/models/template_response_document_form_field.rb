@@ -14,7 +14,6 @@ require 'date'
 require 'time'
 
 module HelloSign
-  # An array of Form Field objects containing the name and type of each named textbox and checkmark field.
   class TemplateResponseDocumentFormField
     # A unique id for the form field.
     attr_accessor :api_id
@@ -24,6 +23,9 @@ module HelloSign
 
     # The type of this form field. See [field types](/api/reference/constants/#field-types).
     attr_accessor :type
+
+    # The signer of the Form Field.
+    attr_accessor :signer
 
     # The horizontal offset in pixels for this form field.
     attr_accessor :x
@@ -42,6 +44,17 @@ module HelloSign
 
     # The name of the group this field is in. If this field is not a group, this defaults to `null`.
     attr_accessor :group
+
+    attr_accessor :avg_text_length
+
+    # Whether this form field is multiline text.
+    attr_accessor :is_multiline
+
+    # Original font size used in this form field's text.
+    attr_accessor :original_font_size
+
+    # Font family used in this form field's text.
+    attr_accessor :font_family
 
     class EnumAttributeValidator
       attr_reader :datatype
@@ -71,12 +84,17 @@ module HelloSign
         :'api_id' => :'api_id',
         :'name' => :'name',
         :'type' => :'type',
+        :'signer' => :'signer',
         :'x' => :'x',
         :'y' => :'y',
         :'width' => :'width',
         :'height' => :'height',
         :'required' => :'required',
-        :'group' => :'group'
+        :'group' => :'group',
+        :'avg_text_length' => :'avg_text_length',
+        :'is_multiline' => :'isMultiline',
+        :'original_font_size' => :'originalFontSize',
+        :'font_family' => :'fontFamily'
       }
     end
 
@@ -96,12 +114,17 @@ module HelloSign
         :'api_id' => :'String',
         :'name' => :'String',
         :'type' => :'String',
+        :'signer' => :'String',
         :'x' => :'Integer',
         :'y' => :'Integer',
         :'width' => :'Integer',
         :'height' => :'Integer',
         :'required' => :'Boolean',
-        :'group' => :'String'
+        :'group' => :'String',
+        :'avg_text_length' => :'TemplateResponseFieldAvgTextLength',
+        :'is_multiline' => :'Boolean',
+        :'original_font_size' => :'Integer',
+        :'font_family' => :'String'
       }
     end
 
@@ -113,7 +136,10 @@ module HelloSign
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
-        :'group'
+        :'group',
+        :'is_multiline',
+        :'original_font_size',
+        :'font_family'
       ])
     end
 
@@ -149,6 +175,10 @@ module HelloSign
         self.type = attributes[:'type']
       end
 
+      if attributes.key?(:'signer')
+        self.signer = attributes[:'signer']
+      end
+
       if attributes.key?(:'x')
         self.x = attributes[:'x']
       end
@@ -171,6 +201,22 @@ module HelloSign
 
       if attributes.key?(:'group')
         self.group = attributes[:'group']
+      end
+
+      if attributes.key?(:'avg_text_length')
+        self.avg_text_length = attributes[:'avg_text_length']
+      end
+
+      if attributes.key?(:'is_multiline')
+        self.is_multiline = attributes[:'is_multiline']
+      end
+
+      if attributes.key?(:'original_font_size')
+        self.original_font_size = attributes[:'original_font_size']
+      end
+
+      if attributes.key?(:'font_family')
+        self.font_family = attributes[:'font_family']
       end
     end
 
@@ -207,12 +253,17 @@ module HelloSign
           api_id == o.api_id &&
           name == o.name &&
           type == o.type &&
+          signer == o.signer &&
           x == o.x &&
           y == o.y &&
           width == o.width &&
           height == o.height &&
           required == o.required &&
-          group == o.group
+          group == o.group &&
+          avg_text_length == o.avg_text_length &&
+          is_multiline == o.is_multiline &&
+          original_font_size == o.original_font_size &&
+          font_family == o.font_family
     end
 
     # @see the `==` method
@@ -224,7 +275,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [api_id, name, type, x, y, width, height, required, group].hash
+      [api_id, name, type, signer, x, y, width, height, required, group, avg_text_length, is_multiline, original_font_size, font_family].hash
     end
 
     # Builds the object from hash
@@ -329,16 +380,17 @@ module HelloSign
 
     # Returns the object in the form of hash
     # @return [Hash] Returns the object in the form of hash
-    def to_hash
+    def to_hash(include_nil = true)
       hash = {}
       self.class.merged_attributes.each_pair do |attr, param|
         value = self.send(attr)
         if value.nil?
+          next unless include_nil
           is_nullable = self.class.merged_nullable.include?(attr)
           next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))
         end
 
-        hash[param] = _to_hash(value)
+        hash[param] = _to_hash(value, include_nil)
       end
       hash
     end
@@ -347,15 +399,15 @@ module HelloSign
     # For object, use to_hash. Otherwise, just return the value
     # @param [Object] value Any valid value
     # @return [Hash] Returns the value in the form of hash
-    def _to_hash(value)
+    def _to_hash(value, include_nil = true)
       if value.is_a?(Array)
-        value.compact.map { |v| _to_hash(v) }
+        value.compact.map { |v| _to_hash(v, include_nil) }
       elsif value.is_a?(Hash)
         {}.tap do |hash|
-          value.each { |k, v| hash[k] = _to_hash(v) }
+          value.each { |k, v| hash[k] = _to_hash(v, include_nil) }
         end
       elsif value.respond_to? :to_hash
-        value.to_hash
+        value.to_hash(include_nil)
       else
         value
       end

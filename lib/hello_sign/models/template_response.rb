@@ -14,6 +14,7 @@ require 'date'
 require 'time'
 
 module HelloSign
+  # Contains information about the templates you and your team have created.
   class TemplateResponse
     # The id of the Template.
     attr_accessor :template_id
@@ -36,23 +37,29 @@ module HelloSign
     # Indicates whether edit rights have been granted to you by the owner (always `true` if that's you).
     attr_accessor :can_edit
 
-    # `true` if you exceed Template quota; these can only be used in test mode. `false` if the template is included with the Template quota; these can be used at any time.
+    # Indicates whether the template is locked.  If `true`, then the template was created outside your quota and can only be used in `test_mode`.  If `false`, then the template is within your quota and can be used to create signature requests.
     attr_accessor :is_locked
 
     # The metadata attached to the template.
     attr_accessor :metadata
 
+    # An array of the designated signer roles that must be specified when sending a SignatureRequest using this Template.
     attr_accessor :signer_roles
 
+    # An array of the designated CC roles that must be specified when sending a SignatureRequest using this Template.
     attr_accessor :cc_roles
 
+    # An array describing each document associated with this Template. Includes form field data for each document.
     attr_accessor :documents
 
+    # An array of Custom Field objects.
     attr_accessor :custom_fields
 
-    attr_accessor :accounts
+    # Use \"form_fields\" under the \"documents\" array instead.
+    attr_accessor :named_form_fields
 
-    attr_accessor :warnings
+    # An array of the Accounts that can use this Template.
+    attr_accessor :accounts
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
@@ -70,8 +77,8 @@ module HelloSign
         :'cc_roles' => :'cc_roles',
         :'documents' => :'documents',
         :'custom_fields' => :'custom_fields',
-        :'accounts' => :'accounts',
-        :'warnings' => :'warnings'
+        :'named_form_fields' => :'named_form_fields',
+        :'accounts' => :'accounts'
       }
     end
 
@@ -101,8 +108,8 @@ module HelloSign
         :'cc_roles' => :'Array<TemplateResponseCCRole>',
         :'documents' => :'Array<TemplateResponseDocument>',
         :'custom_fields' => :'Array<TemplateResponseCustomField>',
-        :'accounts' => :'Array<TemplateResponseAccount>',
-        :'warnings' => :'Array<WarningResponse>'
+        :'named_form_fields' => :'Array<TemplateResponseNamedFormField>',
+        :'accounts' => :'Array<TemplateResponseAccount>'
       }
     end
 
@@ -119,7 +126,8 @@ module HelloSign
         :'can_edit',
         :'is_locked',
         :'custom_fields',
-        :'accounts',
+        :'named_form_fields',
+        :'accounts'
       ])
     end
 
@@ -203,15 +211,15 @@ module HelloSign
         end
       end
 
-      if attributes.key?(:'accounts')
-        if (value = attributes[:'accounts']).is_a?(Array)
-          self.accounts = value
+      if attributes.key?(:'named_form_fields')
+        if (value = attributes[:'named_form_fields']).is_a?(Array)
+          self.named_form_fields = value
         end
       end
 
-      if attributes.key?(:'warnings')
-        if (value = attributes[:'warnings']).is_a?(Array)
-          self.warnings = value
+      if attributes.key?(:'accounts')
+        if (value = attributes[:'accounts']).is_a?(Array)
+          self.accounts = value
         end
       end
     end
@@ -247,8 +255,8 @@ module HelloSign
           cc_roles == o.cc_roles &&
           documents == o.documents &&
           custom_fields == o.custom_fields &&
-          accounts == o.accounts &&
-          warnings == o.warnings
+          named_form_fields == o.named_form_fields &&
+          accounts == o.accounts
     end
 
     # @see the `==` method
@@ -260,7 +268,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [template_id, title, message, updated_at, is_embedded, is_creator, can_edit, is_locked, metadata, signer_roles, cc_roles, documents, custom_fields, accounts, warnings].hash
+      [template_id, title, message, updated_at, is_embedded, is_creator, can_edit, is_locked, metadata, signer_roles, cc_roles, documents, custom_fields, named_form_fields, accounts].hash
     end
 
     # Builds the object from hash
@@ -365,16 +373,17 @@ module HelloSign
 
     # Returns the object in the form of hash
     # @return [Hash] Returns the object in the form of hash
-    def to_hash
+    def to_hash(include_nil = true)
       hash = {}
       self.class.merged_attributes.each_pair do |attr, param|
         value = self.send(attr)
         if value.nil?
+          next unless include_nil
           is_nullable = self.class.merged_nullable.include?(attr)
           next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))
         end
 
-        hash[param] = _to_hash(value)
+        hash[param] = _to_hash(value, include_nil)
       end
       hash
     end
@@ -383,15 +392,15 @@ module HelloSign
     # For object, use to_hash. Otherwise, just return the value
     # @param [Object] value Any valid value
     # @return [Hash] Returns the value in the form of hash
-    def _to_hash(value)
+    def _to_hash(value, include_nil = true)
       if value.is_a?(Array)
-        value.compact.map { |v| _to_hash(v) }
+        value.compact.map { |v| _to_hash(v, include_nil) }
       elsif value.is_a?(Hash)
         {}.tap do |hash|
-          value.each { |k, v| hash[k] = _to_hash(v) }
+          value.each { |k, v| hash[k] = _to_hash(v, include_nil) }
         end
       elsif value.respond_to? :to_hash
-        value.to_hash
+        value.to_hash(include_nil)
       else
         value
       end

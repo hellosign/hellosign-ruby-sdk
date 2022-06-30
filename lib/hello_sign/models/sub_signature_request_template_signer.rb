@@ -15,7 +15,7 @@ require 'time'
 
 module HelloSign
   class SubSignatureRequestTemplateSigner
-    # Must match an existing role in chosen Template(s).
+    # Must match an existing role in chosen Template(s). It's case-sensitive.
     attr_accessor :role
 
     # The name of the signer.
@@ -27,8 +27,33 @@ module HelloSign
     # The 4- to 12-character access code that will secure this signer's signature page.
     attr_accessor :pin
 
-    # An E.164 formatted phone number that will receive a code via SMS to access this signer's signature page.  **Note**: Not available in test mode and requires a Standard plan or higher.
+    # An E.164 formatted phone number.  **Note**: Not available in test mode and requires a Standard plan or higher.
     attr_accessor :sms_phone_number
+
+    # **Note**: This only works in non embedded endpoints.  If set, the value must be either `authentication` or `delivery`. Default `authentication`.   If `authentication` is set, `sms_phone_number` will receive a code via SMS to access this signer's signature page.  If `delivery` is set, signature request will be delivered to both email and `sms_phone_number`.
+    attr_accessor :sms_phone_number_type
+
+    class EnumAttributeValidator
+      attr_reader :datatype
+      attr_reader :allowable_values
+
+      def initialize(datatype, allowable_values)
+        @allowable_values = allowable_values.map do |value|
+          case datatype.to_s
+          when /Integer/i
+            value.to_i
+          when /Float/i
+            value.to_f
+          else
+            value
+          end
+        end
+      end
+
+      def valid?(value)
+        !value || allowable_values.include?(value)
+      end
+    end
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
@@ -37,7 +62,8 @@ module HelloSign
         :'name' => :'name',
         :'email_address' => :'email_address',
         :'pin' => :'pin',
-        :'sms_phone_number' => :'sms_phone_number'
+        :'sms_phone_number' => :'sms_phone_number',
+        :'sms_phone_number_type' => :'sms_phone_number_type'
       }
     end
 
@@ -58,7 +84,8 @@ module HelloSign
         :'name' => :'String',
         :'email_address' => :'String',
         :'pin' => :'String',
-        :'sms_phone_number' => :'String'
+        :'sms_phone_number' => :'String',
+        :'sms_phone_number_type' => :'String'
       }
     end
 
@@ -112,6 +139,10 @@ module HelloSign
       if attributes.key?(:'sms_phone_number')
         self.sms_phone_number = attributes[:'sms_phone_number']
       end
+
+      if attributes.key?(:'sms_phone_number_type')
+        self.sms_phone_number_type = attributes[:'sms_phone_number_type']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -149,6 +180,8 @@ module HelloSign
       return false if @email_address.nil?
       return false if !@pin.nil? && @pin.to_s.length > 12
       return false if !@pin.nil? && @pin.to_s.length < 4
+      sms_phone_number_type_validator = EnumAttributeValidator.new('String', ["authentication", "delivery"])
+      return false unless sms_phone_number_type_validator.valid?(@sms_phone_number_type)
       true
     end
 
@@ -166,6 +199,16 @@ module HelloSign
       @pin = pin
     end
 
+    # Custom attribute writer method checking allowed values (enum).
+    # @param [Object] sms_phone_number_type Object to be assigned
+    def sms_phone_number_type=(sms_phone_number_type)
+      validator = EnumAttributeValidator.new('String', ["authentication", "delivery"])
+      unless validator.valid?(sms_phone_number_type)
+        fail ArgumentError, "invalid value for \"sms_phone_number_type\", must be one of #{validator.allowable_values}."
+      end
+      @sms_phone_number_type = sms_phone_number_type
+    end
+
     # Checks equality by comparing each attribute.
     # @param [Object] Object to be compared
     def ==(o)
@@ -175,7 +218,8 @@ module HelloSign
           name == o.name &&
           email_address == o.email_address &&
           pin == o.pin &&
-          sms_phone_number == o.sms_phone_number
+          sms_phone_number == o.sms_phone_number &&
+          sms_phone_number_type == o.sms_phone_number_type
     end
 
     # @see the `==` method
@@ -187,7 +231,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [role, name, email_address, pin, sms_phone_number].hash
+      [role, name, email_address, pin, sms_phone_number, sms_phone_number_type].hash
     end
 
     # Builds the object from hash
@@ -292,16 +336,17 @@ module HelloSign
 
     # Returns the object in the form of hash
     # @return [Hash] Returns the object in the form of hash
-    def to_hash
+    def to_hash(include_nil = true)
       hash = {}
       self.class.merged_attributes.each_pair do |attr, param|
         value = self.send(attr)
         if value.nil?
+          next unless include_nil
           is_nullable = self.class.merged_nullable.include?(attr)
           next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))
         end
 
-        hash[param] = _to_hash(value)
+        hash[param] = _to_hash(value, include_nil)
       end
       hash
     end
@@ -310,15 +355,15 @@ module HelloSign
     # For object, use to_hash. Otherwise, just return the value
     # @param [Object] value Any valid value
     # @return [Hash] Returns the value in the form of hash
-    def _to_hash(value)
+    def _to_hash(value, include_nil = true)
       if value.is_a?(Array)
-        value.compact.map { |v| _to_hash(v) }
+        value.compact.map { |v| _to_hash(v, include_nil) }
       elsif value.is_a?(Hash)
         {}.tap do |hash|
-          value.each { |k, v| hash[k] = _to_hash(v) }
+          value.each { |k, v| hash[k] = _to_hash(v, include_nil) }
         end
       elsif value.respond_to? :to_hash
-        value.to_hash
+        value.to_hash(include_nil)
       else
         value
       end

@@ -15,21 +15,31 @@ require 'time'
 
 module HelloSign
   class AccountResponse
+    # The ID of the Account
     attr_accessor :account_id
 
+    # The email address associated with the Account.
     attr_accessor :email_address
 
+    # Returns `true` if the user has been locked out of their account by a team admin.
     attr_accessor :is_locked
 
+    # Returns `true` if the user has a paid HelloSign account.
     attr_accessor :is_paid_hs
 
+    # Returns `true` if the user has a paid HelloFax account.
     attr_accessor :is_paid_hf
 
     attr_accessor :quotas
 
+    # The URL that HelloSign events will `POST` to.
     attr_accessor :callback_url
 
+    # The membership role for the team.
     attr_accessor :role_code
+
+    # The locale used in this Account. Check out the list of [supported locales](/api/reference/constants/#supported-locales) to learn more about the possible values.
+    attr_accessor :locale
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
@@ -41,7 +51,8 @@ module HelloSign
         :'is_paid_hf' => :'is_paid_hf',
         :'quotas' => :'quotas',
         :'callback_url' => :'callback_url',
-        :'role_code' => :'role_code'
+        :'role_code' => :'role_code',
+        :'locale' => :'locale'
       }
     end
 
@@ -65,7 +76,8 @@ module HelloSign
         :'is_paid_hf' => :'Boolean',
         :'quotas' => :'AccountResponseQuotas',
         :'callback_url' => :'String',
-        :'role_code' => :'String'
+        :'role_code' => :'String',
+        :'locale' => :'String'
       }
     end
 
@@ -78,7 +90,8 @@ module HelloSign
     def self.openapi_nullable
       Set.new([
         :'callback_url',
-        :'role_code'
+        :'role_code',
+        :'locale'
       ])
     end
 
@@ -133,6 +146,10 @@ module HelloSign
       if attributes.key?(:'role_code')
         self.role_code = attributes[:'role_code']
       end
+
+      if attributes.key?(:'locale')
+        self.locale = attributes[:'locale']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -160,7 +177,8 @@ module HelloSign
           is_paid_hf == o.is_paid_hf &&
           quotas == o.quotas &&
           callback_url == o.callback_url &&
-          role_code == o.role_code
+          role_code == o.role_code &&
+          locale == o.locale
     end
 
     # @see the `==` method
@@ -172,7 +190,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [account_id, email_address, is_locked, is_paid_hs, is_paid_hf, quotas, callback_url, role_code].hash
+      [account_id, email_address, is_locked, is_paid_hs, is_paid_hf, quotas, callback_url, role_code, locale].hash
     end
 
     # Builds the object from hash
@@ -277,16 +295,17 @@ module HelloSign
 
     # Returns the object in the form of hash
     # @return [Hash] Returns the object in the form of hash
-    def to_hash
+    def to_hash(include_nil = true)
       hash = {}
       self.class.merged_attributes.each_pair do |attr, param|
         value = self.send(attr)
         if value.nil?
+          next unless include_nil
           is_nullable = self.class.merged_nullable.include?(attr)
           next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))
         end
 
-        hash[param] = _to_hash(value)
+        hash[param] = _to_hash(value, include_nil)
       end
       hash
     end
@@ -295,15 +314,15 @@ module HelloSign
     # For object, use to_hash. Otherwise, just return the value
     # @param [Object] value Any valid value
     # @return [Hash] Returns the value in the form of hash
-    def _to_hash(value)
+    def _to_hash(value, include_nil = true)
       if value.is_a?(Array)
-        value.compact.map { |v| _to_hash(v) }
+        value.compact.map { |v| _to_hash(v, include_nil) }
       elsif value.is_a?(Hash)
         {}.tap do |hash|
-          value.each { |k, v| hash[k] = _to_hash(v) }
+          value.each { |k, v| hash[k] = _to_hash(v, include_nil) }
         end
       elsif value.respond_to? :to_hash
-        value.to_hash
+        value.to_hash(include_nil)
       else
         value
       end

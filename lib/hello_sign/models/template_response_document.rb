@@ -14,19 +14,24 @@ require 'date'
 require 'time'
 
 module HelloSign
-  # An array describing each document associated with this Template. Includes form field data for each document.
   class TemplateResponseDocument
     # Name of the associated file.
     attr_accessor :name
 
-    # Document ordering, the lowest index is displayed first and the highest last.
+    # Document ordering, the lowest index is displayed first and the highest last (0-based indexing).
     attr_accessor :index
 
+    # An array of Form Field Group objects.
     attr_accessor :field_groups
 
+    # An array of Form Field objects containing the name and type of each named textbox and checkmark field.
     attr_accessor :form_fields
 
+    # An array of Document Custom Field objects.
     attr_accessor :custom_fields
+
+    # An array describing static overlay fields. <b>Note</b> only available for certain subscriptions.
+    attr_accessor :static_fields
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
@@ -35,7 +40,8 @@ module HelloSign
         :'index' => :'index',
         :'field_groups' => :'field_groups',
         :'form_fields' => :'form_fields',
-        :'custom_fields' => :'custom_fields'
+        :'custom_fields' => :'custom_fields',
+        :'static_fields' => :'static_fields'
       }
     end
 
@@ -56,7 +62,8 @@ module HelloSign
         :'index' => :'Integer',
         :'field_groups' => :'Array<TemplateResponseDocumentFieldGroup>',
         :'form_fields' => :'Array<TemplateResponseDocumentFormField>',
-        :'custom_fields' => :'Array<TemplateResponseDocumentCustomField>'
+        :'custom_fields' => :'Array<TemplateResponseDocumentCustomField>',
+        :'static_fields' => :'Array<TemplateResponseDocumentStaticField>'
       }
     end
 
@@ -68,6 +75,7 @@ module HelloSign
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'static_fields'
       ])
     end
 
@@ -116,6 +124,12 @@ module HelloSign
           self.custom_fields = value
         end
       end
+
+      if attributes.key?(:'static_fields')
+        if (value = attributes[:'static_fields']).is_a?(Array)
+          self.static_fields = value
+        end
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -140,7 +154,8 @@ module HelloSign
           index == o.index &&
           field_groups == o.field_groups &&
           form_fields == o.form_fields &&
-          custom_fields == o.custom_fields
+          custom_fields == o.custom_fields &&
+          static_fields == o.static_fields
     end
 
     # @see the `==` method
@@ -152,7 +167,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [name, index, field_groups, form_fields, custom_fields].hash
+      [name, index, field_groups, form_fields, custom_fields, static_fields].hash
     end
 
     # Builds the object from hash
@@ -257,16 +272,17 @@ module HelloSign
 
     # Returns the object in the form of hash
     # @return [Hash] Returns the object in the form of hash
-    def to_hash
+    def to_hash(include_nil = true)
       hash = {}
       self.class.merged_attributes.each_pair do |attr, param|
         value = self.send(attr)
         if value.nil?
+          next unless include_nil
           is_nullable = self.class.merged_nullable.include?(attr)
           next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))
         end
 
-        hash[param] = _to_hash(value)
+        hash[param] = _to_hash(value, include_nil)
       end
       hash
     end
@@ -275,15 +291,15 @@ module HelloSign
     # For object, use to_hash. Otherwise, just return the value
     # @param [Object] value Any valid value
     # @return [Hash] Returns the value in the form of hash
-    def _to_hash(value)
+    def _to_hash(value, include_nil = true)
       if value.is_a?(Array)
-        value.compact.map { |v| _to_hash(v) }
+        value.compact.map { |v| _to_hash(v, include_nil) }
       elsif value.is_a?(Hash)
         {}.tap do |hash|
-          value.each { |k, v| hash[k] = _to_hash(v) }
+          value.each { |k, v| hash[k] = _to_hash(v, include_nil) }
         end
       elsif value.respond_to? :to_hash
-        value.to_hash
+        value.to_hash(include_nil)
       else
         value
       end

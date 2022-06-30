@@ -131,6 +131,7 @@ module HelloSign
     # Get Account
     # Returns the properties and settings of your Account.
     # @param [Hash] opts the optional parameters
+    # @option opts [String] :account_id The ID of the Account
     # @return [AccountGetResponse]
     def account_get(opts = {})
       data, _status_code, _headers = account_get_with_http_info(opts)
@@ -140,6 +141,7 @@ module HelloSign
     # Get Account
     # Returns the properties and settings of your Account.
     # @param [Hash] opts the optional parameters
+    # @option opts [String] :account_id The ID of the Account
     # @return [Array<(AccountGetResponse, Integer, Hash)>] AccountGetResponse data, response status code and response headers
     def account_get_with_http_info(opts = {})
       if @api_client.config.debugging
@@ -150,6 +152,7 @@ module HelloSign
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'account_id'] = opts[:'account_id'] if !opts[:'account_id'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}
@@ -217,7 +220,7 @@ module HelloSign
     end
 
     # Update Account
-    # Updates the properties and settings of your Account.
+    # Updates the properties and settings of your Account. Currently only allows for updates to the [Callback URL](/api/reference/tag/Callbacks-and-Events) and locale.
     # @param account_update_request [AccountUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [AccountGetResponse]
@@ -227,7 +230,7 @@ module HelloSign
     end
 
     # Update Account
-    # Updates the properties and settings of your Account.
+    # Updates the properties and settings of your Account. Currently only allows for updates to the [Callback URL](/api/reference/tag/Callbacks-and-Events) and locale.
     # @param account_update_request [AccountUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AccountGetResponse, Integer, Hash)>] AccountGetResponse data, response status code and response headers
@@ -326,7 +329,7 @@ module HelloSign
     end
 
     # Verify Account
-    # Verifies whether an HelloSign Account exists for the given email address.  **NOTE** This method is restricted to paid API users.
+    # Verifies whether an HelloSign Account exists for the given email address.
     # @param account_verify_request [AccountVerifyRequest] 
     # @param [Hash] opts the optional parameters
     # @return [AccountVerifyResponse]
@@ -336,7 +339,7 @@ module HelloSign
     end
 
     # Verify Account
-    # Verifies whether an HelloSign Account exists for the given email address.  **NOTE** This method is restricted to paid API users.
+    # Verifies whether an HelloSign Account exists for the given email address.
     # @param account_verify_request [AccountVerifyRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AccountVerifyResponse, Integer, Hash)>] AccountVerifyResponse data, response status code and response headers

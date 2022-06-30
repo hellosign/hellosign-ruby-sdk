@@ -14,6 +14,7 @@ require 'date'
 require 'time'
 
 module HelloSign
+  # Contains information about a signature request.
   class SignatureRequestResponse
     # Whether this is a test signature request. Test requests have no legal value. Defaults to `false`.
     attr_accessor :test_mode
@@ -51,9 +52,6 @@ module HelloSign
     # Whether or not an error occurred (either during the creation of the SignatureRequest or during one of the signings).
     attr_accessor :has_error
 
-    # (Deprecated) The relative URI where the PDF copy of the finalized documents can be downloaded. Only present when `is_complete = true`. This will be removed at some point; use the files_url instead.
-    attr_accessor :final_copy_uri
-
     # The URL where a copy of the request's documents can be downloaded.
     attr_accessor :files_url
 
@@ -69,10 +67,19 @@ module HelloSign
     # The URL you want the signer redirected to after they successfully sign.
     attr_accessor :signing_redirect_url
 
+    # Templates IDs used in this SignatureRequest (if any).
+    attr_accessor :template_ids
+
+    # An array of Custom Field objects containing the name and type of each custom field.  * Text Field uses `SignatureRequestResponseCustomFieldText` * Checkbox Field uses `SignatureRequestResponseCustomFieldCheckbox`
     attr_accessor :custom_fields
 
+    # Signer attachments.
+    attr_accessor :attachments
+
+    # An array of form field objects containing the name, value, and type of each textbox or checkmark field filled in by the signers.
     attr_accessor :response_data
 
+    # An array of signature objects, 1 for each signer.
     attr_accessor :signatures
 
     # Attribute mapping from ruby-style variable name to JSON key.
@@ -90,13 +97,14 @@ module HelloSign
         :'is_complete' => :'is_complete',
         :'is_declined' => :'is_declined',
         :'has_error' => :'has_error',
-        :'final_copy_uri' => :'final_copy_uri',
         :'files_url' => :'files_url',
         :'signing_url' => :'signing_url',
         :'details_url' => :'details_url',
         :'cc_email_addresses' => :'cc_email_addresses',
         :'signing_redirect_url' => :'signing_redirect_url',
+        :'template_ids' => :'template_ids',
         :'custom_fields' => :'custom_fields',
+        :'attachments' => :'attachments',
         :'response_data' => :'response_data',
         :'signatures' => :'signatures'
       }
@@ -127,13 +135,14 @@ module HelloSign
         :'is_complete' => :'Boolean',
         :'is_declined' => :'Boolean',
         :'has_error' => :'Boolean',
-        :'final_copy_uri' => :'String',
         :'files_url' => :'String',
         :'signing_url' => :'String',
         :'details_url' => :'String',
         :'cc_email_addresses' => :'Array<String>',
         :'signing_redirect_url' => :'String',
-        :'custom_fields' => :'Array<SignatureRequestResponseCustomField>',
+        :'template_ids' => :'Array<String>',
+        :'custom_fields' => :'Array<SignatureRequestResponseCustomFieldBase>',
+        :'attachments' => :'Array<SignatureRequestResponseAttachment>',
         :'response_data' => :'Array<SignatureRequestResponseData>',
         :'signatures' => :'Array<SignatureRequestResponseSignatures>'
       }
@@ -151,7 +160,9 @@ module HelloSign
         :'message',
         :'signing_url',
         :'signing_redirect_url',
+        :'template_ids',
         :'custom_fields',
+        :'attachments',
         :'response_data',
       ])
     end
@@ -226,10 +237,6 @@ module HelloSign
         self.has_error = attributes[:'has_error']
       end
 
-      if attributes.key?(:'final_copy_uri')
-        self.final_copy_uri = attributes[:'final_copy_uri']
-      end
-
       if attributes.key?(:'files_url')
         self.files_url = attributes[:'files_url']
       end
@@ -252,9 +259,21 @@ module HelloSign
         self.signing_redirect_url = attributes[:'signing_redirect_url']
       end
 
+      if attributes.key?(:'template_ids')
+        if (value = attributes[:'template_ids']).is_a?(Array)
+          self.template_ids = value
+        end
+      end
+
       if attributes.key?(:'custom_fields')
         if (value = attributes[:'custom_fields']).is_a?(Array)
           self.custom_fields = value
+        end
+      end
+
+      if attributes.key?(:'attachments')
+        if (value = attributes[:'attachments']).is_a?(Array)
+          self.attachments = value
         end
       end
 
@@ -301,13 +320,14 @@ module HelloSign
           is_complete == o.is_complete &&
           is_declined == o.is_declined &&
           has_error == o.has_error &&
-          final_copy_uri == o.final_copy_uri &&
           files_url == o.files_url &&
           signing_url == o.signing_url &&
           details_url == o.details_url &&
           cc_email_addresses == o.cc_email_addresses &&
           signing_redirect_url == o.signing_redirect_url &&
+          template_ids == o.template_ids &&
           custom_fields == o.custom_fields &&
+          attachments == o.attachments &&
           response_data == o.response_data &&
           signatures == o.signatures
     end
@@ -321,7 +341,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [test_mode, signature_request_id, requester_email_address, title, original_title, subject, message, metadata, created_at, is_complete, is_declined, has_error, final_copy_uri, files_url, signing_url, details_url, cc_email_addresses, signing_redirect_url, custom_fields, response_data, signatures].hash
+      [test_mode, signature_request_id, requester_email_address, title, original_title, subject, message, metadata, created_at, is_complete, is_declined, has_error, files_url, signing_url, details_url, cc_email_addresses, signing_redirect_url, template_ids, custom_fields, attachments, response_data, signatures].hash
     end
 
     # Builds the object from hash
@@ -426,16 +446,17 @@ module HelloSign
 
     # Returns the object in the form of hash
     # @return [Hash] Returns the object in the form of hash
-    def to_hash
+    def to_hash(include_nil = true)
       hash = {}
       self.class.merged_attributes.each_pair do |attr, param|
         value = self.send(attr)
         if value.nil?
+          next unless include_nil
           is_nullable = self.class.merged_nullable.include?(attr)
           next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))
         end
 
-        hash[param] = _to_hash(value)
+        hash[param] = _to_hash(value, include_nil)
       end
       hash
     end
@@ -444,15 +465,15 @@ module HelloSign
     # For object, use to_hash. Otherwise, just return the value
     # @param [Object] value Any valid value
     # @return [Hash] Returns the value in the form of hash
-    def _to_hash(value)
+    def _to_hash(value, include_nil = true)
       if value.is_a?(Array)
-        value.compact.map { |v| _to_hash(v) }
+        value.compact.map { |v| _to_hash(v, include_nil) }
       elsif value.is_a?(Hash)
         {}.tap do |hash|
-          value.each { |k, v| hash[k] = _to_hash(v) }
+          value.each { |k, v| hash[k] = _to_hash(v, include_nil) }
         end
       elsif value.respond_to? :to_hash
-        value.to_hash
+        value.to_hash(include_nil)
       else
         value
       end

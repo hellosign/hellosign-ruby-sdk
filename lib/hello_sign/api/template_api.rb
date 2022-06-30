@@ -311,8 +311,8 @@ module HelloSign
     end
 
     # Get Template Files
-    # Obtain a copy of the current documents specified by the `template_id` parameter.  Returns a PDF or ZIP file, or if `get_url` is set, a JSON object with a url to the file (PDFs only). If `get_data_uri` is set, a JSON object with a `data_uri` representing the base64 encoded file (PDFs only) is returned.  If the files are currently being prepared, a status code of `409` will be returned instead.
-    # @param template_id [String] The id of the Template to delete.
+    # Obtain a copy of the current documents specified by the `template_id` parameter.  Returns a PDF or ZIP file, or if `get_url` is set, a JSON object with a url to the file (PDFs only). If `get_data_uri` is set, a JSON object with a `data_uri` representing the base64 encoded file (PDFs only) is returned.  If the files are currently being prepared, a status code of `409` will be returned instead. In this case please wait for the `template_created` callback event.
+    # @param template_id [String] The id of the template files to retrieve.
     # @param [Hash] opts the optional parameters
     # @option opts [String] :file_type Set to &#x60;pdf&#x60; for a single merged document or &#x60;zip&#x60; for a collection of individual documents.
     # @option opts [Boolean] :get_url If &#x60;true&#x60;, the response will contain a url link to the file instead. Links are only available for PDFs and have a TTL of 3 days. (default to false)
@@ -324,8 +324,8 @@ module HelloSign
     end
 
     # Get Template Files
-    # Obtain a copy of the current documents specified by the &#x60;template_id&#x60; parameter.  Returns a PDF or ZIP file, or if &#x60;get_url&#x60; is set, a JSON object with a url to the file (PDFs only). If &#x60;get_data_uri&#x60; is set, a JSON object with a &#x60;data_uri&#x60; representing the base64 encoded file (PDFs only) is returned.  If the files are currently being prepared, a status code of &#x60;409&#x60; will be returned instead.
-    # @param template_id [String] The id of the Template to delete.
+    # Obtain a copy of the current documents specified by the &#x60;template_id&#x60; parameter.  Returns a PDF or ZIP file, or if &#x60;get_url&#x60; is set, a JSON object with a url to the file (PDFs only). If &#x60;get_data_uri&#x60; is set, a JSON object with a &#x60;data_uri&#x60; representing the base64 encoded file (PDFs only) is returned.  If the files are currently being prepared, a status code of &#x60;409&#x60; will be returned instead. In this case please wait for the &#x60;template_created&#x60; callback event.
+    # @param template_id [String] The id of the template files to retrieve.
     # @param [Hash] opts the optional parameters
     # @option opts [String] :file_type Set to &#x60;pdf&#x60; for a single merged document or &#x60;zip&#x60; for a collection of individual documents.
     # @option opts [Boolean] :get_url If &#x60;true&#x60;, the response will contain a url link to the file instead. Links are only available for PDFs and have a TTL of 3 days.
@@ -418,7 +418,7 @@ module HelloSign
     end
 
     # Get Template
-    # Returns the Template specified by the id parameter.
+    # Returns the Template specified by the `id` parameter.
     # @param template_id [String] The id of the Template to retrieve.
     # @param [Hash] opts the optional parameters
     # @return [TemplateGetResponse]
@@ -428,7 +428,7 @@ module HelloSign
     end
 
     # Get Template
-    # Returns the Template specified by the id parameter.
+    # Returns the Template specified by the &#x60;id&#x60; parameter.
     # @param template_id [String] The id of the Template to retrieve.
     # @param [Hash] opts the optional parameters
     # @return [Array<(TemplateGetResponse, Integer, Hash)>] TemplateGetResponse data, response status code and response headers
@@ -516,7 +516,7 @@ module HelloSign
     # @param [Hash] opts the optional parameters
     # @option opts [String] :account_id Which account to return Templates for. Must be a team member. Use &#x60;all&#x60; to indicate all team members. Defaults to your account.
     # @option opts [Integer] :page Which page number of the Template List to return. Defaults to &#x60;1&#x60;. (default to 1)
-    # @option opts [Integer] :page_size &#x60;Number of objects to be returned per page. Must be between &#x60;1&#x60; and &#x60;100&#x60;. Default is &#x60;20&#x60;. (default to 20)
+    # @option opts [Integer] :page_size Number of objects to be returned per page. Must be between &#x60;1&#x60; and &#x60;100&#x60;. Default is &#x60;20&#x60;. (default to 20)
     # @option opts [String] :query String that includes search terms and/or fields to be used to filter the Template objects.
     # @return [TemplateListResponse]
     def template_list(opts = {})
@@ -529,7 +529,7 @@ module HelloSign
     # @param [Hash] opts the optional parameters
     # @option opts [String] :account_id Which account to return Templates for. Must be a team member. Use &#x60;all&#x60; to indicate all team members. Defaults to your account.
     # @option opts [Integer] :page Which page number of the Template List to return. Defaults to &#x60;1&#x60;.
-    # @option opts [Integer] :page_size &#x60;Number of objects to be returned per page. Must be between &#x60;1&#x60; and &#x60;100&#x60;. Default is &#x60;20&#x60;.
+    # @option opts [Integer] :page_size Number of objects to be returned per page. Must be between &#x60;1&#x60; and &#x60;100&#x60;. Default is &#x60;20&#x60;.
     # @option opts [String] :query String that includes search terms and/or fields to be used to filter the Template objects.
     # @return [Array<(TemplateListResponse, Integer, Hash)>] TemplateListResponse data, response status code and response headers
     def template_list_with_http_info(opts = {})
@@ -735,7 +735,7 @@ module HelloSign
     end
 
     # Update Template Files
-    # Overlays a new file with the overlay of an existing template. The new file(s) must:  1. have the same or higher page count 2. the same orientation as the file(s) being replaced.  This will not overwrite or in any way affect the existing template. Both the existing template and new template will be available for use after executing this endpoint. Also note that this will decrement your template quota.  Overlaying new files is asynchronous and a successful call to this endpoint will return an empty 200 OK response if the request passes initial validation checks.  It is recommended that a callback be implemented to listen for the callback event. A `template_created` event will be sent when the files are updated or a `template_error` event will be sent if there was a problem while updating the files. If a callback handler has been configured and the event has not been received within 60 minutes of making the call, check the status of the request in the API dashboard and retry the request if necessary.  If the page orientation or page count is different from the original template document, we will notify you with a `template_error` [callback event](https://app.hellosign.com/api/eventsAndCallbacksWalkthrough).
+    # Overlays a new file with the overlay of an existing template. The new file(s) must:  1. have the same or higher page count 2. the same orientation as the file(s) being replaced.  This will not overwrite or in any way affect the existing template. Both the existing template and new template will be available for use after executing this endpoint. Also note that this will decrement your template quota.  Overlaying new files is asynchronous and a successful call to this endpoint will return 200 OK response if the request passes initial validation checks.  It is recommended that a callback be implemented to listen for the callback event. A `template_created` event will be sent when the files are updated or a `template_error` event will be sent if there was a problem while updating the files. If a callback handler has been configured and the event has not been received within 60 minutes of making the call, check the status of the request in the API dashboard and retry the request if necessary.  If the page orientation or page count is different from the original template document, we will notify you with a `template_error` [callback event](https://app.hellosign.com/api/eventsAndCallbacksWalkthrough).
     # @param template_id [String] The ID of the template whose files to update.
     # @param template_update_files_request [TemplateUpdateFilesRequest] 
     # @param [Hash] opts the optional parameters
@@ -746,7 +746,7 @@ module HelloSign
     end
 
     # Update Template Files
-    # Overlays a new file with the overlay of an existing template. The new file(s) must:  1. have the same or higher page count 2. the same orientation as the file(s) being replaced.  This will not overwrite or in any way affect the existing template. Both the existing template and new template will be available for use after executing this endpoint. Also note that this will decrement your template quota.  Overlaying new files is asynchronous and a successful call to this endpoint will return an empty 200 OK response if the request passes initial validation checks.  It is recommended that a callback be implemented to listen for the callback event. A &#x60;template_created&#x60; event will be sent when the files are updated or a &#x60;template_error&#x60; event will be sent if there was a problem while updating the files. If a callback handler has been configured and the event has not been received within 60 minutes of making the call, check the status of the request in the API dashboard and retry the request if necessary.  If the page orientation or page count is different from the original template document, we will notify you with a &#x60;template_error&#x60; [callback event](https://app.hellosign.com/api/eventsAndCallbacksWalkthrough).
+    # Overlays a new file with the overlay of an existing template. The new file(s) must:  1. have the same or higher page count 2. the same orientation as the file(s) being replaced.  This will not overwrite or in any way affect the existing template. Both the existing template and new template will be available for use after executing this endpoint. Also note that this will decrement your template quota.  Overlaying new files is asynchronous and a successful call to this endpoint will return 200 OK response if the request passes initial validation checks.  It is recommended that a callback be implemented to listen for the callback event. A &#x60;template_created&#x60; event will be sent when the files are updated or a &#x60;template_error&#x60; event will be sent if there was a problem while updating the files. If a callback handler has been configured and the event has not been received within 60 minutes of making the call, check the status of the request in the API dashboard and retry the request if necessary.  If the page orientation or page count is different from the original template document, we will notify you with a &#x60;template_error&#x60; [callback event](https://app.hellosign.com/api/eventsAndCallbacksWalkthrough).
     # @param template_id [String] The ID of the template whose files to update.
     # @param template_update_files_request [TemplateUpdateFilesRequest] 
     # @param [Hash] opts the optional parameters

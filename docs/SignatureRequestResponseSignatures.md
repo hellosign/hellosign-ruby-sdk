@@ -1,6 +1,6 @@
 # HelloSign::SignatureRequestResponseSignatures
 
-An array of signature obects, 1 for each signer.
+An array of signature objects, 1 for each signer.
 
 ## Properties
 
@@ -18,6 +18,8 @@ An array of signature obects, 1 for each signer.
 | `last_reminded_at` | ```Integer``` |  The time the last reminder email was sent to the signer or null.  |  |
 | `has_pin` | ```Boolean``` |  Boolean to indicate whether this signature requires a PIN to access.  |  |
 | `has_sms_auth` | ```Boolean``` |  Boolean to indicate whether this signature has SMS authentication enabled.  |  |
+| `has_sms_delivery` | ```Boolean``` |  Boolean to indicate whether this signature has SMS delivery enabled.  |  |
+| `sms_phone_number` | ```String``` |  The SMS phone number used for authentication or signature request delivery.  |  |
 | `reassigned_by` | ```String``` |  Email address of original signer who reassigned to this signer.  |  |
 | `reassignment_reason` | ```String``` |  Reason provided by original signer who reassigned to this signer.  |  |
 | `error` | ```String``` |  Error message pertaining to this signer, or null.  |  |

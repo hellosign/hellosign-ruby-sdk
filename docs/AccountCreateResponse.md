@@ -8,5 +8,5 @@
 | ---- | ---- | ----------- | ----- |
 | `account` | [```AccountResponse```](AccountResponse.md) |    |  |
 | `oauth_data` | [```OAuthTokenResponse```](OAuthTokenResponse.md) |    |  |
-| `warnings` | [```Array<WarningResponse>```](WarningResponse.md) |    |  |
+| `warnings` | [```Array<WarningResponse>```](WarningResponse.md) |  A list of warnings.  |  |
 

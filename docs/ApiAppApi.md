@@ -154,7 +154,7 @@ end
 
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
-| `client_id` | **String** | The client id of the ApiApp to delete. |  |
+| `client_id` | **String** | The client id of the API App to delete. |  |
 
 ### Return type
 
@@ -226,7 +226,7 @@ end
 
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
-| `client_id` | **String** | The client ID of the ApiApp to retrieve. |  |
+| `client_id` | **String** | The client id of the API App to retrieve. |  |
 
 ### Return type
 
@@ -299,7 +299,7 @@ end
 
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
-| `page` | **Integer** | Which page number of the ApiApp List to return. Defaults to `1`. | [optional][default to 1] |
+| `page` | **Integer** | Which page number of the API App List to return. Defaults to `1`. | [optional][default to 1] |
 | `page_size` | **Integer** | Number of objects to be returned per page. Must be between `1` and `100`. Default is `20`. | [optional][default to 20] |
 
 ### Return type
@@ -384,7 +384,7 @@ end
 
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
-| `client_id` | **String** | The client ID of the ApiApp to update. |  |
+| `client_id` | **String** | The client id of the API App to update. |  |
 | `api_app_update_request` | [**ApiAppUpdateRequest**](ApiAppUpdateRequest.md) |  |  |
 
 ### Return type

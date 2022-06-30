@@ -44,6 +44,9 @@ module HelloSign
 
     attr_accessor :text_color2
 
+    # Resets white labeling options to defaults. Only useful when updating an API App.
+    attr_accessor :reset_to_default
+
     class EnumAttributeValidator
       attr_reader :datatype
       attr_reader :allowable_values
@@ -82,7 +85,8 @@ module HelloSign
         :'secondary_button_text_color' => :'secondary_button_text_color',
         :'secondary_button_text_color_hover' => :'secondary_button_text_color_hover',
         :'text_color1' => :'text_color1',
-        :'text_color2' => :'text_color2'
+        :'text_color2' => :'text_color2',
+        :'reset_to_default' => :'reset_to_default'
       }
     end
 
@@ -112,7 +116,8 @@ module HelloSign
         :'secondary_button_text_color' => :'String',
         :'secondary_button_text_color_hover' => :'String',
         :'text_color1' => :'String',
-        :'text_color2' => :'String'
+        :'text_color2' => :'String',
+        :'reset_to_default' => :'Boolean'
       }
     end
 
@@ -230,6 +235,10 @@ module HelloSign
       else
         self.text_color2 = '#FFFFFF'
       end
+
+      if attributes.key?(:'reset_to_default')
+        self.reset_to_default = attributes[:'reset_to_default']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -275,7 +284,8 @@ module HelloSign
           secondary_button_text_color == o.secondary_button_text_color &&
           secondary_button_text_color_hover == o.secondary_button_text_color_hover &&
           text_color1 == o.text_color1 &&
-          text_color2 == o.text_color2
+          text_color2 == o.text_color2 &&
+          reset_to_default == o.reset_to_default
     end
 
     # @see the `==` method
@@ -287,7 +297,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [header_background_color, legal_version, link_color, page_background_color, primary_button_color, primary_button_color_hover, primary_button_text_color, primary_button_text_color_hover, secondary_button_color, secondary_button_color_hover, secondary_button_text_color, secondary_button_text_color_hover, text_color1, text_color2].hash
+      [header_background_color, legal_version, link_color, page_background_color, primary_button_color, primary_button_color_hover, primary_button_text_color, primary_button_text_color_hover, secondary_button_color, secondary_button_color_hover, secondary_button_text_color, secondary_button_text_color_hover, text_color1, text_color2, reset_to_default].hash
     end
 
     # Builds the object from hash
@@ -392,16 +402,17 @@ module HelloSign
 
     # Returns the object in the form of hash
     # @return [Hash] Returns the object in the form of hash
-    def to_hash
+    def to_hash(include_nil = true)
       hash = {}
       self.class.merged_attributes.each_pair do |attr, param|
         value = self.send(attr)
         if value.nil?
+          next unless include_nil
           is_nullable = self.class.merged_nullable.include?(attr)
           next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))
         end
 
-        hash[param] = _to_hash(value)
+        hash[param] = _to_hash(value, include_nil)
       end
       hash
     end
@@ -410,15 +421,15 @@ module HelloSign
     # For object, use to_hash. Otherwise, just return the value
     # @param [Object] value Any valid value
     # @return [Hash] Returns the value in the form of hash
-    def _to_hash(value)
+    def _to_hash(value, include_nil = true)
       if value.is_a?(Array)
-        value.compact.map { |v| _to_hash(v) }
+        value.compact.map { |v| _to_hash(v, include_nil) }
       elsif value.is_a?(Hash)
         {}.tap do |hash|
-          value.each { |k, v| hash[k] = _to_hash(v) }
+          value.each { |k, v| hash[k] = _to_hash(v, include_nil) }
         end
       elsif value.respond_to? :to_hash
-        value.to_hash
+        value.to_hash(include_nil)
       else
         value
       end
