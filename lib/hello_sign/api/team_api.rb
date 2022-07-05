@@ -23,6 +23,7 @@ module HelloSign
     # Invites a user (specified using the `email_address` parameter) to your Team. If the user does not currently have a HelloSign Account, a new one will be created for them. If a user is already a part of another Team, a `team_invite_failed` error will be returned.
     # @param team_add_member_request [TeamAddMemberRequest] 
     # @param [Hash] opts the optional parameters
+    # @option opts [String] :team_id The id of the team.
     # @return [TeamGetResponse]
     def team_add_member(team_add_member_request, opts = {})
       data, _status_code, _headers = team_add_member_with_http_info(team_add_member_request, opts)
@@ -33,6 +34,7 @@ module HelloSign
     # Invites a user (specified using the &#x60;email_address&#x60; parameter) to your Team. If the user does not currently have a HelloSign Account, a new one will be created for them. If a user is already a part of another Team, a &#x60;team_invite_failed&#x60; error will be returned.
     # @param team_add_member_request [TeamAddMemberRequest] 
     # @param [Hash] opts the optional parameters
+    # @option opts [String] :team_id The id of the team.
     # @return [Array<(TeamGetResponse, Integer, Hash)>] TeamGetResponse data, response status code and response headers
     def team_add_member_with_http_info(team_add_member_request, opts = {})
       if @api_client.config.debugging
@@ -47,6 +49,7 @@ module HelloSign
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'team_id'] = opts[:'team_id'] if !opts[:'team_id'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}

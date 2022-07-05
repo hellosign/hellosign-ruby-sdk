@@ -14,7 +14,7 @@ All URIs are relative to *https://api.hellosign.com/v3*
 
 ## `team_add_member`
 
-> `<TeamGetResponse> team_add_member(team_add_member_request)`
+> `<TeamGetResponse> team_add_member(team_add_member_request, opts)`
 
 Add User to Team
 
@@ -51,12 +51,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> `<Array(<TeamGetResponse>, Integer, Hash)> team_add_member_with_http_info(team_add_member_request)`
+> `<Array(<TeamGetResponse>, Integer, Hash)> team_add_member_with_http_info(team_add_member_request, opts)`
 
 ```ruby
 begin
   # Add User to Team
-  data, status_code, headers = api_instance.team_add_member_with_http_info(team_add_member_request)
+  data, status_code, headers = api_instance.team_add_member_with_http_info(team_add_member_request, opts)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <TeamGetResponse>
@@ -70,6 +70,7 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | `team_add_member_request` | [**TeamAddMemberRequest**](TeamAddMemberRequest.md) |  |  |
+| `team_id` | **String** | The id of the team. | [optional] |
 
 ### Return type
 
