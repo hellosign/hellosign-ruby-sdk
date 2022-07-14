@@ -131,6 +131,7 @@ module HelloSign
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'signer_name',
         :'signer_role',
         :'order',
         :'decline_reason',

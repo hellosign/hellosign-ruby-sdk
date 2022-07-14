@@ -389,6 +389,205 @@ module HelloSign
       return data, status_code, headers
     end
 
+    # Get Team Info
+    # Provides information about a team.
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :team_id The id of the team.
+    # @return [TeamGetInfoResponse]
+    def team_info(opts = {})
+      data, _status_code, _headers = team_info_with_http_info(opts)
+      data
+    end
+
+    # Get Team Info
+    # Provides information about a team.
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :team_id The id of the team.
+    # @return [Array<(TeamGetInfoResponse, Integer, Hash)>] TeamGetInfoResponse data, response status code and response headers
+    def team_info_with_http_info(opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: TeamApi.team_info ...'
+      end
+      # resource path
+      local_var_path = '/team/info'
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+      query_params[:'team_id'] = opts[:'team_id'] if !opts[:'team_id'].nil?
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
+
+      post_body = {}
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'TeamGetInfoResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['api_key', 'oauth2']
+
+      new_options = opts.merge(
+        :operation => :"TeamApi.team_info",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      begin
+        data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      rescue HelloSign::ApiError => e
+        if e.code === 200
+          body = @api_client.convert_to_type(
+            JSON.parse("[#{e.response_body}]", :symbolize_names => true)[0],
+            "HelloSign::TeamGetInfoResponse"
+          )
+
+          fail ApiError.new(:code => e.code,
+                            :response_headers => e.response_headers,
+                            :response_body => body),
+               e.message
+        end
+
+        range_code = "4XX".split('').first
+        range_code_left = "#{range_code}00".to_i
+        range_code_right = "#{range_code}99".to_i
+        if e.code >= range_code_left && e.code <= range_code_right
+          body = @api_client.convert_to_type(
+            JSON.parse("[#{e.response_body}]", :symbolize_names => true)[0],
+            "HelloSign::ErrorResponse"
+          )
+
+          fail ApiError.new(:code => e.code,
+                            :response_headers => e.response_headers,
+                            :response_body => body),
+               e.message
+        end
+
+      end
+
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: TeamApi#team_info\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # List Team Members
+    # Provides a paginated list of members (and their roles) that belong to a given team.
+    # @param team_id [String] The id of the team that a member list is being requested from.
+    # @param [Hash] opts the optional parameters
+    # @option opts [Integer] :page Which page number of the team member list to return. Defaults to &#x60;1&#x60;. (default to 1)
+    # @option opts [Integer] :page_size Number of objects to be returned per page. Must be between &#x60;1&#x60; and &#x60;100&#x60;. Default is &#x60;20&#x60;. (default to 20)
+    # @return [TeamMembersResponse]
+    def team_members(team_id, opts = {})
+      data, _status_code, _headers = team_members_with_http_info(team_id, opts)
+      data
+    end
+
+    # List Team Members
+    # Provides a paginated list of members (and their roles) that belong to a given team.
+    # @param team_id [String] The id of the team that a member list is being requested from.
+    # @param [Hash] opts the optional parameters
+    # @option opts [Integer] :page Which page number of the team member list to return. Defaults to &#x60;1&#x60;.
+    # @option opts [Integer] :page_size Number of objects to be returned per page. Must be between &#x60;1&#x60; and &#x60;100&#x60;. Default is &#x60;20&#x60;.
+    # @return [Array<(TeamMembersResponse, Integer, Hash)>] TeamMembersResponse data, response status code and response headers
+    def team_members_with_http_info(team_id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: TeamApi.team_members ...'
+      end
+      # verify the required parameter 'team_id' is set
+      if @api_client.config.client_side_validation && team_id.nil?
+        fail ArgumentError, "Missing the required parameter 'team_id' when calling TeamApi.team_members"
+      end
+      if @api_client.config.client_side_validation && !opts[:'page_size'].nil? && opts[:'page_size'] > 100
+        fail ArgumentError, 'invalid value for "opts[:"page_size"]" when calling TeamApi.team_members, must be smaller than or equal to 100.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'page_size'].nil? && opts[:'page_size'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"page_size"]" when calling TeamApi.team_members, must be greater than or equal to 1.'
+      end
+
+      # resource path
+      local_var_path = '/team/members/{team_id}'.sub('{' + 'team_id' + '}', CGI.escape(team_id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+      query_params[:'page'] = opts[:'page'] if !opts[:'page'].nil?
+      query_params[:'page_size'] = opts[:'page_size'] if !opts[:'page_size'].nil?
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
+
+      post_body = {}
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'TeamMembersResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['api_key', 'oauth2']
+
+      new_options = opts.merge(
+        :operation => :"TeamApi.team_members",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      begin
+        data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      rescue HelloSign::ApiError => e
+        if e.code === 200
+          body = @api_client.convert_to_type(
+            JSON.parse("[#{e.response_body}]", :symbolize_names => true)[0],
+            "HelloSign::TeamMembersResponse"
+          )
+
+          fail ApiError.new(:code => e.code,
+                            :response_headers => e.response_headers,
+                            :response_body => body),
+               e.message
+        end
+
+        range_code = "4XX".split('').first
+        range_code_left = "#{range_code}00".to_i
+        range_code_right = "#{range_code}99".to_i
+        if e.code >= range_code_left && e.code <= range_code_right
+          body = @api_client.convert_to_type(
+            JSON.parse("[#{e.response_body}]", :symbolize_names => true)[0],
+            "HelloSign::ErrorResponse"
+          )
+
+          fail ApiError.new(:code => e.code,
+                            :response_headers => e.response_headers,
+                            :response_body => body),
+               e.message
+        end
+
+      end
+
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: TeamApi#team_members\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
     # Remove User from Team
     # Removes the provided user Account from your Team. If the Account had an outstanding invitation to your Team, the invitation will be expired. If you choose to transfer documents from the removed Account to an Account provided in the `new_owner_email_address` parameter (available only for Enterprise plans), the response status code will be 201, which indicates that your request has been queued but not fully executed.
     # @param team_remove_member_request [TeamRemoveMemberRequest] 
@@ -494,6 +693,114 @@ module HelloSign
 
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: TeamApi#team_remove_member\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # List Sub Teams
+    # Provides a paginated list of sub teams that belong to a given team.
+    # @param team_id [String] The id of the parent Team.
+    # @param [Hash] opts the optional parameters
+    # @option opts [Integer] :page Which page number of the SubTeam List to return. Defaults to &#x60;1&#x60;. (default to 1)
+    # @option opts [Integer] :page_size Number of objects to be returned per page. Must be between &#x60;1&#x60; and &#x60;100&#x60;. Default is &#x60;20&#x60;. (default to 20)
+    # @return [TeamSubTeamsResponse]
+    def team_sub_teams(team_id, opts = {})
+      data, _status_code, _headers = team_sub_teams_with_http_info(team_id, opts)
+      data
+    end
+
+    # List Sub Teams
+    # Provides a paginated list of sub teams that belong to a given team.
+    # @param team_id [String] The id of the parent Team.
+    # @param [Hash] opts the optional parameters
+    # @option opts [Integer] :page Which page number of the SubTeam List to return. Defaults to &#x60;1&#x60;.
+    # @option opts [Integer] :page_size Number of objects to be returned per page. Must be between &#x60;1&#x60; and &#x60;100&#x60;. Default is &#x60;20&#x60;.
+    # @return [Array<(TeamSubTeamsResponse, Integer, Hash)>] TeamSubTeamsResponse data, response status code and response headers
+    def team_sub_teams_with_http_info(team_id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: TeamApi.team_sub_teams ...'
+      end
+      # verify the required parameter 'team_id' is set
+      if @api_client.config.client_side_validation && team_id.nil?
+        fail ArgumentError, "Missing the required parameter 'team_id' when calling TeamApi.team_sub_teams"
+      end
+      if @api_client.config.client_side_validation && !opts[:'page_size'].nil? && opts[:'page_size'] > 100
+        fail ArgumentError, 'invalid value for "opts[:"page_size"]" when calling TeamApi.team_sub_teams, must be smaller than or equal to 100.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'page_size'].nil? && opts[:'page_size'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"page_size"]" when calling TeamApi.team_sub_teams, must be greater than or equal to 1.'
+      end
+
+      # resource path
+      local_var_path = '/team/sub_teams/{team_id}'.sub('{' + 'team_id' + '}', CGI.escape(team_id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+      query_params[:'page'] = opts[:'page'] if !opts[:'page'].nil?
+      query_params[:'page_size'] = opts[:'page_size'] if !opts[:'page_size'].nil?
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
+
+      post_body = {}
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'TeamSubTeamsResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['api_key', 'oauth2']
+
+      new_options = opts.merge(
+        :operation => :"TeamApi.team_sub_teams",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      begin
+        data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      rescue HelloSign::ApiError => e
+        if e.code === 200
+          body = @api_client.convert_to_type(
+            JSON.parse("[#{e.response_body}]", :symbolize_names => true)[0],
+            "HelloSign::TeamSubTeamsResponse"
+          )
+
+          fail ApiError.new(:code => e.code,
+                            :response_headers => e.response_headers,
+                            :response_body => body),
+               e.message
+        end
+
+        range_code = "4XX".split('').first
+        range_code_left = "#{range_code}00".to_i
+        range_code_right = "#{range_code}99".to_i
+        if e.code >= range_code_left && e.code <= range_code_right
+          body = @api_client.convert_to_type(
+            JSON.parse("[#{e.response_body}]", :symbolize_names => true)[0],
+            "HelloSign::ErrorResponse"
+          )
+
+          fail ApiError.new(:code => e.code,
+                            :response_headers => e.response_headers,
+                            :response_body => body),
+               e.message
+        end
+
+      end
+
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: TeamApi#team_sub_teams\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end

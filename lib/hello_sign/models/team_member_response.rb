@@ -14,71 +14,22 @@ require 'date'
 require 'time'
 
 module HelloSign
-  # Contains information about the templates you and your team have created.
-  class TemplateResponse
-    # The id of the Template.
-    attr_accessor :template_id
+  class TeamMemberResponse
+    # Account id of the team member.
+    attr_accessor :account_id
 
-    # The title of the Template. This will also be the default subject of the message sent to signers when using this Template to send a SignatureRequest. This can be overridden when sending the SignatureRequest.
-    attr_accessor :title
+    # Email address of the team member.
+    attr_accessor :email_address
 
-    # The default message that will be sent to signers when using this Template to send a SignatureRequest. This can be overridden when sending the SignatureRequest.
-    attr_accessor :message
-
-    # Time the template was last updated.
-    attr_accessor :updated_at
-
-    # `true` if this template was created using an embedded flow, `false` if it was created on our website.
-    attr_accessor :is_embedded
-
-    # `true` if you are the owner of this template, `false` if it's been shared with you by a team member.
-    attr_accessor :is_creator
-
-    # Indicates whether edit rights have been granted to you by the owner (always `true` if that's you).
-    attr_accessor :can_edit
-
-    # Indicates whether the template is locked.  If `true`, then the template was created outside your quota and can only be used in `test_mode`.  If `false`, then the template is within your quota and can be used to create signature requests.
-    attr_accessor :is_locked
-
-    # The metadata attached to the template.
-    attr_accessor :metadata
-
-    # An array of the designated signer roles that must be specified when sending a SignatureRequest using this Template.
-    attr_accessor :signer_roles
-
-    # An array of the designated CC roles that must be specified when sending a SignatureRequest using this Template.
-    attr_accessor :cc_roles
-
-    # An array describing each document associated with this Template. Includes form field data for each document.
-    attr_accessor :documents
-
-    # An array of Custom Field objects.
-    attr_accessor :custom_fields
-
-    # Deprecated. Use `form_fields` inside the [documents](https://developers.hellosign.com/api/reference/operation/templateGet/#!c=200&path=template/documents&t=response) array instead.
-    attr_accessor :named_form_fields
-
-    # An array of the Accounts that can use this Template.
-    attr_accessor :accounts
+    # The specific role a member has on the team.
+    attr_accessor :role
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'template_id' => :'template_id',
-        :'title' => :'title',
-        :'message' => :'message',
-        :'updated_at' => :'updated_at',
-        :'is_embedded' => :'is_embedded',
-        :'is_creator' => :'is_creator',
-        :'can_edit' => :'can_edit',
-        :'is_locked' => :'is_locked',
-        :'metadata' => :'metadata',
-        :'signer_roles' => :'signer_roles',
-        :'cc_roles' => :'cc_roles',
-        :'documents' => :'documents',
-        :'custom_fields' => :'custom_fields',
-        :'named_form_fields' => :'named_form_fields',
-        :'accounts' => :'accounts'
+        :'account_id' => :'account_id',
+        :'email_address' => :'email_address',
+        :'role' => :'role'
       }
     end
 
@@ -95,21 +46,9 @@ module HelloSign
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'template_id' => :'String',
-        :'title' => :'String',
-        :'message' => :'String',
-        :'updated_at' => :'Integer',
-        :'is_embedded' => :'Boolean',
-        :'is_creator' => :'Boolean',
-        :'can_edit' => :'Boolean',
-        :'is_locked' => :'Boolean',
-        :'metadata' => :'Object',
-        :'signer_roles' => :'Array<TemplateResponseSignerRole>',
-        :'cc_roles' => :'Array<TemplateResponseCCRole>',
-        :'documents' => :'Array<TemplateResponseDocument>',
-        :'custom_fields' => :'Array<TemplateResponseCustomField>',
-        :'named_form_fields' => :'Array<TemplateResponseNamedFormField>',
-        :'accounts' => :'Array<TemplateResponseAccount>'
+        :'account_id' => :'String',
+        :'email_address' => :'String',
+        :'role' => :'String'
       }
     end
 
@@ -121,13 +60,6 @@ module HelloSign
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
-        :'is_embedded',
-        :'is_creator',
-        :'can_edit',
-        :'is_locked',
-        :'custom_fields',
-        :'named_form_fields',
-        :'accounts'
       ])
     end
 
@@ -140,87 +72,27 @@ module HelloSign
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `HelloSign::TemplateResponse` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `HelloSign::TeamMemberResponse` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!self.class.merged_attributes.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `HelloSign::TemplateResponse`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `HelloSign::TeamMemberResponse`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'template_id')
-        self.template_id = attributes[:'template_id']
+      if attributes.key?(:'account_id')
+        self.account_id = attributes[:'account_id']
       end
 
-      if attributes.key?(:'title')
-        self.title = attributes[:'title']
+      if attributes.key?(:'email_address')
+        self.email_address = attributes[:'email_address']
       end
 
-      if attributes.key?(:'message')
-        self.message = attributes[:'message']
-      end
-
-      if attributes.key?(:'updated_at')
-        self.updated_at = attributes[:'updated_at']
-      end
-
-      if attributes.key?(:'is_embedded')
-        self.is_embedded = attributes[:'is_embedded']
-      end
-
-      if attributes.key?(:'is_creator')
-        self.is_creator = attributes[:'is_creator']
-      end
-
-      if attributes.key?(:'can_edit')
-        self.can_edit = attributes[:'can_edit']
-      end
-
-      if attributes.key?(:'is_locked')
-        self.is_locked = attributes[:'is_locked']
-      end
-
-      if attributes.key?(:'metadata')
-        self.metadata = attributes[:'metadata']
-      end
-
-      if attributes.key?(:'signer_roles')
-        if (value = attributes[:'signer_roles']).is_a?(Array)
-          self.signer_roles = value
-        end
-      end
-
-      if attributes.key?(:'cc_roles')
-        if (value = attributes[:'cc_roles']).is_a?(Array)
-          self.cc_roles = value
-        end
-      end
-
-      if attributes.key?(:'documents')
-        if (value = attributes[:'documents']).is_a?(Array)
-          self.documents = value
-        end
-      end
-
-      if attributes.key?(:'custom_fields')
-        if (value = attributes[:'custom_fields']).is_a?(Array)
-          self.custom_fields = value
-        end
-      end
-
-      if attributes.key?(:'named_form_fields')
-        if (value = attributes[:'named_form_fields']).is_a?(Array)
-          self.named_form_fields = value
-        end
-      end
-
-      if attributes.key?(:'accounts')
-        if (value = attributes[:'accounts']).is_a?(Array)
-          self.accounts = value
-        end
+      if attributes.key?(:'role')
+        self.role = attributes[:'role']
       end
     end
 
@@ -242,21 +114,9 @@ module HelloSign
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          template_id == o.template_id &&
-          title == o.title &&
-          message == o.message &&
-          updated_at == o.updated_at &&
-          is_embedded == o.is_embedded &&
-          is_creator == o.is_creator &&
-          can_edit == o.can_edit &&
-          is_locked == o.is_locked &&
-          metadata == o.metadata &&
-          signer_roles == o.signer_roles &&
-          cc_roles == o.cc_roles &&
-          documents == o.documents &&
-          custom_fields == o.custom_fields &&
-          named_form_fields == o.named_form_fields &&
-          accounts == o.accounts
+          account_id == o.account_id &&
+          email_address == o.email_address &&
+          role == o.role
     end
 
     # @see the `==` method
@@ -268,7 +128,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [template_id, title, message, updated_at, is_embedded, is_creator, can_edit, is_locked, metadata, signer_roles, cc_roles, documents, custom_fields, named_form_fields, accounts].hash
+      [account_id, email_address, role].hash
     end
 
     # Builds the object from hash

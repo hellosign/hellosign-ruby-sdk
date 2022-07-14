@@ -418,7 +418,7 @@ module HelloSign
     end
 
     # Get Template
-    # Returns the Template specified by the `id` parameter.
+    # Returns the Template specified by the `template_id` parameter.
     # @param template_id [String] The id of the Template to retrieve.
     # @param [Hash] opts the optional parameters
     # @return [TemplateGetResponse]
@@ -428,7 +428,7 @@ module HelloSign
     end
 
     # Get Template
-    # Returns the Template specified by the &#x60;id&#x60; parameter.
+    # Returns the Template specified by the &#x60;template_id&#x60; parameter.
     # @param template_id [String] The id of the Template to retrieve.
     # @param [Hash] opts the optional parameters
     # @return [Array<(TemplateGetResponse, Integer, Hash)>] TemplateGetResponse data, response status code and response headers

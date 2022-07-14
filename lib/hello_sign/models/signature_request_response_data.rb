@@ -25,36 +25,11 @@ module HelloSign
     # The name of the form field.
     attr_accessor :name
 
-    # The value of the form field.
-    attr_accessor :value
-
     # A boolean value denoting if this field is required.
     attr_accessor :required
 
-    # - `text`: A text input field - `checkbox`: A yes/no checkbox - `date_signed`: A date - `dropdown`: An input field for dropdowns - `initials`: An input field for initials - `radio`: An input field for radios - `signature`: A signature input field - `text-merge`: A text field that has default text set by the api - `checkbox-merge`: A checkbox field that has default value set by the api
+    # TEST DESCRIPTION
     attr_accessor :type
-
-    class EnumAttributeValidator
-      attr_reader :datatype
-      attr_reader :allowable_values
-
-      def initialize(datatype, allowable_values)
-        @allowable_values = allowable_values.map do |value|
-          case datatype.to_s
-          when /Integer/i
-            value.to_i
-          when /Float/i
-            value.to_f
-          else
-            value
-          end
-        end
-      end
-
-      def valid?(value)
-        !value || allowable_values.include?(value)
-      end
-    end
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
@@ -62,7 +37,6 @@ module HelloSign
         :'api_id' => :'api_id',
         :'signature_id' => :'signature_id',
         :'name' => :'name',
-        :'value' => :'value',
         :'required' => :'required',
         :'type' => :'type'
       }
@@ -84,7 +58,6 @@ module HelloSign
         :'api_id' => :'String',
         :'signature_id' => :'String',
         :'name' => :'String',
-        :'value' => :'String',
         :'required' => :'Boolean',
         :'type' => :'String'
       }
@@ -104,6 +77,45 @@ module HelloSign
     # Returns list of attributes with nullable: true of this model + parent
     def self.merged_nullable
       self.openapi_nullable
+    end
+
+    # discriminator's property name in OpenAPI v3
+    def self.openapi_discriminator_name
+      :'type'
+    end
+
+    def self.discriminator_class_name(value)
+      return nil unless value.is_a?(String)
+
+      if value == 'checkbox'
+        return "HelloSign::SignatureRequestResponseDataValueCheckbox"
+      end
+      if value == 'checkbox-merge'
+        return "HelloSign::SignatureRequestResponseDataValueCheckboxMerge"
+      end
+      if value == 'date_signed'
+        return "HelloSign::SignatureRequestResponseDataValueDateSigned"
+      end
+      if value == 'dropdown'
+        return "HelloSign::SignatureRequestResponseDataValueDropdown"
+      end
+      if value == 'initials'
+        return "HelloSign::SignatureRequestResponseDataValueInitials"
+      end
+      if value == 'radio'
+        return "HelloSign::SignatureRequestResponseDataValueRadio"
+      end
+      if value == 'signature'
+        return "HelloSign::SignatureRequestResponseDataValueSignature"
+      end
+      if value == 'text'
+        return "HelloSign::SignatureRequestResponseDataValueText"
+      end
+      if value == 'text-merge'
+        return "HelloSign::SignatureRequestResponseDataValueTextMerge"
+      end
+
+      return nil
     end
 
     # Initializes the object
@@ -133,10 +145,6 @@ module HelloSign
         self.name = attributes[:'name']
       end
 
-      if attributes.key?(:'value')
-        self.value = attributes[:'value']
-      end
-
       if attributes.key?(:'required')
         self.required = attributes[:'required']
       end
@@ -156,19 +164,7 @@ module HelloSign
     # Check to see if the all the properties in the model are valid
     # @return true if the model is valid
     def valid?
-      type_validator = EnumAttributeValidator.new('String', ["text", "checkbox", "date_signed", "dropdown", "initials", "radio", "signature", "text-merge", "checkbox-merge"])
-      return false unless type_validator.valid?(@type)
       true
-    end
-
-    # Custom attribute writer method checking allowed values (enum).
-    # @param [Object] type Object to be assigned
-    def type=(type)
-      validator = EnumAttributeValidator.new('String', ["text", "checkbox", "date_signed", "dropdown", "initials", "radio", "signature", "text-merge", "checkbox-merge"])
-      unless validator.valid?(type)
-        fail ArgumentError, "invalid value for \"type\", must be one of #{validator.allowable_values}."
-      end
-      @type = type
     end
 
     # Checks equality by comparing each attribute.
@@ -179,7 +175,6 @@ module HelloSign
           api_id == o.api_id &&
           signature_id == o.signature_id &&
           name == o.name &&
-          value == o.value &&
           required == o.required &&
           type == o.type
     end
@@ -193,13 +188,20 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [api_id, signature_id, name, value, required, type].hash
+      [api_id, signature_id, name, required, type].hash
     end
 
     # Builds the object from hash
     # @param [Hash] attributes Model attributes in the form of hash
     # @return [Object] Returns the model itself
     def self.build_from_hash(attributes)
+      if !attributes[self.openapi_discriminator_name].nil?
+        klass = self.discriminator_class_name(attributes[self.openapi_discriminator_name])
+        if klass != new.class.to_s
+          obj = Object.const_get(klass).new.build_from_hash(attributes)
+          return obj
+        end
+      end
       new.build_from_hash(attributes)
     end
 
