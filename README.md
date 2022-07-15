@@ -128,7 +128,10 @@ All URIs are relative to *https://api.hellosign.com/v3*
 |*HelloSign::TeamApi* | [**team_create**](docs/TeamApi.md#team_create) | **POST** /team/create | Create Team |
 |*HelloSign::TeamApi* | [**team_delete**](docs/TeamApi.md#team_delete) | **DELETE** /team/destroy | Delete Team |
 |*HelloSign::TeamApi* | [**team_get**](docs/TeamApi.md#team_get) | **GET** /team | Get Team |
+|*HelloSign::TeamApi* | [**team_info**](docs/TeamApi.md#team_info) | **GET** /team/info | Get Team Info |
+|*HelloSign::TeamApi* | [**team_members**](docs/TeamApi.md#team_members) | **GET** /team/members/{team_id} | List Team Members |
 |*HelloSign::TeamApi* | [**team_remove_member**](docs/TeamApi.md#team_remove_member) | **POST** /team/remove_member | Remove User from Team |
+|*HelloSign::TeamApi* | [**team_sub_teams**](docs/TeamApi.md#team_sub_teams) | **GET** /team/sub_teams/{team_id} | List Sub Teams |
 |*HelloSign::TeamApi* | [**team_update**](docs/TeamApi.md#team_update) | **PUT** /team | Update Team |
 |*HelloSign::TemplateApi* | [**template_add_user**](docs/TemplateApi.md#template_add_user) | **POST** /template/add_user/{template_id} | Add User to Template |
 |*HelloSign::TemplateApi* | [**template_create_embedded_draft**](docs/TemplateApi.md#template_create_embedded_draft) | **POST** /template/create_embedded_draft | Create Embedded Template Draft |
@@ -204,6 +207,16 @@ All URIs are relative to *https://api.hellosign.com/v3*
  - [HelloSign::SignatureRequestResponseCustomFieldText](docs/SignatureRequestResponseCustomFieldText.md)
  - [HelloSign::SignatureRequestResponseCustomFieldTypeEnum](docs/SignatureRequestResponseCustomFieldTypeEnum.md)
  - [HelloSign::SignatureRequestResponseData](docs/SignatureRequestResponseData.md)
+ - [HelloSign::SignatureRequestResponseDataTypeEnum](docs/SignatureRequestResponseDataTypeEnum.md)
+ - [HelloSign::SignatureRequestResponseDataValueCheckbox](docs/SignatureRequestResponseDataValueCheckbox.md)
+ - [HelloSign::SignatureRequestResponseDataValueCheckboxMerge](docs/SignatureRequestResponseDataValueCheckboxMerge.md)
+ - [HelloSign::SignatureRequestResponseDataValueDateSigned](docs/SignatureRequestResponseDataValueDateSigned.md)
+ - [HelloSign::SignatureRequestResponseDataValueDropdown](docs/SignatureRequestResponseDataValueDropdown.md)
+ - [HelloSign::SignatureRequestResponseDataValueInitials](docs/SignatureRequestResponseDataValueInitials.md)
+ - [HelloSign::SignatureRequestResponseDataValueRadio](docs/SignatureRequestResponseDataValueRadio.md)
+ - [HelloSign::SignatureRequestResponseDataValueSignature](docs/SignatureRequestResponseDataValueSignature.md)
+ - [HelloSign::SignatureRequestResponseDataValueText](docs/SignatureRequestResponseDataValueText.md)
+ - [HelloSign::SignatureRequestResponseDataValueTextMerge](docs/SignatureRequestResponseDataValueTextMerge.md)
  - [HelloSign::SignatureRequestResponseSignatures](docs/SignatureRequestResponseSignatures.md)
  - [HelloSign::SignatureRequestSendRequest](docs/SignatureRequestSendRequest.md)
  - [HelloSign::SignatureRequestSendWithTemplateRequest](docs/SignatureRequestSendWithTemplateRequest.md)
@@ -237,15 +250,22 @@ All URIs are relative to *https://api.hellosign.com/v3*
  - [HelloSign::SubSignatureRequestSigner](docs/SubSignatureRequestSigner.md)
  - [HelloSign::SubSignatureRequestTemplateSigner](docs/SubSignatureRequestTemplateSigner.md)
  - [HelloSign::SubSigningOptions](docs/SubSigningOptions.md)
+ - [HelloSign::SubTeamResponse](docs/SubTeamResponse.md)
  - [HelloSign::SubTemplateRole](docs/SubTemplateRole.md)
  - [HelloSign::SubUnclaimedDraftSigner](docs/SubUnclaimedDraftSigner.md)
  - [HelloSign::SubUnclaimedDraftTemplateSigner](docs/SubUnclaimedDraftTemplateSigner.md)
  - [HelloSign::SubWhiteLabelingOptions](docs/SubWhiteLabelingOptions.md)
  - [HelloSign::TeamAddMemberRequest](docs/TeamAddMemberRequest.md)
  - [HelloSign::TeamCreateRequest](docs/TeamCreateRequest.md)
+ - [HelloSign::TeamGetInfoResponse](docs/TeamGetInfoResponse.md)
  - [HelloSign::TeamGetResponse](docs/TeamGetResponse.md)
+ - [HelloSign::TeamInfoResponse](docs/TeamInfoResponse.md)
+ - [HelloSign::TeamMemberResponse](docs/TeamMemberResponse.md)
+ - [HelloSign::TeamMembersResponse](docs/TeamMembersResponse.md)
+ - [HelloSign::TeamParentResponse](docs/TeamParentResponse.md)
  - [HelloSign::TeamRemoveMemberRequest](docs/TeamRemoveMemberRequest.md)
  - [HelloSign::TeamResponse](docs/TeamResponse.md)
+ - [HelloSign::TeamSubTeamsResponse](docs/TeamSubTeamsResponse.md)
  - [HelloSign::TeamUpdateRequest](docs/TeamUpdateRequest.md)
  - [HelloSign::TemplateAddUserRequest](docs/TemplateAddUserRequest.md)
  - [HelloSign::TemplateCreateEmbeddedDraftRequest](docs/TemplateCreateEmbeddedDraftRequest.md)

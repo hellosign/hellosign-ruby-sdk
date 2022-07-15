@@ -14,254 +14,95 @@ require 'date'
 require 'time'
 
 module HelloSign
-  class TemplateResponseDocumentCustomField
-    # The name of the Custom Field.
-    attr_accessor :name
-
-    # The type of this Custom Field. Only `text` and `checkbox` are currently supported.
+  class SignatureRequestResponseDataValueCheckbox < SignatureRequestResponseData
+    # A yes/no checkbox
     attr_accessor :type
 
-    # The signer of the Custom Field.
-    attr_accessor :signer
-
-    # The horizontal offset in pixels for this form field.
-    attr_accessor :x
-
-    # The vertical offset in pixels for this form field.
-    attr_accessor :y
-
-    # The width in pixels of this form field.
-    attr_accessor :width
-
-    # The height in pixels of this form field.
-    attr_accessor :height
-
-    # Boolean showing whether or not this field is required.
-    attr_accessor :required
-
-    # The unique ID for this field.
-    attr_accessor :api_id
-
-    # The name of the group this field is in. If this field is not a group, this defaults to `null`.
-    attr_accessor :group
-
-    attr_accessor :avg_text_length
-
-    # Whether this form field is multiline text.
-    attr_accessor :is_multiline
-
-    # Original font size used in this form field's text.
-    attr_accessor :original_font_size
-
-    # Font family used in this form field's text.
-    attr_accessor :font_family
-
-    # Deprecated. Use `form_fields` inside the [documents](https://developers.hellosign.com/api/reference/operation/templateGet/#!c=200&path=template/documents&t=response) array instead.
-    attr_accessor :named_form_fields
-
-    attr_accessor :reusable_form_id
-
-    class EnumAttributeValidator
-      attr_reader :datatype
-      attr_reader :allowable_values
-
-      def initialize(datatype, allowable_values)
-        @allowable_values = allowable_values.map do |value|
-          case datatype.to_s
-          when /Integer/i
-            value.to_i
-          when /Float/i
-            value.to_f
-          else
-            value
-          end
-        end
-      end
-
-      def valid?(value)
-        !value || allowable_values.include?(value)
-      end
-    end
+    # The value of the form field.
+    attr_accessor :value
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'name' => :'name',
         :'type' => :'type',
-        :'signer' => :'signer',
-        :'x' => :'x',
-        :'y' => :'y',
-        :'width' => :'width',
-        :'height' => :'height',
-        :'required' => :'required',
-        :'api_id' => :'api_id',
-        :'group' => :'group',
-        :'avg_text_length' => :'avg_text_length',
-        :'is_multiline' => :'isMultiline',
-        :'original_font_size' => :'originalFontSize',
-        :'font_family' => :'fontFamily',
-        :'named_form_fields' => :'named_form_fields',
-        :'reusable_form_id' => :'reusable_form_id'
+        :'value' => :'value'
       }
     end
 
-    # Returns all the JSON keys this model knows about
+    # Returns all the JSON keys this model knows about, including the ones defined in its parent(s)
     def self.acceptable_attributes
-      attribute_map.values
+      attribute_map.values.concat(superclass.acceptable_attributes)
     end
 
     # Returns attribute map of this model + parent
     def self.merged_attributes
-      self.attribute_map
+      self.superclass.attribute_map.merge(self.attribute_map)
     end
 
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'name' => :'String',
         :'type' => :'String',
-        :'signer' => :'String',
-        :'x' => :'Integer',
-        :'y' => :'Integer',
-        :'width' => :'Integer',
-        :'height' => :'Integer',
-        :'required' => :'Boolean',
-        :'api_id' => :'String',
-        :'group' => :'String',
-        :'avg_text_length' => :'TemplateResponseFieldAvgTextLength',
-        :'is_multiline' => :'Boolean',
-        :'original_font_size' => :'Integer',
-        :'font_family' => :'String',
-        :'named_form_fields' => :'Object',
-        :'reusable_form_id' => :'String'
+        :'value' => :'Boolean'
       }
     end
 
     # Attribute type mapping of this model + parent
     def self.merged_types
-      self.openapi_types
+      self.superclass.openapi_types.merge(self.openapi_types)
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
-        :'group',
-        :'is_multiline',
-        :'original_font_size',
-        :'font_family',
-        :'named_form_fields',
-        :'reusable_form_id'
       ])
     end
 
     # Returns list of attributes with nullable: true of this model + parent
     def self.merged_nullable
-      self.openapi_nullable
+      self.superclass.openapi_nullable.merge(self.openapi_nullable)
     end
 
     # Initializes the object
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `HelloSign::TemplateResponseDocumentCustomField` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `HelloSign::SignatureRequestResponseDataValueCheckbox` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!self.class.merged_attributes.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `HelloSign::TemplateResponseDocumentCustomField`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `HelloSign::SignatureRequestResponseDataValueCheckbox`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'name')
-        self.name = attributes[:'name']
-      end
+      # call parent's initialize
+      super(attributes)
 
       if attributes.key?(:'type')
         self.type = attributes[:'type']
+      else
+        self.type = 'checkbox'
       end
 
-      if attributes.key?(:'signer')
-        self.signer = attributes[:'signer']
-      end
-
-      if attributes.key?(:'x')
-        self.x = attributes[:'x']
-      end
-
-      if attributes.key?(:'y')
-        self.y = attributes[:'y']
-      end
-
-      if attributes.key?(:'width')
-        self.width = attributes[:'width']
-      end
-
-      if attributes.key?(:'height')
-        self.height = attributes[:'height']
-      end
-
-      if attributes.key?(:'required')
-        self.required = attributes[:'required']
-      end
-
-      if attributes.key?(:'api_id')
-        self.api_id = attributes[:'api_id']
-      end
-
-      if attributes.key?(:'group')
-        self.group = attributes[:'group']
-      end
-
-      if attributes.key?(:'avg_text_length')
-        self.avg_text_length = attributes[:'avg_text_length']
-      end
-
-      if attributes.key?(:'is_multiline')
-        self.is_multiline = attributes[:'is_multiline']
-      end
-
-      if attributes.key?(:'original_font_size')
-        self.original_font_size = attributes[:'original_font_size']
-      end
-
-      if attributes.key?(:'font_family')
-        self.font_family = attributes[:'font_family']
-      end
-
-      if attributes.key?(:'named_form_fields')
-        self.named_form_fields = attributes[:'named_form_fields']
-      end
-
-      if attributes.key?(:'reusable_form_id')
-        self.reusable_form_id = attributes[:'reusable_form_id']
+      if attributes.key?(:'value')
+        self.value = attributes[:'value']
       end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
     # @return Array for valid properties with the reasons
     def list_invalid_properties
-      invalid_properties = Array.new
+      invalid_properties = super
       invalid_properties
     end
 
     # Check to see if the all the properties in the model are valid
     # @return true if the model is valid
     def valid?
-      type_validator = EnumAttributeValidator.new('String', ["text", "checkbox"])
-      return false unless type_validator.valid?(@type)
-      true
-    end
-
-    # Custom attribute writer method checking allowed values (enum).
-    # @param [Object] type Object to be assigned
-    def type=(type)
-      validator = EnumAttributeValidator.new('String', ["text", "checkbox"])
-      unless validator.valid?(type)
-        fail ArgumentError, "invalid value for \"type\", must be one of #{validator.allowable_values}."
-      end
-      @type = type
+      true && super
     end
 
     # Checks equality by comparing each attribute.
@@ -269,22 +110,8 @@ module HelloSign
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          name == o.name &&
           type == o.type &&
-          signer == o.signer &&
-          x == o.x &&
-          y == o.y &&
-          width == o.width &&
-          height == o.height &&
-          required == o.required &&
-          api_id == o.api_id &&
-          group == o.group &&
-          avg_text_length == o.avg_text_length &&
-          is_multiline == o.is_multiline &&
-          original_font_size == o.original_font_size &&
-          font_family == o.font_family &&
-          named_form_fields == o.named_form_fields &&
-          reusable_form_id == o.reusable_form_id
+          value == o.value && super(o)
     end
 
     # @see the `==` method
@@ -296,7 +123,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [name, type, signer, x, y, width, height, required, api_id, group, avg_text_length, is_multiline, original_font_size, font_family, named_form_fields, reusable_form_id].hash
+      [type, value].hash
     end
 
     # Builds the object from hash
@@ -311,6 +138,7 @@ module HelloSign
     # @return [Object] Returns the model itself
     def build_from_hash(attributes)
       return nil unless attributes.is_a?(Hash)
+      super(attributes)
       attribute_map = self.class.merged_attributes
 
       self.class.merged_types.each_pair do |key, type|
@@ -402,7 +230,7 @@ module HelloSign
     # Returns the object in the form of hash
     # @return [Hash] Returns the object in the form of hash
     def to_hash(include_nil = true)
-      hash = {}
+      hash = super
       self.class.merged_attributes.each_pair do |attr, param|
         value = self.send(attr)
         if value.nil?

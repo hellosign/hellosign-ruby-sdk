@@ -161,6 +161,7 @@ module HelloSign
     def self.openapi_nullable
       Set.new([
         :'test_mode',
+        :'subject',
         :'message',
         :'signing_url',
         :'signing_redirect_url',

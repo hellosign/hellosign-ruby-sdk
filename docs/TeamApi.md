@@ -8,7 +8,10 @@ All URIs are relative to *https://api.hellosign.com/v3*
 | [`team_create`](TeamApi.md#team_create) | **POST** `/team/create` | Create Team |
 | [`team_delete`](TeamApi.md#team_delete) | **DELETE** `/team/destroy` | Delete Team |
 | [`team_get`](TeamApi.md#team_get) | **GET** `/team` | Get Team |
+| [`team_info`](TeamApi.md#team_info) | **GET** `/team/info` | Get Team Info |
+| [`team_members`](TeamApi.md#team_members) | **GET** `/team/members/{team_id}` | List Team Members |
 | [`team_remove_member`](TeamApi.md#team_remove_member) | **POST** `/team/remove_member` | Remove User from Team |
+| [`team_sub_teams`](TeamApi.md#team_sub_teams) | **GET** `/team/sub_teams/{team_id}` | List Sub Teams |
 | [`team_update`](TeamApi.md#team_update) | **PUT** `/team` | Update Team |
 
 
@@ -295,6 +298,150 @@ This endpoint does not need any parameter.
 - **Accept**: application/json
 
 
+## `team_info`
+
+> `<TeamGetInfoResponse> team_info(opts)`
+
+Get Team Info
+
+Provides information about a team.
+
+### Examples
+
+```ruby
+require "hello_sign"
+
+HelloSign.configure do |config|
+  # Configure HTTP basic authorization: api_key
+  config.username = "YOUR_API_KEY"
+
+  # or, configure Bearer (JWT) authorization: oauth2
+  # config.access_token = "YOUR_ACCESS_TOKEN"
+end
+
+api = HelloSign::TeamApi.new
+
+begin
+  result = api.team_info()
+  p result
+rescue HelloSign::ApiError => e
+  puts "Exception when calling HelloSign API: #{e}"
+end
+
+```
+
+#### Using the `team_info_with_http_info` variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> `<Array(<TeamGetInfoResponse>, Integer, Hash)> team_info_with_http_info(opts)`
+
+```ruby
+begin
+  # Get Team Info
+  data, status_code, headers = api_instance.team_info_with_http_info(opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <TeamGetInfoResponse>
+rescue HelloSign::ApiError => e
+  puts "Error when calling TeamApi->team_info_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| `team_id` | **String** | The id of the team. | [optional] |
+
+### Return type
+
+[**TeamGetInfoResponse**](TeamGetInfoResponse.md)
+
+### Authorization
+
+[api_key](../README.md#api_key), [oauth2](../README.md#oauth2)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## `team_members`
+
+> `<TeamMembersResponse> team_members(team_id, opts)`
+
+List Team Members
+
+Provides a paginated list of members (and their roles) that belong to a given team.
+
+### Examples
+
+```ruby
+require "hello_sign"
+
+HelloSign.configure do |config|
+  # Configure HTTP basic authorization: api_key
+  config.username = "YOUR_API_KEY"
+
+  # or, configure Bearer (JWT) authorization: oauth2
+  # config.access_token = "YOUR_ACCESS_TOKEN"
+end
+
+api = HelloSign::TeamApi.new
+
+team_id = "4fea99bfcf2b26bfccf6cea3e127fb8bb74d8d9c"
+
+begin
+  result = api.team_members(team_id)
+  p result
+rescue HelloSign::ApiError => e
+  puts "Exception when calling HelloSign API: #{e}"
+end
+
+```
+
+#### Using the `team_members_with_http_info` variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> `<Array(<TeamMembersResponse>, Integer, Hash)> team_members_with_http_info(team_id, opts)`
+
+```ruby
+begin
+  # List Team Members
+  data, status_code, headers = api_instance.team_members_with_http_info(team_id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <TeamMembersResponse>
+rescue HelloSign::ApiError => e
+  puts "Error when calling TeamApi->team_members_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| `team_id` | **String** | The id of the team that a member list is being requested from. |  |
+| `page` | **Integer** | Which page number of the team member list to return. Defaults to `1`. | [optional][default to 1] |
+| `page_size` | **Integer** | Number of objects to be returned per page. Must be between `1` and `100`. Default is `20`. | [optional][default to 20] |
+
+### Return type
+
+[**TeamMembersResponse**](TeamMembersResponse.md)
+
+### Authorization
+
+[api_key](../README.md#api_key), [oauth2](../README.md#oauth2)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
 ## `team_remove_member`
 
 > `<TeamGetResponse> team_remove_member(team_remove_member_request)`
@@ -366,6 +513,80 @@ end
 ### HTTP request headers
 
 - **Content-Type**: application/json
+- **Accept**: application/json
+
+
+## `team_sub_teams`
+
+> `<TeamSubTeamsResponse> team_sub_teams(team_id, opts)`
+
+List Sub Teams
+
+Provides a paginated list of sub teams that belong to a given team.
+
+### Examples
+
+```ruby
+require "hello_sign"
+
+HelloSign.configure do |config|
+  # Configure HTTP basic authorization: api_key
+  config.username = "YOUR_API_KEY"
+
+  # or, configure Bearer (JWT) authorization: oauth2
+  # config.access_token = "YOUR_ACCESS_TOKEN"
+end
+
+api = HelloSign::TeamApi.new
+
+team_id = "4fea99bfcf2b26bfccf6cea3e127fb8bb74d8d9c"
+
+begin
+  result = api.team_sub_teams(team_id)
+  p result
+rescue HelloSign::ApiError => e
+  puts "Exception when calling HelloSign API: #{e}"
+end
+
+```
+
+#### Using the `team_sub_teams_with_http_info` variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> `<Array(<TeamSubTeamsResponse>, Integer, Hash)> team_sub_teams_with_http_info(team_id, opts)`
+
+```ruby
+begin
+  # List Sub Teams
+  data, status_code, headers = api_instance.team_sub_teams_with_http_info(team_id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <TeamSubTeamsResponse>
+rescue HelloSign::ApiError => e
+  puts "Error when calling TeamApi->team_sub_teams_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| `team_id` | **String** | The id of the parent Team. |  |
+| `page` | **Integer** | Which page number of the SubTeam List to return. Defaults to `1`. | [optional][default to 1] |
+| `page_size` | **Integer** | Number of objects to be returned per page. Must be between `1` and `100`. Default is `20`. | [optional][default to 20] |
+
+### Return type
+
+[**TeamSubTeamsResponse**](TeamSubTeamsResponse.md)
+
+### Authorization
+
+[api_key](../README.md#api_key), [oauth2](../README.md#oauth2)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: application/json
 
 
