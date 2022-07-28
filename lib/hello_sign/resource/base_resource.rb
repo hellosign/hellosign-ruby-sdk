@@ -66,8 +66,10 @@ module HelloSign
       #   resource.email_address => "me@example.com"
       #   resource.not_in_hash_keys => nil
       def method_missing(method)
-        @data.key?(method.to_s) ? @data[method.to_s] : nil
+        # method_name could be `[]` and the first arg is the key
+        @data[method_name.to_s].presence || @data[args.try(:first)].presence
       end
+
     end
   end
 end
