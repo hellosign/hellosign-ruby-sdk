@@ -263,10 +263,6 @@ $generate = new GenerateExamples(
     ['Ruby'],
     [__DIR__ . '/../docs'],
     [__DIR__ . '/../README.md'],
-    [
-        '```Array<Array<SubFormFieldsPerDocumentBase>>```'
-        => '[```Array<Array<SubFormFieldsPerDocumentBase>>```](SubFormFieldsPerDocumentBase.md)',
-    ]
 );
 $generate->setUseSnakeCase(true);
 

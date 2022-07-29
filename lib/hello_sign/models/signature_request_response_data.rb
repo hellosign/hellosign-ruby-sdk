@@ -28,7 +28,6 @@ module HelloSign
     # A boolean value denoting if this field is required.
     attr_accessor :required
 
-    # TEST DESCRIPTION
     attr_accessor :type
 
     # Attribute mapping from ruby-style variable name to JSON key.
