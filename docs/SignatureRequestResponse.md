@@ -26,6 +26,6 @@ Contains information about a signature request.
 | `template_ids` | ```Array<String>``` |  Templates IDs used in this SignatureRequest (if any).  |  |
 | `custom_fields` | [```Array<SignatureRequestResponseCustomFieldBase>```](SignatureRequestResponseCustomFieldBase.md) |  An array of Custom Field objects containing the name and type of each custom field.<br><br>* Text Field uses `SignatureRequestResponseCustomFieldText`<br>* Checkbox Field uses `SignatureRequestResponseCustomFieldCheckbox`  |  |
 | `attachments` | [```Array<SignatureRequestResponseAttachment>```](SignatureRequestResponseAttachment.md) |  Signer attachments.  |  |
-| `response_data` | [```Array<SignatureRequestResponseData>```](SignatureRequestResponseData.md) |  An array of form field objects containing the name, value, and type of each textbox or checkmark field filled in by the signers.  |  |
+| `response_data` | [```Array<SignatureRequestResponseDataBase>```](SignatureRequestResponseDataBase.md) |  An array of form field objects containing the name, value, and type of each textbox or checkmark field filled in by the signers.  |  |
 | `signatures` | [```Array<SignatureRequestResponseSignatures>```](SignatureRequestResponseSignatures.md) |  An array of signature objects, 1 for each signer.  |  |
 
