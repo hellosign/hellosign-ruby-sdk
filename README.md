@@ -206,7 +206,7 @@ All URIs are relative to *https://api.hellosign.com/v3*
  - [HelloSign::SignatureRequestResponseCustomFieldCheckbox](docs/SignatureRequestResponseCustomFieldCheckbox.md)
  - [HelloSign::SignatureRequestResponseCustomFieldText](docs/SignatureRequestResponseCustomFieldText.md)
  - [HelloSign::SignatureRequestResponseCustomFieldTypeEnum](docs/SignatureRequestResponseCustomFieldTypeEnum.md)
- - [HelloSign::SignatureRequestResponseData](docs/SignatureRequestResponseData.md)
+ - [HelloSign::SignatureRequestResponseDataBase](docs/SignatureRequestResponseDataBase.md)
  - [HelloSign::SignatureRequestResponseDataTypeEnum](docs/SignatureRequestResponseDataTypeEnum.md)
  - [HelloSign::SignatureRequestResponseDataValueCheckbox](docs/SignatureRequestResponseDataValueCheckbox.md)
  - [HelloSign::SignatureRequestResponseDataValueCheckboxMerge](docs/SignatureRequestResponseDataValueCheckboxMerge.md)

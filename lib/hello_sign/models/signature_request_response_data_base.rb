@@ -14,17 +14,30 @@ require 'date'
 require 'time'
 
 module HelloSign
-  class AccountGetResponse
-    attr_accessor :account
+  # An array of form field objects containing the name, value, and type of each textbox or checkmark field filled in by the signers.
+  class SignatureRequestResponseDataBase
+    # The unique ID for this field.
+    attr_accessor :api_id
 
-    # A list of warnings.
-    attr_accessor :warnings
+    # The ID of the signature to which this response is linked.
+    attr_accessor :signature_id
+
+    # The name of the form field.
+    attr_accessor :name
+
+    # A boolean value denoting if this field is required.
+    attr_accessor :required
+
+    attr_accessor :type
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'account' => :'account',
-        :'warnings' => :'warnings'
+        :'api_id' => :'api_id',
+        :'signature_id' => :'signature_id',
+        :'name' => :'name',
+        :'required' => :'required',
+        :'type' => :'type'
       }
     end
 
@@ -41,8 +54,11 @@ module HelloSign
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'account' => :'AccountResponse',
-        :'warnings' => :'Array<WarningResponse>'
+        :'api_id' => :'String',
+        :'signature_id' => :'String',
+        :'name' => :'String',
+        :'required' => :'Boolean',
+        :'type' => :'String'
       }
     end
 
@@ -62,29 +78,78 @@ module HelloSign
       self.openapi_nullable
     end
 
+    # discriminator's property name in OpenAPI v3
+    def self.openapi_discriminator_name
+      :'type'
+    end
+
+    def self.discriminator_class_name(value)
+      return nil unless value.is_a?(String)
+
+      if value == 'checkbox'
+        return "HelloSign::SignatureRequestResponseDataValueCheckbox"
+      end
+      if value == 'checkbox-merge'
+        return "HelloSign::SignatureRequestResponseDataValueCheckboxMerge"
+      end
+      if value == 'date_signed'
+        return "HelloSign::SignatureRequestResponseDataValueDateSigned"
+      end
+      if value == 'dropdown'
+        return "HelloSign::SignatureRequestResponseDataValueDropdown"
+      end
+      if value == 'initials'
+        return "HelloSign::SignatureRequestResponseDataValueInitials"
+      end
+      if value == 'radio'
+        return "HelloSign::SignatureRequestResponseDataValueRadio"
+      end
+      if value == 'signature'
+        return "HelloSign::SignatureRequestResponseDataValueSignature"
+      end
+      if value == 'text'
+        return "HelloSign::SignatureRequestResponseDataValueText"
+      end
+      if value == 'text-merge'
+        return "HelloSign::SignatureRequestResponseDataValueTextMerge"
+      end
+
+      return nil
+    end
+
     # Initializes the object
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `HelloSign::AccountGetResponse` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `HelloSign::SignatureRequestResponseDataBase` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!self.class.merged_attributes.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `HelloSign::AccountGetResponse`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `HelloSign::SignatureRequestResponseDataBase`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'account')
-        self.account = attributes[:'account']
+      if attributes.key?(:'api_id')
+        self.api_id = attributes[:'api_id']
       end
 
-      if attributes.key?(:'warnings')
-        if (value = attributes[:'warnings']).is_a?(Array)
-          self.warnings = value
-        end
+      if attributes.key?(:'signature_id')
+        self.signature_id = attributes[:'signature_id']
+      end
+
+      if attributes.key?(:'name')
+        self.name = attributes[:'name']
+      end
+
+      if attributes.key?(:'required')
+        self.required = attributes[:'required']
+      end
+
+      if attributes.key?(:'type')
+        self.type = attributes[:'type']
       end
     end
 
@@ -106,8 +171,11 @@ module HelloSign
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          account == o.account &&
-          warnings == o.warnings
+          api_id == o.api_id &&
+          signature_id == o.signature_id &&
+          name == o.name &&
+          required == o.required &&
+          type == o.type
     end
 
     # @see the `==` method
@@ -119,13 +187,20 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [account, warnings].hash
+      [api_id, signature_id, name, required, type].hash
     end
 
     # Builds the object from hash
     # @param [Hash] attributes Model attributes in the form of hash
     # @return [Object] Returns the model itself
     def self.build_from_hash(attributes)
+      if !attributes[self.openapi_discriminator_name].nil?
+        klass = self.discriminator_class_name(attributes[self.openapi_discriminator_name])
+        if klass != new.class.to_s
+          obj = Object.const_get(klass).new.build_from_hash(attributes)
+          return obj
+        end
+      end
       new.build_from_hash(attributes)
     end
 

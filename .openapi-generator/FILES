@@ -69,7 +69,7 @@ docs/SignatureRequestResponseCustomFieldBase.md
 docs/SignatureRequestResponseCustomFieldCheckbox.md
 docs/SignatureRequestResponseCustomFieldText.md
 docs/SignatureRequestResponseCustomFieldTypeEnum.md
-docs/SignatureRequestResponseData.md
+docs/SignatureRequestResponseDataBase.md
 docs/SignatureRequestResponseDataTypeEnum.md
 docs/SignatureRequestResponseDataValueCheckbox.md
 docs/SignatureRequestResponseDataValueCheckboxMerge.md
@@ -237,7 +237,7 @@ lib/hello_sign/models/signature_request_response_custom_field_base.rb
 lib/hello_sign/models/signature_request_response_custom_field_checkbox.rb
 lib/hello_sign/models/signature_request_response_custom_field_text.rb
 lib/hello_sign/models/signature_request_response_custom_field_type_enum.rb
-lib/hello_sign/models/signature_request_response_data.rb
+lib/hello_sign/models/signature_request_response_data_base.rb
 lib/hello_sign/models/signature_request_response_data_type_enum.rb
 lib/hello_sign/models/signature_request_response_data_value_checkbox.rb
 lib/hello_sign/models/signature_request_response_data_value_checkbox_merge.rb

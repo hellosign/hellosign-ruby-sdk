@@ -14,7 +14,7 @@ require 'date'
 require 'time'
 
 module HelloSign
-  class SignatureRequestResponseDataValueRadio < SignatureRequestResponseData
+  class SignatureRequestResponseDataValueRadio < SignatureRequestResponseDataBase
     # An input field for radios
     attr_accessor :type
 
@@ -142,9 +142,7 @@ module HelloSign
       attribute_map = self.class.merged_attributes
 
       self.class.merged_types.each_pair do |key, type|
-        if attributes[attribute_map[key]].nil? && self.class.merged_nullable.include?(key)
-          self.send("#{key}=", nil)
-        elsif type =~ /\AArray<(.*)>/i
+        if type =~ /\AArray<(.*)>/i
           # check to ensure the input is an array given that the attribute
           # is documented as an array but the input is not
           if attributes[attribute_map[key]].is_a?(Array)
