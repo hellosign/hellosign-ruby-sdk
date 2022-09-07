@@ -96,6 +96,9 @@ module HelloSign
     # The title you want to assign to the SignatureRequest.
     attr_accessor :title
 
+    # Controls whether [auto fill fields](https://faq.hellosign.com/hc/en-us/articles/360051467511-Auto-Fill-Fields) can automatically populate a signer's information during signing.    ⚠️ **Note** ⚠️: Keep your signer's information safe by ensuring that the _signer on your signature request is the intended party_ before using this feature.
+    attr_accessor :populate_auto_fill_fields
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
@@ -126,7 +129,8 @@ module HelloSign
         :'skip_me_now' => :'skip_me_now',
         :'subject' => :'subject',
         :'test_mode' => :'test_mode',
-        :'title' => :'title'
+        :'title' => :'title',
+        :'populate_auto_fill_fields' => :'populate_auto_fill_fields'
       }
     end
 
@@ -170,7 +174,8 @@ module HelloSign
         :'skip_me_now' => :'Boolean',
         :'subject' => :'String',
         :'test_mode' => :'Boolean',
-        :'title' => :'String'
+        :'title' => :'String',
+        :'populate_auto_fill_fields' => :'Boolean'
       }
     end
 
@@ -352,6 +357,12 @@ module HelloSign
       if attributes.key?(:'title')
         self.title = attributes[:'title']
       end
+
+      if attributes.key?(:'populate_auto_fill_fields')
+        self.populate_auto_fill_fields = attributes[:'populate_auto_fill_fields']
+      else
+        self.populate_auto_fill_fields = false
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -465,7 +476,8 @@ module HelloSign
           skip_me_now == o.skip_me_now &&
           subject == o.subject &&
           test_mode == o.test_mode &&
-          title == o.title
+          title == o.title &&
+          populate_auto_fill_fields == o.populate_auto_fill_fields
     end
 
     # @see the `==` method
@@ -477,7 +489,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [client_id, requester_email_address, template_ids, allow_decline, allow_reassign, ccs, custom_fields, editor_options, field_options, file, file_url, force_signer_roles, force_subject_message, hold_request, is_for_embedded_signing, message, metadata, preview_only, requesting_redirect_url, show_preview, show_progress_stepper, signers, signing_options, signing_redirect_url, skip_me_now, subject, test_mode, title].hash
+      [client_id, requester_email_address, template_ids, allow_decline, allow_reassign, ccs, custom_fields, editor_options, field_options, file, file_url, force_signer_roles, force_subject_message, hold_request, is_for_embedded_signing, message, metadata, preview_only, requesting_redirect_url, show_preview, show_progress_stepper, signers, signing_options, signing_redirect_url, skip_me_now, subject, test_mode, title, populate_auto_fill_fields].hash
     end
 
     # Builds the object from hash

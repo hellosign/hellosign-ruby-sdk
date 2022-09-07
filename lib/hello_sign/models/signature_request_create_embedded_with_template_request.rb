@@ -57,6 +57,9 @@ module HelloSign
     # The title you want to assign to the SignatureRequest.
     attr_accessor :title
 
+    # Controls whether [auto fill fields](https://faq.hellosign.com/hc/en-us/articles/360051467511-Auto-Fill-Fields) can automatically populate a signer's information during signing.    ⚠️ **Note** ⚠️: Keep your signer's information safe by ensuring that the _signer on your signature request is the intended party_ before using this feature.
+    attr_accessor :populate_auto_fill_fields
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
@@ -73,7 +76,8 @@ module HelloSign
         :'signing_options' => :'signing_options',
         :'subject' => :'subject',
         :'test_mode' => :'test_mode',
-        :'title' => :'title'
+        :'title' => :'title',
+        :'populate_auto_fill_fields' => :'populate_auto_fill_fields'
       }
     end
 
@@ -103,7 +107,8 @@ module HelloSign
         :'signing_options' => :'SubSigningOptions',
         :'subject' => :'String',
         :'test_mode' => :'Boolean',
-        :'title' => :'String'
+        :'title' => :'String',
+        :'populate_auto_fill_fields' => :'Boolean'
       }
     end
 
@@ -211,6 +216,12 @@ module HelloSign
       if attributes.key?(:'title')
         self.title = attributes[:'title']
       end
+
+      if attributes.key?(:'populate_auto_fill_fields')
+        self.populate_auto_fill_fields = attributes[:'populate_auto_fill_fields']
+      else
+        self.populate_auto_fill_fields = false
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -310,7 +321,8 @@ module HelloSign
           signing_options == o.signing_options &&
           subject == o.subject &&
           test_mode == o.test_mode &&
-          title == o.title
+          title == o.title &&
+          populate_auto_fill_fields == o.populate_auto_fill_fields
     end
 
     # @see the `==` method
@@ -322,7 +334,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [template_ids, client_id, signers, allow_decline, ccs, custom_fields, file, file_url, message, metadata, signing_options, subject, test_mode, title].hash
+      [template_ids, client_id, signers, allow_decline, ccs, custom_fields, file, file_url, message, metadata, signing_options, subject, test_mode, title, populate_auto_fill_fields].hash
     end
 
     # Builds the object from hash

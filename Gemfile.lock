@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    hello_sign (1.0.0)
+    hello_sign (6.0.0.pre.beta)
       typhoeus (~> 1.0, >= 1.0.1)
 
 GEM

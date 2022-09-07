@@ -61,7 +61,7 @@ module HelloSign
     # Conditional Logic rules for fields defined in `form_fields_per_document`.
     attr_accessor :form_field_rules
 
-    # The fields that should appear on the document, expressed as an array of objects.  **NOTE**: Fields like **text**, **dropdown**, **checkbox**, **radio**, and **hyperlink** have additional required and optional parameters. Check out the list of [additional parameters](/api/reference/constants/#form-fields-per-document) for these field types.  * Text Field use `SubFormFieldsPerDocumentText` * Dropdown Field use `SubFormFieldsPerDocumentDropdown` * Hyperlink Field use `SubFormFieldsPerDocumentHyperlink` * Checkbox Field use `SubFormFieldsPerDocumentCheckbox` * Radio Field use `SubFormFieldsPerDocumentRadio` * Signature Field use `SubFormFieldsPerDocumentSignature` * Date Signed Field use `SubFormFieldsPerDocumentDateSigned` * Initials Field use `SubFormFieldsPerDocumentInitials` * Text Merge Field use `SubFormFieldsPerDocumentTextMerge` * Checkbox Merge Field use `SubFormFieldsPerDocumentCheckboxMerge`
+    # The fields that should appear on the document, expressed as an array of objects. (We're currently fixing a bug where this property only accepts a two-dimensional array. You can read about it here: <a href=\"/docs/placing-fields/form-fields-per-document\" target=\"_blank\">Using Form Fields per Document</a>.)  **NOTE**: Fields like **text**, **dropdown**, **checkbox**, **radio**, and **hyperlink** have additional required and optional parameters. Check out the list of [additional parameters](/api/reference/constants/#form-fields-per-document) for these field types.  * Text Field use `SubFormFieldsPerDocumentText` * Dropdown Field use `SubFormFieldsPerDocumentDropdown` * Hyperlink Field use `SubFormFieldsPerDocumentHyperlink` * Checkbox Field use `SubFormFieldsPerDocumentCheckbox` * Radio Field use `SubFormFieldsPerDocumentRadio` * Signature Field use `SubFormFieldsPerDocumentSignature` * Date Signed Field use `SubFormFieldsPerDocumentDateSigned` * Initials Field use `SubFormFieldsPerDocumentInitials` * Text Merge Field use `SubFormFieldsPerDocumentTextMerge` * Checkbox Merge Field use `SubFormFieldsPerDocumentCheckboxMerge`
     attr_accessor :form_fields_per_document
 
     # Send with a value of `true` if you wish to enable automatic Text Tag removal. Defaults to `false`. When using Text Tags it is preferred that you set this to `false` and hide your tags with white text or something similar because the automatic removal system can cause unwanted clipping. See the [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro) walkthrough for more details.
@@ -113,6 +113,9 @@ module HelloSign
 
     # Set `use_text_tags` to `true` to enable [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro) parsing in your document (defaults to disabled, or `false`). Alternatively, if your PDF contains pre-defined fields, enable the detection of these fields by setting the `use_preexisting_fields` to `true` (defaults to disabled, or `false`). Currently we only support use of either `use_text_tags` or `use_preexisting_fields` parameter, not both.
     attr_accessor :use_text_tags
+
+    # Controls whether [auto fill fields](https://faq.hellosign.com/hc/en-us/articles/360051467511-Auto-Fill-Fields) can automatically populate a signer's information during signing.    ⚠️ **Note** ⚠️: Keep your signer's information safe by ensuring that the _signer on your signature request is the intended party_ before using this feature.
+    attr_accessor :populate_auto_fill_fields
 
     class EnumAttributeValidator
       attr_reader :datatype
@@ -172,7 +175,8 @@ module HelloSign
         :'test_mode' => :'test_mode',
         :'type' => :'type',
         :'use_preexisting_fields' => :'use_preexisting_fields',
-        :'use_text_tags' => :'use_text_tags'
+        :'use_text_tags' => :'use_text_tags',
+        :'populate_auto_fill_fields' => :'populate_auto_fill_fields'
       }
     end
 
@@ -222,7 +226,8 @@ module HelloSign
         :'test_mode' => :'Boolean',
         :'type' => :'String',
         :'use_preexisting_fields' => :'Boolean',
-        :'use_text_tags' => :'Boolean'
+        :'use_text_tags' => :'Boolean',
+        :'populate_auto_fill_fields' => :'Boolean'
       }
     end
 
@@ -440,6 +445,12 @@ module HelloSign
       else
         self.use_text_tags = false
       end
+
+      if attributes.key?(:'populate_auto_fill_fields')
+        self.populate_auto_fill_fields = attributes[:'populate_auto_fill_fields']
+      else
+        self.populate_auto_fill_fields = false
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -551,7 +562,8 @@ module HelloSign
           test_mode == o.test_mode &&
           type == o.type &&
           use_preexisting_fields == o.use_preexisting_fields &&
-          use_text_tags == o.use_text_tags
+          use_text_tags == o.use_text_tags &&
+          populate_auto_fill_fields == o.populate_auto_fill_fields
     end
 
     # @see the `==` method
@@ -563,7 +575,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [client_id, requester_email_address, file, file_url, allow_ccs, allow_decline, allow_reassign, attachments, cc_email_addresses, custom_fields, editor_options, field_options, force_signer_page, force_subject_message, form_field_groups, form_field_rules, form_fields_per_document, hide_text_tags, hold_request, is_for_embedded_signing, message, metadata, requesting_redirect_url, show_preview, show_progress_stepper, signers, signing_options, signing_redirect_url, skip_me_now, subject, test_mode, type, use_preexisting_fields, use_text_tags].hash
+      [client_id, requester_email_address, file, file_url, allow_ccs, allow_decline, allow_reassign, attachments, cc_email_addresses, custom_fields, editor_options, field_options, force_signer_page, force_subject_message, form_field_groups, form_field_rules, form_fields_per_document, hide_text_tags, hold_request, is_for_embedded_signing, message, metadata, requesting_redirect_url, show_preview, show_progress_stepper, signers, signing_options, signing_redirect_url, skip_me_now, subject, test_mode, type, use_preexisting_fields, use_text_tags, populate_auto_fill_fields].hash
     end
 
     # Builds the object from hash

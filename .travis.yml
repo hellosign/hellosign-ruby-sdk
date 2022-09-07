@@ -11,4 +11,4 @@ script:
   - bundle install --path vendor/bundle
   - bundle exec rspec
   - gem build hello_sign.gemspec
-  - gem install ./hello_sign-1.0.0.gem
+  - gem install ./hello_sign-6.0.0-beta.gem
