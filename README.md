@@ -63,7 +63,7 @@ Please follow the [installation](#installation) procedure and then run the follo
 
 
 ```ruby
-require "hello_sign"
+require "hellosign-ruby-sdk"
 
 HelloSign.configure do |config|
   # Configure HTTP basic authorization: api_key

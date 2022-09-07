@@ -31,7 +31,7 @@ Creates BulkSendJob which sends up to 250 SignatureRequests in bulk based off of
 ### Examples
 
 ```ruby
-require "hello_sign"
+require "hellosign-ruby-sdk"
 
 HelloSign.configure do |config|
   # Configure HTTP basic authorization: api_key
@@ -142,7 +142,7 @@ Creates BulkSendJob which sends up to 250 SignatureRequests in bulk based off of
 ### Examples
 
 ```ruby
-require "hello_sign"
+require "hellosign-ruby-sdk"
 
 HelloSign.configure do |config|
   # Configure HTTP basic authorization: api_key
@@ -252,7 +252,7 @@ Cancels an incomplete signature request. This action is **not reversible**.  The
 ### Examples
 
 ```ruby
-require "hello_sign"
+require "hellosign-ruby-sdk"
 
 HelloSign.configure do |config|
   # Configure HTTP basic authorization: api_key
@@ -324,7 +324,7 @@ Creates a new SignatureRequest with the submitted documents to be signed in an e
 ### Examples
 
 ```ruby
-require "hello_sign"
+require "hellosign-ruby-sdk"
 
 HelloSign.configure do |config|
   # Configure HTTP basic authorization: api_key
@@ -422,7 +422,7 @@ Creates a new SignatureRequest based on the given Template(s) to be signed in an
 ### Examples
 
 ```ruby
-require "hello_sign"
+require "hellosign-ruby-sdk"
 
 HelloSign.configure do |config|
   # Configure HTTP basic authorization: api_key
@@ -513,7 +513,7 @@ Obtain a copy of the current documents specified by the `signature_request_id` p
 ### Examples
 
 ```ruby
-require "hello_sign"
+require "hellosign-ruby-sdk"
 
 HelloSign.configure do |config|
   # Configure HTTP basic authorization: api_key
@@ -588,7 +588,7 @@ Returns the status of the SignatureRequest specified by the `signature_request_i
 ### Examples
 
 ```ruby
-require "hello_sign"
+require "hellosign-ruby-sdk"
 
 HelloSign.configure do |config|
   # Configure HTTP basic authorization: api_key
@@ -660,7 +660,7 @@ Returns a list of SignatureRequests that you can access. This includes Signature
 ### Examples
 
 ```ruby
-require "hello_sign"
+require "hellosign-ruby-sdk"
 
 HelloSign.configure do |config|
   # Configure HTTP basic authorization: api_key
@@ -736,7 +736,7 @@ Releases a held SignatureRequest that was claimed and prepared from an [Unclaime
 ### Examples
 
 ```ruby
-require "hello_sign"
+require "hellosign-ruby-sdk"
 
 HelloSign.configure do |config|
   # Configure HTTP basic authorization: api_key
@@ -808,7 +808,7 @@ Sends an email to the signer reminding them to sign the signature request. You c
 ### Examples
 
 ```ruby
-require "hello_sign"
+require "hellosign-ruby-sdk"
 
 HelloSign.configure do |config|
   # Configure HTTP basic authorization: api_key
@@ -884,7 +884,7 @@ Removes your access to a completed signature request. This action is **not rever
 ### Examples
 
 ```ruby
-require "hello_sign"
+require "hellosign-ruby-sdk"
 
 HelloSign.configure do |config|
   # Configure HTTP basic authorization: api_key
@@ -956,7 +956,7 @@ Creates and sends a new SignatureRequest with the submitted documents. If `form_
 ### Examples
 
 ```ruby
-require "hello_sign"
+require "hellosign-ruby-sdk"
 
 HelloSign.configure do |config|
   # Configure HTTP basic authorization: api_key
@@ -1064,7 +1064,7 @@ Creates and sends a new SignatureRequest based off of the Template(s) specified 
 ### Examples
 
 ```ruby
-require "hello_sign"
+require "hellosign-ruby-sdk"
 
 HelloSign.configure do |config|
   # Configure HTTP basic authorization: api_key
@@ -1166,7 +1166,7 @@ Updates the email address and/or the name for a given signer on a signature requ
 ### Examples
 
 ```ruby
-require "hello_sign"
+require "hellosign-ruby-sdk"
 
 HelloSign.configure do |config|
   # Configure HTTP basic authorization: api_key

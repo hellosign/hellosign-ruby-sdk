@@ -19,7 +19,7 @@ Returns the status of the BulkSendJob and its SignatureRequests specified by the
 ### Examples
 
 ```ruby
-require "hello_sign"
+require "hellosign-ruby-sdk"
 
 HelloSign.configure do |config|
   # Configure HTTP basic authorization: api_key
@@ -91,7 +91,7 @@ Returns a list of BulkSendJob that you can access.
 ### Examples
 
 ```ruby
-require "hello_sign"
+require "hellosign-ruby-sdk"
 
 HelloSign.configure do |config|
   # Configure HTTP basic authorization: api_key

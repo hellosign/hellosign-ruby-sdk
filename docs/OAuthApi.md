@@ -19,7 +19,7 @@ Once you have retrieved the code from the user callback, you will need to exchan
 ### Examples
 
 ```ruby
-require "hello_sign"
+require "hellosign-ruby-sdk"
 
 HelloSign.configure do |config|
   # Configure HTTP basic authorization: api_key
@@ -95,7 +95,7 @@ Access tokens are only valid for a given period of time (typically one hour) for
 ### Examples
 
 ```ruby
-require "hello_sign"
+require "hellosign-ruby-sdk"
 
 HelloSign.configure do |config|
   # Configure HTTP basic authorization: api_key
