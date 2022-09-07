@@ -13,10 +13,10 @@ OpenAPI Generator version: 5.3.0
 =end
 
 $:.push File.expand_path("../lib", __FILE__)
-require "hello_sign/version"
+require "hellosign-ruby-sdk/version"
 
 Gem::Specification.new do |s|
-  s.name        = "hello_sign"
+  s.name        = "hellosign-ruby-sdk"
   s.version     = HelloSign::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["HelloSign"]

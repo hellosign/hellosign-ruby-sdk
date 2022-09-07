@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    hello_sign (6.0.0.pre.beta)
+    hellosign-ruby-sdk (6.0.0.pre.beta)
       typhoeus (~> 1.0, >= 1.0.1)
 
 GEM
@@ -65,7 +65,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  hello_sign!
+  hellosign-ruby-sdk!
   json_spec (~> 1.1.5)
   pry-byebug
   rake (~> 13.0.1)
