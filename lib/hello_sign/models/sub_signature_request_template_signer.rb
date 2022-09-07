@@ -30,7 +30,7 @@ module HelloSign
     # An E.164 formatted phone number.  **Note**: Not available in test mode and requires a Standard plan or higher.
     attr_accessor :sms_phone_number
 
-    # **Note**: This only works in non embedded endpoints.  If set, the value must be either `authentication` or `delivery`. Default `authentication`.   If `authentication` is set, `sms_phone_number` will receive a code via SMS to access this signer's signature page.  If `delivery` is set, signature request will be delivered to both email and `sms_phone_number`.
+    # Specifies the feature used with the `sms_phone_number`. Default `authentication`.  If `authentication`, signer is sent a verification code via SMS that is required to access the document.  If `delivery`, the completed signature request is delivered via SMS (_and_ email).
     attr_accessor :sms_phone_number_type
 
     class EnumAttributeValidator

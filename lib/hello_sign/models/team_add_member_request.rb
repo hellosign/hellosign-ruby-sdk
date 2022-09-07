@@ -21,11 +21,37 @@ module HelloSign
     # `account_id` or `email_address` is required, If both are provided, the account id prevails.   Email address of the user to invite to your Team.
     attr_accessor :email_address
 
+    # A role member will take in a new Team.  **Note**: This parameter is used only if `team_id` is provided.
+    attr_accessor :role
+
+    class EnumAttributeValidator
+      attr_reader :datatype
+      attr_reader :allowable_values
+
+      def initialize(datatype, allowable_values)
+        @allowable_values = allowable_values.map do |value|
+          case datatype.to_s
+          when /Integer/i
+            value.to_i
+          when /Float/i
+            value.to_f
+          else
+            value
+          end
+        end
+      end
+
+      def valid?(value)
+        !value || allowable_values.include?(value)
+      end
+    end
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'account_id' => :'account_id',
-        :'email_address' => :'email_address'
+        :'email_address' => :'email_address',
+        :'role' => :'role'
       }
     end
 
@@ -43,7 +69,8 @@ module HelloSign
     def self.openapi_types
       {
         :'account_id' => :'String',
-        :'email_address' => :'String'
+        :'email_address' => :'String',
+        :'role' => :'String'
       }
     end
 
@@ -85,6 +112,10 @@ module HelloSign
       if attributes.key?(:'email_address')
         self.email_address = attributes[:'email_address']
       end
+
+      if attributes.key?(:'role')
+        self.role = attributes[:'role']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -97,7 +128,19 @@ module HelloSign
     # Check to see if the all the properties in the model are valid
     # @return true if the model is valid
     def valid?
+      role_validator = EnumAttributeValidator.new('String', ["Member", "Developer", "Team Manager", "Admin"])
+      return false unless role_validator.valid?(@role)
       true
+    end
+
+    # Custom attribute writer method checking allowed values (enum).
+    # @param [Object] role Object to be assigned
+    def role=(role)
+      validator = EnumAttributeValidator.new('String', ["Member", "Developer", "Team Manager", "Admin"])
+      unless validator.valid?(role)
+        fail ArgumentError, "invalid value for \"role\", must be one of #{validator.allowable_values}."
+      end
+      @role = role
     end
 
     # Checks equality by comparing each attribute.
@@ -106,7 +149,8 @@ module HelloSign
       return true if self.equal?(o)
       self.class == o.class &&
           account_id == o.account_id &&
-          email_address == o.email_address
+          email_address == o.email_address &&
+          role == o.role
     end
 
     # @see the `==` method
@@ -118,7 +162,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [account_id, email_address].hash
+      [account_id, email_address, role].hash
     end
 
     # Builds the object from hash

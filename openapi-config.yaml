@@ -9,6 +9,7 @@ additionalProperties:
   gemName: hello_sign
   gemRequiredRubyVersion: '>= 2.7'
   moduleName: HelloSign
+  gemVersion: 6.0.0-beta
   sortModelPropertiesByRequiredFlag: true
   legacyDiscriminatorBehavior: true
 files:
