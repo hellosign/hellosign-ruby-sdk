@@ -18,7 +18,7 @@ Request the creation of one or more report(s).  When the report(s) have been gen
 ### Examples
 
 ```ruby
-require "hello_sign"
+require "hellosign-ruby-sdk"
 
 HelloSign.configure do |config|
   # Configure HTTP basic authorization: api_key

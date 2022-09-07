@@ -22,7 +22,7 @@ Creates a new API App.
 ### Examples
 
 ```ruby
-require "hello_sign"
+require "hellosign-ruby-sdk"
 
 HelloSign.configure do |config|
   # Configure HTTP basic authorization: api_key
@@ -109,7 +109,7 @@ Deletes an API App. Can only be invoked for apps you own.
 ### Examples
 
 ```ruby
-require "hello_sign"
+require "hellosign-ruby-sdk"
 
 HelloSign.configure do |config|
   # Configure HTTP basic authorization: api_key
@@ -181,7 +181,7 @@ Returns an object with information about an API App.
 ### Examples
 
 ```ruby
-require "hello_sign"
+require "hellosign-ruby-sdk"
 
 HelloSign.configure do |config|
   # Configure HTTP basic authorization: api_key
@@ -253,7 +253,7 @@ Returns a list of API Apps that are accessible by you. If you are on a team with
 ### Examples
 
 ```ruby
-require "hello_sign"
+require "hellosign-ruby-sdk"
 
 HelloSign.configure do |config|
   # Configure HTTP basic authorization: api_key
@@ -327,7 +327,7 @@ Updates an existing API App. Can only be invoked for apps you own. Only the fiel
 ### Examples
 
 ```ruby
-require "hello_sign"
+require "hellosign-ruby-sdk"
 
 HelloSign.configure do |config|
   # Configure HTTP basic authorization: api_key

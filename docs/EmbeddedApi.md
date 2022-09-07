@@ -19,7 +19,7 @@ Retrieves an embedded object containing a template url that can be opened in an 
 ### Examples
 
 ```ruby
-require "hello_sign"
+require "hellosign-ruby-sdk"
 
 HelloSign.configure do |config|
   # Configure HTTP basic authorization: api_key
@@ -96,7 +96,7 @@ Retrieves an embedded object containing a signature url that can be opened in an
 ### Examples
 
 ```ruby
-require "hello_sign"
+require "hellosign-ruby-sdk"
 
 HelloSign.configure do |config|
   # Configure HTTP basic authorization: api_key

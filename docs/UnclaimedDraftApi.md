@@ -21,7 +21,7 @@ Creates a new Draft that can be claimed using the claim URL. The first authentic
 ### Examples
 
 ```ruby
-require "hello_sign"
+require "hellosign-ruby-sdk"
 
 HelloSign.configure do |config|
   # Configure HTTP basic authorization: api_key
@@ -129,7 +129,7 @@ Creates a new Draft that can be claimed and used in an embedded iFrame. The firs
 ### Examples
 
 ```ruby
-require "hello_sign"
+require "hellosign-ruby-sdk"
 
 HelloSign.configure do |config|
   # Configure HTTP basic authorization: api_key
@@ -205,7 +205,7 @@ Creates a new Draft with a previously saved template(s) that can be claimed and 
 ### Examples
 
 ```ruby
-require "hello_sign"
+require "hellosign-ruby-sdk"
 
 HelloSign.configure do |config|
   # Configure HTTP basic authorization: api_key
@@ -292,7 +292,7 @@ Creates a new signature request from an embedded request that can be edited prio
 ### Examples
 
 ```ruby
-require "hello_sign"
+require "hellosign-ruby-sdk"
 
 HelloSign.configure do |config|
   # Configure HTTP basic authorization: api_key

@@ -21,7 +21,7 @@ Creates a new HelloSign Account that is associated with the specified `email_add
 ### Examples
 
 ```ruby
-require "hello_sign"
+require "hellosign-ruby-sdk"
 
 HelloSign.configure do |config|
   # Configure HTTP basic authorization: api_key
@@ -94,7 +94,7 @@ Returns the properties and settings of your Account.
 ### Examples
 
 ```ruby
-require "hello_sign"
+require "hellosign-ruby-sdk"
 
 HelloSign.configure do |config|
   # Configure HTTP basic authorization: api_key
@@ -164,7 +164,7 @@ Updates the properties and settings of your Account. Currently only allows for u
 ### Examples
 
 ```ruby
-require "hello_sign"
+require "hellosign-ruby-sdk"
 
 HelloSign.configure do |config|
   # Configure HTTP basic authorization: api_key
@@ -237,7 +237,7 @@ Verifies whether an HelloSign Account exists for the given email address.
 ### Examples
 
 ```ruby
-require "hello_sign"
+require "hellosign-ruby-sdk"
 
 HelloSign.configure do |config|
   # Configure HTTP basic authorization: api_key
