@@ -6,7 +6,7 @@ additionalProperties:
   gemDescription: Official HelloSign APIv3 OpenAPI Ruby SDK
   gemHomepage: https://hellosign.com
   gemLicense: MIT
-  gemName: hello_sign
+  gemName: hellosign-ruby-sdk
   gemRequiredRubyVersion: '>= 2.7'
   moduleName: HelloSign
   gemVersion: 6.0.0-beta
@@ -15,7 +15,7 @@ additionalProperties:
 files:
   event_callback_helper.mustache:
     templateType: SupportingFiles
-    destinationFilename: lib/hello_sign/event_callback_helper.rb
+    destinationFilename: lib/hellosign-ruby-sdk/event_callback_helper.rb
 globalProperties:
   apiTests: false
   modelTests: false

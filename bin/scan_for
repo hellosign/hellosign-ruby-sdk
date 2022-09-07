@@ -6,7 +6,7 @@ ROOT_DIR="${DIR}/.."
 
 scan_for () {
   SEARCH_STRING=$1
-  SCAN_TARGETS=( "docs" "lib/hello_sign/api" "lib/hello_sign/models" "README.md" )
+  SCAN_TARGETS=( "docs" "lib/hellosign-ruby-sdk/api" "lib/hellosign-ruby-sdk/models" "README.md" )
 
   printf "Scanning for '${SEARCH_STRING}': "
 
