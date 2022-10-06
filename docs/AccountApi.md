@@ -137,7 +137,8 @@ end
 
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
-| `account_id` | **String** | The ID of the Account | [optional] |
+| `account_id` | **String** | `account_id` or `email_address` is required. If both are provided, the account id prevails.   The ID of the Account. | [optional] |
+| `email_address` | **String** | `account_id` or `email_address` is required, If both are provided, the account id prevails.   The email address of the Account. | [optional] |
 
 ### Return type
 

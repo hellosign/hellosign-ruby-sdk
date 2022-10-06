@@ -310,27 +310,23 @@ module HelloSign
       return data, status_code, headers
     end
 
-    # Get Template Files
-    # Obtain a copy of the current documents specified by the `template_id` parameter.  Returns a PDF or ZIP file, or if `get_url` is set, a JSON object with a url to the file (PDFs only). If `get_data_uri` is set, a JSON object with a `data_uri` representing the base64 encoded file (PDFs only) is returned.  If the files are currently being prepared, a status code of `409` will be returned instead. In this case please wait for the `template_created` callback event.
+    # Get Template File
+    # Obtain a copy of the current documents specified by the `template_id` parameter. Returns a PDF or ZIP file.  If the files are currently being prepared, a status code of `409` will be returned instead. In this case please wait for the `template_created` callback event.
     # @param template_id [String] The id of the template files to retrieve.
     # @param [Hash] opts the optional parameters
     # @option opts [String] :file_type Set to &#x60;pdf&#x60; for a single merged document or &#x60;zip&#x60; for a collection of individual documents.
-    # @option opts [Boolean] :get_url If &#x60;true&#x60;, the response will contain a url link to the file instead. Links are only available for PDFs and have a TTL of 3 days. (default to false)
-    # @option opts [Boolean] :get_data_uri If &#x60;true&#x60;, the response will contain the file as base64 encoded string. Base64 encoding is only available for PDFs. (default to false)
-    # @return [FileResponse]
+    # @return [File]
     def template_files(template_id, opts = {})
       data, _status_code, _headers = template_files_with_http_info(template_id, opts)
       data
     end
 
-    # Get Template Files
-    # Obtain a copy of the current documents specified by the &#x60;template_id&#x60; parameter.  Returns a PDF or ZIP file, or if &#x60;get_url&#x60; is set, a JSON object with a url to the file (PDFs only). If &#x60;get_data_uri&#x60; is set, a JSON object with a &#x60;data_uri&#x60; representing the base64 encoded file (PDFs only) is returned.  If the files are currently being prepared, a status code of &#x60;409&#x60; will be returned instead. In this case please wait for the &#x60;template_created&#x60; callback event.
+    # Get Template File
+    # Obtain a copy of the current documents specified by the &#x60;template_id&#x60; parameter. Returns a PDF or ZIP file.  If the files are currently being prepared, a status code of &#x60;409&#x60; will be returned instead. In this case please wait for the &#x60;template_created&#x60; callback event.
     # @param template_id [String] The id of the template files to retrieve.
     # @param [Hash] opts the optional parameters
     # @option opts [String] :file_type Set to &#x60;pdf&#x60; for a single merged document or &#x60;zip&#x60; for a collection of individual documents.
-    # @option opts [Boolean] :get_url If &#x60;true&#x60;, the response will contain a url link to the file instead. Links are only available for PDFs and have a TTL of 3 days.
-    # @option opts [Boolean] :get_data_uri If &#x60;true&#x60;, the response will contain the file as base64 encoded string. Base64 encoding is only available for PDFs.
-    # @return [Array<(FileResponse, Integer, Hash)>] FileResponse data, response status code and response headers
+    # @return [Array<(File, Integer, Hash)>] File data, response status code and response headers
     def template_files_with_http_info(template_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: TemplateApi.template_files ...'
@@ -349,8 +345,194 @@ module HelloSign
       # query parameters
       query_params = opts[:query_params] || {}
       query_params[:'file_type'] = opts[:'file_type'] if !opts[:'file_type'].nil?
-      query_params[:'get_url'] = opts[:'get_url'] if !opts[:'get_url'].nil?
-      query_params[:'get_data_uri'] = opts[:'get_data_uri'] if !opts[:'get_data_uri'].nil?
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/pdf', 'application/zip', 'application/json'])
+
+      post_body = {}
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'File'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['api_key', 'oauth2']
+
+      new_options = opts.merge(
+        :operation => :"TemplateApi.template_files",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      begin
+        data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      rescue HelloSign::ApiError => e
+        if e.code === 200
+          body = @api_client.convert_to_type(
+            JSON.parse("[#{e.response_body}]", :symbolize_names => true)[0],
+            "HelloSign::File"
+          )
+
+          fail ApiError.new(:code => e.code,
+                            :response_headers => e.response_headers,
+                            :response_body => body),
+               e.message
+        end
+
+        range_code = "4XX".split('').first
+        range_code_left = "#{range_code}00".to_i
+        range_code_right = "#{range_code}99".to_i
+        if e.code >= range_code_left && e.code <= range_code_right
+          body = @api_client.convert_to_type(
+            JSON.parse("[#{e.response_body}]", :symbolize_names => true)[0],
+            "HelloSign::ErrorResponse"
+          )
+
+          fail ApiError.new(:code => e.code,
+                            :response_headers => e.response_headers,
+                            :response_body => body),
+               e.message
+        end
+
+      end
+
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: TemplateApi#template_files\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Get Template File as Encoded String
+    # Obtain a copy of the current documents specified by the `template_id` parameter. Returns a JSON object with a `data_uri` representing the base64 encoded file (PDFs only).   If the files are currently being prepared, a status code of `409` will be returned instead. In this case please wait for the `template_created` callback event.
+    # @param template_id [String] The id of the template files to retrieve.
+    # @param [Hash] opts the optional parameters
+    # @return [FileResponseDataUri]
+    def template_files_as_encoded_string(template_id, opts = {})
+      data, _status_code, _headers = template_files_as_encoded_string_with_http_info(template_id, opts)
+      data
+    end
+
+    # Get Template File as Encoded String
+    # Obtain a copy of the current documents specified by the &#x60;template_id&#x60; parameter. Returns a JSON object with a &#x60;data_uri&#x60; representing the base64 encoded file (PDFs only).   If the files are currently being prepared, a status code of &#x60;409&#x60; will be returned instead. In this case please wait for the &#x60;template_created&#x60; callback event.
+    # @param template_id [String] The id of the template files to retrieve.
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(FileResponseDataUri, Integer, Hash)>] FileResponseDataUri data, response status code and response headers
+    def template_files_as_encoded_string_with_http_info(template_id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: TemplateApi.template_files_as_encoded_string ...'
+      end
+      # verify the required parameter 'template_id' is set
+      if @api_client.config.client_side_validation && template_id.nil?
+        fail ArgumentError, "Missing the required parameter 'template_id' when calling TemplateApi.template_files_as_encoded_string"
+      end
+      # resource path
+      local_var_path = '/template/files/{template_id}?get_data_uri=1&file_type=pdf'.sub('{' + 'template_id' + '}', CGI.escape(template_id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
+
+      post_body = {}
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'FileResponseDataUri'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['api_key', 'oauth2']
+
+      new_options = opts.merge(
+        :operation => :"TemplateApi.template_files_as_encoded_string",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      begin
+        data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      rescue HelloSign::ApiError => e
+        if e.code === 200
+          body = @api_client.convert_to_type(
+            JSON.parse("[#{e.response_body}]", :symbolize_names => true)[0],
+            "HelloSign::FileResponseDataUri"
+          )
+
+          fail ApiError.new(:code => e.code,
+                            :response_headers => e.response_headers,
+                            :response_body => body),
+               e.message
+        end
+
+        range_code = "4XX".split('').first
+        range_code_left = "#{range_code}00".to_i
+        range_code_right = "#{range_code}99".to_i
+        if e.code >= range_code_left && e.code <= range_code_right
+          body = @api_client.convert_to_type(
+            JSON.parse("[#{e.response_body}]", :symbolize_names => true)[0],
+            "HelloSign::ErrorResponse"
+          )
+
+          fail ApiError.new(:code => e.code,
+                            :response_headers => e.response_headers,
+                            :response_body => body),
+               e.message
+        end
+
+      end
+
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: TemplateApi#template_files_as_encoded_string\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Get Template File as File Url
+    # Obtain a copy of the current documents specified by the `template_id` parameter. Returns a JSON object with a url to the file (PDFs only).   If the files are currently being prepared, a status code of `409` will be returned instead. In this case please wait for the `template_created` callback event.
+    # @param template_id [String] The id of the template files to retrieve.
+    # @param [Hash] opts the optional parameters
+    # @return [FileResponse]
+    def template_files_as_file_url(template_id, opts = {})
+      data, _status_code, _headers = template_files_as_file_url_with_http_info(template_id, opts)
+      data
+    end
+
+    # Get Template File as File Url
+    # Obtain a copy of the current documents specified by the &#x60;template_id&#x60; parameter. Returns a JSON object with a url to the file (PDFs only).   If the files are currently being prepared, a status code of &#x60;409&#x60; will be returned instead. In this case please wait for the &#x60;template_created&#x60; callback event.
+    # @param template_id [String] The id of the template files to retrieve.
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(FileResponse, Integer, Hash)>] FileResponse data, response status code and response headers
+    def template_files_as_file_url_with_http_info(template_id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: TemplateApi.template_files_as_file_url ...'
+      end
+      # verify the required parameter 'template_id' is set
+      if @api_client.config.client_side_validation && template_id.nil?
+        fail ArgumentError, "Missing the required parameter 'template_id' when calling TemplateApi.template_files_as_file_url"
+      end
+      # resource path
+      local_var_path = '/template/files/{template_id}?get_url=1&file_type=pdf'.sub('{' + 'template_id' + '}', CGI.escape(template_id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
 
       # header parameters
       header_params = opts[:header_params] || {}
@@ -370,7 +552,7 @@ module HelloSign
       auth_names = opts[:debug_auth_names] || ['api_key', 'oauth2']
 
       new_options = opts.merge(
-        :operation => :"TemplateApi.template_files",
+        :operation => :"TemplateApi.template_files_as_file_url",
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
@@ -412,7 +594,7 @@ module HelloSign
       end
 
       if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: TemplateApi#template_files\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+        @api_client.config.logger.debug "API called: TemplateApi#template_files_as_file_url\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end

@@ -14,49 +14,14 @@ require 'date'
 require 'time'
 
 module HelloSign
-  class AccountResponse
-    # The ID of the Account
-    attr_accessor :account_id
-
-    # The email address associated with the Account.
-    attr_accessor :email_address
-
-    # Returns `true` if the user has been locked out of their account by a team admin.
-    attr_accessor :is_locked
-
-    # Returns `true` if the user has a paid HelloSign account.
-    attr_accessor :is_paid_hs
-
-    # Returns `true` if the user has a paid HelloFax account.
-    attr_accessor :is_paid_hf
-
-    attr_accessor :quotas
-
-    # The URL that HelloSign events will `POST` to.
-    attr_accessor :callback_url
-
-    # The membership role for the team.
-    attr_accessor :role_code
-
-    # The id of the team account belongs to.
-    attr_accessor :team_id
-
-    # The locale used in this Account. Check out the list of [supported locales](/api/reference/constants/#supported-locales) to learn more about the possible values.
-    attr_accessor :locale
+  class FileResponseDataUri
+    # File as base64 encoded string.
+    attr_accessor :data_uri
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'account_id' => :'account_id',
-        :'email_address' => :'email_address',
-        :'is_locked' => :'is_locked',
-        :'is_paid_hs' => :'is_paid_hs',
-        :'is_paid_hf' => :'is_paid_hf',
-        :'quotas' => :'quotas',
-        :'callback_url' => :'callback_url',
-        :'role_code' => :'role_code',
-        :'team_id' => :'team_id',
-        :'locale' => :'locale'
+        :'data_uri' => :'data_uri'
       }
     end
 
@@ -73,16 +38,7 @@ module HelloSign
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'account_id' => :'String',
-        :'email_address' => :'String',
-        :'is_locked' => :'Boolean',
-        :'is_paid_hs' => :'Boolean',
-        :'is_paid_hf' => :'Boolean',
-        :'quotas' => :'AccountResponseQuotas',
-        :'callback_url' => :'String',
-        :'role_code' => :'String',
-        :'team_id' => :'String',
-        :'locale' => :'String'
+        :'data_uri' => :'String'
       }
     end
 
@@ -94,10 +50,6 @@ module HelloSign
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
-        :'callback_url',
-        :'role_code',
-        :'team_id',
-        :'locale'
       ])
     end
 
@@ -110,55 +62,19 @@ module HelloSign
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `HelloSign::AccountResponse` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `HelloSign::FileResponseDataUri` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!self.class.merged_attributes.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `HelloSign::AccountResponse`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `HelloSign::FileResponseDataUri`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'account_id')
-        self.account_id = attributes[:'account_id']
-      end
-
-      if attributes.key?(:'email_address')
-        self.email_address = attributes[:'email_address']
-      end
-
-      if attributes.key?(:'is_locked')
-        self.is_locked = attributes[:'is_locked']
-      end
-
-      if attributes.key?(:'is_paid_hs')
-        self.is_paid_hs = attributes[:'is_paid_hs']
-      end
-
-      if attributes.key?(:'is_paid_hf')
-        self.is_paid_hf = attributes[:'is_paid_hf']
-      end
-
-      if attributes.key?(:'quotas')
-        self.quotas = attributes[:'quotas']
-      end
-
-      if attributes.key?(:'callback_url')
-        self.callback_url = attributes[:'callback_url']
-      end
-
-      if attributes.key?(:'role_code')
-        self.role_code = attributes[:'role_code']
-      end
-
-      if attributes.key?(:'team_id')
-        self.team_id = attributes[:'team_id']
-      end
-
-      if attributes.key?(:'locale')
-        self.locale = attributes[:'locale']
+      if attributes.key?(:'data_uri')
+        self.data_uri = attributes[:'data_uri']
       end
     end
 
@@ -180,16 +96,7 @@ module HelloSign
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          account_id == o.account_id &&
-          email_address == o.email_address &&
-          is_locked == o.is_locked &&
-          is_paid_hs == o.is_paid_hs &&
-          is_paid_hf == o.is_paid_hf &&
-          quotas == o.quotas &&
-          callback_url == o.callback_url &&
-          role_code == o.role_code &&
-          team_id == o.team_id &&
-          locale == o.locale
+          data_uri == o.data_uri
     end
 
     # @see the `==` method
@@ -201,7 +108,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [account_id, email_address, is_locked, is_paid_hs, is_paid_hf, quotas, callback_url, role_code, team_id, locale].hash
+      [data_uri].hash
     end
 
     # Builds the object from hash

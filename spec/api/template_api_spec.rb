@@ -72,11 +72,7 @@ describe HelloSign::TemplateApi do
       set_expected_response(200, JSON.dump(response_data))
       expected = api_client.convert_to_type(response_data, response_class)
 
-      result = api.template_files(template_id, {
-        :file_type => file_type,
-        :get_url => get_url,
-        :get_data_uri => get_data_uri,
-      })
+      result = api.template_files_as_file_url(template_id, {})
 
       expect(result.class.to_s).to eq("HelloSign::#{response_class}")
       expect(result.to_json).to be_json_eql(expected.to_json)
