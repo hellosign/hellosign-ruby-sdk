@@ -46,7 +46,6 @@ docs/EventCallbackApiAppRequestPayload.md
 docs/EventCallbackRequestEvent.md
 docs/EventCallbackRequestEventMetadata.md
 docs/FileResponse.md
-docs/FileResponseDataUri.md
 docs/ListInfoResponse.md
 docs/OAuthApi.md
 docs/OAuthTokenGenerateRequest.md
@@ -218,7 +217,6 @@ lib/hellosign-ruby-sdk/models/event_callback_api_app_request_payload.rb
 lib/hellosign-ruby-sdk/models/event_callback_request_event.rb
 lib/hellosign-ruby-sdk/models/event_callback_request_event_metadata.rb
 lib/hellosign-ruby-sdk/models/file_response.rb
-lib/hellosign-ruby-sdk/models/file_response_data_uri.rb
 lib/hellosign-ruby-sdk/models/list_info_response.rb
 lib/hellosign-ruby-sdk/models/o_auth_token_generate_request.rb
 lib/hellosign-ruby-sdk/models/o_auth_token_refresh_request.rb

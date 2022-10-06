@@ -7,9 +7,7 @@ All URIs are relative to *https://api.hellosign.com/v3*
 | [`template_add_user`](TemplateApi.md#template_add_user) | **POST** `/template/add_user/{template_id}` | Add User to Template |
 | [`template_create_embedded_draft`](TemplateApi.md#template_create_embedded_draft) | **POST** `/template/create_embedded_draft` | Create Embedded Template Draft |
 | [`template_delete`](TemplateApi.md#template_delete) | **POST** `/template/delete/{template_id}` | Delete Template |
-| [`template_files`](TemplateApi.md#template_files) | **GET** `/template/files/{template_id}` | Get Template File |
-| [`template_files_as_encoded_string`](TemplateApi.md#template_files_as_encoded_string) | **GET** `/template/files/{template_id}?get_data_uri&#x3D;1&amp;file_type&#x3D;pdf` | Get Template File as Encoded String |
-| [`template_files_as_file_url`](TemplateApi.md#template_files_as_file_url) | **GET** `/template/files/{template_id}?get_url&#x3D;1&amp;file_type&#x3D;pdf` | Get Template File as File Url |
+| [`template_files`](TemplateApi.md#template_files) | **GET** `/template/files/{template_id}` | Get Template Files |
 | [`template_get`](TemplateApi.md#template_get) | **GET** `/template/{template_id}` | Get Template |
 | [`template_list`](TemplateApi.md#template_list) | **GET** `/template/list` | List Templates |
 | [`template_remove_user`](TemplateApi.md#template_remove_user) | **POST** `/template/remove_user/{template_id}` | Remove User from Template |
@@ -267,11 +265,11 @@ nil (empty response body)
 
 ## `template_files`
 
-> `File template_files(template_id, opts)`
+> `<FileResponse> template_files(template_id, opts)`
 
-Get Template File
+Get Template Files
 
-Obtain a copy of the current documents specified by the `template_id` parameter. Returns a PDF or ZIP file.  If the files are currently being prepared, a status code of `409` will be returned instead. In this case please wait for the `template_created` callback event.
+Obtain a copy of the current documents specified by the `template_id` parameter.  Returns a PDF or ZIP file, or if `get_url` is set, a JSON object with a url to the file (PDFs only). If `get_data_uri` is set, a JSON object with a `data_uri` representing the base64 encoded file (PDFs only) is returned.  If the files are currently being prepared, a status code of `409` will be returned instead. In this case please wait for the `template_created` callback event.
 
 ### Examples
 
@@ -303,15 +301,15 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> `<Array(File, Integer, Hash)> template_files_with_http_info(template_id, opts)`
+> `<Array(<FileResponse>, Integer, Hash)> template_files_with_http_info(template_id, opts)`
 
 ```ruby
 begin
-  # Get Template File
+  # Get Template Files
   data, status_code, headers = api_instance.template_files_with_http_info(template_id, opts)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => File
+  p data # => <FileResponse>
 rescue HelloSign::ApiError => e
   puts "Error when calling TemplateApi->template_files_with_http_info: #{e}"
 end
@@ -323,150 +321,8 @@ end
 | ---- | ---- | ----------- | ----- |
 | `template_id` | **String** | The id of the template files to retrieve. |  |
 | `file_type` | **String** | Set to `pdf` for a single merged document or `zip` for a collection of individual documents. | [optional] |
-
-### Return type
-
-**File**
-
-### Authorization
-
-[api_key](../README.md#api_key), [oauth2](../README.md#oauth2)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: application/pdf, application/zip, application/json
-
-
-## `template_files_as_encoded_string`
-
-> `<FileResponseDataUri> template_files_as_encoded_string(template_id)`
-
-Get Template File as Encoded String
-
-Obtain a copy of the current documents specified by the `template_id` parameter. Returns a JSON object with a `data_uri` representing the base64 encoded file (PDFs only).   If the files are currently being prepared, a status code of `409` will be returned instead. In this case please wait for the `template_created` callback event.
-
-### Examples
-
-```ruby
-require "hellosign-ruby-sdk"
-
-HelloSign.configure do |config|
-  # Configure HTTP basic authorization: api_key
-  config.username = "YOUR_API_KEY"
-
-  # or, configure Bearer (JWT) authorization: oauth2
-  # config.access_token = "YOUR_ACCESS_TOKEN"
-end
-
-api = HelloSign::TemplateApi.new
-
-template_id = "5de8179668f2033afac48da1868d0093bf133266"
-
-begin
-  result = api.template_files_as_encoded_string(template_id)
-  p result
-rescue HelloSign::ApiError => e
-  puts "Exception when calling HelloSign API: #{e}"
-end
-
-```
-
-#### Using the `template_files_as_encoded_string_with_http_info` variant
-
-This returns an Array which contains the response data, status code and headers.
-
-> `<Array(<FileResponseDataUri>, Integer, Hash)> template_files_as_encoded_string_with_http_info(template_id)`
-
-```ruby
-begin
-  # Get Template File as Encoded String
-  data, status_code, headers = api_instance.template_files_as_encoded_string_with_http_info(template_id)
-  p status_code # => 2xx
-  p headers # => { ... }
-  p data # => <FileResponseDataUri>
-rescue HelloSign::ApiError => e
-  puts "Error when calling TemplateApi->template_files_as_encoded_string_with_http_info: #{e}"
-end
-```
-
-### Parameters
-
-| Name | Type | Description | Notes |
-| ---- | ---- | ----------- | ----- |
-| `template_id` | **String** | The id of the template files to retrieve. |  |
-
-### Return type
-
-[**FileResponseDataUri**](FileResponseDataUri.md)
-
-### Authorization
-
-[api_key](../README.md#api_key), [oauth2](../README.md#oauth2)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: application/json
-
-
-## `template_files_as_file_url`
-
-> `<FileResponse> template_files_as_file_url(template_id)`
-
-Get Template File as File Url
-
-Obtain a copy of the current documents specified by the `template_id` parameter. Returns a JSON object with a url to the file (PDFs only).   If the files are currently being prepared, a status code of `409` will be returned instead. In this case please wait for the `template_created` callback event.
-
-### Examples
-
-```ruby
-require "hellosign-ruby-sdk"
-
-HelloSign.configure do |config|
-  # Configure HTTP basic authorization: api_key
-  config.username = "YOUR_API_KEY"
-
-  # or, configure Bearer (JWT) authorization: oauth2
-  # config.access_token = "YOUR_ACCESS_TOKEN"
-end
-
-api = HelloSign::TemplateApi.new
-
-template_id = "5de8179668f2033afac48da1868d0093bf133266"
-
-begin
-  result = api.template_files_as_file_url(template_id)
-  p result
-rescue HelloSign::ApiError => e
-  puts "Exception when calling HelloSign API: #{e}"
-end
-
-```
-
-#### Using the `template_files_as_file_url_with_http_info` variant
-
-This returns an Array which contains the response data, status code and headers.
-
-> `<Array(<FileResponse>, Integer, Hash)> template_files_as_file_url_with_http_info(template_id)`
-
-```ruby
-begin
-  # Get Template File as File Url
-  data, status_code, headers = api_instance.template_files_as_file_url_with_http_info(template_id)
-  p status_code # => 2xx
-  p headers # => { ... }
-  p data # => <FileResponse>
-rescue HelloSign::ApiError => e
-  puts "Error when calling TemplateApi->template_files_as_file_url_with_http_info: #{e}"
-end
-```
-
-### Parameters
-
-| Name | Type | Description | Notes |
-| ---- | ---- | ----------- | ----- |
-| `template_id` | **String** | The id of the template files to retrieve. |  |
+| `get_url` | **Boolean** | If `true`, the response will contain a url link to the file instead. Links are only available for PDFs and have a TTL of 3 days. | [optional][default to false] |
+| `get_data_uri` | **Boolean** | If `true`, the response will contain the file as base64 encoded string. Base64 encoding is only available for PDFs. | [optional][default to false] |
 
 ### Return type
 

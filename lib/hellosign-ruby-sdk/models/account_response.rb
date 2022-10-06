@@ -38,9 +38,6 @@ module HelloSign
     # The membership role for the team.
     attr_accessor :role_code
 
-    # The id of the team account belongs to.
-    attr_accessor :team_id
-
     # The locale used in this Account. Check out the list of [supported locales](/api/reference/constants/#supported-locales) to learn more about the possible values.
     attr_accessor :locale
 
@@ -55,7 +52,6 @@ module HelloSign
         :'quotas' => :'quotas',
         :'callback_url' => :'callback_url',
         :'role_code' => :'role_code',
-        :'team_id' => :'team_id',
         :'locale' => :'locale'
       }
     end
@@ -81,7 +77,6 @@ module HelloSign
         :'quotas' => :'AccountResponseQuotas',
         :'callback_url' => :'String',
         :'role_code' => :'String',
-        :'team_id' => :'String',
         :'locale' => :'String'
       }
     end
@@ -96,7 +91,6 @@ module HelloSign
       Set.new([
         :'callback_url',
         :'role_code',
-        :'team_id',
         :'locale'
       ])
     end
@@ -153,10 +147,6 @@ module HelloSign
         self.role_code = attributes[:'role_code']
       end
 
-      if attributes.key?(:'team_id')
-        self.team_id = attributes[:'team_id']
-      end
-
       if attributes.key?(:'locale')
         self.locale = attributes[:'locale']
       end
@@ -188,7 +178,6 @@ module HelloSign
           quotas == o.quotas &&
           callback_url == o.callback_url &&
           role_code == o.role_code &&
-          team_id == o.team_id &&
           locale == o.locale
     end
 
@@ -201,7 +190,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [account_id, email_address, is_locked, is_paid_hs, is_paid_hf, quotas, callback_url, role_code, team_id, locale].hash
+      [account_id, email_address, is_locked, is_paid_hs, is_paid_hf, quotas, callback_url, role_code, locale].hash
     end
 
     # Builds the object from hash

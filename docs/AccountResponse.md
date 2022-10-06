@@ -14,6 +14,5 @@
 | `quotas` | [```AccountResponseQuotas```](AccountResponseQuotas.md) |    |  |
 | `callback_url` | ```String``` |  The URL that HelloSign events will `POST` to.  |  |
 | `role_code` | ```String``` |  The membership role for the team.  |  |
-| `team_id` | ```String``` |  The id of the team account belongs to.  |  |
 | `locale` | ```String``` |  The locale used in this Account. Check out the list of [supported locales](/api/reference/constants/#supported-locales) to learn more about the possible values.  |  |
 

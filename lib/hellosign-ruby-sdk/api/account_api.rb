@@ -131,8 +131,7 @@ module HelloSign
     # Get Account
     # Returns the properties and settings of your Account.
     # @param [Hash] opts the optional parameters
-    # @option opts [String] :account_id &#x60;account_id&#x60; or &#x60;email_address&#x60; is required. If both are provided, the account id prevails.   The ID of the Account.
-    # @option opts [String] :email_address &#x60;account_id&#x60; or &#x60;email_address&#x60; is required, If both are provided, the account id prevails.   The email address of the Account.
+    # @option opts [String] :account_id The ID of the Account
     # @return [AccountGetResponse]
     def account_get(opts = {})
       data, _status_code, _headers = account_get_with_http_info(opts)
@@ -142,8 +141,7 @@ module HelloSign
     # Get Account
     # Returns the properties and settings of your Account.
     # @param [Hash] opts the optional parameters
-    # @option opts [String] :account_id &#x60;account_id&#x60; or &#x60;email_address&#x60; is required. If both are provided, the account id prevails.   The ID of the Account.
-    # @option opts [String] :email_address &#x60;account_id&#x60; or &#x60;email_address&#x60; is required, If both are provided, the account id prevails.   The email address of the Account.
+    # @option opts [String] :account_id The ID of the Account
     # @return [Array<(AccountGetResponse, Integer, Hash)>] AccountGetResponse data, response status code and response headers
     def account_get_with_http_info(opts = {})
       if @api_client.config.debugging
@@ -155,7 +153,6 @@ module HelloSign
       # query parameters
       query_params = opts[:query_params] || {}
       query_params[:'account_id'] = opts[:'account_id'] if !opts[:'account_id'].nil?
-      query_params[:'email_address'] = opts[:'email_address'] if !opts[:'email_address'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}

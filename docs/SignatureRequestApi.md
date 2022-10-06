@@ -9,9 +9,7 @@ All URIs are relative to *https://api.hellosign.com/v3*
 | [`signature_request_cancel`](SignatureRequestApi.md#signature_request_cancel) | **POST** `/signature_request/cancel/{signature_request_id}` | Cancel Incomplete Signature Request |
 | [`signature_request_create_embedded`](SignatureRequestApi.md#signature_request_create_embedded) | **POST** `/signature_request/create_embedded` | Create Embedded Signature Request |
 | [`signature_request_create_embedded_with_template`](SignatureRequestApi.md#signature_request_create_embedded_with_template) | **POST** `/signature_request/create_embedded_with_template` | Create Embedded Signature Request with Template |
-| [`signature_request_files`](SignatureRequestApi.md#signature_request_files) | **GET** `/signature_request/files/{signature_request_id}` | Download File |
-| [`signature_request_files_as_encoded_string`](SignatureRequestApi.md#signature_request_files_as_encoded_string) | **GET** `/signature_request/files/{signature_request_id}?get_data_uri&#x3D;1&amp;file_type&#x3D;pdf` | Download File as Encoded String |
-| [`signature_request_files_as_file_url`](SignatureRequestApi.md#signature_request_files_as_file_url) | **GET** `/signature_request/files/{signature_request_id}?get_url&#x3D;1&amp;file_type&#x3D;pdf` | Download File as File Url |
+| [`signature_request_files`](SignatureRequestApi.md#signature_request_files) | **GET** `/signature_request/files/{signature_request_id}` | Download Files |
 | [`signature_request_get`](SignatureRequestApi.md#signature_request_get) | **GET** `/signature_request/{signature_request_id}` | Get Signature Request |
 | [`signature_request_list`](SignatureRequestApi.md#signature_request_list) | **GET** `/signature_request/list` | List Signature Requests |
 | [`signature_request_release_hold`](SignatureRequestApi.md#signature_request_release_hold) | **POST** `/signature_request/release_hold/{signature_request_id}` | Release On-Hold Signature Request |
@@ -506,11 +504,11 @@ end
 
 ## `signature_request_files`
 
-> `File signature_request_files(signature_request_id, opts)`
+> `<FileResponse> signature_request_files(signature_request_id, opts)`
 
-Download File
+Download Files
 
-Obtain a copy of the current documents specified by the `signature_request_id` parameter. Returns a PDF or ZIP file.   If the files are currently being prepared, a status code of `409` will be returned instead.
+Obtain a copy of the current documents specified by the `signature_request_id` parameter.  Returns a PDF or ZIP file, or if `get_url` is set, a JSON object with a url to the file (PDFs only). If `get_data_uri` is set, a JSON object with a `data_uri` representing the base64 encoded file (PDFs only) is returned.  If the files are currently being prepared, a status code of `409` will be returned instead.
 
 ### Examples
 
@@ -542,15 +540,15 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> `<Array(File, Integer, Hash)> signature_request_files_with_http_info(signature_request_id, opts)`
+> `<Array(<FileResponse>, Integer, Hash)> signature_request_files_with_http_info(signature_request_id, opts)`
 
 ```ruby
 begin
-  # Download File
+  # Download Files
   data, status_code, headers = api_instance.signature_request_files_with_http_info(signature_request_id, opts)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => File
+  p data # => <FileResponse>
 rescue HelloSign::ApiError => e
   puts "Error when calling SignatureRequestApi->signature_request_files_with_http_info: #{e}"
 end
@@ -562,150 +560,8 @@ end
 | ---- | ---- | ----------- | ----- |
 | `signature_request_id` | **String** | The id of the SignatureRequest to retrieve. |  |
 | `file_type` | **String** | Set to `pdf` for a single merged document or `zip` for a collection of individual documents. | [optional][default to &#39;pdf&#39;] |
-
-### Return type
-
-**File**
-
-### Authorization
-
-[api_key](../README.md#api_key), [oauth2](../README.md#oauth2)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: application/pdf, application/zip, application/json
-
-
-## `signature_request_files_as_encoded_string`
-
-> `<FileResponseDataUri> signature_request_files_as_encoded_string(signature_request_id)`
-
-Download File as Encoded String
-
-Obtain a copy of the current documents specified by the `signature_request_id` parameter. Returns a JSON object with a `data_uri` representing the base64 encoded file (PDFs only).   If the files are currently being prepared, a status code of `409` will be returned instead.
-
-### Examples
-
-```ruby
-require "hellosign-ruby-sdk"
-
-HelloSign.configure do |config|
-  # Configure HTTP basic authorization: api_key
-  config.username = "YOUR_API_KEY"
-
-  # or, configure Bearer (JWT) authorization: oauth2
-  # config.access_token = "YOUR_ACCESS_TOKEN"
-end
-
-api = HelloSign::SignatureRequestApi.new
-
-signature_request_id = "fa5c8a0b0f492d768749333ad6fcc214c111e967"
-
-begin
-  result = api.signature_request_files_as_encoded_string(signature_request_id)
-  p result
-rescue HelloSign::ApiError => e
-  puts "Exception when calling HelloSign API: #{e}"
-end
-
-```
-
-#### Using the `signature_request_files_as_encoded_string_with_http_info` variant
-
-This returns an Array which contains the response data, status code and headers.
-
-> `<Array(<FileResponseDataUri>, Integer, Hash)> signature_request_files_as_encoded_string_with_http_info(signature_request_id)`
-
-```ruby
-begin
-  # Download File as Encoded String
-  data, status_code, headers = api_instance.signature_request_files_as_encoded_string_with_http_info(signature_request_id)
-  p status_code # => 2xx
-  p headers # => { ... }
-  p data # => <FileResponseDataUri>
-rescue HelloSign::ApiError => e
-  puts "Error when calling SignatureRequestApi->signature_request_files_as_encoded_string_with_http_info: #{e}"
-end
-```
-
-### Parameters
-
-| Name | Type | Description | Notes |
-| ---- | ---- | ----------- | ----- |
-| `signature_request_id` | **String** | The id of the SignatureRequest to retrieve. |  |
-
-### Return type
-
-[**FileResponseDataUri**](FileResponseDataUri.md)
-
-### Authorization
-
-[api_key](../README.md#api_key), [oauth2](../README.md#oauth2)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: application/json
-
-
-## `signature_request_files_as_file_url`
-
-> `<FileResponse> signature_request_files_as_file_url(signature_request_id)`
-
-Download File as File Url
-
-Obtain a copy of the current documents specified by the `signature_request_id` parameter. Returns a JSON object with a url to the file (PDFs only).   If the files are currently being prepared, a status code of `409` will be returned instead.
-
-### Examples
-
-```ruby
-require "hellosign-ruby-sdk"
-
-HelloSign.configure do |config|
-  # Configure HTTP basic authorization: api_key
-  config.username = "YOUR_API_KEY"
-
-  # or, configure Bearer (JWT) authorization: oauth2
-  # config.access_token = "YOUR_ACCESS_TOKEN"
-end
-
-api = HelloSign::SignatureRequestApi.new
-
-signature_request_id = "fa5c8a0b0f492d768749333ad6fcc214c111e967"
-
-begin
-  result = api.signature_request_files_as_file_url(signature_request_id)
-  p result
-rescue HelloSign::ApiError => e
-  puts "Exception when calling HelloSign API: #{e}"
-end
-
-```
-
-#### Using the `signature_request_files_as_file_url_with_http_info` variant
-
-This returns an Array which contains the response data, status code and headers.
-
-> `<Array(<FileResponse>, Integer, Hash)> signature_request_files_as_file_url_with_http_info(signature_request_id)`
-
-```ruby
-begin
-  # Download File as File Url
-  data, status_code, headers = api_instance.signature_request_files_as_file_url_with_http_info(signature_request_id)
-  p status_code # => 2xx
-  p headers # => { ... }
-  p data # => <FileResponse>
-rescue HelloSign::ApiError => e
-  puts "Error when calling SignatureRequestApi->signature_request_files_as_file_url_with_http_info: #{e}"
-end
-```
-
-### Parameters
-
-| Name | Type | Description | Notes |
-| ---- | ---- | ----------- | ----- |
-| `signature_request_id` | **String** | The id of the SignatureRequest to retrieve. |  |
+| `get_url` | **Boolean** | If `true`, the response will contain a url link to the file instead. Links are only available for PDFs and have a TTL of 3 days. | [optional][default to false] |
+| `get_data_uri` | **Boolean** | If `true`, the response will contain the file as base64 encoded string. Base64 encoding is only available for PDFs. | [optional][default to false] |
 
 ### Return type
 

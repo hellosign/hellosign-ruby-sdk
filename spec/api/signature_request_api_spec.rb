@@ -104,7 +104,11 @@ describe HelloSign::SignatureRequestApi do
       set_expected_response(200, JSON.dump(response_data))
       expected = api_client.convert_to_type(response_data, response_class)
 
-      result = api.signature_request_files_as_file_url(signature_request_id,{})
+      result = api.signature_request_files(signature_request_id,{
+        :file_type => file_type,
+        :get_url => get_url,
+        :get_data_uri => get_data_uri,
+      })
 
       expect(result.class.to_s).to eq("HelloSign::#{response_class}")
       expect(result.to_json).to be_json_eql(expected.to_json)
