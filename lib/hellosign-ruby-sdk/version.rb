@@ -1,7 +1,7 @@
 =begin
-#HelloSign API
+#Dropbox Sign API
 
-#HelloSign v3 API
+#Dropbox Sign v3 API
 
 The version of the OpenAPI document: 3.0.0
 Contact: apisupport@hellosign.com
@@ -11,5 +11,5 @@ OpenAPI Generator version: 5.3.0
 =end
 
 module HelloSign
-  VERSION = '6.0.0-beta.2'
+  VERSION = '6.0.0-beta22.22'
 end

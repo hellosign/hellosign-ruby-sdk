@@ -4,44 +4,41 @@
 
 set -e
 
+DIR=$(cd `dirname $0` && pwd)
 WORKINGDIR="/app/ruby"
 
 docker run --rm \
-  -v "${PWD}/:/local" \
+  -v "${DIR}/:/local" \
   openapitools/openapi-generator-cli:v5.3.0 generate \
-    -i "/local/oas/openapi-sdk.yaml" \
+    -i "/local/openapi-sdk.yaml" \
     -c "/local/openapi-config.yaml" \
     -t "/local/templates" \
     -o "/local/"
 
 printf "\nInstalling composer dependencies ...\n"
-mkdir -p "${PWD}/vendor"
-bash "${PWD}/bin/php" composer install
+mkdir -p "${DIR}/vendor"
+bash "${DIR}/bin/php" composer install
 printf "\n"
 
-printf "Adding examples to /examples ...\n"
-rm -f "${PWD}/examples/"*.rb
-cp -r "${PWD}/oas/examples/"*.rb "${PWD}/examples/"
-
 printf "Adding examples to Docs ...\n"
-bash "${PWD}/bin/php" ./bin/generate-examples.php
+bash "${DIR}/bin/php" ./bin/generate-examples.php
 
 printf "Install Ruby dependencies ...\n"
-bash "${PWD}/bin/ruby" bundle
+bash "${DIR}/bin/ruby" bundle
 
 printf "Replacing strings ...\n"
 docker run --rm \
-  -v "${PWD}:${WORKINGDIR}" \
+  -v "${DIR}:${WORKINGDIR}" \
   -w "${WORKINGDIR}" \
   perl bash ./bin/replace
 
 printf "Scanning for prohibited keywords ...\n"
 docker run --rm \
-  -v "${PWD}:${WORKINGDIR}" \
+  -v "${DIR}:${WORKINGDIR}" \
   -w "${WORKINGDIR}" \
   perl bash ./bin/scan_for
 
 printf "Running tests ...\n"
-bash "${PWD}/bin/ruby" bundle exec rspec
+bash "${DIR}/bin/ruby" bundle exec rspec
 
 printf "Success!\n"

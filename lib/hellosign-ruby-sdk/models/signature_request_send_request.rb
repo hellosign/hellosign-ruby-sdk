@@ -1,7 +1,7 @@
 =begin
-#HelloSign API
+#Dropbox Sign API
 
-#HelloSign v3 API
+#Dropbox Sign v3 API
 
 The version of the OpenAPI document: 3.0.0
 Contact: apisupport@hellosign.com
@@ -21,7 +21,7 @@ module HelloSign
     # Use `file[]` to indicate the uploaded file(s) to send for signature.  This endpoint requires either **file** or **file_url[]**, but not both.
     attr_accessor :file
 
-    # Use `file_url[]` to have HelloSign download the file(s) to send for signature.  This endpoint requires either **file** or **file_url[]**, but not both.
+    # Use `file_url[]` to have Dropbox Sign download the file(s) to send for signature.  This endpoint requires either **file** or **file_url[]**, but not both.
     attr_accessor :file_url
 
     # Allows signers to decline to sign a document if `true`. Defaults to `false`.
@@ -39,7 +39,7 @@ module HelloSign
     # The client id of the API App you want to associate with this request. Used to apply the branding and callback url defined for the app.
     attr_accessor :client_id
 
-    # When used together with merge fields, `custom_fields` allows users to add pre-filled data to their signature requests.  Pre-filled data can be used with \"send-once\" signature requests by adding merge fields with `form_fields_per_document` or [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro) while passing values back with `custom_fields` together in one API call.  For using pre-filled on repeatable signature requests, merge fields are added to templates in the HelloSign UI or by calling [/template/create_embedded_draft](/api/reference/operation/templateCreateEmbeddedDraft) and then passing `custom_fields` on subsequent signature requests referencing that template.
+    # When used together with merge fields, `custom_fields` allows users to add pre-filled data to their signature requests.  Pre-filled data can be used with \"send-once\" signature requests by adding merge fields with `form_fields_per_document` or [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro) while passing values back with `custom_fields` together in one API call.  For using pre-filled on repeatable signature requests, merge fields are added to templates in the Dropbox Sign UI or by calling [/template/create_embedded_draft](/api/reference/operation/templateCreateEmbeddedDraft) and then passing `custom_fields` on subsequent signature requests referencing that template.
     attr_accessor :custom_fields
 
     attr_accessor :field_options
@@ -82,6 +82,9 @@ module HelloSign
     # Send with a value of `true` if you wish to enable [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro) parsing in your document. Defaults to disabled, or `false`.
     attr_accessor :use_text_tags
 
+    # When the signature request will expire. Unsigned signatures will be moved to the expired status, and no longer signable.
+    attr_accessor :expires_at
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
@@ -107,7 +110,8 @@ module HelloSign
         :'subject' => :'subject',
         :'test_mode' => :'test_mode',
         :'title' => :'title',
-        :'use_text_tags' => :'use_text_tags'
+        :'use_text_tags' => :'use_text_tags',
+        :'expires_at' => :'expires_at'
       }
     end
 
@@ -146,7 +150,8 @@ module HelloSign
         :'subject' => :'String',
         :'test_mode' => :'Boolean',
         :'title' => :'String',
-        :'use_text_tags' => :'Boolean'
+        :'use_text_tags' => :'Boolean',
+        :'expires_at' => :'Integer'
       }
     end
 
@@ -158,6 +163,7 @@ module HelloSign
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'expires_at'
       ])
     end
 
@@ -304,6 +310,10 @@ module HelloSign
       else
         self.use_text_tags = false
       end
+
+      if attributes.key?(:'expires_at')
+        self.expires_at = attributes[:'expires_at']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -402,7 +412,8 @@ module HelloSign
           subject == o.subject &&
           test_mode == o.test_mode &&
           title == o.title &&
-          use_text_tags == o.use_text_tags
+          use_text_tags == o.use_text_tags &&
+          expires_at == o.expires_at
     end
 
     # @see the `==` method
@@ -414,7 +425,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [signers, file, file_url, allow_decline, allow_reassign, attachments, cc_email_addresses, client_id, custom_fields, field_options, form_field_groups, form_field_rules, form_fields_per_document, hide_text_tags, is_qualified_signature, message, metadata, signing_options, signing_redirect_url, subject, test_mode, title, use_text_tags].hash
+      [signers, file, file_url, allow_decline, allow_reassign, attachments, cc_email_addresses, client_id, custom_fields, field_options, form_field_groups, form_field_rules, form_fields_per_document, hide_text_tags, is_qualified_signature, message, metadata, signing_options, signing_redirect_url, subject, test_mode, title, use_text_tags, expires_at].hash
     end
 
     # Builds the object from hash

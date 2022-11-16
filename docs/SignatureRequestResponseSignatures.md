@@ -22,5 +22,6 @@ An array of signature objects, 1 for each signer.
 | `sms_phone_number` | ```String``` |  The SMS phone number used for authentication or signature request delivery.  |  |
 | `reassigned_by` | ```String``` |  Email address of original signer who reassigned to this signer.  |  |
 | `reassignment_reason` | ```String``` |  Reason provided by original signer who reassigned to this signer.  |  |
+| `reassigned_from` | ```String``` |  Previous signature identifier.  |  |
 | `error` | ```String``` |  Error message pertaining to this signer, or null.  |  |
 

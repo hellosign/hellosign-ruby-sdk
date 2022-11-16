@@ -1,7 +1,7 @@
 =begin
-#HelloSign API
+#Dropbox Sign API
 
-#HelloSign v3 API
+#Dropbox Sign v3 API
 
 The version of the OpenAPI document: 3.0.0
 Contact: apisupport@hellosign.com
@@ -24,7 +24,7 @@ module HelloSign
     # Returns `true` if the user has been locked out of their account by a team admin.
     attr_accessor :is_locked
 
-    # Returns `true` if the user has a paid HelloSign account.
+    # Returns `true` if the user has a paid Dropbox Sign account.
     attr_accessor :is_paid_hs
 
     # Returns `true` if the user has a paid HelloFax account.
@@ -32,7 +32,7 @@ module HelloSign
 
     attr_accessor :quotas
 
-    # The URL that HelloSign events will `POST` to.
+    # The URL that Dropbox Sign events will `POST` to.
     attr_accessor :callback_url
 
     # The membership role for the team.

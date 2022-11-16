@@ -16,7 +16,7 @@ All URIs are relative to *https://api.hellosign.com/v3*
 
 Create Account
 
-Creates a new HelloSign Account that is associated with the specified `email_address`.
+Creates a new Dropbox Sign Account that is associated with the specified `email_address`.
 
 ### Examples
 
@@ -233,7 +233,7 @@ end
 
 Verify Account
 
-Verifies whether an HelloSign Account exists for the given email address.
+Verifies whether an Dropbox Sign Account exists for the given email address.
 
 ### Examples
 

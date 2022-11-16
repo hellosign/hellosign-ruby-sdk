@@ -1,7 +1,7 @@
 =begin
-#HelloSign API
+#Dropbox Sign API
 
-#HelloSign v3 API
+#Dropbox Sign v3 API
 
 The version of the OpenAPI document: 3.0.0
 Contact: apisupport@hellosign.com
@@ -24,12 +24,16 @@ module HelloSign
     # The new name for the recipient.  **NOTE**: Optional if `email_address` is provided.
     attr_accessor :name
 
+    # The new time when the signature request will expire. Unsigned signatures will be moved to the expired status, and no longer signable.
+    attr_accessor :expires_at
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'signature_id' => :'signature_id',
         :'email_address' => :'email_address',
-        :'name' => :'name'
+        :'name' => :'name',
+        :'expires_at' => :'expires_at'
       }
     end
 
@@ -48,7 +52,8 @@ module HelloSign
       {
         :'signature_id' => :'String',
         :'email_address' => :'String',
-        :'name' => :'String'
+        :'name' => :'String',
+        :'expires_at' => :'Integer'
       }
     end
 
@@ -60,6 +65,7 @@ module HelloSign
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'expires_at'
       ])
     end
 
@@ -94,6 +100,10 @@ module HelloSign
       if attributes.key?(:'name')
         self.name = attributes[:'name']
       end
+
+      if attributes.key?(:'expires_at')
+        self.expires_at = attributes[:'expires_at']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -121,7 +131,8 @@ module HelloSign
       self.class == o.class &&
           signature_id == o.signature_id &&
           email_address == o.email_address &&
-          name == o.name
+          name == o.name &&
+          expires_at == o.expires_at
     end
 
     # @see the `==` method
@@ -133,7 +144,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [signature_id, email_address, name].hash
+      [signature_id, email_address, name, expires_at].hash
     end
 
     # Builds the object from hash

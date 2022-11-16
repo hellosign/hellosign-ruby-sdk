@@ -1,7 +1,7 @@
 =begin
-#HelloSign API
+#Dropbox Sign API
 
-#HelloSign v3 API
+#Dropbox Sign v3 API
 
 The version of the OpenAPI document: 3.0.0
 Contact: apisupport@hellosign.com
@@ -108,6 +108,8 @@ require 'hellosign-ruby-sdk/models/team_create_request'
 require 'hellosign-ruby-sdk/models/team_get_info_response'
 require 'hellosign-ruby-sdk/models/team_get_response'
 require 'hellosign-ruby-sdk/models/team_info_response'
+require 'hellosign-ruby-sdk/models/team_invite_response'
+require 'hellosign-ruby-sdk/models/team_invites_response'
 require 'hellosign-ruby-sdk/models/team_member_response'
 require 'hellosign-ruby-sdk/models/team_members_response'
 require 'hellosign-ruby-sdk/models/team_parent_response'

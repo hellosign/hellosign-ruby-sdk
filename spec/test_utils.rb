@@ -1,7 +1,7 @@
 def do_config
   config = HelloSign.configure
   config.instantiate_files = false
-  config.root_file_path = __dir__ + "/../oas/test_fixtures"
+  config.root_file_path = __dir__ + "/../test_fixtures"
 
   config
 end

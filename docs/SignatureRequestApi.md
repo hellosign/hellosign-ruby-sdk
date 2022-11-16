@@ -9,9 +9,9 @@ All URIs are relative to *https://api.hellosign.com/v3*
 | [`signature_request_cancel`](SignatureRequestApi.md#signature_request_cancel) | **POST** `/signature_request/cancel/{signature_request_id}` | Cancel Incomplete Signature Request |
 | [`signature_request_create_embedded`](SignatureRequestApi.md#signature_request_create_embedded) | **POST** `/signature_request/create_embedded` | Create Embedded Signature Request |
 | [`signature_request_create_embedded_with_template`](SignatureRequestApi.md#signature_request_create_embedded_with_template) | **POST** `/signature_request/create_embedded_with_template` | Create Embedded Signature Request with Template |
-| [`signature_request_files`](SignatureRequestApi.md#signature_request_files) | **GET** `/signature_request/files/{signature_request_id}` | Download File |
-| [`signature_request_files_as_encoded_string`](SignatureRequestApi.md#signature_request_files_as_encoded_string) | **GET** `/signature_request/files/{signature_request_id}?get_data_uri&#x3D;1&amp;file_type&#x3D;pdf` | Download File as Encoded String |
-| [`signature_request_files_as_file_url`](SignatureRequestApi.md#signature_request_files_as_file_url) | **GET** `/signature_request/files/{signature_request_id}?get_url&#x3D;1&amp;file_type&#x3D;pdf` | Download File as File Url |
+| [`signature_request_files`](SignatureRequestApi.md#signature_request_files) | **GET** `/signature_request/files/{signature_request_id}` | Download Files |
+| [`signature_request_files_as_data_uri`](SignatureRequestApi.md#signature_request_files_as_data_uri) | **GET** `/signature_request/files_as_data_uri/{signature_request_id}` | Download Files as Data Uri |
+| [`signature_request_files_as_file_url`](SignatureRequestApi.md#signature_request_files_as_file_url) | **GET** `/signature_request/files_as_file_url/{signature_request_id}` | Download Files as File Url |
 | [`signature_request_get`](SignatureRequestApi.md#signature_request_get) | **GET** `/signature_request/{signature_request_id}` | Get Signature Request |
 | [`signature_request_list`](SignatureRequestApi.md#signature_request_list) | **GET** `/signature_request/list` | List Signature Requests |
 | [`signature_request_release_hold`](SignatureRequestApi.md#signature_request_release_hold) | **POST** `/signature_request/release_hold/{signature_request_id}` | Release On-Hold Signature Request |
@@ -28,7 +28,7 @@ All URIs are relative to *https://api.hellosign.com/v3*
 
 Embedded Bulk Send with Template
 
-Creates BulkSendJob which sends up to 250 SignatureRequests in bulk based off of the provided Template(s) specified with the `template_ids` parameter to be signed in an embedded iFrame. These embedded signature requests can only be signed in embedded iFrames whereas normal signature requests can only be signed on HelloSign.  **NOTE**: Only available for Standard plan and higher.
+Creates BulkSendJob which sends up to 250 SignatureRequests in bulk based off of the provided Template(s) specified with the `template_ids` parameter to be signed in an embedded iFrame. These embedded signature requests can only be signed in embedded iFrames whereas normal signature requests can only be signed on Dropbox Sign.  **NOTE**: Only available for Standard plan and higher.
 
 ### Examples
 
@@ -321,7 +321,7 @@ nil (empty response body)
 
 Create Embedded Signature Request
 
-Creates a new SignatureRequest with the submitted documents to be signed in an embedded iFrame. If form_fields_per_document is not specified, a signature page will be affixed where all signers will be required to add their signature, signifying their agreement to all contained documents. <u>Note</u> that embedded signature requests can only be signed in embedded iFrames whereas normal signature requests can only be signed on HelloSign.
+Creates a new SignatureRequest with the submitted documents to be signed in an embedded iFrame. If form_fields_per_document is not specified, a signature page will be affixed where all signers will be required to add their signature, signifying their agreement to all contained documents. <u>Note</u> that embedded signature requests can only be signed in embedded iFrames whereas normal signature requests can only be signed on Dropbox Sign.
 
 ### Examples
 
@@ -419,7 +419,7 @@ end
 
 Create Embedded Signature Request with Template
 
-Creates a new SignatureRequest based on the given Template(s) to be signed in an embedded iFrame. <u>Note</u> that embedded signature requests can only be signed in embedded iFrames whereas normal signature requests can only be signed on HelloSign.
+Creates a new SignatureRequest based on the given Template(s) to be signed in an embedded iFrame. <u>Note</u> that embedded signature requests can only be signed in embedded iFrames whereas normal signature requests can only be signed on Dropbox Sign.
 
 ### Examples
 
@@ -508,7 +508,7 @@ end
 
 > `File signature_request_files(signature_request_id, opts)`
 
-Download File
+Download Files
 
 Obtain a copy of the current documents specified by the `signature_request_id` parameter. Returns a PDF or ZIP file.   If the files are currently being prepared, a status code of `409` will be returned instead.
 
@@ -546,7 +546,7 @@ This returns an Array which contains the response data, status code and headers.
 
 ```ruby
 begin
-  # Download File
+  # Download Files
   data, status_code, headers = api_instance.signature_request_files_with_http_info(signature_request_id, opts)
   p status_code # => 2xx
   p headers # => { ... }
@@ -577,11 +577,11 @@ end
 - **Accept**: application/pdf, application/zip, application/json
 
 
-## `signature_request_files_as_encoded_string`
+## `signature_request_files_as_data_uri`
 
-> `<FileResponseDataUri> signature_request_files_as_encoded_string(signature_request_id)`
+> `<FileResponseDataUri> signature_request_files_as_data_uri(signature_request_id)`
 
-Download File as Encoded String
+Download Files as Data Uri
 
 Obtain a copy of the current documents specified by the `signature_request_id` parameter. Returns a JSON object with a `data_uri` representing the base64 encoded file (PDFs only).   If the files are currently being prepared, a status code of `409` will be returned instead.
 
@@ -603,7 +603,7 @@ api = HelloSign::SignatureRequestApi.new
 signature_request_id = "fa5c8a0b0f492d768749333ad6fcc214c111e967"
 
 begin
-  result = api.signature_request_files_as_encoded_string(signature_request_id)
+  result = api.signature_request_files_as_data_uri(signature_request_id)
   p result
 rescue HelloSign::ApiError => e
   puts "Exception when calling HelloSign API: #{e}"
@@ -611,21 +611,21 @@ end
 
 ```
 
-#### Using the `signature_request_files_as_encoded_string_with_http_info` variant
+#### Using the `signature_request_files_as_data_uri_with_http_info` variant
 
 This returns an Array which contains the response data, status code and headers.
 
-> `<Array(<FileResponseDataUri>, Integer, Hash)> signature_request_files_as_encoded_string_with_http_info(signature_request_id)`
+> `<Array(<FileResponseDataUri>, Integer, Hash)> signature_request_files_as_data_uri_with_http_info(signature_request_id)`
 
 ```ruby
 begin
-  # Download File as Encoded String
-  data, status_code, headers = api_instance.signature_request_files_as_encoded_string_with_http_info(signature_request_id)
+  # Download Files as Data Uri
+  data, status_code, headers = api_instance.signature_request_files_as_data_uri_with_http_info(signature_request_id)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <FileResponseDataUri>
 rescue HelloSign::ApiError => e
-  puts "Error when calling SignatureRequestApi->signature_request_files_as_encoded_string_with_http_info: #{e}"
+  puts "Error when calling SignatureRequestApi->signature_request_files_as_data_uri_with_http_info: #{e}"
 end
 ```
 
@@ -653,7 +653,7 @@ end
 
 > `<FileResponse> signature_request_files_as_file_url(signature_request_id)`
 
-Download File as File Url
+Download Files as File Url
 
 Obtain a copy of the current documents specified by the `signature_request_id` parameter. Returns a JSON object with a url to the file (PDFs only).   If the files are currently being prepared, a status code of `409` will be returned instead.
 
@@ -691,7 +691,7 @@ This returns an Array which contains the response data, status code and headers.
 
 ```ruby
 begin
-  # Download File as File Url
+  # Download Files as File Url
   data, status_code, headers = api_instance.signature_request_files_as_file_url_with_http_info(signature_request_id)
   p status_code # => 2xx
   p headers # => { ... }

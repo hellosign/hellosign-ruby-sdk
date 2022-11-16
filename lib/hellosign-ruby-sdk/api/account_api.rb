@@ -1,7 +1,7 @@
 =begin
-#HelloSign API
+#Dropbox Sign API
 
-#HelloSign v3 API
+#Dropbox Sign v3 API
 
 The version of the OpenAPI document: 3.0.0
 Contact: apisupport@hellosign.com
@@ -20,7 +20,7 @@ module HelloSign
       @api_client = api_client
     end
     # Create Account
-    # Creates a new HelloSign Account that is associated with the specified `email_address`.
+    # Creates a new Dropbox Sign Account that is associated with the specified `email_address`.
     # @param account_create_request [AccountCreateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [AccountCreateResponse]
@@ -30,7 +30,7 @@ module HelloSign
     end
 
     # Create Account
-    # Creates a new HelloSign Account that is associated with the specified &#x60;email_address&#x60;.
+    # Creates a new Dropbox Sign Account that is associated with the specified &#x60;email_address&#x60;.
     # @param account_create_request [AccountCreateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AccountCreateResponse, Integer, Hash)>] AccountCreateResponse data, response status code and response headers
@@ -332,7 +332,7 @@ module HelloSign
     end
 
     # Verify Account
-    # Verifies whether an HelloSign Account exists for the given email address.
+    # Verifies whether an Dropbox Sign Account exists for the given email address.
     # @param account_verify_request [AccountVerifyRequest] 
     # @param [Hash] opts the optional parameters
     # @return [AccountVerifyResponse]
@@ -342,7 +342,7 @@ module HelloSign
     end
 
     # Verify Account
-    # Verifies whether an HelloSign Account exists for the given email address.
+    # Verifies whether an Dropbox Sign Account exists for the given email address.
     # @param account_verify_request [AccountVerifyRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AccountVerifyResponse, Integer, Hash)>] AccountVerifyResponse data, response status code and response headers
