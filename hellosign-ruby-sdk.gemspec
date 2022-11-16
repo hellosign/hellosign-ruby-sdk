@@ -1,9 +1,9 @@
 # -*- encoding: utf-8 -*-
 
 =begin
-#HelloSign API
+#Dropbox Sign API
 
-#HelloSign v3 API
+#Dropbox Sign v3 API
 
 The version of the OpenAPI document: 3.0.0
 Contact: apisupport@hellosign.com
@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
   s.authors     = ["HelloSign"]
   s.email       = ["apisupport@hellosign.com"]
   s.homepage    = "https://hellosign.com"
-  s.summary     = "HelloSign API Ruby Gem"
+  s.summary     = "Dropbox Sign API Ruby Gem"
   s.description = "Official HelloSign APIv3 OpenAPI Ruby SDK"
   s.license     = "MIT"
   s.required_ruby_version = ">= 2.7"

@@ -1,7 +1,7 @@
 =begin
-#HelloSign API
+#Dropbox Sign API
 
-#HelloSign v3 API
+#Dropbox Sign v3 API
 
 The version of the OpenAPI document: 3.0.0
 Contact: apisupport@hellosign.com
@@ -64,6 +64,9 @@ module HelloSign
     # Reason provided by original signer who reassigned to this signer.
     attr_accessor :reassignment_reason
 
+    # Previous signature identifier.
+    attr_accessor :reassigned_from
+
     # Error message pertaining to this signer, or null.
     attr_accessor :error
 
@@ -86,6 +89,7 @@ module HelloSign
         :'sms_phone_number' => :'sms_phone_number',
         :'reassigned_by' => :'reassigned_by',
         :'reassignment_reason' => :'reassignment_reason',
+        :'reassigned_from' => :'reassigned_from',
         :'error' => :'error'
       }
     end
@@ -119,6 +123,7 @@ module HelloSign
         :'sms_phone_number' => :'String',
         :'reassigned_by' => :'String',
         :'reassignment_reason' => :'String',
+        :'reassigned_from' => :'String',
         :'error' => :'String'
       }
     end
@@ -143,6 +148,7 @@ module HelloSign
         :'sms_phone_number',
         :'reassigned_by',
         :'reassignment_reason',
+        :'reassigned_from',
         :'error'
       ])
     end
@@ -231,6 +237,10 @@ module HelloSign
         self.reassignment_reason = attributes[:'reassignment_reason']
       end
 
+      if attributes.key?(:'reassigned_from')
+        self.reassigned_from = attributes[:'reassigned_from']
+      end
+
       if attributes.key?(:'error')
         self.error = attributes[:'error']
       end
@@ -270,6 +280,7 @@ module HelloSign
           sms_phone_number == o.sms_phone_number &&
           reassigned_by == o.reassigned_by &&
           reassignment_reason == o.reassignment_reason &&
+          reassigned_from == o.reassigned_from &&
           error == o.error
     end
 
@@ -282,7 +293,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [signature_id, signer_email_address, signer_name, signer_role, order, status_code, decline_reason, signed_at, last_viewed_at, last_reminded_at, has_pin, has_sms_auth, has_sms_delivery, sms_phone_number, reassigned_by, reassignment_reason, error].hash
+      [signature_id, signer_email_address, signer_name, signer_role, order, status_code, decline_reason, signed_at, last_viewed_at, last_reminded_at, has_pin, has_sms_auth, has_sms_delivery, sms_phone_number, reassigned_by, reassignment_reason, reassigned_from, error].hash
     end
 
     # Builds the object from hash

@@ -1,7 +1,7 @@
 =begin
-#HelloSign API
+#Dropbox Sign API
 
-#HelloSign v3 API
+#Dropbox Sign v3 API
 
 The version of the OpenAPI document: 3.0.0
 Contact: apisupport@hellosign.com
@@ -129,7 +129,7 @@ module HelloSign
     end
 
     # Create Embedded Unclaimed Draft
-    # Creates a new Draft that can be claimed and used in an embedded iFrame. The first authenticated user to access the URL will claim the Draft and will be shown the \"Request signature\" page with the Draft loaded. Subsequent access to the claim URL will result in a `404`. For this embedded endpoint the `requester_email_address` parameter is required.  **NOTE**: Embedded unclaimed drafts can only be accessed in embedded iFrames whereas normal drafts can be used and accessed on HelloSign.
+    # Creates a new Draft that can be claimed and used in an embedded iFrame. The first authenticated user to access the URL will claim the Draft and will be shown the \"Request signature\" page with the Draft loaded. Subsequent access to the claim URL will result in a `404`. For this embedded endpoint the `requester_email_address` parameter is required.  **NOTE**: Embedded unclaimed drafts can only be accessed in embedded iFrames whereas normal drafts can be used and accessed on Dropbox Sign.
     # @param unclaimed_draft_create_embedded_request [UnclaimedDraftCreateEmbeddedRequest] 
     # @param [Hash] opts the optional parameters
     # @return [UnclaimedDraftCreateResponse]
@@ -139,7 +139,7 @@ module HelloSign
     end
 
     # Create Embedded Unclaimed Draft
-    # Creates a new Draft that can be claimed and used in an embedded iFrame. The first authenticated user to access the URL will claim the Draft and will be shown the \&quot;Request signature\&quot; page with the Draft loaded. Subsequent access to the claim URL will result in a &#x60;404&#x60;. For this embedded endpoint the &#x60;requester_email_address&#x60; parameter is required.  **NOTE**: Embedded unclaimed drafts can only be accessed in embedded iFrames whereas normal drafts can be used and accessed on HelloSign.
+    # Creates a new Draft that can be claimed and used in an embedded iFrame. The first authenticated user to access the URL will claim the Draft and will be shown the \&quot;Request signature\&quot; page with the Draft loaded. Subsequent access to the claim URL will result in a &#x60;404&#x60;. For this embedded endpoint the &#x60;requester_email_address&#x60; parameter is required.  **NOTE**: Embedded unclaimed drafts can only be accessed in embedded iFrames whereas normal drafts can be used and accessed on Dropbox Sign.
     # @param unclaimed_draft_create_embedded_request [UnclaimedDraftCreateEmbeddedRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(UnclaimedDraftCreateResponse, Integer, Hash)>] UnclaimedDraftCreateResponse data, response status code and response headers
@@ -238,7 +238,7 @@ module HelloSign
     end
 
     # Create Embedded Unclaimed Draft with Template
-    # Creates a new Draft with a previously saved template(s) that can be claimed and used in an embedded iFrame. The first authenticated user to access the URL will claim the Draft and will be shown the \"Request signature\" page with the Draft loaded. Subsequent access to the claim URL will result in a `404`. For this embedded endpoint the `requester_email_address` parameter is required.  **NOTE**: Embedded unclaimed drafts can only be accessed in embedded iFrames whereas normal drafts can be used and accessed on HelloSign.
+    # Creates a new Draft with a previously saved template(s) that can be claimed and used in an embedded iFrame. The first authenticated user to access the URL will claim the Draft and will be shown the \"Request signature\" page with the Draft loaded. Subsequent access to the claim URL will result in a `404`. For this embedded endpoint the `requester_email_address` parameter is required.  **NOTE**: Embedded unclaimed drafts can only be accessed in embedded iFrames whereas normal drafts can be used and accessed on Dropbox Sign.
     # @param unclaimed_draft_create_embedded_with_template_request [UnclaimedDraftCreateEmbeddedWithTemplateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [UnclaimedDraftCreateResponse]
@@ -248,7 +248,7 @@ module HelloSign
     end
 
     # Create Embedded Unclaimed Draft with Template
-    # Creates a new Draft with a previously saved template(s) that can be claimed and used in an embedded iFrame. The first authenticated user to access the URL will claim the Draft and will be shown the \&quot;Request signature\&quot; page with the Draft loaded. Subsequent access to the claim URL will result in a &#x60;404&#x60;. For this embedded endpoint the &#x60;requester_email_address&#x60; parameter is required.  **NOTE**: Embedded unclaimed drafts can only be accessed in embedded iFrames whereas normal drafts can be used and accessed on HelloSign.
+    # Creates a new Draft with a previously saved template(s) that can be claimed and used in an embedded iFrame. The first authenticated user to access the URL will claim the Draft and will be shown the \&quot;Request signature\&quot; page with the Draft loaded. Subsequent access to the claim URL will result in a &#x60;404&#x60;. For this embedded endpoint the &#x60;requester_email_address&#x60; parameter is required.  **NOTE**: Embedded unclaimed drafts can only be accessed in embedded iFrames whereas normal drafts can be used and accessed on Dropbox Sign.
     # @param unclaimed_draft_create_embedded_with_template_request [UnclaimedDraftCreateEmbeddedWithTemplateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(UnclaimedDraftCreateResponse, Integer, Hash)>] UnclaimedDraftCreateResponse data, response status code and response headers
@@ -347,7 +347,7 @@ module HelloSign
     end
 
     # Edit and Resend Unclaimed Draft
-    # Creates a new signature request from an embedded request that can be edited prior to being sent to the recipients. Parameter `test_mode` can be edited prior to request. Signers can be edited in embedded editor. Requester's email address will remain unchanged if `requester_email_address` parameter is not set.  **NOTE**: Embedded unclaimed drafts can only be accessed in embedded iFrames whereas normal drafts can be used and accessed on HelloSign.
+    # Creates a new signature request from an embedded request that can be edited prior to being sent to the recipients. Parameter `test_mode` can be edited prior to request. Signers can be edited in embedded editor. Requester's email address will remain unchanged if `requester_email_address` parameter is not set.  **NOTE**: Embedded unclaimed drafts can only be accessed in embedded iFrames whereas normal drafts can be used and accessed on Dropbox Sign.
     # @param signature_request_id [String] The ID of the signature request to edit and resend.
     # @param unclaimed_draft_edit_and_resend_request [UnclaimedDraftEditAndResendRequest] 
     # @param [Hash] opts the optional parameters
@@ -358,7 +358,7 @@ module HelloSign
     end
 
     # Edit and Resend Unclaimed Draft
-    # Creates a new signature request from an embedded request that can be edited prior to being sent to the recipients. Parameter &#x60;test_mode&#x60; can be edited prior to request. Signers can be edited in embedded editor. Requester&#39;s email address will remain unchanged if &#x60;requester_email_address&#x60; parameter is not set.  **NOTE**: Embedded unclaimed drafts can only be accessed in embedded iFrames whereas normal drafts can be used and accessed on HelloSign.
+    # Creates a new signature request from an embedded request that can be edited prior to being sent to the recipients. Parameter &#x60;test_mode&#x60; can be edited prior to request. Signers can be edited in embedded editor. Requester&#39;s email address will remain unchanged if &#x60;requester_email_address&#x60; parameter is not set.  **NOTE**: Embedded unclaimed drafts can only be accessed in embedded iFrames whereas normal drafts can be used and accessed on Dropbox Sign.
     # @param signature_request_id [String] The ID of the signature request to edit and resend.
     # @param unclaimed_draft_edit_and_resend_request [UnclaimedDraftEditAndResendRequest] 
     # @param [Hash] opts the optional parameters

@@ -1,7 +1,7 @@
 =begin
-#HelloSign API
+#Dropbox Sign API
 
-#HelloSign v3 API
+#Dropbox Sign v3 API
 
 The version of the OpenAPI document: 3.0.0
 Contact: apisupport@hellosign.com
@@ -20,7 +20,7 @@ module HelloSign
       @api_client = api_client
     end
     # Add User to Team
-    # Invites a user (specified using the `email_address` parameter) to your Team. If the user does not currently have a HelloSign Account, a new one will be created for them. If a user is already a part of another Team, a `team_invite_failed` error will be returned.
+    # Invites a user (specified using the `email_address` parameter) to your Team. If the user does not currently have a Dropbox Sign Account, a new one will be created for them. If a user is already a part of another Team, a `team_invite_failed` error will be returned.
     # @param team_add_member_request [TeamAddMemberRequest] 
     # @param [Hash] opts the optional parameters
     # @option opts [String] :team_id The id of the team.
@@ -31,7 +31,7 @@ module HelloSign
     end
 
     # Add User to Team
-    # Invites a user (specified using the &#x60;email_address&#x60; parameter) to your Team. If the user does not currently have a HelloSign Account, a new one will be created for them. If a user is already a part of another Team, a &#x60;team_invite_failed&#x60; error will be returned.
+    # Invites a user (specified using the &#x60;email_address&#x60; parameter) to your Team. If the user does not currently have a Dropbox Sign Account, a new one will be created for them. If a user is already a part of another Team, a &#x60;team_invite_failed&#x60; error will be returned.
     # @param team_add_member_request [TeamAddMemberRequest] 
     # @param [Hash] opts the optional parameters
     # @option opts [String] :team_id The id of the team.
@@ -476,6 +476,97 @@ module HelloSign
 
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: TeamApi#team_info\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # List Team Invites
+    # Provides a list of team invites (and their roles).
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :email_address The email address for which to display the team invites.
+    # @return [TeamInvitesResponse]
+    def team_invites(opts = {})
+      data, _status_code, _headers = team_invites_with_http_info(opts)
+      data
+    end
+
+    # List Team Invites
+    # Provides a list of team invites (and their roles).
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :email_address The email address for which to display the team invites.
+    # @return [Array<(TeamInvitesResponse, Integer, Hash)>] TeamInvitesResponse data, response status code and response headers
+    def team_invites_with_http_info(opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: TeamApi.team_invites ...'
+      end
+      # resource path
+      local_var_path = '/team/invites'
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+      query_params[:'email_address'] = opts[:'email_address'] if !opts[:'email_address'].nil?
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
+
+      post_body = {}
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'TeamInvitesResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['api_key', 'oauth2']
+
+      new_options = opts.merge(
+        :operation => :"TeamApi.team_invites",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      begin
+        data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      rescue HelloSign::ApiError => e
+        if e.code === 200
+          body = @api_client.convert_to_type(
+            JSON.parse("[#{e.response_body}]", :symbolize_names => true)[0],
+            "HelloSign::TeamInvitesResponse"
+          )
+
+          fail ApiError.new(:code => e.code,
+                            :response_headers => e.response_headers,
+                            :response_body => body),
+               e.message
+        end
+
+        range_code = "4XX".split('').first
+        range_code_left = "#{range_code}00".to_i
+        range_code_right = "#{range_code}99".to_i
+        if e.code >= range_code_left && e.code <= range_code_right
+          body = @api_client.convert_to_type(
+            JSON.parse("[#{e.response_body}]", :symbolize_names => true)[0],
+            "HelloSign::ErrorResponse"
+          )
+
+          fail ApiError.new(:code => e.code,
+                            :response_headers => e.response_headers,
+                            :response_body => body),
+               e.message
+        end
+
+      end
+
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: TeamApi#team_invites\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end

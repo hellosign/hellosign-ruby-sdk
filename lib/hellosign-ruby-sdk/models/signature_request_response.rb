@@ -1,7 +1,7 @@
 =begin
-#HelloSign API
+#Dropbox Sign API
 
-#HelloSign v3 API
+#Dropbox Sign v3 API
 
 The version of the OpenAPI document: 3.0.0
 Contact: apisupport@hellosign.com
@@ -43,6 +43,9 @@ module HelloSign
     # Time the signature request was created.
     attr_accessor :created_at
 
+    # The time when the signature request will expire pending signatures.
+    attr_accessor :expires_at
+
     # Whether or not the SignatureRequest has been fully executed by all signers.
     attr_accessor :is_complete
 
@@ -55,7 +58,7 @@ module HelloSign
     # The URL where a copy of the request's documents can be downloaded.
     attr_accessor :files_url
 
-    # The URL where a signer, after authenticating, can sign the documents. This should only be used by users with existing HelloSign accounts as they will be required to log in before signing.
+    # The URL where a signer, after authenticating, can sign the documents. This should only be used by users with existing Dropbox Sign accounts as they will be required to log in before signing.
     attr_accessor :signing_url
 
     # The URL where the requester and the signers can view the current status of the SignatureRequest.
@@ -94,6 +97,7 @@ module HelloSign
         :'message' => :'message',
         :'metadata' => :'metadata',
         :'created_at' => :'created_at',
+        :'expires_at' => :'expires_at',
         :'is_complete' => :'is_complete',
         :'is_declined' => :'is_declined',
         :'has_error' => :'has_error',
@@ -132,6 +136,7 @@ module HelloSign
         :'message' => :'String',
         :'metadata' => :'Object',
         :'created_at' => :'Integer',
+        :'expires_at' => :'Integer',
         :'is_complete' => :'Boolean',
         :'is_declined' => :'Boolean',
         :'has_error' => :'Boolean',
@@ -226,6 +231,10 @@ module HelloSign
         self.created_at = attributes[:'created_at']
       end
 
+      if attributes.key?(:'expires_at')
+        self.expires_at = attributes[:'expires_at']
+      end
+
       if attributes.key?(:'is_complete')
         self.is_complete = attributes[:'is_complete']
       end
@@ -318,6 +327,7 @@ module HelloSign
           message == o.message &&
           metadata == o.metadata &&
           created_at == o.created_at &&
+          expires_at == o.expires_at &&
           is_complete == o.is_complete &&
           is_declined == o.is_declined &&
           has_error == o.has_error &&
@@ -342,7 +352,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [test_mode, signature_request_id, requester_email_address, title, original_title, subject, message, metadata, created_at, is_complete, is_declined, has_error, files_url, signing_url, details_url, cc_email_addresses, signing_redirect_url, template_ids, custom_fields, attachments, response_data, signatures].hash
+      [test_mode, signature_request_id, requester_email_address, title, original_title, subject, message, metadata, created_at, expires_at, is_complete, is_declined, has_error, files_url, signing_url, details_url, cc_email_addresses, signing_redirect_url, template_ids, custom_fields, attachments, response_data, signatures].hash
     end
 
     # Builds the object from hash

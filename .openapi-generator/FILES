@@ -125,6 +125,8 @@ docs/TeamCreateRequest.md
 docs/TeamGetInfoResponse.md
 docs/TeamGetResponse.md
 docs/TeamInfoResponse.md
+docs/TeamInviteResponse.md
+docs/TeamInvitesResponse.md
 docs/TeamMemberResponse.md
 docs/TeamMembersResponse.md
 docs/TeamParentResponse.md
@@ -293,6 +295,8 @@ lib/hellosign-ruby-sdk/models/team_create_request.rb
 lib/hellosign-ruby-sdk/models/team_get_info_response.rb
 lib/hellosign-ruby-sdk/models/team_get_response.rb
 lib/hellosign-ruby-sdk/models/team_info_response.rb
+lib/hellosign-ruby-sdk/models/team_invite_response.rb
+lib/hellosign-ruby-sdk/models/team_invites_response.rb
 lib/hellosign-ruby-sdk/models/team_member_response.rb
 lib/hellosign-ruby-sdk/models/team_members_response.rb
 lib/hellosign-ruby-sdk/models/team_parent_response.rb

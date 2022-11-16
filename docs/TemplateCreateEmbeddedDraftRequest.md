@@ -8,7 +8,7 @@
 | ---- | ---- | ----------- | ----- |
 | `client_id`<sup>*_required_</sup> | ```String``` |  Client id of the app you&#39;re using to create this draft. Used to apply the branding and callback url defined for the app.  |  |
 | `file` | ```Array<File>``` |  Use `file[]` to indicate the uploaded file(s) to send for signature.<br><br>This endpoint requires either **file** or **file_url[]**, but not both.  |  |
-| `file_url` | ```Array<String>``` |  Use `file_url[]` to have HelloSign download the file(s) to send for signature.<br><br>This endpoint requires either **file** or **file_url[]**, but not both.  |  |
+| `file_url` | ```Array<String>``` |  Use `file_url[]` to have Dropbox Sign download the file(s) to send for signature.<br><br>This endpoint requires either **file** or **file_url[]**, but not both.  |  |
 | `allow_ccs` | ```Boolean``` |  This allows the requester to specify whether the user is allowed to provide email addresses to CC when creating a template.  |  [default to true] |
 | `allow_reassign` | ```Boolean``` |  Allows signers to reassign their signature requests to other signers if set to `true`. Defaults to `false`.<br><br>**Note**: Only available for Premium plan and higher.  |  [default to false] |
 | `attachments` | [```Array<SubAttachment>```](SubAttachment.md) |  A list describing the attachments  |  |

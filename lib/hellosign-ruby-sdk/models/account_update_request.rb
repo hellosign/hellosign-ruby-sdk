@@ -1,7 +1,7 @@
 =begin
-#HelloSign API
+#Dropbox Sign API
 
-#HelloSign v3 API
+#Dropbox Sign v3 API
 
 The version of the OpenAPI document: 3.0.0
 Contact: apisupport@hellosign.com
@@ -18,7 +18,7 @@ module HelloSign
     # The ID of the Account
     attr_accessor :account_id
 
-    # The URL that HelloSign should POST events to.
+    # The URL that Dropbox Sign should POST events to.
     attr_accessor :callback_url
 
     # The locale used in this Account. Check out the list of [supported locales](/api/reference/constants/#supported-locales) to learn more about the possible values.

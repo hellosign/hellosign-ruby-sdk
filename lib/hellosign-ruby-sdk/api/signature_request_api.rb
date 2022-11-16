@@ -1,7 +1,7 @@
 =begin
-#HelloSign API
+#Dropbox Sign API
 
-#HelloSign v3 API
+#Dropbox Sign v3 API
 
 The version of the OpenAPI document: 3.0.0
 Contact: apisupport@hellosign.com
@@ -20,7 +20,7 @@ module HelloSign
       @api_client = api_client
     end
     # Embedded Bulk Send with Template
-    # Creates BulkSendJob which sends up to 250 SignatureRequests in bulk based off of the provided Template(s) specified with the `template_ids` parameter to be signed in an embedded iFrame. These embedded signature requests can only be signed in embedded iFrames whereas normal signature requests can only be signed on HelloSign.  **NOTE**: Only available for Standard plan and higher.
+    # Creates BulkSendJob which sends up to 250 SignatureRequests in bulk based off of the provided Template(s) specified with the `template_ids` parameter to be signed in an embedded iFrame. These embedded signature requests can only be signed in embedded iFrames whereas normal signature requests can only be signed on Dropbox Sign.  **NOTE**: Only available for Standard plan and higher.
     # @param signature_request_bulk_create_embedded_with_template_request [SignatureRequestBulkCreateEmbeddedWithTemplateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [BulkSendJobSendResponse]
@@ -30,7 +30,7 @@ module HelloSign
     end
 
     # Embedded Bulk Send with Template
-    # Creates BulkSendJob which sends up to 250 SignatureRequests in bulk based off of the provided Template(s) specified with the &#x60;template_ids&#x60; parameter to be signed in an embedded iFrame. These embedded signature requests can only be signed in embedded iFrames whereas normal signature requests can only be signed on HelloSign.  **NOTE**: Only available for Standard plan and higher.
+    # Creates BulkSendJob which sends up to 250 SignatureRequests in bulk based off of the provided Template(s) specified with the &#x60;template_ids&#x60; parameter to be signed in an embedded iFrame. These embedded signature requests can only be signed in embedded iFrames whereas normal signature requests can only be signed on Dropbox Sign.  **NOTE**: Only available for Standard plan and higher.
     # @param signature_request_bulk_create_embedded_with_template_request [SignatureRequestBulkCreateEmbeddedWithTemplateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(BulkSendJobSendResponse, Integer, Hash)>] BulkSendJobSendResponse data, response status code and response headers
@@ -305,7 +305,7 @@ module HelloSign
     end
 
     # Create Embedded Signature Request
-    # Creates a new SignatureRequest with the submitted documents to be signed in an embedded iFrame. If form_fields_per_document is not specified, a signature page will be affixed where all signers will be required to add their signature, signifying their agreement to all contained documents. <u>Note</u> that embedded signature requests can only be signed in embedded iFrames whereas normal signature requests can only be signed on HelloSign.
+    # Creates a new SignatureRequest with the submitted documents to be signed in an embedded iFrame. If form_fields_per_document is not specified, a signature page will be affixed where all signers will be required to add their signature, signifying their agreement to all contained documents. <u>Note</u> that embedded signature requests can only be signed in embedded iFrames whereas normal signature requests can only be signed on Dropbox Sign.
     # @param signature_request_create_embedded_request [SignatureRequestCreateEmbeddedRequest] 
     # @param [Hash] opts the optional parameters
     # @return [SignatureRequestGetResponse]
@@ -315,7 +315,7 @@ module HelloSign
     end
 
     # Create Embedded Signature Request
-    # Creates a new SignatureRequest with the submitted documents to be signed in an embedded iFrame. If form_fields_per_document is not specified, a signature page will be affixed where all signers will be required to add their signature, signifying their agreement to all contained documents. &lt;u&gt;Note&lt;/u&gt; that embedded signature requests can only be signed in embedded iFrames whereas normal signature requests can only be signed on HelloSign.
+    # Creates a new SignatureRequest with the submitted documents to be signed in an embedded iFrame. If form_fields_per_document is not specified, a signature page will be affixed where all signers will be required to add their signature, signifying their agreement to all contained documents. &lt;u&gt;Note&lt;/u&gt; that embedded signature requests can only be signed in embedded iFrames whereas normal signature requests can only be signed on Dropbox Sign.
     # @param signature_request_create_embedded_request [SignatureRequestCreateEmbeddedRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(SignatureRequestGetResponse, Integer, Hash)>] SignatureRequestGetResponse data, response status code and response headers
@@ -414,7 +414,7 @@ module HelloSign
     end
 
     # Create Embedded Signature Request with Template
-    # Creates a new SignatureRequest based on the given Template(s) to be signed in an embedded iFrame. <u>Note</u> that embedded signature requests can only be signed in embedded iFrames whereas normal signature requests can only be signed on HelloSign.
+    # Creates a new SignatureRequest based on the given Template(s) to be signed in an embedded iFrame. <u>Note</u> that embedded signature requests can only be signed in embedded iFrames whereas normal signature requests can only be signed on Dropbox Sign.
     # @param signature_request_create_embedded_with_template_request [SignatureRequestCreateEmbeddedWithTemplateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [SignatureRequestGetResponse]
@@ -424,7 +424,7 @@ module HelloSign
     end
 
     # Create Embedded Signature Request with Template
-    # Creates a new SignatureRequest based on the given Template(s) to be signed in an embedded iFrame. &lt;u&gt;Note&lt;/u&gt; that embedded signature requests can only be signed in embedded iFrames whereas normal signature requests can only be signed on HelloSign.
+    # Creates a new SignatureRequest based on the given Template(s) to be signed in an embedded iFrame. &lt;u&gt;Note&lt;/u&gt; that embedded signature requests can only be signed in embedded iFrames whereas normal signature requests can only be signed on Dropbox Sign.
     # @param signature_request_create_embedded_with_template_request [SignatureRequestCreateEmbeddedWithTemplateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(SignatureRequestGetResponse, Integer, Hash)>] SignatureRequestGetResponse data, response status code and response headers
@@ -522,7 +522,7 @@ module HelloSign
       return data, status_code, headers
     end
 
-    # Download File
+    # Download Files
     # Obtain a copy of the current documents specified by the `signature_request_id` parameter. Returns a PDF or ZIP file.   If the files are currently being prepared, a status code of `409` will be returned instead.
     # @param signature_request_id [String] The id of the SignatureRequest to retrieve.
     # @param [Hash] opts the optional parameters
@@ -533,7 +533,7 @@ module HelloSign
       data
     end
 
-    # Download File
+    # Download Files
     # Obtain a copy of the current documents specified by the &#x60;signature_request_id&#x60; parameter. Returns a PDF or ZIP file.   If the files are currently being prepared, a status code of &#x60;409&#x60; will be returned instead.
     # @param signature_request_id [String] The id of the SignatureRequest to retrieve.
     # @param [Hash] opts the optional parameters
@@ -623,31 +623,31 @@ module HelloSign
       return data, status_code, headers
     end
 
-    # Download File as Encoded String
+    # Download Files as Data Uri
     # Obtain a copy of the current documents specified by the `signature_request_id` parameter. Returns a JSON object with a `data_uri` representing the base64 encoded file (PDFs only).   If the files are currently being prepared, a status code of `409` will be returned instead.
     # @param signature_request_id [String] The id of the SignatureRequest to retrieve.
     # @param [Hash] opts the optional parameters
     # @return [FileResponseDataUri]
-    def signature_request_files_as_encoded_string(signature_request_id, opts = {})
-      data, _status_code, _headers = signature_request_files_as_encoded_string_with_http_info(signature_request_id, opts)
+    def signature_request_files_as_data_uri(signature_request_id, opts = {})
+      data, _status_code, _headers = signature_request_files_as_data_uri_with_http_info(signature_request_id, opts)
       data
     end
 
-    # Download File as Encoded String
+    # Download Files as Data Uri
     # Obtain a copy of the current documents specified by the &#x60;signature_request_id&#x60; parameter. Returns a JSON object with a &#x60;data_uri&#x60; representing the base64 encoded file (PDFs only).   If the files are currently being prepared, a status code of &#x60;409&#x60; will be returned instead.
     # @param signature_request_id [String] The id of the SignatureRequest to retrieve.
     # @param [Hash] opts the optional parameters
     # @return [Array<(FileResponseDataUri, Integer, Hash)>] FileResponseDataUri data, response status code and response headers
-    def signature_request_files_as_encoded_string_with_http_info(signature_request_id, opts = {})
+    def signature_request_files_as_data_uri_with_http_info(signature_request_id, opts = {})
       if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SignatureRequestApi.signature_request_files_as_encoded_string ...'
+        @api_client.config.logger.debug 'Calling API: SignatureRequestApi.signature_request_files_as_data_uri ...'
       end
       # verify the required parameter 'signature_request_id' is set
       if @api_client.config.client_side_validation && signature_request_id.nil?
-        fail ArgumentError, "Missing the required parameter 'signature_request_id' when calling SignatureRequestApi.signature_request_files_as_encoded_string"
+        fail ArgumentError, "Missing the required parameter 'signature_request_id' when calling SignatureRequestApi.signature_request_files_as_data_uri"
       end
       # resource path
-      local_var_path = '/signature_request/files/{signature_request_id}?get_data_uri=1&file_type=pdf'.sub('{' + 'signature_request_id' + '}', CGI.escape(signature_request_id.to_s))
+      local_var_path = '/signature_request/files_as_data_uri/{signature_request_id}'.sub('{' + 'signature_request_id' + '}', CGI.escape(signature_request_id.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
@@ -670,7 +670,7 @@ module HelloSign
       auth_names = opts[:debug_auth_names] || ['api_key', 'oauth2']
 
       new_options = opts.merge(
-        :operation => :"SignatureRequestApi.signature_request_files_as_encoded_string",
+        :operation => :"SignatureRequestApi.signature_request_files_as_data_uri",
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
@@ -712,12 +712,12 @@ module HelloSign
       end
 
       if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SignatureRequestApi#signature_request_files_as_encoded_string\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+        @api_client.config.logger.debug "API called: SignatureRequestApi#signature_request_files_as_data_uri\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end
 
-    # Download File as File Url
+    # Download Files as File Url
     # Obtain a copy of the current documents specified by the `signature_request_id` parameter. Returns a JSON object with a url to the file (PDFs only).   If the files are currently being prepared, a status code of `409` will be returned instead.
     # @param signature_request_id [String] The id of the SignatureRequest to retrieve.
     # @param [Hash] opts the optional parameters
@@ -727,7 +727,7 @@ module HelloSign
       data
     end
 
-    # Download File as File Url
+    # Download Files as File Url
     # Obtain a copy of the current documents specified by the &#x60;signature_request_id&#x60; parameter. Returns a JSON object with a url to the file (PDFs only).   If the files are currently being prepared, a status code of &#x60;409&#x60; will be returned instead.
     # @param signature_request_id [String] The id of the SignatureRequest to retrieve.
     # @param [Hash] opts the optional parameters
@@ -741,7 +741,7 @@ module HelloSign
         fail ArgumentError, "Missing the required parameter 'signature_request_id' when calling SignatureRequestApi.signature_request_files_as_file_url"
       end
       # resource path
-      local_var_path = '/signature_request/files/{signature_request_id}?get_url=1&file_type=pdf'.sub('{' + 'signature_request_id' + '}', CGI.escape(signature_request_id.to_s))
+      local_var_path = '/signature_request/files_as_file_url/{signature_request_id}'.sub('{' + 'signature_request_id' + '}', CGI.escape(signature_request_id.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}

@@ -8,8 +8,8 @@ WORKINGDIR="/app/ruby"
 docker run --rm \
   -e GEM_HOME="/.gem-cache" \
   -e BUNDLE_PATH="/.bundle-cache" \
+  -v "${ROOT_DIR}:${WORKINGDIR}" \
   -v "hellosign-sdk-gem-cache:/.gem-cache" \
   -v "hellosign-sdk-bundle-cache:/.bundle-cache" \
-  -v "${PWD}:${WORKINGDIR}" \
   -w "${WORKINGDIR}" \
   ruby:3.1 "$@"
