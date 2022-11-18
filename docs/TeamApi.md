@@ -323,7 +323,7 @@ end
 api = HelloSign::TeamApi.new
 
 begin
-  result = api.team_info()
+  result = api.team_info
   p result
 rescue HelloSign::ApiError => e
   puts "Exception when calling HelloSign API: #{e}"
@@ -395,7 +395,7 @@ api = HelloSign::TeamApi.new
 email_address = "user@hellosign.com"
 
 begin
-  result = api.team_invites(email_address)
+  result = api.team_invites({email_address: email_address})
   p result
 rescue HelloSign::ApiError => e
   puts "Exception when calling HelloSign API: #{e}"
