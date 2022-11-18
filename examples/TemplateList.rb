@@ -13,7 +13,7 @@ api = HelloSign::TemplateApi.new
 account_id = "f57db65d3f933b5316d398057a36176831451a35"
 
 begin
-  result = api.template_list(account_id)
+  result = api.template_list({account_id: account_id})
   p result
 rescue HelloSign::ApiError => e
   puts "Exception when calling HelloSign API: #{e}"
