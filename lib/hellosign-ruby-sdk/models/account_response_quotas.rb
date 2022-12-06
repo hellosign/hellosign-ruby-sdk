@@ -22,6 +22,9 @@ module HelloSign
     # Signature requests remaining.
     attr_accessor :documents_left
 
+    # Total API templates allowed.
+    attr_accessor :total_templates
+
     # API templates remaining.
     attr_accessor :templates_left
 
@@ -33,6 +36,7 @@ module HelloSign
       {
         :'api_signature_requests_left' => :'api_signature_requests_left',
         :'documents_left' => :'documents_left',
+        :'total_templates' => :'total_templates',
         :'templates_left' => :'templates_left',
         :'sms_verifications_left' => :'sms_verifications_left'
       }
@@ -53,6 +57,7 @@ module HelloSign
       {
         :'api_signature_requests_left' => :'Integer',
         :'documents_left' => :'Integer',
+        :'total_templates' => :'Integer',
         :'templates_left' => :'Integer',
         :'sms_verifications_left' => :'Integer'
       }
@@ -68,6 +73,7 @@ module HelloSign
       Set.new([
         :'api_signature_requests_left',
         :'documents_left',
+        :'total_templates',
         :'templates_left',
         :'sms_verifications_left'
       ])
@@ -101,6 +107,10 @@ module HelloSign
         self.documents_left = attributes[:'documents_left']
       end
 
+      if attributes.key?(:'total_templates')
+        self.total_templates = attributes[:'total_templates']
+      end
+
       if attributes.key?(:'templates_left')
         self.templates_left = attributes[:'templates_left']
       end
@@ -130,6 +140,7 @@ module HelloSign
       self.class == o.class &&
           api_signature_requests_left == o.api_signature_requests_left &&
           documents_left == o.documents_left &&
+          total_templates == o.total_templates &&
           templates_left == o.templates_left &&
           sms_verifications_left == o.sms_verifications_left
     end
@@ -143,7 +154,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [api_signature_requests_left, documents_left, templates_left, sms_verifications_left].hash
+      [api_signature_requests_left, documents_left, total_templates, templates_left, sms_verifications_left].hash
     end
 
     # Builds the object from hash

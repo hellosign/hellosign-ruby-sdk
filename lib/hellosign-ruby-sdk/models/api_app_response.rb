@@ -95,6 +95,7 @@ module HelloSign
         :'callback_url',
         :'oauth',
         :'options',
+        :'white_labeling_options'
       ])
     end
 
