@@ -14,8 +14,9 @@ require 'spec_helper'
 require 'json_spec'
 require_relative '../test_utils'
 
-config = do_config
+config = HelloSign.configure
 api_client = HelloSign::ApiClient.new(config)
+root_file_path = __dir__ + "/../../test_fixtures"
 
 describe HelloSign::TemplateApi do
   context 'TemplateApiTest' do
@@ -31,8 +32,8 @@ describe HelloSign::TemplateApi do
       response_data = get_fixture_data(response_class)[:default]
 
       set_expected_response(200, JSON.dump(response_data))
-      expected = api_client.convert_to_type(response_data, response_class)
-      obj = api_client.convert_to_type(request_data, request_class)
+      expected = api_client.convert_to_type(response_data, response_class) || TemplateGetResponse
+      obj = api_client.convert_to_type(request_data, request_class) || TemplateAddUserRequest
 
       result = api.template_add_user(template_id, obj)
 
@@ -48,8 +49,9 @@ describe HelloSign::TemplateApi do
       response_data = get_fixture_data(response_class)[:default]
 
       set_expected_response(200, JSON.dump(response_data))
-      expected = api_client.convert_to_type(response_data, response_class)
-      obj = api_client.convert_to_type(request_data, request_class)
+      expected = api_client.convert_to_type(response_data, response_class) || TemplateCreateEmbeddedDraftResponse
+      obj = api_client.convert_to_type(request_data, request_class) || TemplateCreateEmbeddedDraftRequest
+      obj.file = [File.new("#{root_file_path}/pdf-sample.pdf", "r")]
 
       result = api.template_create_embedded_draft(obj)
 
@@ -62,15 +64,12 @@ describe HelloSign::TemplateApi do
 
     it 'testTemplateFiles' do
       template_id = 'f57db65d3f933b5316d398057a36176831451a35'
-      file_type = 'pdf'
-      get_url = false
-      get_data_uri = false
 
       response_class = 'FileResponse'
       response_data = get_fixture_data(response_class)[:default]
 
       set_expected_response(200, JSON.dump(response_data))
-      expected = api_client.convert_to_type(response_data, response_class)
+      expected = api_client.convert_to_type(response_data, response_class) || FileResponse
 
       result = api.template_files_as_file_url(template_id, {})
 
@@ -85,7 +84,7 @@ describe HelloSign::TemplateApi do
       response_data = get_fixture_data(response_class)[:default]
 
       set_expected_response(200, JSON.dump(response_data))
-      expected = api_client.convert_to_type(response_data, response_class)
+      expected = api_client.convert_to_type(response_data, response_class) || TemplateGetResponse
 
       result = api.template_get(template_id)
 
@@ -100,7 +99,7 @@ describe HelloSign::TemplateApi do
       response_data = get_fixture_data(response_class)[:default]
 
       set_expected_response(200, JSON.dump(response_data))
-      expected = api_client.convert_to_type(response_data, response_class)
+      expected = api_client.convert_to_type(response_data, response_class) || TemplateListResponse
 
       result = api.template_list({:account_id => account_id})
 
@@ -118,8 +117,8 @@ describe HelloSign::TemplateApi do
       response_data = get_fixture_data(response_class)[:default]
 
       set_expected_response(200, JSON.dump(response_data))
-      expected = api_client.convert_to_type(response_data, response_class)
-      obj = api_client.convert_to_type(request_data, request_class)
+      expected = api_client.convert_to_type(response_data, response_class) || TemplateGetResponse
+      obj = api_client.convert_to_type(request_data, request_class) || TemplateRemoveUserRequest
 
       result = api.template_remove_user(template_id, obj)
 
@@ -137,8 +136,9 @@ describe HelloSign::TemplateApi do
       response_data = get_fixture_data(response_class)[:default]
 
       set_expected_response(200, JSON.dump(response_data))
-      expected = api_client.convert_to_type(response_data, response_class)
-      obj = api_client.convert_to_type(request_data, request_class)
+      expected = api_client.convert_to_type(response_data, response_class) || TemplateUpdateFilesResponse
+      obj = api_client.convert_to_type(request_data, request_class) || TemplateUpdateFilesRequest
+      obj.file = [File.new("#{root_file_path}/pdf-sample.pdf", "r")]
 
       result = api.template_update_files(template_id, obj)
 

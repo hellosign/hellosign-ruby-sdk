@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    hellosign-ruby-sdk (6.0.0.pre.beta22.23)
+    hellosign-ruby-sdk (6.0.0.pre.beta22.24)
       typhoeus (~> 1.0, >= 1.0.1)
 
 GEM
@@ -62,6 +62,7 @@ GEM
 
 PLATFORMS
   aarch64-linux
+  arm64-darwin-21
   x86_64-darwin-20
   x86_64-linux
 

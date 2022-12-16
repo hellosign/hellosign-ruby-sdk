@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'json_spec'
 require_relative '../test_utils'
 
-config = do_config
+config = HelloSign.configure
 api_client = HelloSign::ApiClient.new(config)
 
 describe HelloSign::SubFormFieldsPerDocumentBase do

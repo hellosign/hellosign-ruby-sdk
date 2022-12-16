@@ -14,7 +14,7 @@ require 'spec_helper'
 require 'json_spec'
 require_relative '../test_utils'
 
-config = do_config
+config = HelloSign.configure
 api_client = HelloSign::ApiClient.new(config)
 
 describe HelloSign::AccountApi do
@@ -31,8 +31,8 @@ describe HelloSign::AccountApi do
       code = rand(400..499)
 
       set_expected_response(code, JSON.dump(response_data))
-      expected = api_client.convert_to_type(response_data, response_class)
-      obj = api_client.convert_to_type(request_data, request_class)
+      expected = api_client.convert_to_type(response_data, response_class) || ErrorResponse
+      obj = api_client.convert_to_type(request_data, request_class) || AccountCreateRequest
 
       begin
         result = api.account_create(obj)
@@ -51,8 +51,8 @@ describe HelloSign::AccountApi do
       response_data = get_fixture_data(response_class)[:default]
 
       set_expected_response(200, JSON.dump(response_data))
-      expected = api_client.convert_to_type(response_data, response_class)
-      obj = api_client.convert_to_type(request_data, request_class)
+      expected = api_client.convert_to_type(response_data, response_class) || AccountCreateResponse
+      obj = api_client.convert_to_type(request_data, request_class) || AccountCreateRequest
 
       result = api.account_create(obj)
 
@@ -65,9 +65,9 @@ describe HelloSign::AccountApi do
       response_data = get_fixture_data(response_class)[:default]
 
       set_expected_response(200, JSON.dump(response_data))
-      expected = api_client.convert_to_type(response_data, response_class)
+      expected = api_client.convert_to_type(response_data, response_class) || AccountGetResponse
 
-      result = api.account_get
+      result = api.account_get({ email_address: "jack@example.com" })
 
       expect(result.class.to_s).to eq("HelloSign::#{response_class}")
       expect(result.to_json).to be_json_eql(expected.to_json)
@@ -81,8 +81,8 @@ describe HelloSign::AccountApi do
       response_data = get_fixture_data(response_class)[:default]
 
       set_expected_response(200, JSON.dump(response_data))
-      expected = api_client.convert_to_type(response_data, response_class)
-      obj = api_client.convert_to_type(request_data, request_class)
+      expected = api_client.convert_to_type(response_data, response_class) || AccountGetResponse
+      obj = api_client.convert_to_type(request_data, request_class) || AccountUpdateRequest
 
       result = api.account_update(obj)
 
@@ -98,8 +98,8 @@ describe HelloSign::AccountApi do
       response_data = get_fixture_data(response_class)[:default]
 
       set_expected_response(200, JSON.dump(response_data))
-      expected = api_client.convert_to_type(response_data, response_class)
-      obj = api_client.convert_to_type(request_data, request_class)
+      expected = api_client.convert_to_type(response_data, response_class) || AccountVerifyResponse
+      obj = api_client.convert_to_type(request_data, request_class) || AccountVerifyRequest
 
       result = api.account_verify(obj)
 

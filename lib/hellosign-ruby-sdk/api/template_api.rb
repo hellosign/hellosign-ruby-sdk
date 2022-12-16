@@ -412,7 +412,7 @@ module HelloSign
     end
 
     # Get Template Files as Data Uri
-    # Obtain a copy of the current documents specified by the `template_id` parameter. Returns a JSON object with a `data_uri` representing the base64 encoded file (PDFs only).   If the files are currently being prepared, a status code of `409` will be returned instead. In this case please wait for the `template_created` callback event.
+    # Obtain a copy of the current documents specified by the `template_id` parameter. Returns a JSON object with a `data_uri` representing the base64 encoded file (PDFs only).  If the files are currently being prepared, a status code of `409` will be returned instead. In this case please wait for the `template_created` callback event.
     # @param template_id [String] The id of the template files to retrieve.
     # @param [Hash] opts the optional parameters
     # @return [FileResponseDataUri]
@@ -422,7 +422,7 @@ module HelloSign
     end
 
     # Get Template Files as Data Uri
-    # Obtain a copy of the current documents specified by the &#x60;template_id&#x60; parameter. Returns a JSON object with a &#x60;data_uri&#x60; representing the base64 encoded file (PDFs only).   If the files are currently being prepared, a status code of &#x60;409&#x60; will be returned instead. In this case please wait for the &#x60;template_created&#x60; callback event.
+    # Obtain a copy of the current documents specified by the &#x60;template_id&#x60; parameter. Returns a JSON object with a &#x60;data_uri&#x60; representing the base64 encoded file (PDFs only).  If the files are currently being prepared, a status code of &#x60;409&#x60; will be returned instead. In this case please wait for the &#x60;template_created&#x60; callback event.
     # @param template_id [String] The id of the template files to retrieve.
     # @param [Hash] opts the optional parameters
     # @return [Array<(FileResponseDataUri, Integer, Hash)>] FileResponseDataUri data, response status code and response headers
@@ -506,7 +506,7 @@ module HelloSign
     end
 
     # Get Template Files as File Url
-    # Obtain a copy of the current documents specified by the `template_id` parameter. Returns a JSON object with a url to the file (PDFs only).   If the files are currently being prepared, a status code of `409` will be returned instead. In this case please wait for the `template_created` callback event.
+    # Obtain a copy of the current documents specified by the `template_id` parameter. Returns a JSON object with a url to the file (PDFs only).  If the files are currently being prepared, a status code of `409` will be returned instead. In this case please wait for the `template_created` callback event.
     # @param template_id [String] The id of the template files to retrieve.
     # @param [Hash] opts the optional parameters
     # @return [FileResponse]
@@ -516,7 +516,7 @@ module HelloSign
     end
 
     # Get Template Files as File Url
-    # Obtain a copy of the current documents specified by the &#x60;template_id&#x60; parameter. Returns a JSON object with a url to the file (PDFs only).   If the files are currently being prepared, a status code of &#x60;409&#x60; will be returned instead. In this case please wait for the &#x60;template_created&#x60; callback event.
+    # Obtain a copy of the current documents specified by the &#x60;template_id&#x60; parameter. Returns a JSON object with a url to the file (PDFs only).  If the files are currently being prepared, a status code of &#x60;409&#x60; will be returned instead. In this case please wait for the &#x60;template_created&#x60; callback event.
     # @param template_id [String] The id of the template files to retrieve.
     # @param [Hash] opts the optional parameters
     # @return [Array<(FileResponse, Integer, Hash)>] FileResponse data, response status code and response headers

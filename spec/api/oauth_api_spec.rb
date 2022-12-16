@@ -14,7 +14,7 @@ require 'spec_helper'
 require 'json_spec'
 require_relative '../test_utils'
 
-config = do_config
+config = HelloSign.configure
 api_client = HelloSign::ApiClient.new(config)
 
 describe HelloSign::OAuthApi do
@@ -29,8 +29,8 @@ describe HelloSign::OAuthApi do
       response_data = get_fixture_data(response_class)[:default]
 
       set_expected_response(200, JSON.dump(response_data))
-      expected = api_client.convert_to_type(response_data, response_class)
-      obj = api_client.convert_to_type(request_data, request_class)
+      expected = api_client.convert_to_type(response_data, response_class) || OAuthTokenResponse
+      obj = api_client.convert_to_type(request_data, request_class) || OAuthTokenGenerateRequest
 
       result = api.oauth_token_generate(obj)
 
@@ -46,8 +46,8 @@ describe HelloSign::OAuthApi do
       response_data = get_fixture_data(response_class)[:default]
 
       set_expected_response(200, JSON.dump(response_data))
-      expected = api_client.convert_to_type(response_data, response_class)
-      obj = api_client.convert_to_type(request_data, request_class)
+      expected = api_client.convert_to_type(response_data, response_class) || OAuthTokenResponse
+      obj = api_client.convert_to_type(request_data, request_class) || OAuthTokenRefreshRequest
 
       result = api.oauth_token_refresh(obj)
 

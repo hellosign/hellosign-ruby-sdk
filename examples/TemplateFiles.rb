@@ -13,8 +13,8 @@ api = HelloSign::TemplateApi.new
 template_id = "5de8179668f2033afac48da1868d0093bf133266"
 
 begin
-  result = api.template_files(template_id)
-  p result
+  file_bin = api.template_files(template_id)
+  FileUtils.cp(file_bin.path, "path/to/file.pdf")
 rescue HelloSign::ApiError => e
   puts "Exception when calling HelloSign API: #{e}"
 end

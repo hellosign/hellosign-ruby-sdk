@@ -30,7 +30,7 @@ module HelloSign
     # An E.164 formatted phone number.  **Note**: Not available in test mode and requires a Standard plan or higher.
     attr_accessor :sms_phone_number
 
-    # Specifies the feature used with the `sms_phone_number`. Default `authentication`.  If `authentication`, signer is sent a verification code via SMS that is required to access the document.  If `delivery`, the completed signature request is delivered via SMS (_and_ email).
+    # Specifies the feature used with the `sms_phone_number`. Default `authentication`.  If `authentication`, signer is sent a verification code via SMS that is required to access the document.  If `delivery`, a link to complete the signature request is delivered via SMS (_and_ email).
     attr_accessor :sms_phone_number_type
 
     class EnumAttributeValidator
@@ -282,18 +282,6 @@ module HelloSign
           false
         end
       when :File
-        if HelloSign.configure.instantiate_files && value.is_a?(String)
-          filepath = value
-
-          if HelloSign.configure.root_file_path
-            filepath = "#{HelloSign.configure.root_file_path}/#{value}"
-          end
-
-          if File.exist? filepath
-            value = File.new(filepath, "r")
-          end
-        end
-
         value
       when :Object
         # generic object (usually a Hash), return directly

@@ -131,8 +131,8 @@ module HelloSign
     # Get Account
     # Returns the properties and settings of your Account.
     # @param [Hash] opts the optional parameters
-    # @option opts [String] :account_id &#x60;account_id&#x60; or &#x60;email_address&#x60; is required. If both are provided, the account id prevails.   The ID of the Account.
-    # @option opts [String] :email_address &#x60;account_id&#x60; or &#x60;email_address&#x60; is required, If both are provided, the account id prevails.   The email address of the Account.
+    # @option opts [String] :account_id &#x60;account_id&#x60; or &#x60;email_address&#x60; is required. If both are provided, the account id prevails.  The ID of the Account.
+    # @option opts [String] :email_address &#x60;account_id&#x60; or &#x60;email_address&#x60; is required, If both are provided, the account id prevails.  The email address of the Account.
     # @return [AccountGetResponse]
     def account_get(opts = {})
       data, _status_code, _headers = account_get_with_http_info(opts)
@@ -142,8 +142,8 @@ module HelloSign
     # Get Account
     # Returns the properties and settings of your Account.
     # @param [Hash] opts the optional parameters
-    # @option opts [String] :account_id &#x60;account_id&#x60; or &#x60;email_address&#x60; is required. If both are provided, the account id prevails.   The ID of the Account.
-    # @option opts [String] :email_address &#x60;account_id&#x60; or &#x60;email_address&#x60; is required, If both are provided, the account id prevails.   The email address of the Account.
+    # @option opts [String] :account_id &#x60;account_id&#x60; or &#x60;email_address&#x60; is required. If both are provided, the account id prevails.  The ID of the Account.
+    # @option opts [String] :email_address &#x60;account_id&#x60; or &#x60;email_address&#x60; is required, If both are provided, the account id prevails.  The email address of the Account.
     # @return [Array<(AccountGetResponse, Integer, Hash)>] AccountGetResponse data, response status code and response headers
     def account_get_with_http_info(opts = {})
       if @api_client.config.debugging

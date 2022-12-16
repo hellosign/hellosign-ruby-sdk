@@ -175,18 +175,6 @@ module HelloSign
           false
         end
       when :File
-        if HelloSign.configure.instantiate_files && value.is_a?(String)
-          filepath = value
-
-          if HelloSign.configure.root_file_path
-            filepath = "#{HelloSign.configure.root_file_path}/#{value}"
-          end
-
-          if File.exist? filepath
-            value = File.new(filepath, "r")
-          end
-        end
-
         value
       when :Object
         # generic object (usually a Hash), return directly

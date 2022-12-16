@@ -137,18 +137,6 @@ module HelloSign
 
     attr_accessor :force_ending_format
 
-    # Allows instantiating files when using ApiClient::convert_to_type()
-    # Default to false.
-    #
-    # @return [String]
-    attr_accessor :instantiate_files
-
-    # Define the base location to look for file uploads
-    # Default to nil.
-    #
-    # @return [String]
-    attr_accessor :root_file_path
-
     def initialize
       @scheme = 'https'
       @host = 'api.hellosign.com'
@@ -169,8 +157,6 @@ module HelloSign
       @debugging = false
       @inject_format = false
       @force_ending_format = false
-      @instantiate_files = false
-      @root_file_path = nil
       @logger = defined?(Rails) ? Rails.logger : Logger.new(STDOUT)
 
       yield(self) if block_given?

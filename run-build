@@ -5,7 +5,7 @@
 set -e
 
 DIR=$(cd `dirname $0` && pwd)
-WORKINGDIR="/app/ruby"
+WORKING_DIR="/app/ruby"
 
 docker run --rm \
   -v "${DIR}/:/local" \
@@ -28,14 +28,14 @@ bash "${DIR}/bin/ruby" bundle
 
 printf "Replacing strings ...\n"
 docker run --rm \
-  -v "${DIR}:${WORKINGDIR}" \
-  -w "${WORKINGDIR}" \
+  -v "${DIR}:${WORKING_DIR}" \
+  -w "${WORKING_DIR}" \
   perl bash ./bin/replace
 
 printf "Scanning for prohibited keywords ...\n"
 docker run --rm \
-  -v "${DIR}:${WORKINGDIR}" \
-  -w "${WORKINGDIR}" \
+  -v "${DIR}:${WORKING_DIR}" \
+  -w "${WORKING_DIR}" \
   perl bash ./bin/scan_for
 
 printf "Running tests ...\n"

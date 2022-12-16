@@ -6,19 +6,38 @@ require 'openssl'
 
 module HelloSign
   class EventCallbackHelper
+    EVENT_TYPE_ACCOUNT_CALLBACK = "account_callback"
+
+    EVENT_TYPE_APP_CALLBACK = "app_callback"
+
     # Verify that a callback came from HelloSign.com
     #
     # @param [String] api_key
-    # @param [EventCallbackRequestEvent] event
+    # @param [EventCallbackRequest] event_callback
     # @return bool
-    def self.is_valid(api_key, event)
+    def self.is_valid(api_key, event_callback)
       hash = OpenSSL::HMAC.hexdigest(
         "SHA256",
         api_key,
-        "#{event.event_time}#{event.event_type}",
+        "#{event_callback.event.event_time}#{event_callback.event.event_type}",
       )
 
-      return event.event_hash === hash
+      return event_callback.event.event_hash === hash
+    end
+
+    # Identifies the callback type, one of "account_callback" or "app_callback".
+    # "app_callback" will always include a value for "reported_for_app_id"
+    #
+    # @param [EventCallbackRequest] event_callback
+    # @return string
+    def self.get_callback_type(event_callback)
+      metadata = event_callback.event.event_metadata || EventCallbackRequestEventMetadata.new
+
+      if metadata.reported_for_app_id.nil? || metadata.reported_for_app_id.empty?
+        return EVENT_TYPE_ACCOUNT_CALLBACK
+      end
+
+      return EVENT_TYPE_APP_CALLBACK
     end
   end
 end

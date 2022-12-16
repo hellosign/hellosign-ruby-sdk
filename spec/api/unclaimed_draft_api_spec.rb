@@ -14,8 +14,9 @@ require 'spec_helper'
 require 'json_spec'
 require_relative '../test_utils'
 
-config = do_config
+config = HelloSign.configure
 api_client = HelloSign::ApiClient.new(config)
+root_file_path = __dir__ + "/../../test_fixtures"
 
 describe HelloSign::UnclaimedDraftApi do
   context 'UnclaimedDraftApiTest' do
@@ -29,8 +30,8 @@ describe HelloSign::UnclaimedDraftApi do
       response_data = get_fixture_data(response_class)[:default]
 
       set_expected_response(200, JSON.dump(response_data))
-      expected = api_client.convert_to_type(response_data, response_class)
-      obj = api_client.convert_to_type(request_data, request_class)
+      expected = api_client.convert_to_type(response_data, response_class) || UnclaimedDraftCreateResponse
+      obj = api_client.convert_to_type(request_data, request_class) || UnclaimedDraftCreateRequest
 
       result = api.unclaimed_draft_create(obj)
 
@@ -46,8 +47,9 @@ describe HelloSign::UnclaimedDraftApi do
       response_data = get_fixture_data(response_class)[:default]
 
       set_expected_response(200, JSON.dump(response_data))
-      expected = api_client.convert_to_type(response_data, response_class)
-      obj = api_client.convert_to_type(request_data, request_class)
+      expected = api_client.convert_to_type(response_data, response_class) || UnclaimedDraftCreateResponse
+      obj = api_client.convert_to_type(request_data, request_class) || UnclaimedDraftCreateEmbeddedRequest
+      obj.file = [File.new("#{root_file_path}/pdf-sample.pdf", "r")]
 
       result = api.unclaimed_draft_create_embedded(obj)
 
@@ -63,8 +65,9 @@ describe HelloSign::UnclaimedDraftApi do
       response_data = get_fixture_data(response_class)[:default]
 
       set_expected_response(200, JSON.dump(response_data))
-      expected = api_client.convert_to_type(response_data, response_class)
-      obj = api_client.convert_to_type(request_data, request_class)
+      expected = api_client.convert_to_type(response_data, response_class) || UnclaimedDraftCreateResponse
+      obj = api_client.convert_to_type(request_data, request_class) || UnclaimedDraftCreateEmbeddedWithTemplateRequest
+      obj.file = [File.new("#{root_file_path}/pdf-sample.pdf", "r")]
 
       result = api.unclaimed_draft_create_embedded_with_template(obj)
 
@@ -82,8 +85,8 @@ describe HelloSign::UnclaimedDraftApi do
       response_data = get_fixture_data(response_class)[:default]
 
       set_expected_response(200, JSON.dump(response_data))
-      expected = api_client.convert_to_type(response_data, response_class)
-      obj = api_client.convert_to_type(request_data, request_class)
+      expected = api_client.convert_to_type(response_data, response_class) || UnclaimedDraftCreateResponse
+      obj = api_client.convert_to_type(request_data, request_class) || UnclaimedDraftEditAndResendRequest
 
       result = api.unclaimed_draft_edit_and_resend(signature_request_id, obj)
 

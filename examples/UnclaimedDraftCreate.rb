@@ -39,7 +39,7 @@ data.cc_email_addresses = [
   "lawyer@hellosign.com",
   "lawyer@example.com",
 ]
-data.file_url = ["https://app.hellosign.com/docs/example_signature_request.pdf"]
+data.file = [File.new("example_signature_request.pdf", "r")]
 data.metadata = {
   custom_id: 1234,
   custom_text: "NDA #9",
