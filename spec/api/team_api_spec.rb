@@ -14,7 +14,7 @@ require 'spec_helper'
 require 'json_spec'
 require_relative '../test_utils'
 
-config = do_config
+config = HelloSign.configure
 api_client = HelloSign::ApiClient.new(config)
 
 describe HelloSign::TeamApi do
@@ -29,8 +29,8 @@ describe HelloSign::TeamApi do
       response_data = get_fixture_data(response_class)[:default]
 
       set_expected_response(200, JSON.dump(response_data))
-      expected = api_client.convert_to_type(response_data, response_class)
-      obj = api_client.convert_to_type(request_data, request_class)
+      expected = api_client.convert_to_type(response_data, response_class) || TeamAddMemberRequest
+      obj = api_client.convert_to_type(request_data, request_class) || TeamGetResponse
 
       result = api.team_add_member(obj)
 
@@ -46,8 +46,8 @@ describe HelloSign::TeamApi do
       response_data = get_fixture_data(response_class)[:default]
 
       set_expected_response(200, JSON.dump(response_data))
-      expected = api_client.convert_to_type(response_data, response_class)
-      obj = api_client.convert_to_type(request_data, request_class)
+      expected = api_client.convert_to_type(response_data, response_class) || TeamGetResponse
+      obj = api_client.convert_to_type(request_data, request_class) || TeamCreateRequest
 
       result = api.team_create(obj)
 
@@ -63,7 +63,7 @@ describe HelloSign::TeamApi do
       response_data = get_fixture_data(response_class)[:default]
 
       set_expected_response(200, JSON.dump(response_data))
-      expected = api_client.convert_to_type(response_data, response_class)
+      expected = api_client.convert_to_type(response_data, response_class) || TeamGetResponse
 
       result = api.team_get
 
@@ -79,8 +79,8 @@ describe HelloSign::TeamApi do
       response_data = get_fixture_data(response_class)[:default]
 
       set_expected_response(200, JSON.dump(response_data))
-      expected = api_client.convert_to_type(response_data, response_class)
-      obj = api_client.convert_to_type(request_data, request_class)
+      expected = api_client.convert_to_type(response_data, response_class) || TeamGetResponse
+      obj = api_client.convert_to_type(request_data, request_class) || TeamUpdateRequest
 
       result = api.team_update(obj)
 
@@ -96,8 +96,8 @@ describe HelloSign::TeamApi do
       response_data = get_fixture_data(response_class)[:default]
 
       set_expected_response(200, JSON.dump(response_data))
-      expected = api_client.convert_to_type(response_data, response_class)
-      obj = api_client.convert_to_type(request_data, request_class)
+      expected = api_client.convert_to_type(response_data, response_class) || TeamGetResponse
+      obj = api_client.convert_to_type(request_data, request_class) || TeamRemoveMemberRequest
 
       result = api.team_remove_member(obj)
 

@@ -14,8 +14,9 @@ require 'spec_helper'
 require 'json_spec'
 require_relative '../test_utils'
 
-config = do_config
+config = HelloSign.configure
 api_client = HelloSign::ApiClient.new(config)
+root_file_path = __dir__ + "/../../test_fixtures"
 
 describe HelloSign::ApiAppApi do
   context 'ApiAppApiTest' do
@@ -29,8 +30,9 @@ describe HelloSign::ApiAppApi do
       response_data = get_fixture_data(response_class)[:default]
 
       set_expected_response(200, JSON.dump(response_data))
-      expected = api_client.convert_to_type(response_data, response_class)
-      obj = api_client.convert_to_type(request_data, request_class)
+      expected = api_client.convert_to_type(response_data, response_class) || ApiAppGetResponse
+      obj = api_client.convert_to_type(request_data, request_class) || ApiAppCreateRequest
+      obj.custom_logo_file = File.new("#{root_file_path}/pdf-sample.pdf", "r")
 
       result = api.api_app_create(obj)
 
@@ -45,7 +47,7 @@ describe HelloSign::ApiAppApi do
       response_data = get_fixture_data(response_class)[:default]
 
       set_expected_response(200, JSON.dump(response_data))
-      expected = api_client.convert_to_type(response_data, response_class)
+      expected = api_client.convert_to_type(response_data, response_class) || ApiAppGetResponse
 
       result = api.api_app_get(client_id)
 
@@ -63,8 +65,9 @@ describe HelloSign::ApiAppApi do
       response_data = get_fixture_data(response_class)[:default]
 
       set_expected_response(200, JSON.dump(response_data))
-      expected = api_client.convert_to_type(response_data, response_class)
-      obj = api_client.convert_to_type(request_data, request_class)
+      expected = api_client.convert_to_type(response_data, response_class) || ApiAppGetResponse
+      obj = api_client.convert_to_type(request_data, request_class) || ApiAppUpdateRequest
+      obj.custom_logo_file = File.new("#{root_file_path}/pdf-sample.pdf", "r")
 
       result = api.api_app_update(client_id, obj)
 
@@ -83,7 +86,7 @@ describe HelloSign::ApiAppApi do
       response_data = get_fixture_data(response_class)[:default]
 
       set_expected_response(200, JSON.dump(response_data))
-      expected = api_client.convert_to_type(response_data, response_class)
+      expected = api_client.convert_to_type(response_data, response_class) || ApiAppListResponse
 
       result = api.api_app_list({ :page => page, :page_size => page_size })
 

@@ -37,7 +37,7 @@ module HelloSign
     # Indicates whether edit rights have been granted to you by the owner (always `true` if that's you).
     attr_accessor :can_edit
 
-    # Indicates whether the template is locked.  If `true`, then the template was created outside your quota and can only be used in `test_mode`.  If `false`, then the template is within your quota and can be used to create signature requests.
+    # Indicates whether the template is locked. If `true`, then the template was created outside your quota and can only be used in `test_mode`. If `false`, then the template is within your quota and can be used to create signature requests.
     attr_accessor :is_locked
 
     # The metadata attached to the template.
@@ -323,18 +323,6 @@ module HelloSign
           false
         end
       when :File
-        if HelloSign.configure.instantiate_files && value.is_a?(String)
-          filepath = value
-
-          if HelloSign.configure.root_file_path
-            filepath = "#{HelloSign.configure.root_file_path}/#{value}"
-          end
-
-          if File.exist? filepath
-            value = File.new(filepath, "r")
-          end
-        end
-
         value
       when :Object
         # generic object (usually a Hash), return directly

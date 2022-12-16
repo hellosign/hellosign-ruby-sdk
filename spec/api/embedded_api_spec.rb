@@ -14,7 +14,7 @@ require 'spec_helper'
 require 'json_spec'
 require_relative '../test_utils'
 
-config = do_config
+config = HelloSign.configure
 api_client = HelloSign::ApiClient.new(config)
 
 describe HelloSign::EmbeddedApi do
@@ -31,8 +31,8 @@ describe HelloSign::EmbeddedApi do
       response_data = get_fixture_data(response_class)[:default]
 
       set_expected_response(200, JSON.dump(response_data))
-      expected = api_client.convert_to_type(response_data, response_class)
-      obj = api_client.convert_to_type(request_data, request_class)
+      expected = api_client.convert_to_type(response_data, response_class) ||EmbeddedEditUrlResponse
+      obj = api_client.convert_to_type(request_data, request_class) || EmbeddedEditUrlRequest
 
       result = api.embedded_edit_url(template_id, obj)
 
@@ -47,7 +47,7 @@ describe HelloSign::EmbeddedApi do
       response_data = get_fixture_data(response_class)[:default]
 
       set_expected_response(200, JSON.dump(response_data))
-      expected = api_client.convert_to_type(response_data, response_class)
+      expected = api_client.convert_to_type(response_data, response_class) || EmbeddedSignUrlResponse
 
       result = api.embedded_sign_url(signature_id)
 

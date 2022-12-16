@@ -39,10 +39,7 @@ docs/EmbeddedSignUrlResponse.md
 docs/EmbeddedSignUrlResponseEmbedded.md
 docs/ErrorResponse.md
 docs/ErrorResponseError.md
-docs/EventCallbackAccountRequest.md
-docs/EventCallbackAccountRequestPayload.md
-docs/EventCallbackApiAppRequest.md
-docs/EventCallbackApiAppRequestPayload.md
+docs/EventCallbackRequest.md
 docs/EventCallbackRequestEvent.md
 docs/EventCallbackRequestEventMetadata.md
 docs/FileResponse.md
@@ -213,10 +210,7 @@ lib/hellosign-ruby-sdk/models/embedded_sign_url_response.rb
 lib/hellosign-ruby-sdk/models/embedded_sign_url_response_embedded.rb
 lib/hellosign-ruby-sdk/models/error_response.rb
 lib/hellosign-ruby-sdk/models/error_response_error.rb
-lib/hellosign-ruby-sdk/models/event_callback_account_request.rb
-lib/hellosign-ruby-sdk/models/event_callback_account_request_payload.rb
-lib/hellosign-ruby-sdk/models/event_callback_api_app_request.rb
-lib/hellosign-ruby-sdk/models/event_callback_api_app_request_payload.rb
+lib/hellosign-ruby-sdk/models/event_callback_request.rb
 lib/hellosign-ruby-sdk/models/event_callback_request_event.rb
 lib/hellosign-ruby-sdk/models/event_callback_request_event_metadata.rb
 lib/hellosign-ruby-sdk/models/file_response.rb

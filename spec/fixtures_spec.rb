@@ -3,8 +3,7 @@ require 'json_spec'
 require 'json'
 require_relative './test_utils'
 
-config = do_config
-config.instantiate_files = false
+config = HelloSign.configure
 api_client = HelloSign::ApiClient.new(config)
 
 describe HelloSign::ApiClient do

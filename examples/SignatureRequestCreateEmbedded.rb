@@ -34,7 +34,7 @@ data.subject = "The NDA we talked about"
 data.message = "Please sign this NDA and then we can discuss more. Let me know if you have any questions."
 data.signers = [signer_1, signer_2]
 data.cc_email_addresses = ["lawyer@hellosign.com", "lawyer@example.com"]
-data.file_url = ["https://app.hellosign.com/docs/example_signature_request.pdf"]
+data.file = [File.new("example_signature_request.pdf", "r")]
 data.signing_options = signing_options
 data.test_mode = true
 

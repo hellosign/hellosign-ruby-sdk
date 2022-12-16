@@ -523,7 +523,7 @@ module HelloSign
     end
 
     # Download Files
-    # Obtain a copy of the current documents specified by the `signature_request_id` parameter. Returns a PDF or ZIP file.   If the files are currently being prepared, a status code of `409` will be returned instead.
+    # Obtain a copy of the current documents specified by the `signature_request_id` parameter. Returns a PDF or ZIP file.  If the files are currently being prepared, a status code of `409` will be returned instead.
     # @param signature_request_id [String] The id of the SignatureRequest to retrieve.
     # @param [Hash] opts the optional parameters
     # @option opts [String] :file_type Set to &#x60;pdf&#x60; for a single merged document or &#x60;zip&#x60; for a collection of individual documents. (default to 'pdf')
@@ -534,7 +534,7 @@ module HelloSign
     end
 
     # Download Files
-    # Obtain a copy of the current documents specified by the &#x60;signature_request_id&#x60; parameter. Returns a PDF or ZIP file.   If the files are currently being prepared, a status code of &#x60;409&#x60; will be returned instead.
+    # Obtain a copy of the current documents specified by the &#x60;signature_request_id&#x60; parameter. Returns a PDF or ZIP file.  If the files are currently being prepared, a status code of &#x60;409&#x60; will be returned instead.
     # @param signature_request_id [String] The id of the SignatureRequest to retrieve.
     # @param [Hash] opts the optional parameters
     # @option opts [String] :file_type Set to &#x60;pdf&#x60; for a single merged document or &#x60;zip&#x60; for a collection of individual documents.
@@ -624,7 +624,7 @@ module HelloSign
     end
 
     # Download Files as Data Uri
-    # Obtain a copy of the current documents specified by the `signature_request_id` parameter. Returns a JSON object with a `data_uri` representing the base64 encoded file (PDFs only).   If the files are currently being prepared, a status code of `409` will be returned instead.
+    # Obtain a copy of the current documents specified by the `signature_request_id` parameter. Returns a JSON object with a `data_uri` representing the base64 encoded file (PDFs only).  If the files are currently being prepared, a status code of `409` will be returned instead.
     # @param signature_request_id [String] The id of the SignatureRequest to retrieve.
     # @param [Hash] opts the optional parameters
     # @return [FileResponseDataUri]
@@ -634,7 +634,7 @@ module HelloSign
     end
 
     # Download Files as Data Uri
-    # Obtain a copy of the current documents specified by the &#x60;signature_request_id&#x60; parameter. Returns a JSON object with a &#x60;data_uri&#x60; representing the base64 encoded file (PDFs only).   If the files are currently being prepared, a status code of &#x60;409&#x60; will be returned instead.
+    # Obtain a copy of the current documents specified by the &#x60;signature_request_id&#x60; parameter. Returns a JSON object with a &#x60;data_uri&#x60; representing the base64 encoded file (PDFs only).  If the files are currently being prepared, a status code of &#x60;409&#x60; will be returned instead.
     # @param signature_request_id [String] The id of the SignatureRequest to retrieve.
     # @param [Hash] opts the optional parameters
     # @return [Array<(FileResponseDataUri, Integer, Hash)>] FileResponseDataUri data, response status code and response headers
@@ -718,7 +718,7 @@ module HelloSign
     end
 
     # Download Files as File Url
-    # Obtain a copy of the current documents specified by the `signature_request_id` parameter. Returns a JSON object with a url to the file (PDFs only).   If the files are currently being prepared, a status code of `409` will be returned instead.
+    # Obtain a copy of the current documents specified by the `signature_request_id` parameter. Returns a JSON object with a url to the file (PDFs only).  If the files are currently being prepared, a status code of `409` will be returned instead.
     # @param signature_request_id [String] The id of the SignatureRequest to retrieve.
     # @param [Hash] opts the optional parameters
     # @return [FileResponse]
@@ -728,7 +728,7 @@ module HelloSign
     end
 
     # Download Files as File Url
-    # Obtain a copy of the current documents specified by the &#x60;signature_request_id&#x60; parameter. Returns a JSON object with a url to the file (PDFs only).   If the files are currently being prepared, a status code of &#x60;409&#x60; will be returned instead.
+    # Obtain a copy of the current documents specified by the &#x60;signature_request_id&#x60; parameter. Returns a JSON object with a url to the file (PDFs only).  If the files are currently being prepared, a status code of &#x60;409&#x60; will be returned instead.
     # @param signature_request_id [String] The id of the SignatureRequest to retrieve.
     # @param [Hash] opts the optional parameters
     # @return [Array<(FileResponse, Integer, Hash)>] FileResponse data, response status code and response headers

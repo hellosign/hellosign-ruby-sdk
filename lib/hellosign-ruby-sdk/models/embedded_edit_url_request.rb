@@ -29,7 +29,7 @@ module HelloSign
     # Provide users the ability to review/edit the template subject and message.
     attr_accessor :force_subject_message
 
-    # Add additional merge fields to the template, which can be used used to pre-fill data by passing values into signature requests made with that template.      Remove all merge fields on the template by passing an empty array `[]`.
+    # Add additional merge fields to the template, which can be used used to pre-fill data by passing values into signature requests made with that template.  Remove all merge fields on the template by passing an empty array `[]`.
     attr_accessor :merge_fields
 
     # This allows the requester to enable the preview experience (i.e. does not allow the requester's end user to add any additional fields via the editor).  **Note**: This parameter overwrites `show_preview=true` (if set).
@@ -270,18 +270,6 @@ module HelloSign
           false
         end
       when :File
-        if HelloSign.configure.instantiate_files && value.is_a?(String)
-          filepath = value
-
-          if HelloSign.configure.root_file_path
-            filepath = "#{HelloSign.configure.root_file_path}/#{value}"
-          end
-
-          if File.exist? filepath
-            value = File.new(filepath, "r")
-          end
-        end
-
         value
       when :Object
         # generic object (usually a Hash), return directly

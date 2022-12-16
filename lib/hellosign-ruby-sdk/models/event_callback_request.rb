@@ -14,8 +14,10 @@ require 'date'
 require 'time'
 
 module HelloSign
-  class EventCallbackAccountRequestPayload
+  class EventCallbackRequest
     attr_accessor :event
+
+    attr_accessor :account
 
     attr_accessor :signature_request
 
@@ -25,6 +27,7 @@ module HelloSign
     def self.attribute_map
       {
         :'event' => :'event',
+        :'account' => :'account',
         :'signature_request' => :'signature_request',
         :'template' => :'template'
       }
@@ -44,6 +47,7 @@ module HelloSign
     def self.openapi_types
       {
         :'event' => :'EventCallbackRequestEvent',
+        :'account' => :'AccountResponse',
         :'signature_request' => :'SignatureRequestResponse',
         :'template' => :'TemplateResponse'
       }
@@ -69,19 +73,23 @@ module HelloSign
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `HelloSign::EventCallbackAccountRequestPayload` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `HelloSign::EventCallbackRequest` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!self.class.merged_attributes.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `HelloSign::EventCallbackAccountRequestPayload`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `HelloSign::EventCallbackRequest`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
       if attributes.key?(:'event')
         self.event = attributes[:'event']
+      end
+
+      if attributes.key?(:'account')
+        self.account = attributes[:'account']
       end
 
       if attributes.key?(:'signature_request')
@@ -117,6 +125,7 @@ module HelloSign
       return true if self.equal?(o)
       self.class == o.class &&
           event == o.event &&
+          account == o.account &&
           signature_request == o.signature_request &&
           template == o.template
     end
@@ -130,7 +139,7 @@ module HelloSign
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [event, signature_request, template].hash
+      [event, account, signature_request, template].hash
     end
 
     # Builds the object from hash
@@ -185,18 +194,6 @@ module HelloSign
           false
         end
       when :File
-        if HelloSign.configure.instantiate_files && value.is_a?(String)
-          filepath = value
-
-          if HelloSign.configure.root_file_path
-            filepath = "#{HelloSign.configure.root_file_path}/#{value}"
-          end
-
-          if File.exist? filepath
-            value = File.new(filepath, "r")
-          end
-        end
-
         value
       when :Object
         # generic object (usually a Hash), return directly

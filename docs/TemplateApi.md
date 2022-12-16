@@ -136,7 +136,7 @@ field_options.date_format = "DD - MM - YYYY"
 
 data = HelloSign::TemplateCreateEmbeddedDraftRequest.new
 data.client_id = "37dee8d8440c66d54cfa05d92c160882"
-data.file_url = ["https://app.hellosign.com/docs/example_signature_request.pdf"]
+data.file = [File.new("example_signature_request.pdf", "r")]
 data.title = "Test Template"
 data.subject = "Please sign this document"
 data.message = "For your approval"
@@ -291,8 +291,8 @@ api = HelloSign::TemplateApi.new
 template_id = "5de8179668f2033afac48da1868d0093bf133266"
 
 begin
-  result = api.template_files(template_id)
-  p result
+  file_bin = api.template_files(template_id)
+  FileUtils.cp(file_bin.path, "path/to/file.pdf")
 rescue HelloSign::ApiError => e
   puts "Exception when calling HelloSign API: #{e}"
 end
@@ -344,7 +344,7 @@ end
 
 Get Template Files as Data Uri
 
-Obtain a copy of the current documents specified by the `template_id` parameter. Returns a JSON object with a `data_uri` representing the base64 encoded file (PDFs only).   If the files are currently being prepared, a status code of `409` will be returned instead. In this case please wait for the `template_created` callback event.
+Obtain a copy of the current documents specified by the `template_id` parameter. Returns a JSON object with a `data_uri` representing the base64 encoded file (PDFs only).  If the files are currently being prepared, a status code of `409` will be returned instead. In this case please wait for the `template_created` callback event.
 
 ### Examples
 
@@ -416,7 +416,7 @@ end
 
 Get Template Files as File Url
 
-Obtain a copy of the current documents specified by the `template_id` parameter. Returns a JSON object with a url to the file (PDFs only).   If the files are currently being prepared, a status code of `409` will be returned instead. In this case please wait for the `template_created` callback event.
+Obtain a copy of the current documents specified by the `template_id` parameter. Returns a JSON object with a url to the file (PDFs only).  If the files are currently being prepared, a status code of `409` will be returned instead. In this case please wait for the `template_created` callback event.
 
 ### Examples
 
@@ -729,7 +729,7 @@ end
 api = HelloSign::TemplateApi.new
 
 data = HelloSign::TemplateUpdateFilesRequest.new
-data.file_url = ["https://app.hellosign.com/docs/example_signature_request.pdf"]
+data.file = [File.new("example_signature_request.pdf", "r")]
 
 template_id = "5de8179668f2033afac48da1868d0093bf133266"
 

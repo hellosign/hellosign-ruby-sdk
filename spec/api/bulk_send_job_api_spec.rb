@@ -14,7 +14,7 @@ require 'spec_helper'
 require 'json_spec'
 require_relative '../test_utils'
 
-config = do_config
+config = HelloSign.configure
 api_client = HelloSign::ApiClient.new(config)
 
 describe HelloSign::BulkSendJobApi do
@@ -28,7 +28,7 @@ describe HelloSign::BulkSendJobApi do
       response_data = get_fixture_data(response_class)[:default]
 
       set_expected_response(200, JSON.dump(response_data))
-      expected = api_client.convert_to_type(response_data, response_class)
+      expected = api_client.convert_to_type(response_data, response_class) || BulkSendJobGetResponse
 
       result = api.bulk_send_job_get(id)
 
@@ -44,7 +44,7 @@ describe HelloSign::BulkSendJobApi do
       response_data = get_fixture_data(response_class)[:default]
 
       set_expected_response(200, JSON.dump(response_data))
-      expected = api_client.convert_to_type(response_data, response_class)
+      expected = api_client.convert_to_type(response_data, response_class) || BulkSendJobListResponse
 
       result = api.bulk_send_job_list({ :page => page, :page_size => page_size})
 

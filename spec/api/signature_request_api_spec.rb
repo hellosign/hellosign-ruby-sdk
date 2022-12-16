@@ -14,8 +14,9 @@ require 'spec_helper'
 require 'json_spec'
 require_relative '../test_utils'
 
-config = do_config
+config = HelloSign.configure
 api_client = HelloSign::ApiClient.new(config)
+root_file_path = __dir__ + "/../../test_fixtures"
 
 describe HelloSign::SignatureRequestApi do
   context 'SignatureRequestApiTest' do
@@ -29,8 +30,9 @@ describe HelloSign::SignatureRequestApi do
       response_data = get_fixture_data(response_class)[:default]
 
       set_expected_response(200, JSON.dump(response_data))
-      expected = api_client.convert_to_type(response_data, response_class)
-      obj = api_client.convert_to_type(request_data, request_class)
+      expected = api_client.convert_to_type(response_data, response_class) || BulkSendJobSendResponse
+      obj = api_client.convert_to_type(request_data, request_class) || SignatureRequestBulkCreateEmbeddedWithTemplateRequest
+      obj.signer_file = File.new("#{root_file_path}/bulk-send-sample.csv", "r")
 
       result = api.signature_request_bulk_create_embedded_with_template(obj)
 
@@ -46,8 +48,9 @@ describe HelloSign::SignatureRequestApi do
       response_data = get_fixture_data(response_class)[:default]
 
       set_expected_response(200, JSON.dump(response_data))
-      expected = api_client.convert_to_type(response_data, response_class)
-      obj = api_client.convert_to_type(request_data, request_class)
+      expected = api_client.convert_to_type(response_data, response_class) || BulkSendJobSendResponse
+      obj = api_client.convert_to_type(request_data, request_class) || SignatureRequestBulkSendWithTemplateRequest
+      obj.signer_file = File.new("#{root_file_path}/bulk-send-sample.csv", "r")
 
       result = api.signature_request_bulk_send_with_template(obj)
 
@@ -66,8 +69,9 @@ describe HelloSign::SignatureRequestApi do
       response_data = get_fixture_data(response_class)[:default]
 
       set_expected_response(200, JSON.dump(response_data))
-      expected = api_client.convert_to_type(response_data, response_class)
-      obj = api_client.convert_to_type(request_data, request_class)
+      expected = api_client.convert_to_type(response_data, response_class) || SignatureRequestGetResponse
+      obj = api_client.convert_to_type(request_data, request_class) || SignatureRequestCreateEmbeddedRequest
+      obj.file = [File.new("#{root_file_path}/pdf-sample.pdf", "r")]
 
       result = api.signature_request_create_embedded(obj)
 
@@ -83,8 +87,9 @@ describe HelloSign::SignatureRequestApi do
       response_data = get_fixture_data(response_class)[:default]
 
       set_expected_response(200, JSON.dump(response_data))
-      expected = api_client.convert_to_type(response_data, response_class)
-      obj = api_client.convert_to_type(request_data, request_class)
+      expected = api_client.convert_to_type(response_data, response_class) || SignatureRequestGetResponse
+      obj = api_client.convert_to_type(request_data, request_class) || SignatureRequestCreateEmbeddedWithTemplateRequest
+      obj.file = [File.new("#{root_file_path}/pdf-sample.pdf", "r")]
 
       result = api.signature_request_create_embedded_with_template(obj)
 
@@ -94,15 +99,12 @@ describe HelloSign::SignatureRequestApi do
 
     it 'testSignatureRequestFiles' do
       signature_request_id = 'fa5c8a0b0f492d768749333ad6fcc214c111e967'
-      file_type = 'pdf'
-      get_url = false
-      get_data_uri = false
 
       response_class = 'FileResponse'
       response_data = get_fixture_data(response_class)[:default]
 
       set_expected_response(200, JSON.dump(response_data))
-      expected = api_client.convert_to_type(response_data, response_class)
+      expected = api_client.convert_to_type(response_data, response_class) || FileResponse
 
       result = api.signature_request_files_as_file_url(signature_request_id,{})
 
@@ -117,7 +119,7 @@ describe HelloSign::SignatureRequestApi do
       response_data = get_fixture_data(response_class)[:default]
 
       set_expected_response(200, JSON.dump(response_data))
-      expected = api_client.convert_to_type(response_data, response_class)
+      expected = api_client.convert_to_type(response_data, response_class) || SignatureRequestGetResponse
 
       result = api.signature_request_get(signature_request_id)
 
@@ -132,7 +134,7 @@ describe HelloSign::SignatureRequestApi do
       response_data = get_fixture_data(response_class)[:default]
 
       set_expected_response(200, JSON.dump(response_data))
-      expected = api_client.convert_to_type(response_data, response_class)
+      expected = api_client.convert_to_type(response_data, response_class) || SignatureRequestListResponse
 
       result = api.signature_request_list({:account_id => account_id})
 
@@ -147,7 +149,7 @@ describe HelloSign::SignatureRequestApi do
       response_data = get_fixture_data(response_class)[:default]
 
       set_expected_response(200, JSON.dump(response_data))
-      expected = api_client.convert_to_type(response_data, response_class)
+      expected = api_client.convert_to_type(response_data, response_class) || SignatureRequestGetResponse
 
       result = api.signature_request_release_hold(signature_request_list)
 
@@ -165,8 +167,8 @@ describe HelloSign::SignatureRequestApi do
       response_data = get_fixture_data(response_class)[:default]
 
       set_expected_response(200, JSON.dump(response_data))
-      expected = api_client.convert_to_type(response_data, response_class)
-      obj = api_client.convert_to_type(request_data, request_class)
+      expected = api_client.convert_to_type(response_data, response_class) || SignatureRequestGetResponse
+      obj = api_client.convert_to_type(request_data, request_class) || SignatureRequestRemindRequest
 
       result = api.signature_request_remind(signature_request_list, obj)
 
@@ -185,8 +187,9 @@ describe HelloSign::SignatureRequestApi do
       response_data = get_fixture_data(response_class)[:default]
 
       set_expected_response(200, JSON.dump(response_data))
-      expected = api_client.convert_to_type(response_data, response_class)
-      obj = api_client.convert_to_type(request_data, request_class)
+      expected = api_client.convert_to_type(response_data, response_class) || SignatureRequestGetResponse
+      obj = api_client.convert_to_type(request_data, request_class) || SignatureRequestSendRequest
+      obj.file = [File.new("#{root_file_path}/pdf-sample.pdf", "r")]
 
       result = api.signature_request_send(obj)
 
@@ -196,9 +199,10 @@ describe HelloSign::SignatureRequestApi do
 
     it 'testFileForcesMultipartFormData' do
       request_class = 'SignatureRequestSendRequest'
-      request_data = get_fixture_data(request_class)[:with_file]
+      request_data = get_fixture_data(request_class)[:default]
 
-      obj = api_client.convert_to_type(request_data, request_class)
+      obj = api_client.convert_to_type(request_data, request_class) || SignatureRequestSendRequest
+      obj.file = [File.new("#{root_file_path}/pdf-sample.pdf", "r")]
 
       result = api_client.generate_form_data(
         obj,
@@ -210,9 +214,9 @@ describe HelloSign::SignatureRequestApi do
 
     it 'testNoFileForcesApplicationJson' do
       request_class = 'SignatureRequestSendRequest'
-      request_data = get_fixture_data(request_class)[:with_file_url]
+      request_data = get_fixture_data(request_class)[:default]
 
-      obj = api_client.convert_to_type(request_data, request_class)
+      obj = api_client.convert_to_type(request_data, request_class) || SignatureRequestSendRequest
 
       result = api_client.generate_form_data(
         obj,
@@ -230,8 +234,8 @@ describe HelloSign::SignatureRequestApi do
       response_data = get_fixture_data(response_class)[:default]
 
       set_expected_response(200, JSON.dump(response_data))
-      expected = api_client.convert_to_type(response_data, response_class)
-      obj = api_client.convert_to_type(request_data, request_class)
+      expected = api_client.convert_to_type(response_data, response_class) || SignatureRequestGetResponse
+      obj = api_client.convert_to_type(request_data, request_class) || SignatureRequestSendWithTemplateRequest
 
       result = api.signature_request_send_with_template(obj)
 
@@ -249,8 +253,8 @@ describe HelloSign::SignatureRequestApi do
       response_data = get_fixture_data(response_class)[:default]
 
       set_expected_response(200, JSON.dump(response_data))
-      expected = api_client.convert_to_type(response_data, response_class)
-      obj = api_client.convert_to_type(request_data, request_class)
+      expected = api_client.convert_to_type(response_data, response_class) || SignatureRequestGetResponse
+      obj = api_client.convert_to_type(request_data, request_class) || SignatureRequestUpdateRequest
 
       result = api.signature_request_update(signature_request_id, obj)
 

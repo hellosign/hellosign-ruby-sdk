@@ -9,7 +9,7 @@ additionalProperties:
   gemName: hellosign-ruby-sdk
   gemRequiredRubyVersion: '>= 2.7'
   moduleName: HelloSign
-  gemVersion: 6.0.0-beta22.23
+  gemVersion: 6.0.0-beta22.24
   sortModelPropertiesByRequiredFlag: true
   legacyDiscriminatorBehavior: true
 files:

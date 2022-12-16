@@ -1,11 +1,3 @@
-def do_config
-  config = HelloSign.configure
-  config.instantiate_files = false
-  config.root_file_path = __dir__ + "/../test_fixtures"
-
-  config
-end
-
 def set_expected_response(code, body, content_type = 'application/json')
   Typhoeus.stub(/hellosign.com/) do
     Typhoeus::Response.new(
@@ -17,7 +9,7 @@ def set_expected_response(code, body, content_type = 'application/json')
 end
 
 def get_fixture_data(file)
-  path = "#{HelloSign.configure.root_file_path}/#{file}.json"
+  path = __dir__ + "/../test_fixtures/#{file}.json"
 
   if ! File.exist? path
     raise "Fixture file #{path} not found"

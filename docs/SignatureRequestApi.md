@@ -362,7 +362,7 @@ data.subject = "The NDA we talked about"
 data.message = "Please sign this NDA and then we can discuss more. Let me know if you have any questions."
 data.signers = [signer_1, signer_2]
 data.cc_email_addresses = ["lawyer@hellosign.com", "lawyer@example.com"]
-data.file_url = ["https://app.hellosign.com/docs/example_signature_request.pdf"]
+data.file = [File.new("example_signature_request.pdf", "r")]
 data.signing_options = signing_options
 data.test_mode = true
 
@@ -510,7 +510,7 @@ end
 
 Download Files
 
-Obtain a copy of the current documents specified by the `signature_request_id` parameter. Returns a PDF or ZIP file.   If the files are currently being prepared, a status code of `409` will be returned instead.
+Obtain a copy of the current documents specified by the `signature_request_id` parameter. Returns a PDF or ZIP file.  If the files are currently being prepared, a status code of `409` will be returned instead.
 
 ### Examples
 
@@ -530,8 +530,8 @@ api = HelloSign::SignatureRequestApi.new
 signature_request_id = "fa5c8a0b0f492d768749333ad6fcc214c111e967"
 
 begin
-  result = api.signature_request_files(signature_request_id)
-  p result
+  file_bin = api.signature_request_files(signature_request_id)
+  FileUtils.cp(file_bin.path, "path/to/file.pdf")
 rescue HelloSign::ApiError => e
   puts "Exception when calling HelloSign API: #{e}"
 end
@@ -583,7 +583,7 @@ end
 
 Download Files as Data Uri
 
-Obtain a copy of the current documents specified by the `signature_request_id` parameter. Returns a JSON object with a `data_uri` representing the base64 encoded file (PDFs only).   If the files are currently being prepared, a status code of `409` will be returned instead.
+Obtain a copy of the current documents specified by the `signature_request_id` parameter. Returns a JSON object with a `data_uri` representing the base64 encoded file (PDFs only).  If the files are currently being prepared, a status code of `409` will be returned instead.
 
 ### Examples
 
@@ -655,7 +655,7 @@ end
 
 Download Files as File Url
 
-Obtain a copy of the current documents specified by the `signature_request_id` parameter. Returns a JSON object with a url to the file (PDFs only).   If the files are currently being prepared, a status code of `409` will be returned instead.
+Obtain a copy of the current documents specified by the `signature_request_id` parameter. Returns a JSON object with a url to the file (PDFs only).  If the files are currently being prepared, a status code of `409` will be returned instead.
 
 ### Examples
 
@@ -1141,7 +1141,7 @@ data.cc_email_addresses = [
   "lawyer@hellosign.com",
   "lawyer@example.com",
 ]
-data.file_url = ["https://app.hellosign.com/docs/example_signature_request.pdf"]
+data.file = [File.new("example_signature_request.pdf", "r")]
 data.metadata = {
   custom_id: 1234,
   custom_text: "NDA #9",
@@ -1220,7 +1220,7 @@ end
 
 api = HelloSign::SignatureRequestApi.new
 
-signer_1 = HelloSign::SubSignatureRequestSigner.new
+signer_1 = HelloSign::SubSignatureRequestTemplateSigner.new
 signer_1.role = "Client"
 signer_1.email_address = "george@example.com"
 signer_1.name = "George"
