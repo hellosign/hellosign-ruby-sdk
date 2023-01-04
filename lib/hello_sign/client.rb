@@ -21,6 +21,7 @@
 # SOFTWARE.
 
 require 'faraday'
+require 'faraday/multipart'
 require 'multi_json'
 require 'mime/types'
 require 'hello_sign/error'
